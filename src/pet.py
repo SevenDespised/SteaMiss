@@ -31,6 +31,7 @@ class DesktopPet(QWidget):
         
         # 初始化轮盘菜单
         self.radial_menu = RadialMenu()
+        self.radial_menu.hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle" # 当前行为状态
@@ -167,6 +168,22 @@ class DesktopPet(QWidget):
             result += char
             
         return result + ".."
+
+    def on_menu_hover_changed(self, index):
+        """
+        当轮盘菜单悬停项改变时触发
+        index: 悬停的菜单项索引，-1 表示无悬停
+        """
+        if index == -1:
+            self.load_image("assets/main.png")
+        else:
+            # 尝试加载对应的 point 图片
+            path = f"assets/point{index}.png"
+            if os.path.exists(path):
+                self.load_image(path)
+            else:
+                # 如果对应图片不存在，回退到默认图片
+                self.load_image("assets/main.png")
 
     def show_interaction_panel(self, position):
         """

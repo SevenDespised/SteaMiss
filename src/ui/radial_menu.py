@@ -1,9 +1,11 @@
 import math
 from PyQt6.QtWidgets import QWidget
-from PyQt6.QtCore import Qt, QPoint, QRectF, QRect, QEvent
+from PyQt6.QtCore import Qt, QPoint, QRectF, QRect, QEvent, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QPen, QPainterPath, QFont, QCursor, QRegion
 
 class RadialMenu(QWidget):
+    hovered_changed = pyqtSignal(int) # 信号：悬停索引改变 (index, -1表示无悬停)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         # 使用 Tool 类型而不是 Popup，以便支持点击穿透 (Popup 会强制抓取鼠标)
@@ -147,17 +149,25 @@ class RadialMenu(QWidget):
             painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, item['label'])
 
     def leaveEvent(self, event):
-        self.hovered_index = -1
+        if self.hovered_index != -1:
+            self.hovered_index = -1
+            self.hovered_changed.emit(-1)
         self.update()
         super().leaveEvent(event)
+
+    def hideEvent(self, event):
+        # 窗口隐藏/关闭时，重置状态
+        self.hovered_changed.emit(-1)
+        super().hideEvent(event)
 
     def mouseMoveEvent(self, event):
         center = QPoint(self.width() // 2, self.height() // 2)
         pos = event.pos() - center
         dist = math.sqrt(pos.x()**2 + pos.y()**2)
         
+        new_index = -1
         if dist < self.inner_radius or dist > self.radius:
-            self.hovered_index = -1
+            new_index = -1
         else:
             # 计算角度
             angle = math.degrees(math.atan2(pos.y(), pos.x()))
@@ -172,9 +182,12 @@ class RadialMenu(QWidget):
                 step = 360 / count
                 index = int(mouse_angle / step)
                 if 0 <= index < count:
-                    self.hovered_index = index
+                    new_index = index
         
-        self.update()
+        if self.hovered_index != new_index:
+            self.hovered_index = new_index
+            self.hovered_changed.emit(new_index)
+            self.update()
 
     def mousePressEvent(self, event):
         # 右键点击直接关闭菜单
