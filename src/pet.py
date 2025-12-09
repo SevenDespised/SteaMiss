@@ -133,7 +133,9 @@ class DesktopPet(QWidget):
         右键点击事件
         这里不再直接写死菜单，而是调用一个“展示交互面板”的方法
         """
-        self.show_interaction_panel(event.globalPos())
+        # 使用窗口中心作为菜单中心，确保宠物在圆环正中央
+        center_pos = self.mapToGlobal(self.rect().center())
+        self.show_interaction_panel(center_pos)
 
     def _truncate_game_name(self, name, max_len=8):
         """

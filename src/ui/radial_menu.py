@@ -12,8 +12,8 @@ class RadialMenu(QWidget):
         
         self.items = []
         self.hovered_index = -1
-        self.radius = 100
-        self.inner_radius = 30 
+        self.radius = 180
+        self.inner_radius = 120
         
         # 启用鼠标追踪，以便在不按键时也能检测悬停
         self.setMouseTracking(True)
@@ -153,13 +153,10 @@ class RadialMenu(QWidget):
         # 仅左键释放触发点击
         if event.button() != Qt.MouseButton.LeftButton:
             return
-
+        # 1. 先关闭菜单 (符合用户直觉，点击即消失)
+        self.close()
         if self.hovered_index != -1 and self.items:
             item = self.items[self.hovered_index]
-            
-            # 1. 先关闭菜单 (符合用户直觉，点击即消失)
-            self.close()
-            
             # 2. 再执行回调
             if 'callback' in item:
                 item['callback']()
