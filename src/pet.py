@@ -25,8 +25,9 @@ class DesktopPet(QWidget):
         # 3. 初始化管理器
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
-        self.tool_manager = ToolManager()
         self.steam_manager = SteamManager(self.config_manager)
+        # ToolManager 需要 SteamManager 来创建统计窗口
+        self.tool_manager = ToolManager(self.steam_manager)
         
         # 初始化轮盘菜单
         self.radial_menu = RadialMenu()
@@ -134,6 +135,33 @@ class DesktopPet(QWidget):
         """
         self.show_interaction_panel(event.globalPos())
 
+    def _truncate_game_name(self, name, max_len=8):
+        """
+        截断游戏名称，限制显示长度
+        规则：最多 max_len 个英文字符，1个中文字符 = 2个英文字符
+        如果超出，保留 max_len-2 的长度并添加 ".."
+        """
+        # 1. 计算总长度
+        total_len = 0
+        for char in name:
+            total_len += 2 if '\u4e00' <= char <= '\u9fff' else 1
+        
+        if total_len <= max_len:
+            return name
+            
+        # 2. 需要截断
+        target_len = max_len - 2
+        current_len = 0
+        result = ""
+        for char in name:
+            char_len = 2 if '\u4e00' <= char <= '\u9fff' else 1
+            if current_len + char_len > target_len:
+                break
+            current_len += char_len
+            result += char
+            
+        return result + ".."
+
     def show_interaction_panel(self, position):
         """
         [接口] 交互面板入口
@@ -158,7 +186,7 @@ class DesktopPet(QWidget):
         # --- 轮盘菜单实现 ---
         items = [
             {'label': '打招呼', 'callback': self.say_hello},
-            {'label': '备忘录', 'callback': lambda: self.tool_manager.open_tool("memo")},
+            {'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")},
             {'label': '闹钟', 'callback': lambda: self.tool_manager.open_tool("alarm")},
             {'label': open_label, 'callback': self.open_explorer}
         ]
@@ -168,8 +196,7 @@ class DesktopPet(QWidget):
         recent_game = self.steam_manager.get_recent_game()
         if recent_game:
             name = recent_game.get("name", "Unknown")
-            # 截断过长的名字
-            if len(name) > 10: name = name[:8] + "..."
+            name = self._truncate_game_name(name)
             items.append({
                 'label': f"最近\n{name}",
                 'callback': lambda: self.launch_steam_game(recent_game['appid'])
@@ -179,7 +206,7 @@ class DesktopPet(QWidget):
         fav_game = self.config_manager.get("steam_favorite_game")
         if fav_game:
             name = fav_game.get("name", "Unknown")
-            if len(name) > 10: name = name[:8] + "..."
+            name = self._truncate_game_name(name)
             items.append({
                 'label': f"启动\n{name}",
                 'callback': lambda: self.launch_steam_game(fav_game['appid'])

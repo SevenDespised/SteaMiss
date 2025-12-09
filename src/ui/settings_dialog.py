@@ -1,7 +1,4 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTabWidget, QWidget, QHBoxLayout, QListWidget, QGroupBox, QFormLayout
-from PyQt6.QtCore import Qt
-from src.ui.all_games_window import AllGamesWindow
-import datetime
+from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTabWidget, QWidget, QHBoxLayout, QListWidget
 
 class SettingsDialog(QDialog):
     def __init__(self, config_manager, steam_manager=None, parent=None):
@@ -29,12 +26,7 @@ class SettingsDialog(QDialog):
         self.init_steam_tab()
         self.tabs.addTab(self.steam_tab, "Steam")
 
-        # Tab 4: 游玩记录 (Stats)
-        self.stats_tab = QWidget()
-        self.init_stats_tab()
-        self.tabs.addTab(self.stats_tab, "游玩记录")
-        
-        # Tab 5: 闹钟 (Empty)
+        # Tab 4: 闹钟 (Empty)
         self.tabs.addTab(QWidget(), "闹钟")
         
         layout.addWidget(self.tabs)
@@ -50,88 +42,8 @@ class SettingsDialog(QDialog):
         
         layout.addLayout(btn_layout)
         self.setLayout(layout)
-        
-        # 连接信号以更新统计界面
-        if self.steam_manager:
-            self.steam_manager.on_player_summary.connect(self.update_stats_ui)
-            self.steam_manager.on_games_stats.connect(self.update_stats_ui)
 
-    def init_stats_tab(self):
-        layout = QVBoxLayout()
-        
-        # 1. 个人信息区域
-        self.info_group = QGroupBox("个人信息")
-        info_layout = QFormLayout()
-        self.lbl_name = QLabel("加载中...")
-        self.lbl_level = QLabel("Lv. ?")
-        self.lbl_created = QLabel("?")
-        info_layout.addRow("昵称:", self.lbl_name)
-        info_layout.addRow("等级:", self.lbl_level)
-        info_layout.addRow("注册时间:", self.lbl_created)
-        self.info_group.setLayout(info_layout)
-        layout.addWidget(self.info_group)
-        
-        # 2. 统计概览
-        self.stats_group = QGroupBox("库统计")
-        stats_layout = QFormLayout()
-        self.lbl_game_count = QLabel("0")
-        self.lbl_total_time = QLabel("0 小时")
-        stats_layout.addRow("游戏总数:", self.lbl_game_count)
-        stats_layout.addRow("总游玩时长:", self.lbl_total_time)
-        self.stats_group.setLayout(stats_layout)
-        layout.addWidget(self.stats_group)
-        
-        # 3. 最近两周游玩 (Top 5)
-        layout.addWidget(QLabel("最近两周游玩 (Top 5):"))
-        self.recent_list = QListWidget()
-        self.recent_list.setMaximumHeight(120)
-        layout.addWidget(self.recent_list)
-        
-        # 4. 按钮
-        self.btn_all_games = QPushButton("查看所有库存游戏 & 价值统计")
-        self.btn_all_games.clicked.connect(self.open_all_games_window)
-        layout.addWidget(self.btn_all_games)
-        
-        layout.addStretch()
-        self.stats_tab.setLayout(layout)
-        
-        # 尝试初始化显示
-        self.update_stats_ui()
 
-    def update_stats_ui(self):
-        if not self.steam_manager: return
-        
-        # 更新个人信息
-        if "summary" in self.steam_manager.cache:
-            data = self.steam_manager.cache["summary"]
-            self.lbl_name.setText(data.get("personaname", "Unknown"))
-            self.lbl_level.setText(f"Lv. {data.get('steam_level', '?')}")
-            
-            ts = data.get("timecreated", 0)
-            if ts:
-                dt = datetime.datetime.fromtimestamp(ts)
-                self.lbl_created.setText(dt.strftime("%Y-%m-%d"))
-        
-        # 更新游戏统计
-        if "games" in self.steam_manager.cache:
-            data = self.steam_manager.cache["games"]
-            self.lbl_game_count.setText(str(data.get("count", 0)))
-            
-            total_min = data.get("total_playtime", 0)
-            self.lbl_total_time.setText(f"{int(total_min/60)} 小时")
-            
-            # 更新最近列表
-            self.recent_list.clear()
-            top_2weeks = data.get("top_2weeks", [])
-            for game in top_2weeks:
-                name = game.get("name", "Unknown")
-                mins = game.get("playtime_2weeks", 0)
-                self.recent_list.addItem(f"{name} - {round(mins/60, 1)} 小时")
-
-    def open_all_games_window(self):
-        if not self.steam_manager: return
-        win = AllGamesWindow(self.steam_manager, self)
-        win.show()
 
     def init_hello_tab(self):
         layout = QVBoxLayout()

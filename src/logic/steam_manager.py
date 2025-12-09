@@ -185,14 +185,30 @@ class SteamManager(QObject):
         return results
 
     def _start_worker(self, key, sid, task_type, extra_data=None):
-        # 如果上一个任务还在跑，可以选择等待或强制终止，这里简单处理为忽略新请求
-        if self.worker and self.worker.isRunning():
-            print("Steam worker is busy...")
-            return
+        # 简单的任务队列机制
+        # 如果当前有 worker 在运行，我们不能直接 return，否则并发请求会丢失
+        # 这里我们简单地创建新的 worker 实例来处理并发请求
+        # 注意：这可能会导致多个线程同时运行，对于简单的应用是可以接受的
+        # 更好的做法是实现一个任务队列，但为了保持代码简单，我们允许并发
+        
+        worker = SteamWorker(key, sid, task_type, extra_data)
+        worker.data_ready.connect(self._handle_worker_result)
+        
+        # 我们需要保持对 worker 的引用，防止被垃圾回收
+        # 可以使用一个列表来管理所有活跃的 worker
+        if not hasattr(self, 'active_workers'):
+            self.active_workers = []
+            
+        self.active_workers.append(worker)
+        
+        # 当 worker 完成时，从列表中移除
+        worker.finished.connect(lambda: self._cleanup_worker(worker))
+        
+        worker.start()
 
-        self.worker = SteamWorker(key, sid, task_type, extra_data)
-        self.worker.data_ready.connect(self._handle_worker_result)
-        self.worker.start()
+    def _cleanup_worker(self, worker):
+        if hasattr(self, 'active_workers') and worker in self.active_workers:
+            self.active_workers.remove(worker)
 
     def _handle_worker_result(self, result):
         if result["error"]:

@@ -2488,7 +2488,78 @@
       "rtime_last_played": 1765206849,
       "playtime_disconnected": 0
     },
+    "top_2weeks": [
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_2weeks": 976,
+        "playtime_forever": 976,
+        "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 976,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1765206849,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_2weeks": 56,
+        "playtime_forever": 232,
+        "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 232,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1764250872,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1205520,
+        "name": "Pentiment",
+        "playtime_2weeks": 2,
+        "playtime_forever": 398,
+        "img_icon_url": "fb2423048d6ffa29b01f11e3a32d7b3cd1b8c4cd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 398,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1764169874,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      }
+    ],
     "total_playtime": 164503
   },
-  "prices": {}
+  "summary": {
+    "steamid": "76561198279072437",
+    "communityvisibilitystate": 3,
+    "profilestate": 1,
+    "personaname": "SevenDespised",
+    "profileurl": "https://steamcommunity.com/profiles/76561198279072437/",
+    "avatar": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba.jpg",
+    "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
+    "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
+    "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
+    "lastlogoff": 1765212465,
+    "personastate": 3,
+    "realname": "七鄙",
+    "primaryclanid": "103582791429521408",
+    "timecreated": 1453718318,
+    "personastateflags": 0,
+    "loccountrycode": "CN",
+    "locstatecode": "12",
+    "loccityid": 10400,
+    "steam_level": 21
+  }
 }

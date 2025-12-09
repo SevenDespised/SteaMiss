@@ -142,7 +142,18 @@ class RadialMenu(QWidget):
         
         self.update()
 
+    def mousePressEvent(self, event):
+        # 右键点击直接关闭菜单
+        if event.button() == Qt.MouseButton.RightButton:
+            self.close()
+            return
+        super().mousePressEvent(event)
+
     def mouseReleaseEvent(self, event):
+        # 仅左键释放触发点击
+        if event.button() != Qt.MouseButton.LeftButton:
+            return
+
         if self.hovered_index != -1 and self.items:
             item = self.items[self.hovered_index]
             
