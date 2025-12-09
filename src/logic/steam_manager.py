@@ -75,7 +75,7 @@ class SteamWorker(QThread):
                     all_prices = {}
                     for i in range(0, len(appids), chunk_size):
                         chunk = appids[i:i+chunk_size]
-                        prices = self.client.get_app_details(chunk)
+                        prices = self.client.get_app_price(chunk)
                         if prices:
                             all_prices.update(prices)
                         time.sleep(0.5) # 礼貌性延迟，防止被封 IP
@@ -93,53 +93,50 @@ class SteamWorker(QThread):
             elif self.task_type == "wishlist":
                 # 获取愿望单
                 wishlist_data = self.client.get_wishlist(self.steam_id)
-                if wishlist_data:
-                    discounted_games = []
-                    for appid, details in wishlist_data.items():
-                        # 必须是可购买的
-                        subs = details.get('subs', [])
-                        if not subs: continue
-                        
-                        # 寻找最大折扣
-                        best_sub = None
-                        max_discount = -1
-                        
-                        for sub in subs:
-                            # discount_pct 有时是 null 或 0
-                            discount = sub.get('discount_pct', 0) or 0
-                            if discount > max_discount:
-                                max_discount = discount
-                                best_sub = sub
-                        
-                        # 只要有折扣就加入 (max_discount > 0)
-                        if best_sub and max_discount > 0:
-                            # 价格通常是格式化好的字符串，如 "¥ 38"
-                            price_str = best_sub.get('price', '')
-                            # 封面图
-                            image_url = details.get('capsule', '')
-                            
-                            discounted_games.append({
-                                "appid": appid,
-                                "name": details.get('name', 'Unknown'),
-                                "discount_pct": max_discount,
-                                "price": price_str,
-                                "image": image_url
-                            })
+
+                discounted_games = []
+                for appid, details in wishlist_data.items():
+                    # 必须是可购买的
+                    subs = details.get('subs', [])
+                    if not subs: continue
                     
-                    # 按折扣力度降序排序
-                    discounted_games.sort(key=lambda x: x['discount_pct'], reverse=True)
+                    # 寻找最大折扣
+                    best_sub = None
+                    max_discount = -1
                     
-                    # 取前 10 个
-                    result["data"] = discounted_games[:10]
-                else:
-                    # 如果获取失败或为空，返回空列表而不是报错，避免 UI 异常
-                    result["data"] = []
+                    for sub in subs:
+                        # discount_pct 有时是 null 或 0
+                        discount = sub.get('discount_pct', 0) or 0
+                        if discount > max_discount:
+                            max_discount = discount
+                            best_sub = sub
                     
+                    # 只要有折扣就加入 (max_discount > 0)
+                    if best_sub and max_discount > 0:
+                        # 价格通常是格式化好的字符串，如 "¥ 38"
+                        price_str = best_sub.get('price', '')
+                        # 封面图
+                        image_url = details.get('capsule', '')
+                        
+                        discounted_games.append({
+                            "appid": appid,
+                            "name": details.get('name', 'Unknown'),
+                            "discount_pct": max_discount,
+                            "price": price_str,
+                            "image": image_url
+                        })
+                
+                # 按折扣力度降序排序
+                discounted_games.sort(key=lambda x: x['discount_pct'], reverse=True)
+                
+                # 取前 10 个
+                result["data"] = discounted_games[:10]
+
         except Exception as e:
             result["error"] = str(e)
-            
+            print(f"Worker Error: {e}")
+        
         self.data_ready.emit(result)
-
 
 class SteamManager(QObject):
     """

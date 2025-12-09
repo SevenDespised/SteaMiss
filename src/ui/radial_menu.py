@@ -46,19 +46,21 @@ class RadialMenu(QWidget):
         super().changeEvent(event)
 
     def resizeEvent(self, event):
-        cx = self.width() // 2
-        cy = self.height() // 2
+        # 移除 setMask 以解决边缘锯齿问题
+        # setMask 会导致硬边缘裁剪，无法抗锯齿
+        # cx = self.width() // 2
+        # cy = self.height() // 2
         
-        # 外圆区域
-        outer_rect = QRect(cx - self.radius, cy - self.radius, self.radius * 2, self.radius * 2)
-        outer_region = QRegion(outer_rect, QRegion.RegionType.Ellipse)
+        # # 外圆区域
+        # outer_rect = QRect(cx - self.radius, cy - self.radius, self.radius * 2, self.radius * 2)
+        # outer_region = QRegion(outer_rect, QRegion.RegionType.Ellipse)
         
-        # 内圆区域 (挖空)
-        inner_rect = QRect(cx - self.inner_radius, cy - self.inner_radius, self.inner_radius * 2, self.inner_radius * 2)
-        inner_region = QRegion(inner_rect, QRegion.RegionType.Ellipse)
+        # # 内圆区域 (挖空)
+        # inner_rect = QRect(cx - self.inner_radius, cy - self.inner_radius, self.inner_radius * 2, self.inner_radius * 2)
+        # inner_region = QRegion(inner_rect, QRegion.RegionType.Ellipse)
         
-        # 设置遮罩：外圆减去内圆
-        self.setMask(outer_region.subtracted(inner_region))
+        # # 设置遮罩：外圆减去内圆
+        # self.setMask(outer_region.subtracted(inner_region))
         
         super().resizeEvent(event)
 
@@ -114,7 +116,8 @@ class RadialMenu(QWidget):
             path.closeSubpath()
             
             # 颜色处理
-            color = QColor(255, 255, 255, 220)
+            # 修改为淡蓝色背景
+            color = QColor(220, 240, 255, 230) 
             if i == self.hovered_index:
                 color = QColor(100, 180, 255, 240) # 高亮色
             

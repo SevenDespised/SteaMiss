@@ -43,7 +43,7 @@ class DesktopPet(QWidget):
         
         # 资源加载
         self.image = None 
-        self.load_image("assets/main.jpg") 
+        self.load_image("assets/main.png") 
 
     def init_window(self):
         """初始化窗口设置"""
@@ -61,14 +61,18 @@ class DesktopPet(QWidget):
     def load_image(self, path):
         self.image = QPixmap(path)
         if not self.image.isNull():
-            # 强制缩放到 150x150 (保持纵横比，平滑缩放)
-            target_size = 150
-            self.image = self.image.scaled(
-                target_size, target_size,
-                Qt.AspectRatioMode.KeepAspectRatio,
-                Qt.TransformationMode.SmoothTransformation
-            )
-            self.resize(self.image.size())
+            # 优化：不要直接缩放到窗口大小 (150x150)，这会导致高分屏模糊
+            # 而是缩放到一个较大的尺寸 (例如 500x500)，保留细节
+            # 只有当图片过大时才缩小，避免浪费内存
+            if self.image.width() > 500 or self.image.height() > 500:
+                self.image = self.image.scaled(
+                    500, 500,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation
+                )
+            
+            # 窗口逻辑大小保持 150x150
+            self.resize(150, 150)
             self.update()
 
     # --- 核心循环 [接口] ---
@@ -263,9 +267,21 @@ class DesktopPet(QWidget):
         """绘制事件：如果没有图片，画一个简单的圆形代表宠物"""
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        # 开启平滑图片变换，确保缩放后依然清晰
+        painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
 
         if self.image and not self.image.isNull():
-            painter.drawPixmap(0, 0, self.image)
+            # 将图片绘制到整个窗口区域 (自动缩放)
+            # 保持纵横比居中绘制
+            target_rect = self.rect()
+            
+            # 计算保持比例的绘制区域
+            scaled_size = self.image.size().scaled(target_rect.size(), Qt.AspectRatioMode.KeepAspectRatio)
+            x = (target_rect.width() - scaled_size.width()) // 2
+            y = (target_rect.height() - scaled_size.height()) // 2
+            draw_rect = target_rect.adjusted(x, y, -x, -y)
+            # 实际上直接用 drawPixmap(x, y, w, h, pixmap) 更简单
+            painter.drawPixmap(x, y, scaled_size.width(), scaled_size.height(), self.image)
         else:
             # 默认绘制一个可爱的圆形
             painter.setBrush(QColor(100, 180, 255, 200)) # 蓝色半透明

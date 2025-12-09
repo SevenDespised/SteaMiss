@@ -66,13 +66,15 @@ class AllGamesWindow(QDialog):
                 p_data = prices[str(appid)]
                 if p_data.get("success"):
                     data = p_data.get("data", {})
-                    if data.get("is_free"):
-                        price_str = "免费"
-                    elif "price_overview" in data:
-                        price_val = data["price_overview"].get("final", 0) / 100
-                        price_str = f"¥{price_val:.2f}"
-                        total_price += price_val
-                        price_count += 1
+                    # 确保 data 是字典 (Steam API 有时会返回空列表)
+                    if isinstance(data, dict):
+                        if data.get("is_free"):
+                            price_str = "免费"
+                        elif "price_overview" in data:
+                            price_val = data["price_overview"].get("final", 0) / 100
+                            price_str = f"¥{price_val:.2f}"
+                            total_price += price_val
+                            price_count += 1
             
             # 设置单元格
             # Name
