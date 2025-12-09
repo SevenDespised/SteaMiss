@@ -10,15 +10,24 @@ class SteamClient:
     def __init__(self, api_key):
         self.api_key = api_key
         self.api = None
-        if WebAPI and self.api_key:
-            # WebAPI 初始化
-            self.api = WebAPI(key=self.api_key)
+        # 移除 __init__ 中的 WebAPI 初始化，改为懒加载
+        # 因为 WebAPI(key=...) 会立即发起网络请求获取接口列表，这会阻塞主线程
+
+    def _ensure_api(self):
+        """确保 WebAPI 已初始化"""
+        if self.api is None and WebAPI and self.api_key:
+            try:
+                self.api = WebAPI(key=self.api_key)
+            except Exception as e:
+                print(f"Failed to initialize WebAPI: {e}")
+                # 这里不抛出异常，让后续调用自行处理 None
 
     def get_player_summaries(self, steam_ids):
         """
         获取玩家基本信息 (头像, 昵称, 状态)
         使用 steam.webapi.WebAPI 调用 ISteamUser.GetPlayerSummaries
         """
+        self._ensure_api()
         if not self.api: 
             return []
 
@@ -36,6 +45,7 @@ class SteamClient:
         获取拥有的游戏列表 (包含时长)
         使用 steam.webapi.WebAPI 调用 IPlayerService.GetOwnedGames
         """
+        self._ensure_api()
         if not self.api: 
             return None
 
@@ -44,12 +54,52 @@ class SteamClient:
             response = self.api.IPlayerService.GetOwnedGames(
                 steamid=steam_id,
                 include_appinfo=1,
-                include_played_free_games=0
+                include_played_free_games=0,
+                appids_filter=[],  # 显式传递空列表以满足某些库版本的验证要求
+                include_free_sub=0,
+                language='schinese',
+                include_extended_appinfo=0
             )
             return response.get('response', {})
         except Exception as e:
             print(f"Steam API Error (GetOwnedGames): {e}")
             return None
+
+    def get_steam_level(self, steam_id):
+        """获取 Steam 等级"""
+        self._ensure_api()
+        if not self.api: return 0
+        try:
+            response = self.api.IPlayerService.GetSteamLevel(steamid=steam_id)
+            return response.get('response', {}).get('player_level', 0)
+        except Exception as e:
+            print(f"Steam API Error (GetSteamLevel): {e}")
+            return 0
+
+    def get_app_details(self, app_ids):
+        """
+        获取游戏商店信息 (价格等)
+        注意：这是非官方 API，有严格速率限制，且不能通过 steam 库直接调用
+        """
+        if not app_ids: return {}
+        
+        # 转换为逗号分隔字符串
+        app_ids_str = ",".join(map(str, app_ids))
+        url = "https://store.steampowered.com/api/appdetails"
+        params = {
+            "appids": app_ids_str,
+            "filters": "price_overview",
+            "cc": "cn", # 中国区价格
+            "l": "schinese"
+        }
+        
+        try:
+            response = requests.get(url, params=params, timeout=10)
+            if response.status_code == 200:
+                return response.json()
+        except Exception as e:
+            print(f"Store API Error: {e}")
+        return {}
 
     def get_player_inventory(self, steam_id, app_id=730, context_id=2):
         """

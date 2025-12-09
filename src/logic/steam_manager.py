@@ -1,6 +1,8 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
 from src.api.steam_client import SteamClient
 import time
+import json
+import os
 
 class SteamWorker(QThread):
     """
@@ -8,11 +10,12 @@ class SteamWorker(QThread):
     """
     data_ready = pyqtSignal(dict) # 信号：携带数据字典
 
-    def __init__(self, api_key, steam_id, task_type="summary"):
+    def __init__(self, api_key, steam_id, task_type="summary", extra_data=None):
         super().__init__()
         self.client = SteamClient(api_key)
         self.steam_id = steam_id
         self.task_type = task_type
+        self.extra_data = extra_data # 用于传递额外参数，如 appids
 
     def run(self):
         result = {"type": self.task_type, "data": None, "error": None}
@@ -26,8 +29,13 @@ class SteamWorker(QThread):
             if self.task_type == "summary":
                 # 获取玩家基本信息
                 players = self.client.get_player_summaries(self.steam_id)
+                # 获取等级
+                level = self.client.get_steam_level(self.steam_id)
+                
                 if players:
-                    result["data"] = players[0]
+                    data = players[0]
+                    data['steam_level'] = level
+                    result["data"] = data
             
             elif self.task_type == "games":
                 # 获取游戏列表
@@ -41,13 +49,35 @@ class SteamWorker(QThread):
                     # rtime_last_played 是 Unix 时间戳
                     games_by_recent = sorted(games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
                     
+                    # 3. 最近两周游玩时长前5
+                    games_by_2weeks = sorted(games, key=lambda x: x.get('playtime_2weeks', 0), reverse=True)
+                    top_2weeks = [g for g in games_by_2weeks if g.get('playtime_2weeks', 0) > 0][:5]
+
                     result["data"] = {
                         "count": games_data.get('game_count', 0),
                         "all_games": games, # 保存完整列表用于搜索
                         "top_games": games_by_playtime[:5],
                         "recent_game": games_by_recent[0] if games_by_recent else None,
+                        "top_2weeks": top_2weeks,
                         "total_playtime": sum(g.get('playtime_forever', 0) for g in games)
                     }
+                else:
+                    result["error"] = "Failed to fetch games data (API returned None)"
+
+            elif self.task_type == "store_prices":
+                # 批量获取价格
+                appids = self.extra_data
+                if appids:
+                    # 分批处理，每次 20 个，避免 URL 过长或超时
+                    chunk_size = 20
+                    all_prices = {}
+                    for i in range(0, len(appids), chunk_size):
+                        chunk = appids[i:i+chunk_size]
+                        prices = self.client.get_app_details(chunk)
+                        if prices:
+                            all_prices.update(prices)
+                        time.sleep(0.5) # 礼貌性延迟，防止被封 IP
+                    result["data"] = all_prices
 
             elif self.task_type == "inventory":
                 # 获取库存 (CS2)
@@ -72,6 +102,7 @@ class SteamManager(QObject):
     # 定义一些信号供 UI 连接
     on_player_summary = pyqtSignal(dict)
     on_games_stats = pyqtSignal(dict)
+    on_store_prices = pyqtSignal(dict) # 商店价格信号
     on_error = pyqtSignal(str)
 
     def __init__(self, config_manager):
@@ -79,6 +110,39 @@ class SteamManager(QObject):
         self.config = config_manager
         self.cache = {}
         self.worker = None
+        self.data_file = "config/steam_data.json"
+        
+        # 1. 加载本地数据
+        self.load_local_data()
+        
+        # 2. 如果配置齐全，尝试自动更新
+        key, sid = self._get_credentials()
+        if key and sid:
+            # 延迟一点启动，避免拖慢启动速度
+            # 这里直接调用，因为 Worker 是异步的
+            self.fetch_games_stats()
+            self.fetch_player_summary()
+
+    def load_local_data(self):
+        """加载本地缓存数据"""
+        if os.path.exists(self.data_file):
+            try:
+                with open(self.data_file, 'r', encoding='utf-8') as f:
+                    self.cache = json.load(f)
+                print(f"Loaded local steam data from {self.data_file}")
+            except Exception as e:
+                print(f"Failed to load local steam data: {e}")
+
+    def save_local_data(self):
+        """保存缓存数据到本地"""
+        try:
+            # 确保目录存在
+            os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
+            with open(self.data_file, 'w', encoding='utf-8') as f:
+                json.dump(self.cache, f, ensure_ascii=False, indent=2)
+            print(f"Saved steam data to {self.data_file}")
+        except Exception as e:
+            print(f"Failed to save local steam data: {e}")
 
     def _get_credentials(self):
         return self.config.get("steam_api_key"), self.config.get("steam_id")
@@ -92,6 +156,11 @@ class SteamManager(QObject):
         """异步获取游戏统计"""
         key, sid = self._get_credentials()
         self._start_worker(key, sid, "games")
+
+    def fetch_store_prices(self, appids):
+        """异步获取游戏价格"""
+        key, sid = self._get_credentials()
+        self._start_worker(key, sid, "store_prices", extra_data=appids)
 
     def get_recent_game(self):
         """从缓存中获取最近游玩的游戏"""
@@ -115,19 +184,21 @@ class SteamManager(QObject):
                 results.append(game)
         return results
 
-    def _start_worker(self, key, sid, task_type):
+    def _start_worker(self, key, sid, task_type, extra_data=None):
         # 如果上一个任务还在跑，可以选择等待或强制终止，这里简单处理为忽略新请求
         if self.worker and self.worker.isRunning():
             print("Steam worker is busy...")
             return
 
-        self.worker = SteamWorker(key, sid, task_type)
+        self.worker = SteamWorker(key, sid, task_type, extra_data)
         self.worker.data_ready.connect(self._handle_worker_result)
         self.worker.start()
 
     def _handle_worker_result(self, result):
         if result["error"]:
             self.on_error.emit(result["error"])
+            # 即使出错，如果本地有旧数据，也可以考虑通知 UI 使用旧数据
+            # 但目前的逻辑是 UI 直接查 cache，所以只要 cache 里有旧数据，UI 就能查到
             return
 
         task_type = result["type"]
@@ -139,3 +210,12 @@ class SteamManager(QObject):
         elif task_type == "games":
             self.cache["games"] = data
             self.on_games_stats.emit(data)
+        elif task_type == "store_prices":
+            # 合并价格数据到缓存
+            if "prices" not in self.cache:
+                self.cache["prices"] = {}
+            self.cache["prices"].update(data)
+            self.on_store_prices.emit(data)
+            
+        # 每次更新成功后，保存到本地
+        self.save_local_data()
