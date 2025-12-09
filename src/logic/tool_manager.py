@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
 from src.ui.stats_window import StatsWindow
+from src.ui.discount_window import DiscountWindow
 
 class ToolManager:
     def __init__(self, steam_manager=None):
@@ -34,6 +35,8 @@ class ToolManager:
             new_tool = self.create_alarm_window()
         elif tool_name == "stats":
             new_tool = self.create_stats_window()
+        elif tool_name == "discounts":
+            new_tool = self.create_discount_window()
             
         if new_tool:
             self.active_tools[tool_name] = new_tool
@@ -44,6 +47,11 @@ class ToolManager:
             print("Error: SteamManager not initialized in ToolManager")
             return None
         return StatsWindow(self.steam_manager)
+
+    def create_discount_window(self):
+        if not self.steam_manager:
+            return None
+        return DiscountWindow(self.steam_manager)
 
     def create_alarm_window(self):
         # 示例：简单的闹钟窗口

@@ -1,13 +1,14 @@
 import math
 from PyQt6.QtWidgets import QWidget
-from PyQt6.QtCore import Qt, QPoint, QRectF
-from PyQt6.QtGui import QPainter, QColor, QPen, QPainterPath, QFont, QCursor
+from PyQt6.QtCore import Qt, QPoint, QRectF, QRect, QEvent
+from PyQt6.QtGui import QPainter, QColor, QPen, QPainterPath, QFont, QCursor, QRegion
 
 class RadialMenu(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        # Popup 属性会让窗口在点击外部时自动关闭
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.Popup | Qt.WindowType.NoDropShadowWindowHint)
+        # 使用 Tool 类型而不是 Popup，以便支持点击穿透 (Popup 会强制抓取鼠标)
+        # 配合 changeEvent 里的 ActivationChange 来实现失去焦点自动关闭
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool | Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         
         self.items = []
@@ -33,8 +34,33 @@ class RadialMenu(QWidget):
         top_left = global_pos - QPoint(self.width() // 2, self.height() // 2)
         self.move(top_left)
         self.show()
+        self.activateWindow() # 确保窗口激活，以便后续能检测到失去焦点
         self.hovered_index = -1
         self.update()
+
+    def changeEvent(self, event):
+        """检测窗口激活状态变化，失去焦点时自动关闭"""
+        if event.type() == QEvent.Type.ActivationChange:
+            if not self.isActiveWindow():
+                self.close()
+        super().changeEvent(event)
+
+    def resizeEvent(self, event):
+        cx = self.width() // 2
+        cy = self.height() // 2
+        
+        # 外圆区域
+        outer_rect = QRect(cx - self.radius, cy - self.radius, self.radius * 2, self.radius * 2)
+        outer_region = QRegion(outer_rect, QRegion.RegionType.Ellipse)
+        
+        # 内圆区域 (挖空)
+        inner_rect = QRect(cx - self.inner_radius, cy - self.inner_radius, self.inner_radius * 2, self.inner_radius * 2)
+        inner_region = QRegion(inner_rect, QRegion.RegionType.Ellipse)
+        
+        # 设置遮罩：外圆减去内圆
+        self.setMask(outer_region.subtracted(inner_region))
+        
+        super().resizeEvent(event)
 
     def paintEvent(self, event):
         if not self.items:
@@ -161,7 +187,4 @@ class RadialMenu(QWidget):
             if 'callback' in item:
                 item['callback']()
         else:
-            # 如果点击的是中心区域 (hovered_index == -1)
-            # 我们选择不关闭菜单，防止用户只是松开右键时意外关闭
-            # 用户可以通过点击菜单外部来关闭它 (Popup 属性会自动处理)
             pass

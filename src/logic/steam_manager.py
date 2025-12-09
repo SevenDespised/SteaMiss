@@ -87,6 +87,51 @@ class SteamWorker(QThread):
                         "total_items": len(inv_data['assets']),
                         # 这里可以做更多复杂的价值计算，暂时只返回数量
                     }
+
+            elif self.task_type == "wishlist":
+                # 获取愿望单
+                wishlist_data = self.client.get_wishlist(self.steam_id)
+                if wishlist_data:
+                    discounted_games = []
+                    for appid, details in wishlist_data.items():
+                        # 必须是可购买的
+                        subs = details.get('subs', [])
+                        if not subs: continue
+                        
+                        # 寻找最大折扣
+                        best_sub = None
+                        max_discount = -1
+                        
+                        for sub in subs:
+                            # discount_pct 有时是 null 或 0
+                            discount = sub.get('discount_pct', 0) or 0
+                            if discount > max_discount:
+                                max_discount = discount
+                                best_sub = sub
+                        
+                        # 只要有折扣就加入 (max_discount > 0)
+                        if best_sub and max_discount > 0:
+                            # 价格通常是格式化好的字符串，如 "¥ 38"
+                            price_str = best_sub.get('price', '')
+                            # 封面图
+                            image_url = details.get('capsule', '')
+                            
+                            discounted_games.append({
+                                "appid": appid,
+                                "name": details.get('name', 'Unknown'),
+                                "discount_pct": max_discount,
+                                "price": price_str,
+                                "image": image_url
+                            })
+                    
+                    # 按折扣力度降序排序
+                    discounted_games.sort(key=lambda x: x['discount_pct'], reverse=True)
+                    
+                    # 取前 10 个
+                    result["data"] = discounted_games[:10]
+                else:
+                    # 如果获取失败或为空，返回空列表而不是报错，避免 UI 异常
+                    result["data"] = []
                     
         except Exception as e:
             result["error"] = str(e)
@@ -103,6 +148,7 @@ class SteamManager(QObject):
     on_player_summary = pyqtSignal(dict)
     on_games_stats = pyqtSignal(dict)
     on_store_prices = pyqtSignal(dict) # 商店价格信号
+    on_wishlist_data = pyqtSignal(list) # 愿望单数据信号
     on_error = pyqtSignal(str)
 
     def __init__(self, config_manager):
@@ -161,6 +207,11 @@ class SteamManager(QObject):
         """异步获取游戏价格"""
         key, sid = self._get_credentials()
         self._start_worker(key, sid, "store_prices", extra_data=appids)
+
+    def fetch_wishlist(self):
+        """异步获取愿望单折扣"""
+        key, sid = self._get_credentials()
+        self._start_worker(key, sid, "wishlist")
 
     def get_recent_game(self):
         """从缓存中获取最近游玩的游戏"""
@@ -232,6 +283,9 @@ class SteamManager(QObject):
                 self.cache["prices"] = {}
             self.cache["prices"].update(data)
             self.on_store_prices.emit(data)
+        elif task_type == "wishlist":
+            self.cache["wishlist"] = data
+            self.on_wishlist_data.emit(data)
             
         # 每次更新成功后，保存到本地
         self.save_local_data()

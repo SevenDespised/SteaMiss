@@ -98,10 +98,29 @@ class SteamClient:
             if response.status_code == 200:
                 return response.json()
         except Exception as e:
-            print(f"Store API Error: {e}")
-        return {}
+            print(f"Steam Store API Error: {e}")
+            return {}
+            
+    def get_wishlist(self, steam_id):
+        """
+        获取愿望单数据 (包含价格和折扣信息)
+        URL: https://store.steampowered.com/wishlist/profiles/{steam_id}/wishlistdata/
+        """
+        url = f"https://store.steampowered.com/wishlist/profiles/{steam_id}/wishlistdata/"
+        params = {
+            "p": 0, 
+            "cc": "cn",
+            "l": "schinese"
+        }
+        try:
+            response = requests.get(url, params=params, timeout=10)
+            if response.status_code == 200:
+                return response.json()
+        except Exception as e:
+            print(f"Steam Wishlist Error: {e}")
+            return None
 
-    def get_player_inventory(self, steam_id, app_id=730, context_id=2):
+    def get_player_inventory(self, steam_id, appid, contextid):
         """
         获取玩家库存
         注意：'steam' 库主要封装官方 WebAPI，而官方 WebAPI 的库存接口 (IEconService) 

@@ -189,6 +189,7 @@ class DesktopPet(QWidget):
         items = [
             {'label': '打招呼', 'callback': self.say_hello},
             {'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")},
+            {'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")},
             {'label': '闹钟', 'callback': lambda: self.tool_manager.open_tool("alarm")},
             {'label': open_label, 'callback': self.open_explorer}
         ]
