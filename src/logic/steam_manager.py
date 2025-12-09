@@ -1,0 +1,141 @@
+from PyQt6.QtCore import QObject, QThread, pyqtSignal
+from src.api.steam_client import SteamClient
+import time
+
+class SteamWorker(QThread):
+    """
+    后台工作线程，用于执行耗时的网络请求
+    """
+    data_ready = pyqtSignal(dict) # 信号：携带数据字典
+
+    def __init__(self, api_key, steam_id, task_type="summary"):
+        super().__init__()
+        self.client = SteamClient(api_key)
+        self.steam_id = steam_id
+        self.task_type = task_type
+
+    def run(self):
+        result = {"type": self.task_type, "data": None, "error": None}
+        
+        if not self.client.api_key or not self.steam_id:
+            result["error"] = "Missing API Key or Steam ID"
+            self.data_ready.emit(result)
+            return
+
+        try:
+            if self.task_type == "summary":
+                # 获取玩家基本信息
+                players = self.client.get_player_summaries(self.steam_id)
+                if players:
+                    result["data"] = players[0]
+            
+            elif self.task_type == "games":
+                # 获取游戏列表
+                games_data = self.client.get_owned_games(self.steam_id)
+                if games_data:
+                    games = games_data.get('games', [])
+                    # 1. 按总时长排序 (用于统计)
+                    games_by_playtime = sorted(games, key=lambda x: x.get('playtime_forever', 0), reverse=True)
+                    
+                    # 2. 按最近游玩时间排序 (用于"最近游玩"功能)
+                    # rtime_last_played 是 Unix 时间戳
+                    games_by_recent = sorted(games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
+                    
+                    result["data"] = {
+                        "count": games_data.get('game_count', 0),
+                        "all_games": games, # 保存完整列表用于搜索
+                        "top_games": games_by_playtime[:5],
+                        "recent_game": games_by_recent[0] if games_by_recent else None,
+                        "total_playtime": sum(g.get('playtime_forever', 0) for g in games)
+                    }
+
+            elif self.task_type == "inventory":
+                # 获取库存 (CS2)
+                inv_data = self.client.get_player_inventory(self.steam_id, 730, 2)
+                if inv_data and 'assets' in inv_data:
+                    result["data"] = {
+                        "total_items": len(inv_data['assets']),
+                        # 这里可以做更多复杂的价值计算，暂时只返回数量
+                    }
+                    
+        except Exception as e:
+            result["error"] = str(e)
+            
+        self.data_ready.emit(result)
+
+
+class SteamManager(QObject):
+    """
+    业务逻辑管理器
+    负责协调 UI 和 Worker，管理数据缓存
+    """
+    # 定义一些信号供 UI 连接
+    on_player_summary = pyqtSignal(dict)
+    on_games_stats = pyqtSignal(dict)
+    on_error = pyqtSignal(str)
+
+    def __init__(self, config_manager):
+        super().__init__()
+        self.config = config_manager
+        self.cache = {}
+        self.worker = None
+
+    def _get_credentials(self):
+        return self.config.get("steam_api_key"), self.config.get("steam_id")
+
+    def fetch_player_summary(self):
+        """异步获取玩家信息"""
+        key, sid = self._get_credentials()
+        self._start_worker(key, sid, "summary")
+
+    def fetch_games_stats(self):
+        """异步获取游戏统计"""
+        key, sid = self._get_credentials()
+        self._start_worker(key, sid, "games")
+
+    def get_recent_game(self):
+        """从缓存中获取最近游玩的游戏"""
+        if "games" in self.cache and self.cache["games"].get("recent_game"):
+            return self.cache["games"]["recent_game"]
+        return None
+
+    def search_games(self, keyword):
+        """
+        在缓存的游戏列表中搜索
+        返回匹配的游戏列表 [{"name": "xxx", "appid": 123}, ...]
+        """
+        if "games" not in self.cache or not self.cache["games"].get("all_games"):
+            return []
+        
+        keyword = keyword.lower()
+        results = []
+        for game in self.cache["games"]["all_games"]:
+            name = game.get("name", "").lower()
+            if keyword in name:
+                results.append(game)
+        return results
+
+    def _start_worker(self, key, sid, task_type):
+        # 如果上一个任务还在跑，可以选择等待或强制终止，这里简单处理为忽略新请求
+        if self.worker and self.worker.isRunning():
+            print("Steam worker is busy...")
+            return
+
+        self.worker = SteamWorker(key, sid, task_type)
+        self.worker.data_ready.connect(self._handle_worker_result)
+        self.worker.start()
+
+    def _handle_worker_result(self, result):
+        if result["error"]:
+            self.on_error.emit(result["error"])
+            return
+
+        task_type = result["type"]
+        data = result["data"]
+
+        if task_type == "summary":
+            self.cache["summary"] = data
+            self.on_player_summary.emit(data)
+        elif task_type == "games":
+            self.cache["games"] = data
+            self.on_games_stats.emit(data)
