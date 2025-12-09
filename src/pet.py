@@ -186,21 +186,19 @@ class DesktopPet(QWidget):
         open_label = f"打开\n{display_path}"
 
         # --- 轮盘菜单实现 ---
-        # 1. 收集所有可能的菜单项
-        all_items = []
+        # 1. 基础互动
+        items = [
+            {'label': '打招呼', 'callback': self.say_hello},
+            {'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")},
+            {'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")},
+        ]
         
-        # 基础互动
-        all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': self.say_hello})
-        all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
-        all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
-        
-        # Steam 游戏扩展
+        # 2. Steam 游戏扩展
         recent_game = self.steam_manager.get_recent_game()
         if recent_game:
             name = recent_game.get("name", "Unknown")
             name = self._truncate_game_name(name)
-            all_items.append({
-                'key': 'recent_game',
+            items.append({
                 'label': f"最近\n{name}",
                 'callback': lambda: self.launch_steam_game(recent_game['appid'])
             })
@@ -209,31 +207,20 @@ class DesktopPet(QWidget):
         if fav_game:
             name = fav_game.get("name", "Unknown")
             name = self._truncate_game_name(name)
-            all_items.append({
-                'key': 'favorite_game',
+            items.append({
                 'label': f"启动\n{name}",
                 'callback': lambda: self.launch_steam_game(fav_game['appid'])
             })
 
-        # 系统功能
-        all_items.append({'key': 'explorer', 'label': open_label, 'callback': self.open_explorer})
-        all_items.append({'key': 'quit', 'label': '退出', 'callback': QApplication.instance().quit})
+        # 3. 系统功能
+        items.append({'label': open_label, 'callback': self.open_explorer})
+        items.append({'label': '退出', 'callback': QApplication.instance().quit})
         
-        # 2. 按照指定顺序重排
-        # 顺序: 启动游戏(recent_game)、打招呼(say_hello)、特惠信息(discounts)、退出(quit)、
-        #       游玩记录(stats)、打开文件路径(explorer)、启动最爱(favorite_game)
-        order_list = ['recent_game', 'say_hello', 'discounts', 'quit', 'stats', 'explorer', 'favorite_game']
-        
-        sorted_items = []
-        # 创建一个查找字典以便快速访问
-        items_map = {item['key']: item for item in all_items}
-        
-        for key in order_list:
-            if key in items_map:
-                sorted_items.append(items_map[key])
-        
-        self.radial_menu.set_items(sorted_items)
+        self.radial_menu.set_items(items)
         self.radial_menu.show_at(position)
+
+        # 重排item
+        target_order = []
 
     # --- 功能实现区 ---
     def say_hello(self):
