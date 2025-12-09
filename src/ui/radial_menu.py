@@ -75,10 +75,17 @@ class RadialMenu(QWidget):
         
         angle_step = 360 / count
         
+        # 计算起始角度偏移，使菜单关于垂直轴对称
+        # 默认0度在3点钟方向。我们希望第一个扇区(index 0)位于正上方(270度)
+        # 并且扇区中心对准270度。
+        # 扇区范围是 angle_step。所以起始边应在 270 - angle_step/2
+        rotation_offset = 270 - angle_step / 2
+        
         # 绘制扇形
         for i, item in enumerate(self.items):
             # 计算角度 (Qt 0度是3点钟方向，逆时针旋转)
-            start_angle = i * angle_step
+            # 加上偏移量
+            start_angle = i * angle_step + rotation_offset
             
             path = QPainterPath()
             
@@ -101,16 +108,56 @@ class RadialMenu(QWidget):
             # 3. 画外圆弧 (注意 arcTo 参数是矩形和角度)
             rect_outer = QRectF(center.x() - self.radius, center.y() - self.radius, self.radius * 2, self.radius * 2)
             
-            current_start = -start_angle
-            current_sweep = -angle_step
+            # Qt 的 arcTo 使用的是 (startAngle, sweepLength)
+            # 这里的角度是逆时针为正，0度在3点钟
+            # 我们计算出的 start_angle 是数学角度（也是逆时针，0度在3点钟）
+            # 但是 QPainterPath.arcTo 的角度参数也是一样的定义
+            # 唯一要注意的是，我们之前的代码用了 -start_angle，可能是为了顺时针排列？
+            # 让我们统一使用顺时针排列 item，即 index 0 在 12点，index 1 在 1点...
+            # 顺时针意味着角度减小。
+            # 所以 item i 的中心角度应该是 270 - i * angle_step
+            # 起始角度应该是 270 - i * angle_step + angle_step/2
+            # 结束角度应该是 270 - i * angle_step - angle_step/2
+            # 让我们重新定义逻辑：
+            
+            # 采用顺时针布局
+            # Item 0 中心: 270度
+            # Item 0 范围: [270 + step/2, 270 - step/2]
+            # Item i 中心: 270 - i * step
+            # Item i 起始(逆时针方向的边缘): 270 - i * step + step/2
+            # Item i 结束(逆时针方向的边缘): 270 - i * step - step/2
+            # Sweep: -step (顺时针扫过)
+            
+            item_center_angle = 270 - i * angle_step
+            arc_start_angle = item_center_angle + angle_step / 2
+            arc_sweep_angle = -angle_step
+            
+            # 重新计算 p1, p2 基于 arc_start_angle
+            p1 = center + QPoint(
+                int(self.inner_radius * math.cos(math.radians(arc_start_angle))),
+                int(self.inner_radius * math.sin(math.radians(arc_start_angle)))
+            )
+            
+            p2 = center + QPoint(
+                int(self.radius * math.cos(math.radians(arc_start_angle))),
+                int(self.radius * math.sin(math.radians(arc_start_angle)))
+            )
             
             path = QPainterPath()
-            path.arcMoveTo(rect_outer, current_start)
-            path.arcTo(rect_outer, current_start, current_sweep)
+            path.moveTo(p1)
+            path.lineTo(p2)
+            
+            path.arcTo(rect_outer, arc_start_angle, arc_sweep_angle)
             
             rect_inner = QRectF(center.x() - self.inner_radius, center.y() - self.inner_radius, self.inner_radius * 2, self.inner_radius * 2)
-            # 内圆回连 (反向)
-            path.arcTo(rect_inner, current_start + current_sweep, -current_sweep)
+            # 内圆回连 (反向扫过，即 +angle_step，但因为是回连，是从结束点画到起始点)
+            # arcTo 会自动连线到圆弧起点
+            # 我们现在的点在 外圆结束点。
+            # 我们需要画内圆弧，从 结束角度 到 起始角度。
+            # 内圆弧起始角度: arc_start_angle + arc_sweep_angle (即结束角度)
+            # 内圆弧扫过角度: -arc_sweep_angle (即 +angle_step)
+            path.arcTo(rect_inner, arc_start_angle + arc_sweep_angle, -arc_sweep_angle)
+            
             path.closeSubpath()
             
             # 颜色处理
@@ -123,16 +170,12 @@ class RadialMenu(QWidget):
             painter.drawPath(path)
             
             # 绘制文字
-            mid_angle = start_angle + angle_step / 2
+            # 文字位置在扇形中心
             text_radius = (self.radius + self.inner_radius) / 2
-            
-            # 修正：使用正角度计算文字位置
-            # 在屏幕坐标系(Y向下)中，math.sin(正角度) 是正值(向下)，对应顺时针旋转
-            # 这与我们的扇形绘制逻辑 (0->90 对应 Right->Bottom) 一致
-            rad = math.radians(mid_angle) 
+            rad = math.radians(item_center_angle) 
             
             text_x = center.x() + text_radius * math.cos(rad)
-            text_y = center.y() + text_radius * math.sin(rad)
+            text_y = center.y() + text_radius * math.sin(rad) # Y轴向下，sin正值向下，符合逻辑
             
             painter.setPen(QColor(0, 0, 0))
             font = QFont()
@@ -143,6 +186,11 @@ class RadialMenu(QWidget):
             text_rect = QRectF(text_x - 40, text_y - 25, 80, 50)
             painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, item['label'])
 
+    def leaveEvent(self, event):
+        self.hovered_index = -1
+        self.update()
+        super().leaveEvent(event)
+
     def mouseMoveEvent(self, event):
         center = QPoint(self.width() // 2, self.height() // 2)
         pos = event.pos() - center
@@ -151,20 +199,48 @@ class RadialMenu(QWidget):
         if dist < self.inner_radius or dist > self.radius:
             self.hovered_index = -1
         else:
-            # 计算角度
+            # 计算角度 (0-360, 0在3点钟, 逆时针增加)
             angle = math.degrees(math.atan2(pos.y(), pos.x()))
             if angle < 0:
                 angle += 360
             
-            mouse_angle = math.degrees(math.atan2(pos.y(), pos.x()))
-            if mouse_angle < 0:
-                mouse_angle += 360
+            # 映射回 index
+            # 我们使用的逻辑是: Item i Center = 270 - i * step
+            # Item i Range = [270 - i*step - step/2, 270 - i*step + step/2]
+            # 注意角度循环 0-360
+            
+            # 为了简化计算，我们将鼠标角度和 Item 0 中心对齐
+            # Item 0 中心是 270。
+            # 相对角度 = 270 - angle
+            # 这样 Item 0 就在 0 度附近。
+            # index = round(relative_angle / step)
+            
+            # 处理 270 - angle 的周期性
+            # 例如 angle = 275 (Item 0 范围内), 270 - 275 = -5
+            # angle = 265 (Item 0 范围内), 270 - 265 = 5
+            # angle = 0 (3点钟), 270 - 0 = 270.
+            
             count = len(self.items)
             if count > 0:
                 step = 360 / count
-                index = int(mouse_angle / step)
+                
+                # 将角度转换到以 270 为起点的顺时针坐标系
+                # 270 -> 0
+                # 260 -> 10
+                # 280 -> -10 (350)
+                
+                # 公式: (270 - angle + 360 + step/2) % 360
+                # 加上 step/2 是为了让 index 从 0 开始而不是从 -0.5 开始
+                # 比如 Item 0 范围是 [-step/2, step/2]
+                # 加上 step/2 后范围是 [0, step] -> int(...) -> 0
+                
+                relative_angle = (270 - angle + 360 + step / 2) % 360
+                index = int(relative_angle / step)
+                
                 if 0 <= index < count:
                     self.hovered_index = index
+                else:
+                    self.hovered_index = -1 # Should not happen if math is right
         
         self.update()
 

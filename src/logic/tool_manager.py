@@ -31,8 +31,6 @@ class ToolManager:
         if tool_name == "memo":
             # new_tool = self.create_memo_window()
             pass # 已移除
-        elif tool_name == "alarm":
-            new_tool = self.create_alarm_window()
         elif tool_name == "stats":
             new_tool = self.create_stats_window()
         elif tool_name == "discounts":
@@ -52,12 +50,6 @@ class ToolManager:
         if not self.steam_manager:
             return None
         return DiscountWindow(self.steam_manager)
-
-    def create_alarm_window(self):
-        # 示例：简单的闹钟窗口
-        w = QWidget()
-        w.setWindowTitle("闹钟")
-        w.resize(200, 100)
         layout = QVBoxLayout()
         layout.addWidget(QLabel("这是一个闹钟示例"))
         w.setLayout(layout)

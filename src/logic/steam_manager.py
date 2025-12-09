@@ -36,6 +36,8 @@ class SteamWorker(QThread):
                     data = players[0]
                     data['steam_level'] = level
                     result["data"] = data
+                else:
+                    result["error"] = "Failed to fetch player summary"
             
             elif self.task_type == "games":
                 # 获取游戏列表
@@ -270,6 +272,9 @@ class SteamManager(QObject):
 
         task_type = result["type"]
         data = result["data"]
+        
+        if data is None:
+            return
 
         if task_type == "summary":
             self.cache["summary"] = data
