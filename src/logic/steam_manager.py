@@ -218,6 +218,20 @@ class SteamManager(QObject):
             return self.cache["games"]["recent_game"]
         return None
 
+    def get_recent_games(self, limit=3):
+        """
+        获取最近游玩的游戏列表 (Top N)
+        如果不足 N 个，则用其他游戏填充 (通过排序自动实现)
+        """
+        if "games" not in self.cache or not self.cache["games"].get("all_games"):
+            return []
+        
+        all_games = self.cache["games"]["all_games"]
+        # 按 rtime_last_played 降序
+        sorted_games = sorted(all_games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
+        
+        return sorted_games[:limit]
+
     def search_games(self, keyword):
         """
         在缓存的游戏列表中搜索

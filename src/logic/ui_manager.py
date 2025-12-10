@@ -71,14 +71,30 @@ class UIManager:
         all_items.append(self._build_timer_item())
 
         # 3. Steam 动态项
-        recent_game = self.steam_manager.get_recent_game()
-        if recent_game:
-            name = self._truncate_text(recent_game.get("name", "Unknown"))
-            all_items.append({
+        recent_games = self.steam_manager.get_recent_games(3)
+        if recent_games:
+            top1 = recent_games[0]
+            name = self._truncate_text(top1.get("name", "Unknown"))
+            
+            item = {
                 'key': 'launch_recent',
                 'label': f"最近\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=recent_game['appid'])
-            })
+                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
+            }
+            
+            # 如果有更多最近游戏，添加为子选项
+            if len(recent_games) > 1:
+                sub_items = []
+                for game in recent_games[1:]:
+                    sub_name = self._truncate_text(game.get("name", "Unknown"))
+                    # 使用默认参数捕获循环变量
+                    sub_items.append({
+                        'label': sub_name,
+                        'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
+                    })
+                item['sub_items'] = sub_items
+                
+            all_items.append(item)
 
         fav_game = self.config_manager.get("steam_favorite_game")
         if fav_game:
