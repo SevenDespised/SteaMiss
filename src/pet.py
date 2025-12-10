@@ -10,6 +10,7 @@ from src.logic.tool_manager import ToolManager
 from src.logic.config_manager import ConfigManager
 from src.logic.steam_manager import SteamManager
 from src.logic.ui_manager import UIManager
+from src.logic.resource_manager import ResourceManager
 
 class DesktopPet(QWidget):
     def __init__(self):
@@ -26,8 +27,10 @@ class DesktopPet(QWidget):
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.steam_manager = SteamManager(self.config_manager)
-        # ToolManager 需要 SteamManager 和 ConfigManager
         self.tool_manager = ToolManager(self.steam_manager, self.config_manager)
+        
+        # 初始化资源管理器 (一次性加载所有图片)
+        self.resource_manager = ResourceManager()
         
         # 初始化 UI 管理器
         self.ui_manager = UIManager(self.tool_manager, self.steam_manager, self.config_manager)
@@ -36,15 +39,15 @@ class DesktopPet(QWidget):
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle" # 当前行为状态
         self.frame_index = 0
+        self.image = None
+        
+        # 初始刷新
+        self.update_animation()
         
         # 这是一个“主循环”计时器，它驱动宠物的所有行为和动画
         self.timer = QTimer()
         self.timer.timeout.connect(self.game_loop)
         self.timer.start(100) # 100ms = 10fps (逻辑帧率)
-        
-        # 资源加载
-        self.image = None 
-        self.load_image("assets/main.png") 
 
     def init_window(self):
         """初始化窗口设置"""
@@ -59,36 +62,24 @@ class DesktopPet(QWidget):
         y = (screen.height() - self.height()) // 2
         self.move(x, y)
 
-    def load_image(self, path):
-        self.image = QPixmap(path)
-        if not self.image.isNull():
-            # 优化：不要直接缩放到窗口大小 (150x150)，这会导致高分屏模糊
-            # 而是缩放到一个较大的尺寸 (例如 500x500)，保留细节
-            # 只有当图片过大时才缩小，避免浪费内存
-            if self.image.width() > 500 or self.image.height() > 500:
-                self.image = self.image.scaled(
-                    500, 500,
-                    Qt.AspectRatioMode.KeepAspectRatio,
-                    Qt.TransformationMode.SmoothTransformation
-                )
-            
-            # 窗口逻辑大小保持 150x150
-            self.resize(150, 150)
-            self.update()
-
     # --- 核心循环 [接口] ---
     def game_loop(self):
         """
         主循环：每一帧都会执行
         这里将 逻辑(Brain) 和 渲染(View) 分离
         """
-        # 1. 询问 BehaviorManager 下一步做什么
-        new_state = self.behavior_manager.update(self.is_dragging)
-        
-        # 如果状态改变，重置帧索引
-        if new_state != self.current_state:
-            self.current_state = new_state
-            self.frame_index = 0
+        # 1. 如果正在交互（比如悬停在菜单上），暂停 AI 思考
+        # 这样 AI 不会突然把状态切回 idle
+        if self.current_state == "point":
+            pass 
+        else:
+            # 询问 BehaviorManager 下一步做什么
+            new_state = self.behavior_manager.update(self.is_dragging)
+            
+            # 如果状态改变，重置帧索引
+            if new_state != self.current_state:
+                self.current_state = new_state
+                self.frame_index = 0
             
         # 2. 决定怎么显示 (动画帧)
         self.update_animation()
@@ -98,11 +89,15 @@ class DesktopPet(QWidget):
         [接口] 渲染层
         根据 current_state 更新图片帧
         """
-        # 询问 BehaviorManager 下一帧是第几帧
-        self.frame_index = self.behavior_manager.get_next_frame(self.current_state, self.frame_index)
+        # 1. 如果不是静态交互状态(如point)，则让帧数前进
+        if self.current_state != "point":
+            self.frame_index = self.behavior_manager.get_next_frame(self.current_state, self.frame_index)
         
-        # self.image = self.animations[self.current_state][self.frame_index]
-        self.update() # 触发 paintEvent 重绘
+        # 2. 向仓库要图片 (这一步极快，因为是内存读取)
+        self.image = self.resource_manager.get_frame(self.current_state, self.frame_index)
+        
+        # 3. 重绘
+        self.update()
 
     # --- 交互事件 [接口] ---
     def mousePressEvent(self, event):
@@ -156,15 +151,17 @@ class DesktopPet(QWidget):
         index: 悬停的菜单项索引，-1 表示无悬停
         """
         if index == -1:
-            self.load_image("assets/main.png")
+            # 鼠标移开，恢复 AI 控制
+            self.current_state = "idle"
+            self.frame_index = 0
         else:
-            # 尝试加载对应的 point 图片
-            path = f"assets/point{index}.png"
-            if os.path.exists(path):
-                self.load_image(path)
-            else:
-                # 如果对应图片不存在，回退到默认图片
-                self.load_image("assets/main.png")
+            # 鼠标悬停，强制切换到 point 状态
+            # 这里 index 直接对应 point 图片的索引 (方向)
+            self.current_state = "point"
+            self.frame_index = index
+            
+        # 立即刷新一帧，保证响应速度
+        self.update_animation()
 
     # --- 绘图 ---
     def paintEvent(self, event):
