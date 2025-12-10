@@ -1,6 +1,7 @@
 import os
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
+from src.utils.path_utils import resource_path
 
 class ResourceManager:
     def __init__(self):
@@ -14,13 +15,13 @@ class ResourceManager:
     def _load_all_resources(self):
         """加载并缓存所有图片资源"""
         # 1. 加载默认图片
-        self.default_image = self._load_processed_image("assets/main.png")
+        self.default_image = self._load_processed_image(resource_path("assets", "main.png"))
         
         # 2. 加载交互图片 (用于环形菜单悬停)
         # 假设 point0.png 到 point7.png 代表8个方向
         self.animations["point"] = []
-        for i in range(8): # 假设有8个方向
-            img = self._load_processed_image(f"assets/point{i}.png")
+        for i in range(8):  # 假设有8个方向
+            img = self._load_processed_image(resource_path("assets", f"point{i}.png"))
             # 如果某个方向没图，可以用默认图顶替，或者留空
             if img:
                 self.animations["point"].append(img)
@@ -29,7 +30,7 @@ class ResourceManager:
                 self.animations["point"].append(self.default_image)
 
         # 3. 加载其他状态 (idle, walk...)
-        # self._load_animation_group("idle", "assets/idle")
+        # self._load_animation_group("idle", resource_path("assets", "idle"))
 
     def _load_animation_group(self, state_name, folder_path):
         """加载一个文件夹下的所有序列帧"""
@@ -49,6 +50,7 @@ class ResourceManager:
 
     def _load_processed_image(self, path):
         """加载单张图片并进行预处理（如缩放）"""
+        path = str(path)
         if not os.path.exists(path):
             return None
             

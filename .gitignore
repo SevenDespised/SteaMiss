@@ -7,6 +7,10 @@ venv/
 # Configuration (Secrets)
 config/settings.json
 
+# Build files
+build/
+dist/
+
 # Test file
 test.py
 

@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QStyle
 from PyQt6.QtGui import QIcon, QAction
+from src.utils.path_utils import resource_path
 from src.pet import DesktopPet
 from src.ui.settings_dialog import SettingsDialog
 
@@ -29,7 +30,7 @@ class AppManager:
         self.tray_icon = QSystemTrayIcon(self.app)
         
         # 设置图标
-        icon = QIcon("assets/icon.png")
+        icon = QIcon(str(resource_path("assets", "icon.png")))
         if icon.isNull():
             icon = self.app.style().standardIcon(QStyle.StandardPixmap.SP_ComputerIcon)
         self.tray_icon.setIcon(icon)

@@ -1,14 +1,15 @@
 import os
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
+from src.utils.path_utils import resource_path
 
 
 class TimerDisplay:
     """负责计时器的渲染：加载背景和数字资源，按给定时间绘制。"""
 
     def __init__(self, digits_dir=None, clock_path=None, target_height=60):
-        self.digits_dir = digits_dir or os.path.join("assets", "digits")
-        self.clock_path = clock_path or os.path.join("assets", "clock.png")
+        self.digits_dir = digits_dir or resource_path("assets", "digits")
+        self.clock_path = clock_path or resource_path("assets", "clock.png")
         self.target_height = target_height  # 作为背景缩放高度，且无背景时作为默认数字高度
         self.digits_raw = {}
         self.colon_on_raw = None
@@ -19,6 +20,7 @@ class TimerDisplay:
     def _load_pixmap(self, path):
         if not os.path.exists(path):
             return None
+        path = str(path)
         pix = QPixmap(path)
         if pix.isNull():
             return None
@@ -37,7 +39,8 @@ class TimerDisplay:
         self.colon_off_raw = self._load_pixmap(colon_off_path)
 
         if os.path.exists(self.clock_path):
-            bg = QPixmap(self.clock_path)
+            path = str(self.clock_path)
+            bg = QPixmap(path)
             if not bg.isNull():
                 bg = bg.scaledToHeight(int(self.target_height), Qt.TransformationMode.SmoothTransformation)
                 self.clock_bg = bg
