@@ -6,7 +6,7 @@ from PyQt6.QtCore import Qt
 class TimerDisplay:
     """负责计时器的渲染：加载背景和数字资源，按给定时间绘制。"""
 
-    def __init__(self, digits_dir=None, clock_path=None, target_height=26):
+    def __init__(self, digits_dir=None, clock_path=None, target_height=24):
         self.digits_dir = digits_dir or os.path.join("assets", "digits")
         self.clock_path = clock_path or os.path.join("assets", "clock.png")
         self.target_height = target_height
@@ -42,7 +42,7 @@ class TimerDisplay:
             bg = QPixmap(self.clock_path)
             if not bg.isNull():
                 # 背景高度略大于数字，保证留边
-                target_h = int(self.target_height * 1.8)
+                target_h = int(self.target_height * 2.4)
                 bg = bg.scaledToHeight(target_h, Qt.TransformationMode.SmoothTransformation)
                 self.clock_bg = bg
 

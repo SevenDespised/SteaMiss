@@ -12,7 +12,7 @@ from src.logic.steam_manager import SteamManager
 from src.logic.ui_manager import UIManager
 from src.logic.resource_manager import ResourceManager
 from src.logic.timer_manager import TimerManager
-from src.logic.timer_display import TimerDisplay
+from src.ui.timer_display import TimerDisplay
 
 class DesktopPet(QWidget):
     def __init__(self):
