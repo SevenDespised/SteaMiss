@@ -4,16 +4,20 @@ from src.ui.discount_window import DiscountWindow
 import os
 
 class ToolManager:
-    def __init__(self, steam_manager=None, config_manager=None):
+    def __init__(self, steam_manager=None, config_manager=None, timer_manager=None):
         self.active_tools = {}
         self.steam_manager = steam_manager
         self.config_manager = config_manager
+        self.timer_manager = timer_manager
 
     def set_steam_manager(self, steam_manager):
         self.steam_manager = steam_manager
 
     def set_config_manager(self, config_manager):
         self.config_manager = config_manager
+
+    def set_timer_manager(self, timer_manager):
+        self.timer_manager = timer_manager
 
     def execute_action(self, action_key, **kwargs):
         """
@@ -29,6 +33,8 @@ class ToolManager:
             appid = kwargs.get("appid")
             if appid:
                 self.action_launch_steam_game(appid)
+        elif action_key == "toggle_timer":
+            self.action_toggle_timer()
 
     def action_say_hello(self):
         if not self.config_manager: return
@@ -49,6 +55,14 @@ class ToolManager:
             os.startfile(f"steam://run/{appid}")
         except Exception as e:
             print(f"Failed to launch game {appid}: {e}")
+
+    def action_toggle_timer(self):
+        if not self.timer_manager:
+            print("TimerManager not configured")
+            return
+        running = self.timer_manager.toggle()
+        state = "START" if running else "STOP"
+        print(f"Timer state: {state}")
 
     def open_tool(self, tool_name):
         """

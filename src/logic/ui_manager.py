@@ -43,7 +43,7 @@ class UIManager:
         # 定义排序顺序
         order = [
             "launch_recent", "say_hello", "discounts", 
-            "exit", "stats", "open_path", "launch_favorite"
+            "timer", "stats", "open_path", "launch_favorite"
         ]
         
         all_items = []
@@ -58,7 +58,8 @@ class UIManager:
         all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': lambda: self.tool_manager.execute_action("say_hello")})
         all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
         all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
-        all_items.append({'key': 'exit', 'label': '退出', 'callback': lambda: self.tool_manager.execute_action("exit")})
+        # 退出替换为计时器
+        all_items.append(self._build_timer_item())
 
         # 3. Steam 动态项
         recent_game = self.steam_manager.get_recent_game()
@@ -87,6 +88,18 @@ class UIManager:
                 sorted_items.append(items_map[key])
                 
         return sorted_items
+
+    def _build_timer_item(self):
+        """根据计时状态构造菜单项。"""
+        label = "开始\n计时"
+        if getattr(self.tool_manager, "timer_manager", None):
+            if self.tool_manager.timer_manager.is_running():
+                label = "结束\n计时"
+        return {
+            'key': 'timer',
+            'label': label,
+            'callback': lambda: self.tool_manager.execute_action("toggle_timer")
+        }
 
     def _truncate_text(self, text, max_len=8):
         """文本截断工具"""

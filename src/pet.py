@@ -11,6 +11,8 @@ from src.logic.config_manager import ConfigManager
 from src.logic.steam_manager import SteamManager
 from src.logic.ui_manager import UIManager
 from src.logic.resource_manager import ResourceManager
+from src.logic.timer_manager import TimerManager
+from src.logic.timer_display import TimerDisplay
 
 class DesktopPet(QWidget):
     def __init__(self):
@@ -27,10 +29,13 @@ class DesktopPet(QWidget):
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.steam_manager = SteamManager(self.config_manager)
-        self.tool_manager = ToolManager(self.steam_manager, self.config_manager)
+        self.timer_manager = TimerManager()
+        self.tool_manager = ToolManager(self.steam_manager, self.config_manager, self.timer_manager)
         
         # 初始化资源管理器 (一次性加载所有图片)
         self.resource_manager = ResourceManager()
+        # 初始化计时器渲染
+        self.timer_display = TimerDisplay()
         
         # 初始化 UI 管理器
         self.ui_manager = UIManager(self.tool_manager, self.steam_manager, self.config_manager)
@@ -201,3 +206,26 @@ class DesktopPet(QWidget):
             # 画嘴巴
             painter.setPen(QColor(0, 0, 0))
             painter.drawArc(50, 80, 50, 30, 0, -180 * 16)
+
+        # 绘制计时器（在宠物下方）
+        self._paint_timer(painter)
+
+    def _paint_timer(self, painter):
+        if not hasattr(self, "timer_display"):
+            return
+        tm = self.timer_manager if hasattr(self, "timer_manager") else None
+        if not tm:
+            return
+        elapsed = tm.get_elapsed_seconds()
+        running = tm.is_running()
+        # 仅在运行或已有耗时时显示
+        if not running and elapsed <= 0:
+            return
+        h, m, s = tm.get_display_time()
+
+        # 将计时器放在窗口底部居中
+        margin = 5
+        w_draw, h_draw = self.timer_display.measure(h, m, s, show_on=running)
+        y = self.height() - h_draw - margin
+        x = (self.width() - w_draw) // 2
+        self.timer_display.draw(painter, x, y, h, m, s, show_on=running)

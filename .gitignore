@@ -7,6 +7,9 @@ venv/
 # Configuration (Secrets)
 config/settings.json
 
+# Test file
+test.py
+
 # IDE
 .vscode/
 .idea/
