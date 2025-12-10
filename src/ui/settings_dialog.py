@@ -56,10 +56,42 @@ class SettingsDialog(QDialog):
 
     def init_func_tab(self):
         layout = QVBoxLayout()
-        layout.addWidget(QLabel("默认打开路径:"))
-        self.path_input = QLineEdit()
-        self.path_input.setText(self.config_manager.get("explorer_path", "C:/"))
-        layout.addWidget(self.path_input)
+        
+        # 路径设置
+        layout.addWidget(QLabel("--- 快捷路径设置 ---"))
+        
+        # 读取配置，默认为3个C:/
+        paths = self.config_manager.get("explorer_paths", ["C:/", "C:/", "C:/"])
+        aliases = self.config_manager.get("explorer_path_aliases", ["", "", ""])
+        
+        # 确保 aliases 长度足够
+        while len(aliases) < 3:
+            aliases.append("")
+            
+        self.path_inputs = []
+        self.alias_inputs = []
+        labels = ["主路径 (Top 1)", "副路径 1 (Top 2)", "副路径 2 (Top 3)"]
+        
+        for i in range(3):
+            layout.addWidget(QLabel(f"{labels[i]}:"))
+            
+            row_layout = QHBoxLayout()
+            
+            path_inp = QLineEdit()
+            path_inp.setPlaceholderText("路径 (例如 C:/)")
+            path_inp.setText(paths[i])
+            self.path_inputs.append(path_inp)
+            
+            alias_inp = QLineEdit()
+            alias_inp.setPlaceholderText("显示名称 (可选)")
+            alias_inp.setText(aliases[i])
+            self.alias_inputs.append(alias_inp)
+            
+            row_layout.addWidget(path_inp, 2)
+            row_layout.addWidget(alias_inp, 1)
+            
+            layout.addLayout(row_layout)
+            
         layout.addStretch()
         self.func_tab.setLayout(layout)
 
@@ -90,11 +122,6 @@ class SettingsDialog(QDialog):
         # 兼容旧配置：如果列表全空，且有旧的 favorite，则填入第一个
         if not isinstance(self.quick_launch_games, list):
             self.quick_launch_games = [None, None, None]
-            
-        if all(x is None for x in self.quick_launch_games):
-            old_fav = self.config_manager.get("steam_favorite_game")
-            if old_fav:
-                self.quick_launch_games[0] = old_fav
 
         # 确保长度为3
         while len(self.quick_launch_games) < 3:
@@ -217,9 +244,12 @@ class SettingsDialog(QDialog):
         text = self.hello_input.text()
         self.config_manager.set("say_hello_content", text)
         
-        # Save Explorer Path
-        path = self.path_input.text()
-        self.config_manager.set("explorer_path", path)
+        # Save Explorer Paths
+        paths = [inp.text() for inp in self.path_inputs]
+        self.config_manager.set("explorer_paths", paths)
+        
+        aliases = [inp.text() for inp in self.alias_inputs]
+        self.config_manager.set("explorer_path_aliases", aliases)
         
         # Save Steam Config
         self.config_manager.set("steam_id", self.steam_id_input.text())

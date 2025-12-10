@@ -19,6 +19,10 @@ class AppManager:
         
         # 4. 显示宠物
         self.pet.show()
+        
+        # 5. 连接信号以同步状态
+        self.pet.visibility_changed.connect(self.update_visibility_text)
+        self.pet.topmost_changed.connect(self.update_topmost_text)
 
     def _setup_tray(self):
         """初始化系统托盘"""
@@ -32,6 +36,16 @@ class AppManager:
         
         # 创建菜单
         tray_menu = QMenu()
+        
+        # 动作：显示/隐藏
+        self.action_toggle = QAction("隐藏宠物", self.app)
+        self.action_toggle.triggered.connect(self.toggle_pet_visibility)
+        tray_menu.addAction(self.action_toggle)
+        
+        # 动作：取消置顶/置顶
+        self.action_topmost = QAction("取消置顶", self.app)
+        self.action_topmost.triggered.connect(self.toggle_topmost)
+        tray_menu.addAction(self.action_topmost)
         
         # 动作：设置
         action_settings = QAction("功能设置", self.app)
@@ -47,6 +61,25 @@ class AppManager:
         
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.show()
+
+    def toggle_pet_visibility(self):
+        # 使用 pet 的方法来切换，状态更新会通过信号回调
+        self.pet.set_visibility(not self.pet.isVisible())
+
+    def toggle_topmost(self):
+        self.pet.toggle_topmost()
+
+    def update_visibility_text(self, visible):
+        if visible:
+            self.action_toggle.setText("隐藏宠物")
+        else:
+            self.action_toggle.setText("显示宠物")
+
+    def update_topmost_text(self, is_topmost):
+        if is_topmost:
+            self.action_topmost.setText("取消置顶")
+        else:
+            self.action_topmost.setText("置顶宠物")
 
     def open_settings(self):
         """打开或激活设置窗口"""

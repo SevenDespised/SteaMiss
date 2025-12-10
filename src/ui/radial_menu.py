@@ -165,7 +165,10 @@ class RadialMenu(QWidget):
             
             # 颜色处理
             color = QColor(220, 240, 255, 230) 
-            if i == self.hovered_index:
+            if item is None:
+                # 空项：颜色更淡，且不响应悬停高亮
+                color = QColor(240, 240, 240, 100)
+            elif i == self.hovered_index:
                 color = QColor(100, 180, 255, 240) # 高亮色
             
             painter.setBrush(color)
@@ -173,28 +176,29 @@ class RadialMenu(QWidget):
             painter.drawPath(path)
             
             # 绘制文字
-            mid_angle = start_angle + angle_step / 2
-            text_radius = (self.radius + self.inner_radius) / 2
-            
-            # 修正：使用正角度计算文字位置
-            # 在屏幕坐标系(Y向下)中，math.sin(正角度) 是正值(向下)，对应顺时针旋转
-            # 这与我们的扇形绘制逻辑 (0->90 对应 Right->Bottom) 一致
-            rad = math.radians(mid_angle) 
-            
-            text_x = center.x() + text_radius * math.cos(rad)
-            text_y = center.y() + text_radius * math.sin(rad)
-            
-            painter.setPen(QColor(0, 0, 0))
-            font = QFont()
-            font.setBold(True)
-            painter.setFont(font)
-            
-            # 绘制文字矩形 (增加高度以支持换行)
-            text_rect = QRectF(text_x - 40, text_y - 25, 80, 50)
-            painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, item['label'])
+            if item:
+                mid_angle = start_angle + angle_step / 2
+                text_radius = (self.radius + self.inner_radius) / 2
+                
+                # 修正：使用正角度计算文字位置
+                # 在屏幕坐标系(Y向下)中，math.sin(正角度) 是正值(向下)，对应顺时针旋转
+                # 这与我们的扇形绘制逻辑 (0->90 对应 Right->Bottom) 一致
+                rad = math.radians(mid_angle) 
+                
+                text_x = center.x() + text_radius * math.cos(rad)
+                text_y = center.y() + text_radius * math.sin(rad)
+                
+                painter.setPen(QColor(0, 0, 0))
+                font = QFont()
+                font.setBold(True)
+                painter.setFont(font)
+                
+                # 绘制文字矩形 (增加高度以支持换行)
+                text_rect = QRectF(text_x - 40, text_y - 25, 80, 50)
+                painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, item['label'])
 
         # 绘制外环子选项（仅当前悬停的扇区展示）
-        if 0 <= self.hovered_index < len(self.items):
+        if 0 <= self.hovered_index < len(self.items) and self.items[self.hovered_index]:
             sub_items = self.items[self.hovered_index].get('sub_items') or []
             if sub_items:
                 angle_step = 360 / count
@@ -270,9 +274,12 @@ class RadialMenu(QWidget):
         if self.inner_radius <= dist <= self.radius:
             new_hover_index = angle_index
         elif self.radius < dist <= self.radius + self.outer_ring_thickness and angle_index != -1:
-            new_hover_index = angle_index
-            sub_items = self.items[angle_index].get('sub_items') if angle_index < len(self.items) else None
+            if self.items[angle_index] and angle_index < len(self.items):
+                sub_items = self.items[angle_index].get('sub_items')
+            else:
+                sub_items = None
             if sub_items:
+                new_hover_index = angle_index
                 band_height = self.outer_ring_thickness / max(len(sub_items), 1)
                 idx = int((dist - self.radius) / band_height)
                 new_hover_sub_index = min(idx, len(sub_items) - 1)
@@ -285,7 +292,7 @@ class RadialMenu(QWidget):
         # 动态计算有效外半径：如果有子菜单，则延伸到子菜单外径
         has_sub_items = False
         if 0 <= angle_index < len(self.items):
-            if self.items[angle_index].get('sub_items'):
+            if self.items[angle_index] and self.items[angle_index].get('sub_items'):
                 has_sub_items = True
         
         real_outer = self.sub_radius if has_sub_items else self.radius
@@ -295,6 +302,10 @@ class RadialMenu(QWidget):
             new_signal_index = angle_index
 
         # 4. 更新 UI 状态
+        if new_hover_index != -1 and (new_hover_index >= len(self.items) or self.items[new_hover_index] is None):
+            new_hover_index = -1
+            new_hover_sub_index = -1
+
         if self.hovered_index != new_hover_index or self.hovered_sub_index != new_hover_sub_index:
             self.hovered_index = new_hover_index
             self.hovered_sub_index = new_hover_sub_index
@@ -321,11 +332,13 @@ class RadialMenu(QWidget):
         callback = None
         if self.hovered_index != -1 and self.items:
             item = self.items[self.hovered_index]
-            sub_items = item.get('sub_items') or []
-            if 0 <= self.hovered_sub_index < len(sub_items):
-                callback = sub_items[self.hovered_sub_index].get('callback')
-            else:
-                callback = item.get('callback')
+            # 确保 item 不是 None
+            if item:
+                sub_items = item.get('sub_items') or []
+                if 0 <= self.hovered_sub_index < len(sub_items):
+                    callback = sub_items[self.hovered_sub_index].get('callback')
+                else:
+                    callback = item.get('callback')
 
         # 关闭菜单后再执行回调，确保视觉反馈同时保留所选项
         self.close()

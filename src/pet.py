@@ -1,7 +1,7 @@
 import sys
 import os
 from PyQt6.QtWidgets import QWidget, QApplication, QMenu
-from PyQt6.QtCore import Qt, QPoint, QTimer
+from PyQt6.QtCore import Qt, QPoint, QTimer, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QAction, QCursor, QPixmap
 
 # 引入新的管理器
@@ -15,6 +15,10 @@ from src.logic.timer_manager import TimerManager
 from src.ui.timer_overlay import TimerOverlay
 
 class DesktopPet(QWidget):
+    # 定义信号，用于通知状态变化
+    visibility_changed = pyqtSignal(bool)
+    topmost_changed = pyqtSignal(bool)
+
     def __init__(self):
         super().__init__()
         
@@ -31,6 +35,7 @@ class DesktopPet(QWidget):
         self.steam_manager = SteamManager(self.config_manager)
         self.timer_manager = TimerManager()
         self.tool_manager = ToolManager(self.steam_manager, self.config_manager, self.timer_manager)
+        self.tool_manager.set_pet_window(self) # 注入自身引用
         
         # 初始化资源管理器 (一次性加载所有图片)
         self.resource_manager = ResourceManager()
@@ -60,6 +65,40 @@ class DesktopPet(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.resize(150, 150)
         self.center_window()
+
+    def is_topmost(self):
+        return bool(self.windowFlags() & Qt.WindowType.WindowStaysOnTopHint)
+
+    def set_topmost(self, enable: bool):
+        flags = self.windowFlags()
+        if enable:
+            flags |= Qt.WindowType.WindowStaysOnTopHint
+        else:
+            flags &= ~Qt.WindowType.WindowStaysOnTopHint
+        
+        if flags != self.windowFlags():
+            self.setWindowFlags(flags)
+            self.show() # 更改 flags 后需要 show 才能生效
+            self.activateWindow() # 确保窗口激活，防止失去焦点导致交互失效
+            self.topmost_changed.emit(enable)
+
+    def toggle_topmost(self):
+        self.set_topmost(not self.is_topmost())
+
+    def set_visibility(self, visible: bool):
+        if visible:
+            self.show()
+        else:
+            self.hide()
+        # 信号由 showEvent/hideEvent 触发，这里不需要手动 emit
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self.visibility_changed.emit(True)
+
+    def hideEvent(self, event):
+        super().hideEvent(event)
+        self.visibility_changed.emit(False)
 
     def center_window(self):
         screen = QApplication.primaryScreen().geometry()

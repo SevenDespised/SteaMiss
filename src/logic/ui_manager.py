@@ -1,8 +1,18 @@
-import os
 from PyQt6.QtCore import QPoint
 from src.ui.radial_menu import RadialMenu
+from src.logic.menu_builders.path_builder import PathMenuBuilder
+from src.logic.menu_builders.interaction_builder import InteractionMenuBuilder
+from src.logic.menu_builders.timer_builder import TimerMenuBuilder
+from src.logic.menu_builders.steam_game_builder import SteamGameMenuBuilder
+from src.logic.menu_builders.tool_builder import ToolMenuBuilder
+
 
 class UIManager:
+    """
+    UI管理器
+    负责协调各个菜单项构建器，生成环形菜单
+    """
+    
     def __init__(self, tool_manager, steam_manager, config_manager):
         self.tool_manager = tool_manager
         self.steam_manager = steam_manager
@@ -10,6 +20,13 @@ class UIManager:
         
         # 管理的 UI 组件
         self.radial_menu = RadialMenu()
+        
+        # 初始化各个菜单项构建器
+        self.path_builder = PathMenuBuilder(tool_manager, config_manager)
+        self.interaction_builder = InteractionMenuBuilder(tool_manager, config_manager)
+        self.timer_builder = TimerMenuBuilder(tool_manager, config_manager)
+        self.steam_game_builder = SteamGameMenuBuilder(tool_manager, config_manager, steam_manager)
+        self.tool_builder = ToolMenuBuilder(tool_manager, config_manager)
         
     def get_radial_menu(self):
         """提供给 Pet 用于事件连接 (如 hover)"""
@@ -39,211 +56,47 @@ class UIManager:
     def _build_menu_items(self):
         """
         内部方法：构建排序好的菜单项列表
+        使用各个专门的构建器来生成菜单项
         """
         # 定义排序顺序
         order = [
-            "launch_recent", "say_hello", "discounts", 
-            "timer", "stats", "open_path", "launch_favorite"
+            "say_hello", "launch_recent", "discounts",
+            "timer", "stats", "launch_favorite", "open_path"
         ]
         
+        # 收集所有菜单项
         all_items = []
-
-        # --- 生成各个菜单项 ---
         
         # 1. 路径打开
-        path_label = self._get_formatted_path_label()
-        all_items.append({'key': 'open_path', 'label': path_label, 'callback': lambda: self.tool_manager.execute_action("open_path")})
+        all_items.append(self.path_builder.build())
         
-        # 2. 基础功能
-        # 为打招呼提供外环子选项测试不同输出
-        all_items.append({
-            'key': 'say_hello',
-            'label': '打招呼',
-            'callback': lambda: self.tool_manager.execute_action("say_hello"),
-            'sub_items': [
-                {'label': '招呼A', 'callback': lambda: print("你好，来自子选项A")},
-                {'label': '招呼B', 'callback': lambda: print("哈喽，来自子选项B")},
-            ]
-        })
-        all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
-        all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
-        # 退出替换为计时器
-        all_items.append(self._build_timer_item())
-
-        # 3. Steam 动态项
-        recent_games = self.steam_manager.get_recent_games(3)
-        if recent_games:
-            top1 = recent_games[0]
-            name = self._truncate_text(top1.get("name", "Unknown"))
-            
-            item = {
-                'key': 'launch_recent',
-                'label': f"最近\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
-            }
-            
-            # 如果有更多最近游戏，添加为子选项
-            if len(recent_games) > 1:
-                sub_items = []
-                for game in recent_games[1:]:
-                    sub_name = self._truncate_text(game.get("name", "Unknown"))
-                    # 使用默认参数捕获循环变量
-                    sub_items.append({
-                        'label': sub_name,
-                        'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
-                    })
-                item['sub_items'] = sub_items
-                
-            all_items.append(item)
-
-        # 4. 快速启动 (Top 3 混合逻辑)
-        # 获取配置的快速启动游戏
-        quick_launch_games = self.config_manager.get("steam_quick_launch_games", [None, None, None])
-        if not isinstance(quick_launch_games, list):
-            quick_launch_games = [None, None, None]
-            
-        # 兼容旧配置
-        if all(x is None for x in quick_launch_games):
-            old_fav = self.config_manager.get("steam_favorite_game")
-            if old_fav:
-                quick_launch_games[0] = old_fav
-                
-        # 获取最近游戏用于填充
-        recent_games = self.steam_manager.get_recent_games(10) # 多取一些备用
+        # 2. 交互功能
+        all_items.append(self.interaction_builder.build())
         
-        # 构建最终的 3 个游戏列表
-        final_games = []
-        used_appids = set()
+        # 3. 工具类
+        all_items.append(self.tool_builder.build_stats_item())
+        all_items.append(self.tool_builder.build_discounts_item())
         
-        # 先填入已配置的
-        for game in quick_launch_games:
-            if game:
-                final_games.append(game)
-                used_appids.add(game['appid'])
-            else:
-                final_games.append(None) # 占位
-                
-        # 填充空位
-        recent_idx = 0
-        for i in range(3):
-            if final_games[i] is None:
-                # 寻找下一个未使用的最近游戏
-                while recent_idx < len(recent_games):
-                    candidate = recent_games[recent_idx]
-                    recent_idx += 1
-                    if candidate['appid'] not in used_appids:
-                        final_games[i] = candidate
-                        used_appids.add(candidate['appid'])
-                        break
+        # 4. 计时器
+        all_items.append(self.timer_builder.build())
         
-        # 过滤掉仍然是 None 的 (如果最近游戏也不够)
-        valid_games = [g for g in final_games if g is not None]
+        # 5. Steam 游戏
+        recent_item = self.steam_game_builder.build_recent_game_item()
+        if recent_item:
+            all_items.append(recent_item)
         
-        if valid_games:
-            top1 = valid_games[0]
-            name = self._truncate_text(top1.get("name", "Unknown"))
-            
-            item = {
-                'key': 'launch_favorite',
-                'label': f"启动\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
-            }
-            
-            if len(valid_games) > 1:
-                sub_items = []
-                for game in valid_games[1:]:
-                    sub_name = self._truncate_text(game.get("name", "Unknown"))
-                    sub_items.append({
-                        'label': sub_name,
-                        'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
-                    })
-                item['sub_items'] = sub_items
-                
-            all_items.append(item)
-
-        # --- 排序 ---
+        quick_launch_item = self.steam_game_builder.build_quick_launch_item()
+        if quick_launch_item:
+            all_items.append(quick_launch_item)
+        
+        # 排序并填充空位
         items_map = {item['key']: item for item in all_items}
         sorted_items = []
         for key in order:
             if key in items_map:
                 sorted_items.append(items_map[key])
-                
-        return sorted_items
-
-    def _build_timer_item(self):
-        """根据计时状态构造菜单项。"""
-        tm = getattr(self.tool_manager, "timer_manager", None)
-        if not tm:
-            return {
-                'key': 'timer',
-                'label': "计时器\n未配置",
-                'callback': lambda: None
-            }
-
-        if tm.is_running():
-            # 正在计时：主按钮结束，子按钮暂停
-            return {
-                'key': 'timer',
-                'label': "结束\n计时",
-                'callback': lambda: self.tool_manager.execute_action("stop_timer"),
-                'sub_items': [
-                    {
-                        'label': "暂停\n计时",
-                        'callback': lambda: self.tool_manager.execute_action("pause_timer")
-                    }
-                ]
-            }
-        elif tm.is_paused():
-            # 暂停中：主按钮结束，子按钮继续
-            return {
-                'key': 'timer',
-                'label': "结束\n计时",
-                'callback': lambda: self.tool_manager.execute_action("stop_timer"),
-                'sub_items': [
-                    {
-                        'label': "继续\n计时",
-                        'callback': lambda: self.tool_manager.execute_action("resume_timer")
-                    }
-                ]
-            }
-        else:
-            # 未开始：主按钮开始
-            return {
-                'key': 'timer',
-                'label': "开始\n计时",
-                'callback': lambda: self.tool_manager.execute_action("toggle_timer")
-            }
-
-    def _truncate_text(self, text, max_len=8):
-        """文本截断工具"""
-        total_len = 0
-        for char in text:
-            total_len += 2 if '\u4e00' <= char <= '\u9fff' else 1
+            else:
+                # 填充空项，保持扇区数量固定
+                sorted_items.append(None)
         
-        if total_len <= max_len:
-            return text
-            
-        target_len = max_len
-        current_len = 0
-        result = ""
-        for char in text:
-            char_len = 2 if '\u4e00' <= char <= '\u9fff' else 1
-            if current_len + char_len > target_len:
-                break
-            current_len += char_len
-            result += char
-            
-        return result + ".."
-
-    def _get_formatted_path_label(self):
-        """获取格式化的路径标签"""
-        explorer_path = self.config_manager.get("explorer_path", "C:/")
-        display_path = explorer_path
-        try:
-            norm_path = os.path.normpath(explorer_path)
-            parts = norm_path.split(os.sep)
-            if len(parts) > 2:
-                display_path = os.sep.join(parts[:2])
-        except:
-            pass
-        return f"打开\n{display_path}"
+        return sorted_items

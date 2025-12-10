@@ -9,6 +9,10 @@ class ToolManager:
         self.steam_manager = steam_manager
         self.config_manager = config_manager
         self.timer_manager = timer_manager
+        self.pet_window = None # 引用主窗口
+
+    def set_pet_window(self, window):
+        self.pet_window = window
 
     def set_steam_manager(self, steam_manager):
         self.steam_manager = steam_manager
@@ -26,7 +30,12 @@ class ToolManager:
         if action_key == "say_hello":
             self.action_say_hello()
         elif action_key == "open_path":
-            self.action_open_explorer()
+            path = kwargs.get("path")
+            self.action_open_explorer(path)
+        elif action_key == "hide_pet":
+            self.action_hide_pet()
+        elif action_key == "toggle_topmost":
+            self.action_toggle_topmost()
         elif action_key == "exit":
             QApplication.instance().quit()
         elif action_key == "launch_game":
@@ -48,9 +57,14 @@ class ToolManager:
         print(content)
         # 这里未来可以扩展为显示气泡等
 
-    def action_open_explorer(self):
+    def action_open_explorer(self, path=None):
         if not self.config_manager: return
-        path = self.config_manager.get("explorer_path", "C:/")
+        
+        if path is None:
+            # 默认使用第一个配置的路径
+            paths = self.config_manager.get("explorer_paths", ["C:/"])
+            path = paths[0] if paths else "C:/"
+            
         if os.path.exists(path):
             os.startfile(path)
         else:
@@ -84,6 +98,14 @@ class ToolManager:
         if self.timer_manager:
             self.timer_manager.stop_and_persist()
             print("Timer stopped and saved")
+
+    def action_hide_pet(self):
+        if self.pet_window:
+            self.pet_window.set_visibility(False)
+
+    def action_toggle_topmost(self):
+        if self.pet_window:
+            self.pet_window.toggle_topmost()
 
     def open_tool(self, tool_name):
         """
