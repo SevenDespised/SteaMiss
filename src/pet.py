@@ -9,7 +9,7 @@ from src.logic.behavior_manager import BehaviorManager
 from src.logic.tool_manager import ToolManager
 from src.logic.config_manager import ConfigManager
 from src.logic.steam_manager import SteamManager
-from src.ui.radial_menu import RadialMenu
+from src.logic.ui_manager import UIManager
 
 class DesktopPet(QWidget):
     def __init__(self):
@@ -29,9 +29,9 @@ class DesktopPet(QWidget):
         # ToolManager 需要 SteamManager 和 ConfigManager
         self.tool_manager = ToolManager(self.steam_manager, self.config_manager)
         
-        # 初始化轮盘菜单
-        self.radial_menu = RadialMenu()
-        self.radial_menu.hovered_changed.connect(self.on_menu_hover_changed)
+        # 初始化 UI 管理器
+        self.ui_manager = UIManager(self.tool_manager, self.steam_manager, self.config_manager)
+        self.ui_manager.get_radial_menu().hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle" # 当前行为状态
@@ -138,44 +138,17 @@ class DesktopPet(QWidget):
         右键点击事件
         这里不再直接写死菜单，而是调用一个“展示交互面板”的方法
         """
-        # 检查菜单是否刚刚关闭（防止点击穿透导致的重复打开）
-        if getattr(self.radial_menu, 'just_closed', False):
+        # 委托给 UI Manager 判断状态
+        if self.ui_manager.is_radial_menu_just_closed():
             return
 
-        if self.radial_menu.isVisible():
-            self.radial_menu.close()
+        if self.ui_manager.is_radial_menu_visible():
+            self.ui_manager.close_radial_menu()
             return
 
         # 使用窗口中心作为菜单中心，确保宠物在圆环正中央
         center_pos = self.mapToGlobal(self.rect().center())
-        self.show_interaction_panel(center_pos)
-
-    def _truncate_game_name(self, name, max_len=8):
-        """
-        截断游戏名称，限制显示长度
-        规则：最多 max_len 个英文字符，1个中文字符 = 2个英文字符
-        如果超出，保留 max_len-2 的长度并添加 ".."
-        """
-        # 1. 计算总长度
-        total_len = 0
-        for char in name:
-            total_len += 2 if '\u4e00' <= char <= '\u9fff' else 1
-        
-        if total_len <= max_len:
-            return name
-            
-        # 2. 需要截断
-        target_len = max_len
-        current_len = 0
-        result = ""
-        for char in name:
-            char_len = 2 if '\u4e00' <= char <= '\u9fff' else 1
-            if current_len + char_len > target_len:
-                break
-            current_len += char_len
-            result += char
-            
-        return result + ".."
+        self.ui_manager.show_radial_menu(center_pos)
 
     def on_menu_hover_changed(self, index):
         """
@@ -192,80 +165,6 @@ class DesktopPet(QWidget):
             else:
                 # 如果对应图片不存在，回退到默认图片
                 self.load_image("assets/main.png")
-
-    def show_interaction_panel(self, position):
-        """
-        [接口] 交互面板入口
-        目前是普通菜单，未来可以替换为 Radial Menu (轮盘) 或自定义 Widget
-        """
-        # 获取配置的路径
-        explorer_path = self.config_manager.get("explorer_path", "C:/")
-        
-        # 格式化显示路径 (前两级)
-        display_path = explorer_path
-        try:
-            norm_path = os.path.normpath(explorer_path)
-            parts = norm_path.split(os.sep)
-            # 处理盘符情况 (e.g. "C:" "Users" ...)
-            if len(parts) > 2:
-                display_path = os.sep.join(parts[:2])
-        except:
-            pass
-            
-        open_label = f"打开\n{display_path}"
-
-        # --- 轮盘菜单实现 ---
-        # 定义排序顺序 (key)
-        order = [
-            "launch_recent",   # 启动游戏(最近)
-            "say_hello",       # 打招呼
-            "discounts",       # 特惠信息
-            "exit",            # 退出
-            "stats",           # 游玩记录
-            "open_path",       # 打开文件路径
-            "launch_favorite"  # 启动最爱
-        ]
-
-        # 收集所有可能的菜单项
-        all_items = []
-
-        # 1. 基础功能
-        all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': lambda: self.tool_manager.execute_action("say_hello")})
-        all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
-        all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
-        all_items.append({'key': 'open_path', 'label': open_label, 'callback': lambda: self.tool_manager.execute_action("open_path")})
-        all_items.append({'key': 'exit', 'label': '退出', 'callback': lambda: self.tool_manager.execute_action("exit")})
-        
-        # 2. Steam 游戏扩展
-        recent_game = self.steam_manager.get_recent_game()
-        if recent_game:
-            name = recent_game.get("name", "Unknown")
-            name = self._truncate_game_name(name)
-            all_items.append({
-                'key': 'launch_recent',
-                'label': f"最近\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=recent_game['appid'])
-            })
-            
-        fav_game = self.config_manager.get("steam_favorite_game")
-        if fav_game:
-            name = fav_game.get("name", "Unknown")
-            name = self._truncate_game_name(name)
-            all_items.append({
-                'key': 'launch_favorite',
-                'label': f"启动\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=fav_game['appid'])
-            })
-
-        # 3. 按照预定顺序排序
-        items_map = {item['key']: item for item in all_items}
-        sorted_items = []
-        for key in order:
-            if key in items_map:
-                sorted_items.append(items_map[key])
-        
-        self.radial_menu.set_items(sorted_items)
-        self.radial_menu.show_at(position)
 
     # --- 绘图 ---
     def paintEvent(self, event):
