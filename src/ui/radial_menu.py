@@ -17,8 +17,10 @@ class RadialMenu(QWidget):
         self.hovered_index = -1
         self.radius = 180
         self.inner_radius = 120
+        self.trigger_radius = 80 # 触发宠物指向动画的半径 (比 inner_radius 小)
         self.just_closed = False # 防止重复触发的标志位
-        
+        # 设置背景透明圆环宽度，防止鼠标穿透无法正确响应动画
+        self.ring_bg_width = self.radius - self.trigger_radius
         # 启用鼠标追踪，以便在不按键时也能检测悬停
         self.setMouseTracking(True)
 
@@ -88,6 +90,19 @@ class RadialMenu(QWidget):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         
         center = QPoint(self.width() // 2, self.height() // 2)
+        
+        # [关键修复] 绘制一个几乎透明的底圆，用于捕获鼠标事件
+        # 解决 Windows 下完全透明区域点击穿透的问题
+        # 覆盖整个交互区域 (半径为 self.radius 的圆)
+        painter.setBrush(Qt.BrushStyle.NoBrush)  # 无填充，仅边框
+        # 几乎透明的画笔（Alpha=1），宽度=圆环厚度
+        pen = QPen(QColor(255, 255, 255, 1), self.ring_bg_width)
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+        painter.setPen(pen)
+        # 绘制椭圆：半径修正为 self.radius - ring_bg_width/2，保证外径= self.radius
+        painter.drawEllipse(center, self.radius - self.ring_bg_width//2, self.radius - self.ring_bg_width//2)
+        
         count = len(self.items)
         if count == 0: return
         
@@ -132,7 +147,6 @@ class RadialMenu(QWidget):
             path.closeSubpath()
             
             # 颜色处理
-            # 修改为淡蓝色背景
             color = QColor(220, 240, 255, 230) 
             if i == self.hovered_index:
                 color = QColor(100, 180, 255, 240) # 高亮色
@@ -179,29 +193,38 @@ class RadialMenu(QWidget):
         pos = event.pos() - center
         dist = math.sqrt(pos.x()**2 + pos.y()**2)
         
-        new_index = -1
-        if dist < self.inner_radius or dist > self.radius:
-            new_index = -1
-        else:
-            # 计算角度
-            angle = math.degrees(math.atan2(pos.y(), pos.x()))
-            if angle < 0:
-                angle += 360
-            
+        # 1. 计算角度索引 (通用)
+        angle_index = -1
+        count = len(self.items)
+        if count > 0:
             mouse_angle = math.degrees(math.atan2(pos.y(), pos.x()))
             if mouse_angle < 0:
                 mouse_angle += 360
-            count = len(self.items)
-            if count > 0:
-                step = 360 / count
-                index = int(mouse_angle / step)
-                if 0 <= index < count:
-                    new_index = index
-        
-        if self.hovered_index != new_index:
-            self.hovered_index = new_index
-            self.hovered_changed.emit(new_index)
-            self.update()
+            step = 360 / count
+            idx = int(mouse_angle / step)
+            if 0 <= idx < count:
+                angle_index = idx
+
+        # 2. 计算 UI 高亮索引 (严格遵循圆环)
+        new_hover_index = -1
+        if self.inner_radius <= dist <= self.radius:
+            new_hover_index = angle_index
+            
+        # 3. 计算 信号触发索引 (更宽松的内圆)
+        new_signal_index = -1
+        if self.trigger_radius <= dist <= self.radius: # 使用 trigger_radius
+            new_signal_index = angle_index
+
+        # 4. 更新 UI 状态
+        if self.hovered_index != new_hover_index:
+            self.hovered_index = new_hover_index
+            self.update() # 只重绘 UI
+
+        # 5. 发送信号 (使用更宽松的索引)
+        # 注意：我们需要记录上一次发送的信号索引，避免重复发送
+        if getattr(self, '_last_signal_index', -2) != new_signal_index:
+            self._last_signal_index = new_signal_index
+            self.hovered_changed.emit(new_signal_index)
 
     def mousePressEvent(self, event):
         # 右键点击直接关闭菜单
