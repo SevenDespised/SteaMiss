@@ -26,8 +26,8 @@ class DesktopPet(QWidget):
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.steam_manager = SteamManager(self.config_manager)
-        # ToolManager 需要 SteamManager 来创建统计窗口
-        self.tool_manager = ToolManager(self.steam_manager)
+        # ToolManager 需要 SteamManager 和 ConfigManager
+        self.tool_manager = ToolManager(self.steam_manager, self.config_manager)
         
         # 初始化轮盘菜单
         self.radial_menu = RadialMenu()
@@ -138,6 +138,14 @@ class DesktopPet(QWidget):
         右键点击事件
         这里不再直接写死菜单，而是调用一个“展示交互面板”的方法
         """
+        # 检查菜单是否刚刚关闭（防止点击穿透导致的重复打开）
+        if getattr(self.radial_menu, 'just_closed', False):
+            return
+
+        if self.radial_menu.isVisible():
+            self.radial_menu.close()
+            return
+
         # 使用窗口中心作为菜单中心，确保宠物在圆环正中央
         center_pos = self.mapToGlobal(self.rect().center())
         self.show_interaction_panel(center_pos)
@@ -222,11 +230,11 @@ class DesktopPet(QWidget):
         all_items = []
 
         # 1. 基础功能
-        all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': self.say_hello})
+        all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': lambda: self.tool_manager.execute_action("say_hello")})
         all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
         all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
-        all_items.append({'key': 'open_path', 'label': open_label, 'callback': self.open_explorer})
-        all_items.append({'key': 'exit', 'label': '退出', 'callback': QApplication.instance().quit})
+        all_items.append({'key': 'open_path', 'label': open_label, 'callback': lambda: self.tool_manager.execute_action("open_path")})
+        all_items.append({'key': 'exit', 'label': '退出', 'callback': lambda: self.tool_manager.execute_action("exit")})
         
         # 2. Steam 游戏扩展
         recent_game = self.steam_manager.get_recent_game()
@@ -236,7 +244,7 @@ class DesktopPet(QWidget):
             all_items.append({
                 'key': 'launch_recent',
                 'label': f"最近\n{name}",
-                'callback': lambda: self.launch_steam_game(recent_game['appid'])
+                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=recent_game['appid'])
             })
             
         fav_game = self.config_manager.get("steam_favorite_game")
@@ -246,7 +254,7 @@ class DesktopPet(QWidget):
             all_items.append({
                 'key': 'launch_favorite',
                 'label': f"启动\n{name}",
-                'callback': lambda: self.launch_steam_game(fav_game['appid'])
+                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=fav_game['appid'])
             })
 
         # 3. 按照预定顺序排序
@@ -258,26 +266,6 @@ class DesktopPet(QWidget):
         
         self.radial_menu.set_items(sorted_items)
         self.radial_menu.show_at(position)
-
-    # --- 功能实现区 ---
-    def say_hello(self):
-        # 从配置中读取打招呼内容
-        content = self.config_manager.get("say_hello_content", "你好！")
-        print(content)
-
-    def open_explorer(self):
-        path = self.config_manager.get("explorer_path", "C:/")
-        if os.path.exists(path):
-            os.startfile(path)
-        else:
-            print(f"Path not found: {path}")
-
-    def launch_steam_game(self, appid):
-        """启动 Steam 游戏"""
-        try:
-            os.startfile(f"steam://run/{appid}")
-        except Exception as e:
-            print(f"Failed to launch game {appid}: {e}")
 
     # --- 绘图 ---
     def paintEvent(self, event):

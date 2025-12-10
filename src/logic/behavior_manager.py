@@ -23,11 +23,44 @@ class BehaviorManager:
         self.state_timer += 1
         if self.state_timer > 100: # 每隔一段时间尝试改变状态
             self.state_timer = 0
+            
+            # [新功能] 调用 AI 决策接口
+            ai_decision = self.decide_ai_behavior()
+            if ai_decision:
+                # TODO: 根据决策执行具体逻辑
+                # self.current_state = ai_decision['state']
+                pass
+
             if random.random() > 0.7:
                 self.current_state = "walk" if self.current_state == "idle" else "idle"
                 # print(f"AI 决定切换状态到: {self.current_state}")
         
         return self.current_state
+
+    def decide_ai_behavior(self):
+        """
+        [接口] 根据随机数决定 AI 的各种行为
+        
+        这个接口负责生成随机数，并根据概率分布决定 AI 接下来要做什么。
+        目前仅开放接口，不实现具体行为。
+        
+        Returns:
+            dict or None: 包含行为类型和参数的字典，例如:
+                          {'type': 'say', 'content': '你好'}
+                          {'type': 'move', 'target': (100, 100)}
+                          {'type': 'emote', 'name': 'happy'}
+        """
+        # 1. 生成随机数 (0.0 - 1.0)
+        roll = random.random()
+        
+        # 2. 行为判定逻辑 (预留)
+        # 示例结构：
+        # if roll < 0.01:
+        #     return {'type': 'special_event', 'id': 1}
+        # elif roll < 0.05:
+        #     return {'type': 'emote', 'name': 'blink'}
+            
+        return None
 
     def get_next_frame(self, state, current_frame_index):
         """

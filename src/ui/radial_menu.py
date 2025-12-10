@@ -17,6 +17,7 @@ class RadialMenu(QWidget):
         self.hovered_index = -1
         self.radius = 180
         self.inner_radius = 120
+        self.just_closed = False # 防止重复触发的标志位
         
         # 启用鼠标追踪，以便在不按键时也能检测悬停
         self.setMouseTracking(True)
@@ -44,7 +45,20 @@ class RadialMenu(QWidget):
         """检测窗口激活状态变化，失去焦点时自动关闭"""
         if event.type() == QEvent.Type.ActivationChange:
             if not self.isActiveWindow():
+                # 延迟关闭，给 Pet 窗口一点时间来检测状态
+                # 但实际上 Pet 的事件处理是在主线程，这里也是主线程
+                # 关键问题是：点击穿透后，Pet 接收到点击事件时，Menu 是否已经关闭？
+                # 如果 Menu 是 Tool 窗口，点击 Pet 会导致 Menu 失去焦点 -> changeEvent -> close()
+                # 然后 Pet 收到 mousePress -> contextMenuEvent
+                # 此时 Menu 已经不可见了。
+                
+                # 我们可以设置一个标志位，表示“刚刚关闭”
+                self.just_closed = True
                 self.close()
+                # 100ms 后重置标志位
+                from PyQt6.QtCore import QTimer
+                QTimer.singleShot(200, lambda: setattr(self, 'just_closed', False))
+                
         super().changeEvent(event)
 
     def resizeEvent(self, event):

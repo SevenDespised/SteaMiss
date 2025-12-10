@@ -1,14 +1,54 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QApplication
 from src.ui.stats_window import StatsWindow
 from src.ui.discount_window import DiscountWindow
+import os
 
 class ToolManager:
-    def __init__(self, steam_manager=None):
+    def __init__(self, steam_manager=None, config_manager=None):
         self.active_tools = {}
         self.steam_manager = steam_manager
+        self.config_manager = config_manager
 
     def set_steam_manager(self, steam_manager):
         self.steam_manager = steam_manager
+
+    def set_config_manager(self, config_manager):
+        self.config_manager = config_manager
+
+    def execute_action(self, action_key, **kwargs):
+        """
+        执行非窗口类的动作
+        """
+        if action_key == "say_hello":
+            self.action_say_hello()
+        elif action_key == "open_path":
+            self.action_open_explorer()
+        elif action_key == "exit":
+            QApplication.instance().quit()
+        elif action_key == "launch_game":
+            appid = kwargs.get("appid")
+            if appid:
+                self.action_launch_steam_game(appid)
+
+    def action_say_hello(self):
+        if not self.config_manager: return
+        content = self.config_manager.get("say_hello_content", "你好！")
+        print(content)
+        # 这里未来可以扩展为显示气泡等
+
+    def action_open_explorer(self):
+        if not self.config_manager: return
+        path = self.config_manager.get("explorer_path", "C:/")
+        if os.path.exists(path):
+            os.startfile(path)
+        else:
+            print(f"Path not found: {path}")
+
+    def action_launch_steam_game(self, appid):
+        try:
+            os.startfile(f"steam://run/{appid}")
+        except Exception as e:
+            print(f"Failed to launch game {appid}: {e}")
 
     def open_tool(self, tool_name):
         """
@@ -50,7 +90,3 @@ class ToolManager:
         if not self.steam_manager:
             return None
         return DiscountWindow(self.steam_manager)
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("这是一个闹钟示例"))
-        w.setLayout(layout)
-        return w
