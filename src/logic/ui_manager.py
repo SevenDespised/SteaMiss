@@ -96,14 +96,70 @@ class UIManager:
                 
             all_items.append(item)
 
-        fav_game = self.config_manager.get("steam_favorite_game")
-        if fav_game:
-            name = self._truncate_text(fav_game.get("name", "Unknown"))
-            all_items.append({
+        # 4. 快速启动 (Top 3 混合逻辑)
+        # 获取配置的快速启动游戏
+        quick_launch_games = self.config_manager.get("steam_quick_launch_games", [None, None, None])
+        if not isinstance(quick_launch_games, list):
+            quick_launch_games = [None, None, None]
+            
+        # 兼容旧配置
+        if all(x is None for x in quick_launch_games):
+            old_fav = self.config_manager.get("steam_favorite_game")
+            if old_fav:
+                quick_launch_games[0] = old_fav
+                
+        # 获取最近游戏用于填充
+        recent_games = self.steam_manager.get_recent_games(10) # 多取一些备用
+        
+        # 构建最终的 3 个游戏列表
+        final_games = []
+        used_appids = set()
+        
+        # 先填入已配置的
+        for game in quick_launch_games:
+            if game:
+                final_games.append(game)
+                used_appids.add(game['appid'])
+            else:
+                final_games.append(None) # 占位
+                
+        # 填充空位
+        recent_idx = 0
+        for i in range(3):
+            if final_games[i] is None:
+                # 寻找下一个未使用的最近游戏
+                while recent_idx < len(recent_games):
+                    candidate = recent_games[recent_idx]
+                    recent_idx += 1
+                    if candidate['appid'] not in used_appids:
+                        final_games[i] = candidate
+                        used_appids.add(candidate['appid'])
+                        break
+        
+        # 过滤掉仍然是 None 的 (如果最近游戏也不够)
+        valid_games = [g for g in final_games if g is not None]
+        
+        if valid_games:
+            top1 = valid_games[0]
+            name = self._truncate_text(top1.get("name", "Unknown"))
+            
+            item = {
                 'key': 'launch_favorite',
                 'label': f"启动\n{name}",
-                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=fav_game['appid'])
-            })
+                'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
+            }
+            
+            if len(valid_games) > 1:
+                sub_items = []
+                for game in valid_games[1:]:
+                    sub_name = self._truncate_text(game.get("name", "Unknown"))
+                    sub_items.append({
+                        'label': sub_name,
+                        'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
+                    })
+                item['sub_items'] = sub_items
+                
+            all_items.append(item)
 
         # --- 排序 ---
         items_map = {item['key']: item for item in all_items}
