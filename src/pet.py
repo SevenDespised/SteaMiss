@@ -12,7 +12,7 @@ from src.logic.steam_manager import SteamManager
 from src.logic.ui_manager import UIManager
 from src.logic.resource_manager import ResourceManager
 from src.logic.timer_manager import TimerManager
-from src.ui.timer_display import TimerDisplay
+from src.ui.timer_overlay import TimerOverlay
 
 class DesktopPet(QWidget):
     def __init__(self):
@@ -34,8 +34,8 @@ class DesktopPet(QWidget):
         
         # 初始化资源管理器 (一次性加载所有图片)
         self.resource_manager = ResourceManager()
-        # 初始化计时器渲染
-        self.timer_display = TimerDisplay()
+        # 初始化计时器绘制器
+        self.timer_overlay = TimerOverlay(self.timer_manager)
         
         # 初始化 UI 管理器
         self.ui_manager = UIManager(self.tool_manager, self.steam_manager, self.config_manager)
@@ -136,7 +136,6 @@ class DesktopPet(QWidget):
     def contextMenuEvent(self, event):
         """
         右键点击事件
-        这里不再直接写死菜单，而是调用一个“展示交互面板”的方法
         """
         # 委托给 UI Manager 判断状态
         if self.ui_manager.is_radial_menu_just_closed():
@@ -211,21 +210,6 @@ class DesktopPet(QWidget):
         self._paint_timer(painter)
 
     def _paint_timer(self, painter):
-        if not hasattr(self, "timer_display"):
+        if not hasattr(self, "timer_overlay"):
             return
-        tm = self.timer_manager if hasattr(self, "timer_manager") else None
-        if not tm:
-            return
-        elapsed = tm.get_elapsed_seconds()
-        running = tm.is_running()
-        # 仅在运行或已有耗时时显示
-        if not running and elapsed <= 0:
-            return
-        h, m, s = tm.get_display_time()
-
-        # 将计时器放在窗口底部居中
-        margin = 5
-        w_draw, h_draw = self.timer_display.measure(h, m, s, show_on=running)
-        y = self.height() - h_draw - margin
-        x = (self.width() - w_draw) // 2
-        self.timer_display.draw(painter, x, y, h, m, s, show_on=running)
+        self.timer_overlay.draw(painter, self.rect())
