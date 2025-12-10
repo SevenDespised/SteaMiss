@@ -55,7 +55,16 @@ class UIManager:
         all_items.append({'key': 'open_path', 'label': path_label, 'callback': lambda: self.tool_manager.execute_action("open_path")})
         
         # 2. 基础功能
-        all_items.append({'key': 'say_hello', 'label': '打招呼', 'callback': lambda: self.tool_manager.execute_action("say_hello")})
+        # 为打招呼提供外环子选项测试不同输出
+        all_items.append({
+            'key': 'say_hello',
+            'label': '打招呼',
+            'callback': lambda: self.tool_manager.execute_action("say_hello"),
+            'sub_items': [
+                {'label': '招呼A', 'callback': lambda: print("你好，来自子选项A")},
+                {'label': '招呼B', 'callback': lambda: print("哈喽，来自子选项B")},
+            ]
+        })
         all_items.append({'key': 'stats', 'label': '游玩记录', 'callback': lambda: self.tool_manager.open_tool("stats")})
         all_items.append({'key': 'discounts', 'label': '特惠推荐', 'callback': lambda: self.tool_manager.open_tool("discounts")})
         # 退出替换为计时器

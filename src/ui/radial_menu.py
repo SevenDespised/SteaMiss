@@ -15,12 +15,16 @@ class RadialMenu(QWidget):
         
         self.items = []
         self.hovered_index = -1
+        self.hovered_sub_index = -1  # -1 表示未悬停子选项
         self.radius = 180
         self.inner_radius = 120
         self.trigger_radius = 80 # 触发宠物指向动画的半径 (比 inner_radius 小)
         self.just_closed = False # 防止重复触发的标志位
         # 设置背景透明圆环宽度，防止鼠标穿透无法正确响应动画
         self.ring_bg_width = self.radius - self.trigger_radius
+        # 外环配置：在原扇区向外扩展子选项
+        self.outer_ring_thickness = 80
+        self.max_sub_options = 2
         # 启用鼠标追踪，以便在不按键时也能检测悬停
         self.setMouseTracking(True)
 
@@ -30,7 +34,7 @@ class RadialMenu(QWidget):
         """
         self.items = items
         # 调整窗口大小以容纳圆盘
-        size = self.radius * 2 + 20
+        size = (self.radius + self.outer_ring_thickness) * 2 + 20
         self.resize(size, size)
 
     def show_at(self, global_pos):
@@ -176,16 +180,58 @@ class RadialMenu(QWidget):
             text_rect = QRectF(text_x - 40, text_y - 25, 80, 50)
             painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, item['label'])
 
+        # 绘制外环子选项（仅当前悬停的扇区展示）
+        if 0 <= self.hovered_index < len(self.items):
+            sub_items = self.items[self.hovered_index].get('sub_items') or []
+            if sub_items:
+                angle_step = 360 / count
+                start_angle = self.hovered_index * angle_step
+                current_start = -start_angle
+                current_sweep = -angle_step
+                band_height = self.outer_ring_thickness / max(len(sub_items), 1)
+
+                for idx, sub in enumerate(sub_items[:self.max_sub_options]):
+                    r_inner = self.radius + idx * band_height
+                    r_outer = self.radius + (idx + 1) * band_height
+
+                    rect_outer = QRectF(center.x() - r_outer, center.y() - r_outer, r_outer * 2, r_outer * 2)
+                    rect_inner = QRectF(center.x() - r_inner, center.y() - r_inner, r_inner * 2, r_inner * 2)
+
+                    path = QPainterPath()
+                    path.arcMoveTo(rect_outer, current_start)
+                    path.arcTo(rect_outer, current_start, current_sweep)
+                    path.arcTo(rect_inner, current_start + current_sweep, -current_sweep)
+                    path.closeSubpath()
+
+                    color = QColor(220, 240, 255, 210)
+                    if idx == self.hovered_sub_index:
+                        color = QColor(120, 200, 255, 240)
+                    painter.setBrush(color)
+                    painter.setPen(QPen(QColor(0, 0, 0, 40), 1))
+                    painter.drawPath(path)
+
+                    # 绘制子项文字
+                    mid_angle = start_angle + angle_step / 2
+                    rad = math.radians(mid_angle)
+                    text_radius = (r_inner + r_outer) / 2
+                    text_x = center.x() + text_radius * math.cos(rad)
+                    text_y = center.y() + text_radius * math.sin(rad)
+                    text_rect = QRectF(text_x - 40, text_y - 20, 80, 40)
+                    painter.setPen(QColor(0, 0, 0))
+                    painter.drawText(text_rect, Qt.AlignmentFlag.AlignCenter, sub.get('label', ''))
+
     def leaveEvent(self, event):
         if self.hovered_index != -1:
             self.hovered_index = -1
             self.hovered_changed.emit(-1)
+        self.hovered_sub_index = -1
         self.update()
         super().leaveEvent(event)
 
     def hideEvent(self, event):
         # 窗口隐藏/关闭时，重置状态
         self.hovered_changed.emit(-1)
+        self.hovered_sub_index = -1
         super().hideEvent(event)
 
     def mouseMoveEvent(self, event):
@@ -205,19 +251,28 @@ class RadialMenu(QWidget):
             if 0 <= idx < count:
                 angle_index = idx
 
-        # 2. 计算 UI 高亮索引 (严格遵循圆环)
+        # 2. 计算 UI 高亮索引 (主项位于内环)
         new_hover_index = -1
+        new_hover_sub_index = -1
         if self.inner_radius <= dist <= self.radius:
             new_hover_index = angle_index
-            
+        elif self.radius < dist <= self.radius + self.outer_ring_thickness and angle_index != -1:
+            new_hover_index = angle_index
+            sub_items = self.items[angle_index].get('sub_items') if angle_index < len(self.items) else None
+            if sub_items:
+                band_height = self.outer_ring_thickness / max(len(sub_items), 1)
+                idx = int((dist - self.radius) / band_height)
+                new_hover_sub_index = min(idx, len(sub_items) - 1)
+        
         # 3. 计算 信号触发索引 (更宽松的内圆)
         new_signal_index = -1
         if self.trigger_radius <= dist <= self.radius: # 使用 trigger_radius
             new_signal_index = angle_index
 
         # 4. 更新 UI 状态
-        if self.hovered_index != new_hover_index:
+        if self.hovered_index != new_hover_index or self.hovered_sub_index != new_hover_sub_index:
             self.hovered_index = new_hover_index
+            self.hovered_sub_index = new_hover_sub_index
             self.update() # 只重绘 UI
 
         # 5. 发送信号 (使用更宽松的索引)
@@ -237,12 +292,17 @@ class RadialMenu(QWidget):
         # 仅左键释放触发点击
         if event.button() != Qt.MouseButton.LeftButton:
             return
-        # 1. 先关闭菜单 (符合用户直觉，点击即消失)
-        self.close()
+        # 先记录当前选择，再关闭窗口，避免 hideEvent 重置状态导致回调丢失
+        callback = None
         if self.hovered_index != -1 and self.items:
             item = self.items[self.hovered_index]
-            # 2. 再执行回调
-            if 'callback' in item:
-                item['callback']()
-        else:
-            pass
+            sub_items = item.get('sub_items') or []
+            if 0 <= self.hovered_sub_index < len(sub_items):
+                callback = sub_items[self.hovered_sub_index].get('callback')
+            else:
+                callback = item.get('callback')
+
+        # 关闭菜单后再执行回调，确保视觉反馈同时保留所选项
+        self.close()
+        if callable(callback):
+            callback()
