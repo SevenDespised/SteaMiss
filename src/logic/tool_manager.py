@@ -35,6 +35,12 @@ class ToolManager:
                 self.action_launch_steam_game(appid)
         elif action_key == "toggle_timer":
             self.action_toggle_timer()
+        elif action_key == "pause_timer":
+            self.action_pause_timer()
+        elif action_key == "resume_timer":
+            self.action_resume_timer()
+        elif action_key == "stop_timer":
+            self.action_stop_timer()
 
     def action_say_hello(self):
         if not self.config_manager: return
@@ -63,6 +69,21 @@ class ToolManager:
         running = self.timer_manager.toggle()
         state = "START" if running else "STOP"
         print(f"Timer state: {state}")
+
+    def action_pause_timer(self):
+        if self.timer_manager:
+            self.timer_manager.pause()
+            print("Timer paused")
+
+    def action_resume_timer(self):
+        if self.timer_manager:
+            self.timer_manager.resume()
+            print("Timer resumed")
+
+    def action_stop_timer(self):
+        if self.timer_manager:
+            self.timer_manager.stop_and_persist()
+            print("Timer stopped and saved")
 
     def open_tool(self, tool_name):
         """

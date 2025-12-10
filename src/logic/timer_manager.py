@@ -16,6 +16,10 @@ class TimerManager:
     def is_running(self):
         return self.timer.is_running
 
+    def is_paused(self):
+        # 既不是 running，又有 accumulated_time，说明是暂停状态
+        return not self.timer.is_running and self.timer.accumulated_time > 0
+
     def toggle(self):
         """开始/结束计时，返回当前是否正在计时。"""
         if self.is_running():
@@ -27,12 +31,22 @@ class TimerManager:
     def start(self):
         self.timer.start()
 
+    def pause(self):
+        """暂停计时（不保存）"""
+        self.timer.pause()
+
+    def resume(self):
+        """恢复计时"""
+        self.timer.start()
+
     def stop_and_persist(self):
-        if not self.is_running():
+        if not self.is_running() and not self.is_paused():
             return
         self.timer.pause()
         self.last_elapsed_seconds = self.timer.get_total_seconds()
         self._persist_record()
+        # 只有在真正结束并保存后才重置，清除时钟图像
+        self.reset()
 
     def get_elapsed_seconds(self):
         # 返回当前累计秒数（运行中则包含实时）

@@ -20,11 +20,17 @@ class RadialMenu(QWidget):
         self.inner_radius = 120
         self.trigger_radius = 80 # 触发宠物指向动画的半径 (比 inner_radius 小)
         self.just_closed = False # 防止重复触发的标志位
+        
         # 设置背景透明圆环宽度，防止鼠标穿透无法正确响应动画
         self.ring_bg_width = self.radius - self.trigger_radius
-        # 外环配置：在原扇区向外扩展子选项
+        
+        # 外环配置
         self.outer_ring_thickness = 80
+        self.sub_radius = self.radius + self.outer_ring_thickness # 子菜单外径
         self.max_sub_options = 2
+        
+        self.margin = 30 # 触发区域的额外边距
+        
         # 启用鼠标追踪，以便在不按键时也能检测悬停
         self.setMouseTracking(True)
 
@@ -33,8 +39,8 @@ class RadialMenu(QWidget):
         items: list of dict {'label': str, 'callback': callable}
         """
         self.items = items
-        # 调整窗口大小以容纳圆盘
-        size = (self.radius + self.outer_ring_thickness) * 2 + 20
+        # 调整窗口大小以容纳圆盘 (包括子菜单) + 边距
+        size = (self.sub_radius + self.margin) * 2
         self.resize(size, size)
 
     def show_at(self, global_pos):
@@ -97,15 +103,22 @@ class RadialMenu(QWidget):
         
         # [关键修复] 绘制一个几乎透明的底圆，用于捕获鼠标事件
         # 解决 Windows 下完全透明区域点击穿透的问题
-        # 覆盖整个交互区域 (半径为 self.radius 的圆)
-        painter.setBrush(Qt.BrushStyle.NoBrush)  # 无填充，仅边框
-        # 几乎透明的画笔（Alpha=1），宽度=圆环厚度
-        pen = QPen(QColor(255, 255, 255, 1), self.ring_bg_width)
+        # 覆盖整个交互区域 (包括可能的子菜单和边距)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        
+        # 计算点击检测区域
+        hit_inner = self.trigger_radius - self.margin
+        hit_outer = self.sub_radius + self.margin
+        hit_thickness = hit_outer - hit_inner
+        hit_radius = hit_inner + hit_thickness / 2
+        
+        # 几乎透明的画笔（Alpha=1）
+        pen = QPen(QColor(255, 255, 255, 1), hit_thickness)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
         pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
         painter.setPen(pen)
-        # 绘制椭圆：半径修正为 self.radius - ring_bg_width/2，保证外径= self.radius
-        painter.drawEllipse(center, self.radius - self.ring_bg_width//2, self.radius - self.ring_bg_width//2)
+        
+        painter.drawEllipse(center, int(hit_radius), int(hit_radius))
         
         count = len(self.items)
         if count == 0: return
@@ -264,9 +277,21 @@ class RadialMenu(QWidget):
                 idx = int((dist - self.radius) / band_height)
                 new_hover_sub_index = min(idx, len(sub_items) - 1)
         
-        # 3. 计算 信号触发索引 (更宽松的内圆)
+        # 3. 计算 信号触发索引
+        # 逻辑：只有在真正的菜单区域内才触发指向信号
+        # 额外区域（margin）仅用于捕获鼠标事件，以便在移出时能正确发送 -1 重置信号
         new_signal_index = -1
-        if self.trigger_radius <= dist <= self.radius: # 使用 trigger_radius
+        
+        # 动态计算有效外半径：如果有子菜单，则延伸到子菜单外径
+        has_sub_items = False
+        if 0 <= angle_index < len(self.items):
+            if self.items[angle_index].get('sub_items'):
+                has_sub_items = True
+        
+        real_outer = self.sub_radius if has_sub_items else self.radius
+        
+        # 严格限制在触发半径和有效外半径之间
+        if self.trigger_radius <= dist <= real_outer:
             new_signal_index = angle_index
 
         # 4. 更新 UI 状态
