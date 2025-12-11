@@ -101,43 +101,299 @@ class SteamClient:
             print(f"Steam Store API Error: {e}")
             return {}
             
-    def get_apps_info(self, app_ids):
+    def get_all_apps(self, include_games=True, include_dlc=False, include_software=False, 
+                     include_videos=False, include_hardware=False, if_modified_since=None, max_results=50000):
         """
-        批量获取游戏基本信息 (如名称)
-        使用 IStoreService.GetAppList
+        获取Steam商店所有可用应用列表
+        使用 IStoreService.GetAppList 接口，支持分页获取全部数据
+        
+        参数:
+            include_games: 是否包含游戏
+            include_dlc: 是否包含DLC
+            include_software: 是否包含软件
+            include_videos: 是否包含视频
+            include_hardware: 是否包含硬件
+            if_modified_since: Unix时间戳，仅返回此时间后修改的应用
+            max_results: 每次请求的最大结果数（默认50000，建议不超过50000）
+            
+        返回:
+            包含所有app信息的列表，每个app包含 appid, name, last_modified, price_change_number 等字段
         """
-        if not app_ids or not self.api_key:
+        self._ensure_api()
+        
+        all_apps = []
+        last_appid = 0
+        import time
+        
+        try:
+            while True:
+                try:
+                    response = self.api.IStoreService.GetAppList(
+                        include_games=include_games,
+                        include_dlc=include_dlc,
+                        include_software=include_software,
+                        include_videos=include_videos,
+                        include_hardware=include_hardware,
+                        max_results=max_results,
+                        language='schinese'
+                    )
+                    if last_appid > 0:
+                        response = self.api.IStoreService.GetAppList(
+                            include_games=include_games,
+                            include_dlc=include_dlc,
+                            include_software=include_software,
+                            include_videos=include_videos,
+                            include_hardware=include_hardware,
+                            max_results=max_results,
+                            language='schinese',
+                            last_appid=last_appid
+                        )
+                    if if_modified_since:
+                        response = self.api.IStoreService.GetAppList(
+                            include_games=include_games,
+                            include_dlc=include_dlc,
+                            include_software=include_software,
+                            include_videos=include_videos,
+                            include_hardware=include_hardware,
+                            max_results=max_results,
+                            language='schinese',
+                            if_modified_since=if_modified_since
+                        )
+                    
+                    data = response.get('response', {})
+                    apps = data.get('apps', [])
+                except TypeError:
+                    # WebAPI 不支持该参数组合，fallback 到 requests
+                    url = "https://api.steampowered.com/IStoreService/GetAppList/v1/"
+                    params = {
+                        "key": self.api_key,
+                        "include_games": str(include_games).lower(),
+                        "include_dlc": str(include_dlc).lower(),
+                        "include_software": str(include_software).lower(),
+                        "include_videos": str(include_videos).lower(),
+                        "include_hardware": str(include_hardware).lower(),
+                        "max_results": max_results,
+                        "language": "schinese"
+                    }
+                    
+                    if last_appid > 0:
+                        params["last_appid"] = last_appid
+                        
+                    if if_modified_since:
+                        params["if_modified_since"] = if_modified_since
+                    
+                    resp = requests.get(url, params=params, timeout=30)
+                    if resp.status_code != 200:
+                        print(f"Steam API Error (GetAppList): HTTP {resp.status_code}")
+                        break
+                    
+                    data = resp.json().get('response', {})
+                    apps = data.get('apps', [])
+                
+                if not apps:
+                    # 没有更多数据了
+                    break
+                    
+                all_apps.extend(apps)
+                
+                # 获取最后一个appid，用于下次请求
+                last_appid = apps[-1]['appid']
+                
+                # 检查是否还有更多数据
+                have_more_results = data.get('have_more_results', False)
+                if not have_more_results:
+                    break
+                    
+                # 简单限流，避免触发速率限制
+                time.sleep(0.5)
+                
+                print(f"已获取 {len(all_apps)} 个应用，继续获取...")
+                
+        except Exception as e:
+            print(f"Steam API Error (GetAppList): {e}")
+            
+        return all_apps
+    
+    def get_apps_info(self, app_ids, max_results=50000):
+        """
+        批量获取游戏基本信息 (如名称) - 高效范围查询
+        只获取包含目标appid的应用范围，避免下载整个Steam应用库
+        
+        策略：
+        1. 找出目标appid中的最小值
+        2. 从 min_appid - 1 开始，获取 max_results 个应用
+        3. 从结果中筛选出目标appid
+        4. 更新 min_appid 为还未找到的最小appid
+        5. 重复直到找到全部或遍历完整个应用库
+        
+        参数:
+            app_ids: 要查询的appid列表
+            max_results: 每次请求的结果数量（默认50000）
+        
+        返回:
+            app_info_map: 以appid为key的应用信息字典
+        """
+        self._ensure_api()
+        if not app_ids or not self.api:
             return {}
 
         app_info_map = {}
+        app_id_set = set(int(aid) for aid in app_ids)
+        found_ids = set()
         import time
+        
         try:
-            # 分批获取信息，每次 30 个
-            for i in range(0, len(app_ids), 30):
-                chunk = app_ids[i:i+30]
-                # IStoreService.GetAppList 需要特殊参数构造
-                # 这里使用 requests 手动构造，因为 steam 库可能不支持复杂的数组参数
-                url = "https://api.steampowered.com/IStoreService/GetAppList/v1/"
-                params = {
-                    "key": self.api_key,
-                    "include_games": "true",
-                    "language": "schinese"
-                }
-                # 手动添加 appids 参数
-                for idx, appid in enumerate(chunk):
-                    params[f"appids[{idx}]"] = appid
+            # 按升序排序，找出最小和最大appid
+            sorted_ids = sorted(app_id_set)
+            min_appid = sorted_ids[0]
+            max_appid = sorted_ids[-1]
+            
+            print(f"开始查询 {len(app_id_set)} 个应用，范围: {min_appid} - {max_appid}")
+            
+            # 从最小appid-1开始循环查询
+            last_appid = min_appid - 1
+            iteration = 0
+            
+            while len(found_ids) < len(app_id_set):
+                iteration += 1
+                try:
+                    response = self.api.IStoreService.GetAppList(
+                        include_games=True,
+                        include_dlc=True,
+                        include_software=False,
+                        include_videos=False,
+                        include_hardware=False,
+                        max_results=max_results,
+                        last_appid=last_appid if last_appid > 0 else None
+                    )
+                    data = response.get('response', {})
+                    apps = data.get('apps', [])
+                except TypeError:
+                    # WebAPI 可能不支持该参数，fallback 到 requests
+                    url = "https://api.steampowered.com/IStoreService/GetAppList/v1/"
+                    params = {
+                        "key": self.api_key,
+                        "include_games": "true",
+                        "include_dlc": "true",
+                        "include_software": "false",
+                        "include_videos": "false",
+                        "include_hardware": "false",
+                        "max_results": max_results,
+                        "language": "schinese"
+                    }
                     
-                resp = requests.get(url, params=params, timeout=10)
-                if resp.status_code == 200:
-                    apps = resp.json().get('response', {}).get('apps', [])
-                    for app in apps:
-                        app_info_map[str(app['appid'])] = app
-                time.sleep(0.2)
+                    if last_appid > 0:
+                        params["last_appid"] = last_appid
+                    
+                    resp = requests.get(url, params=params, timeout=30)
+                    if resp.status_code != 200:
+                        print(f"Steam API Error (GetAppList): HTTP {resp.status_code}")
+                        break
+                    
+                    data = resp.json().get('response', {})
+                    apps = data.get('apps', [])
+                
+                if not apps:
+                    # 没有更多数据了，商店已遍历完整
+                    print(f"已遍历完整个Steam应用库，停止查询")
+                    break
+                
+                # 在这批结果中筛选出目标appid
+                batch_found = 0
+                for app in apps:
+                    appid = app['appid']
+                    if appid in app_id_set and appid not in found_ids:
+                        app_info_map[str(appid)] = app
+                        found_ids.add(appid)
+                        batch_found += 1
+                
+                last_appid = apps[-1]['appid']
+                print(f"[迭代 {iteration}] 获取 {len(apps)} 个应用 (appid范围: {apps[0]['appid']} - {last_appid}), 本批找到 {batch_found} 个目标应用")
+                
+                # 检查是否还有更多数据
+                have_more_results = data.get('have_more_results', False)
+                if not have_more_results:
+                    print(f"已到达Steam应用库末尾")
+                    break
+                
+                # 优化：如果当前批次的最小appid已经大于目标最大appid，说明目标都已超过范围
+                if apps[0]['appid'] > max_appid:
+                    print(f"当前批次最小appid ({apps[0]['appid']}) 已超过目标最大appid ({max_appid})，停止查询")
+                    break
+                
+                time.sleep(0.3)  # 限流
+            
+            print(f"查询完成，找到 {len(found_ids)}/{len(app_id_set)} 个应用")
+            
+            # 如果有遗漏的appid，尝试通过Store API补充
+            missing_ids = app_id_set - found_ids
+            if missing_ids:
+                print(f"尝试补充缺失的 {len(missing_ids)} 个应用...")
+                for appid in sorted(missing_ids):
+                    try:
+                        store_url = "https://store.steampowered.com/api/appdetails"
+                        store_params = {
+                            "appids": appid,
+                            "l": "schinese",
+                            "cc": "cn"
+                        }
+                        store_resp = requests.get(store_url, params=store_params, timeout=5)
+                        if store_resp.status_code == 200:
+                            store_data = store_resp.json()
+                            if str(appid) in store_data and store_data[str(appid)].get('success'):
+                                data = store_data[str(appid)].get('data', {})
+                                app_info_map[str(appid)] = {
+                                    'appid': appid,
+                                    'name': data.get('name', 'Unknown')
+                                }
+                        time.sleep(0.1)
+                    except Exception as e:
+                        print(f"Failed to get app {appid} from Store API: {e}")
+                        
         except Exception as e:
-            print(f"Steam API Error (IStoreService): {e}")
+            print(f"Steam API Error (get_apps_info): {e}")
             
         return app_info_map
 
+    def get_wishlist_app(self, steam_id):
+        """
+        获取愿望单中的应用ID列表
+        使用 IWishlistService.GetWishlist 接口获取愿望单应用ID列表
+        
+        返回:
+            app_ids: 愿望单中的应用ID列表
+        """
+        self._ensure_api()
+        app_ids = []
+        
+        if self.api:
+            try:
+                response = self.api.IWishlistService.GetWishlist(steamid=steam_id)
+                items = response.get('response', {}).get('items', [])
+                app_ids = [item['appid'] for item in items]
+            except Exception as e:
+                print(f"Steam API Error (GetWishlistApp): {e}")
+        return app_ids
+    
+    def get_game_followed(self, steam_id):
+        """
+        获取关注游戏的应用ID列表
+        使用 IStoreService.GetGamesFollowed 接口获取关注游戏ID列表
+        
+        返回:
+            app_ids: 关注游戏的应用ID列表
+        """
+        self._ensure_api()
+        app_ids = []
+        
+        if self.api:
+            try:
+                response = self.api.IStoreService.GetGamesFollowed(steamid=steam_id)
+                app_ids = response.get('response', {}).get('appids', [])
+            except Exception as e:
+                print(f"Steam API Error (GetGamesFollowedApp): {e}")
+        return app_ids
+    
     def get_wishlist(self, steam_id):
         """
         获取愿望单数据，并转换为 SteamWorker 期望的格式
@@ -145,29 +401,11 @@ class SteamClient:
         """
         self._ensure_api()
         
-        app_ids = []
-        # 1. 尝试获取 AppID 列表 (IWishlistService)
-        if self.api:
-            try:
-                response = self.api.IWishlistService.GetWishlist(steamid=steam_id)
-                items = response.get('response', {}).get('items', [])
-                app_ids = [item['appid'] for item in items]
-            except Exception as e:
-                print(f"Steam API Error (GetWishlist): {e}")
+        app_ids1 = self.get_wishlist_app(steam_id)
+        app_ids2 = self.get_game_followed(steam_id)
+        app_ids = list(set(app_ids1 + app_ids2))
 
-        # Fallback: 如果 steam 库失败，尝试直接请求 API
-        if not app_ids and self.api_key:
-             try:
-                url = "https://api.steampowered.com/IWishlistService/GetWishlist/v1/"
-                params = {"key": self.api_key, "steamid": steam_id}
-                response = requests.get(url, params=params, timeout=10)
-                if response.status_code == 200:
-                    items = response.json().get('response', {}).get('items', [])
-                    app_ids = [item['appid'] for item in items]
-             except Exception as e:
-                 print(f"Steam API Fallback Error (GetWishlist): {e}")
-
-        # 2. 如果拿到了 AppID，去商店查价格并转换格式
+        # 如果拿到了 AppID，去商店查价格并转换格式
         if app_ids:
             wishlist_dict = {}
             import time
