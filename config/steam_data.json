@@ -10,7 +10,7 @@
     "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
     "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
     "lastlogoff": 1765421356,
-    "personastate": 3,
+    "personastate": 4,
     "realname": "七鄙",
     "primaryclanid": "103582791429521408",
     "timecreated": 1453718318,
@@ -323,7 +323,24 @@
         "top_2weeks": [],
         "total_playtime": 18140
       },
-      "summary": null
+      "summary": {
+        "steamid": "76561199365389945",
+        "communityvisibilitystate": 3,
+        "profilestate": 1,
+        "personaname": "r8nl3657008584",
+        "commentpermission": 1,
+        "profileurl": "https://steamcommunity.com/profiles/76561199365389945/",
+        "avatar": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75.jpg",
+        "avatarmedium": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_medium.jpg",
+        "avatarfull": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_full.jpg",
+        "avatarhash": "f4f2fc58620a769dfcc51defda89ed5cb8fa7d75",
+        "lastlogoff": 1742872634,
+        "personastate": 0,
+        "primaryclanid": "103582791429521408",
+        "timecreated": 1657008665,
+        "personastateflags": 0,
+        "steam_level": 4
+      }
     },
     "76561198279072437": {
       "games": {
@@ -2854,7 +2871,27 @@
         ],
         "total_playtime": 164505
       },
-      "summary": null
+      "summary": {
+        "steamid": "76561198279072437",
+        "communityvisibilitystate": 3,
+        "profilestate": 1,
+        "personaname": "SevenDespised",
+        "profileurl": "https://steamcommunity.com/profiles/76561198279072437/",
+        "avatar": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba.jpg",
+        "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
+        "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
+        "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
+        "lastlogoff": 1765421356,
+        "personastate": 4,
+        "realname": "七鄙",
+        "primaryclanid": "103582791429521408",
+        "timecreated": 1453718318,
+        "personastateflags": 0,
+        "loccountrycode": "CN",
+        "locstatecode": "12",
+        "loccityid": 10400,
+        "steam_level": 21
+      }
     }
   },
   "games_primary": {
