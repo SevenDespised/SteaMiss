@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QObject, pyqtSignal
-from src.logic.steam_support.steam_worker import SteamWorker
-from src.logic.steam_support.steam_aggregator import GamesAggregator
+from src.feature.steam_support.steam_worker import SteamWorker
+from src.feature.steam_support.steam_aggregator import GamesAggregator
 import json
 import os
 

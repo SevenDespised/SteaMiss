@@ -4,14 +4,14 @@ from PyQt6.QtWidgets import QWidget, QApplication, QMenu
 from PyQt6.QtCore import Qt, QPoint, QTimer, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QAction, QCursor, QPixmap
 
-from src.ui.timer_overlay import TimerOverlay
+# from src.ui.timer_overlay import TimerOverlay # 移除直接依赖
 
 class DesktopPet(QWidget):
     # 定义信号，用于通知状态变化
     visibility_changed = pyqtSignal(bool)
     topmost_changed = pyqtSignal(bool)
 
-    def __init__(self, behavior_manager, resource_manager, ui_manager, timer_manager, feature_manager):
+    def __init__(self, behavior_manager, resource_manager, ui_manager, timer_manager, feature_manager, timer_overlay):
         super().__init__()
         
         # 1. 初始化窗口属性
@@ -27,12 +27,15 @@ class DesktopPet(QWidget):
         self.ui_manager = ui_manager
         self.timer_manager = timer_manager
         self.feature_manager = feature_manager
+        self.timer_overlay = timer_overlay
         
         # 初始化计时器绘制器
-        self.timer_overlay = TimerOverlay(self.timer_manager)
+        # self.timer_overlay = TimerOverlay(self.timer_manager)
+        # TODO: 应该通过依赖注入获取 TimerOverlay，目前暂时保留，等待进一步重构
+        # self.timer_overlay = TimerOverlay(self.timer_manager)
         
         # 连接 UI 管理器信号
-        self.ui_manager.get_radial_menu().hovered_changed.connect(self.on_menu_hover_changed)
+        self.ui_manager.menu_hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle" # 当前行为状态
@@ -164,17 +167,11 @@ class DesktopPet(QWidget):
         """
         右键点击事件
         """
-        # 委托给 UI Manager 判断状态
-        if self.ui_manager.is_radial_menu_just_closed():
-            return
-
-        if self.ui_manager.is_radial_menu_visible():
-            self.ui_manager.close_radial_menu()
-            return
-
         # 使用窗口中心作为菜单中心，确保宠物在圆环正中央
         center_pos = self.mapToGlobal(self.rect().center())
-        self.ui_manager.show_radial_menu(center_pos)
+        
+        # 委托给 UI Manager 处理交互逻辑
+        self.ui_manager.handle_right_click(center_pos)
 
     def on_menu_hover_changed(self, index):
         """

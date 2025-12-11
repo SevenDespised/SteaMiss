@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMessageBox
-from src.logic.app_manager import AppManager
+from src.application import SteaMissApp
 from src.utils.single_instance import ensure_single_instance
 
 def main():
@@ -22,7 +22,7 @@ def main():
     app.setQuitOnLastWindowClosed(False)
     
     # 初始化应用程序管理器
-    manager = AppManager(app)
+    manager = SteaMissApp(app)
     
     sys.exit(app.exec())
 
