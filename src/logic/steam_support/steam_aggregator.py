@@ -1,10 +1,11 @@
 from typing import List, Dict, Any, Optional
 
+
 class GamesAggregator:
     """管理多账号游戏统计的聚合上下文"""
 
     def __init__(self):
-        self._ctx = None
+        self._ctx: Optional[Dict[str, Any]] = None
 
     def begin(self, account_ids: List[str], primary_id: str):
         self._ctx = {
@@ -13,10 +14,22 @@ class GamesAggregator:
             "results": [],
         }
 
-    def add_result(self, steam_id: str, data: Dict[str, Any]) -> bool:
+    def add_result(
+        self,
+        steam_id: str,
+        games: Optional[Dict[str, Any]],
+        summary: Optional[Dict[str, Any]],
+    ) -> bool:
         if not self._ctx:
             return False
-        self._ctx["results"].append({"steam_id": steam_id, "data": data})
+
+        self._ctx["results"].append(
+            {
+                "steam_id": steam_id,
+                "games": games,
+                "summary": summary,
+            }
+        )
         self._ctx["pending"] -= 1
         return self._ctx["pending"] <= 0
 
@@ -28,7 +41,7 @@ class GamesAggregator:
 
     def finalize(self):
         if not self._ctx:
-            return None, None
+            return None, None, {}
 
         results = self._ctx["results"]
         primary_id = self._ctx.get("primary")
@@ -36,7 +49,19 @@ class GamesAggregator:
 
         primary_data = pick_primary_results(results, primary_id)
         aggregated = merge_games(results)
-        return primary_data, aggregated
+
+        account_map: Dict[str, Dict[str, Any]] = {}
+        for item in results:
+            sid = item.get("steam_id")
+            games = item.get("games")
+            summary = item.get("summary")
+            if sid and games:
+                account_map[sid] = {
+                    "games": games,
+                    "summary": summary,
+                }
+
+        return primary_data, aggregated, account_map
 
 
 def pick_primary_results(results: List[Dict[str, Any]], primary_id: Optional[str]):
@@ -44,11 +69,15 @@ def pick_primary_results(results: List[Dict[str, Any]], primary_id: Optional[str
     if primary_id:
         for item in results:
             if item.get("steam_id") == primary_id:
-                primary_data = item.get("data")
+                primary_data = item.get("games")
                 break
 
-    if primary_data is None and results:
-        primary_data = results[0].get("data")
+    if primary_data is None:
+        for item in results:
+            games = item.get("games")
+            if games:
+                primary_data = games
+                break
     return primary_data
 
 
@@ -56,8 +85,8 @@ def merge_games(results: List[Dict[str, Any]]):
     merged: Dict[Any, Dict[str, Any]] = {}
 
     for item in results:
-        data = item.get("data") or {}
-        for game in data.get("all_games", []):
+        games = item.get("games") or {}
+        for game in games.get("all_games", []):
             appid = game.get("appid")
             if appid is None:
                 continue

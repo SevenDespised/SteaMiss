@@ -94,7 +94,7 @@ class SteamManager(QObject):
         self.games_aggregator.begin(ids, primary_id)
 
         for sid in ids:
-            self._start_worker(key, sid, "games", steam_id=sid)
+            self._start_worker(key, sid, "profile_and_games", steam_id=sid)
 
     def fetch_store_prices(self, appids):
         """异步获取游戏价格"""
@@ -195,17 +195,34 @@ class SteamManager(QObject):
         if task_type == "summary":
             self.cache["summary"] = data
             self.on_player_summary.emit(data)
-        elif task_type == "games":
+        elif task_type in ("games", "profile_and_games"):
+            steam_id = result.get("steam_id")
+            if task_type == "profile_and_games":
+                games_data = data.get("games") if data else None
+                summary_data = data.get("summary") if data else None
+            else:
+                games_data = data
+                summary_data = None
+
             if self.games_aggregator:
-                done = self.games_aggregator.add_result(result.get("steam_id"), data)
-                if done:
-                    self._finalize_games_results()
+                if games_data is None:
+                    done = self.games_aggregator.mark_error()
+                    if done:
+                        self._finalize_games_results()
+                else:
+                    done = self.games_aggregator.add_result(steam_id, games_data, summary_data)
+                    if done:
+                        self._finalize_games_results()
             else:
                 # 兼容单账号模式
-                self.cache["games"] = data
-                self.cache["games_primary"] = data
-                self.on_games_stats.emit(data)
-                self.save_local_data()
+                if games_data:
+                    self.cache["games"] = games_data
+                    self.cache["games_primary"] = games_data
+                    if summary_data:
+                        self.cache["summary"] = summary_data
+                        self.on_player_summary.emit(summary_data)
+                    self.on_games_stats.emit(games_data)
+                    self.save_local_data()
         elif task_type == "store_prices":
             # 合并价格数据到缓存
             if "prices" not in self.cache:
@@ -221,15 +238,74 @@ class SteamManager(QObject):
             self.save_local_data()
 
     def _finalize_games_results(self):
-        primary_data, aggregated = self.games_aggregator.finalize()
+        primary_data, aggregated, account_map = self.games_aggregator.finalize()
 
+        if account_map:
+            self.cache["games_accounts"] = account_map
+
+        primary_id = self.config.get("steam_id")
         if primary_data:
             self.cache["games_primary"] = primary_data
+
+        if primary_id and account_map and primary_id in account_map:
+            primary_summary = account_map[primary_id].get("summary")
+            if primary_summary:
+                self.cache["summary"] = primary_summary
+                self.on_player_summary.emit(primary_summary)
 
         if aggregated:
             self.cache["games"] = aggregated
             self.on_games_stats.emit(aggregated)
             self.save_local_data()
+
+    def get_game_datasets(self):
+        datasets = []
+
+        aggregated = self.cache.get("games")
+        if aggregated:
+            datasets.append({
+                "key": "total",
+                "label": "总计",
+                "steam_id": None,
+                "data": aggregated,
+                "summary": None,
+            })
+
+        accounts = dict(self.cache.get("games_accounts", {}) or {})
+        primary_id = self.config.get("steam_id")
+        if primary_id and primary_id not in accounts and "games_primary" in self.cache:
+            accounts[primary_id] = {
+                "games": self.cache["games_primary"],
+                "summary": self.cache.get("summary"),
+            }
+        if primary_id and primary_id in accounts:
+            primary_entry = accounts[primary_id]
+            games_data = primary_entry.get("games")
+            if games_data:
+                datasets.append({
+                    "key": "primary",
+                    "label": "主账号",
+                    "steam_id": primary_id,
+                    "data": games_data,
+                    "summary": primary_entry.get("summary") or self.cache.get("summary"),
+                })
+
+        alt_ids = self.config.get("steam_alt_ids", [])
+        if isinstance(alt_ids, list):
+            sub_index = 1
+            for sid in alt_ids:
+                entry = accounts.get(sid)
+                if entry and entry.get("games"):
+                    datasets.append({
+                        "key": f"sub_{sub_index}",
+                        "label": f"子账号{sub_index}",
+                        "steam_id": sid,
+                        "data": entry.get("games"),
+                        "summary": entry.get("summary"),
+                    })
+                    sub_index += 1
+
+        return datasets
 
     def _get_primary_games_cache(self):
         primary_id = self.config.get("steam_id")

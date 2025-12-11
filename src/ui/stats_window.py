@@ -1,4 +1,14 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QGroupBox, QFormLayout, QListWidget, QPushButton, QHBoxLayout
+from PyQt6.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QLabel,
+    QGroupBox,
+    QFormLayout,
+    QListWidget,
+    QPushButton,
+    QHBoxLayout,
+    QTabWidget,
+)
 from PyQt6.QtCore import Qt
 from src.ui.all_games_window import AllGamesWindow
 import datetime
@@ -12,33 +22,8 @@ class StatsWindow(QWidget):
         
         layout = QVBoxLayout()
         
-        # 1. 个人信息区域
-        self.info_group = QGroupBox("个人信息")
-        info_layout = QFormLayout()
-        self.lbl_name = QLabel("加载中...")
-        self.lbl_level = QLabel("Lv. ?")
-        self.lbl_created = QLabel("?")
-        info_layout.addRow("昵称:", self.lbl_name)
-        info_layout.addRow("等级:", self.lbl_level)
-        info_layout.addRow("注册时间:", self.lbl_created)
-        self.info_group.setLayout(info_layout)
-        layout.addWidget(self.info_group)
-        
-        # 2. 统计概览
-        self.stats_group = QGroupBox("库统计")
-        stats_layout = QFormLayout()
-        self.lbl_game_count = QLabel("0")
-        self.lbl_total_time = QLabel("0 小时")
-        stats_layout.addRow("游戏总数:", self.lbl_game_count)
-        stats_layout.addRow("总游玩时长:", self.lbl_total_time)
-        self.stats_group.setLayout(stats_layout)
-        layout.addWidget(self.stats_group)
-        
-        # 3. 最近两周游玩 (Top 5)
-        layout.addWidget(QLabel("最近两周游玩 (Top 5):"))
-        self.recent_list = QListWidget()
-        self.recent_list.setMaximumHeight(120)
-        layout.addWidget(self.recent_list)
+        self.tabs = QTabWidget()
+        layout.addWidget(self.tabs)
         
         # 4. 按钮
         btn_layout = QHBoxLayout()
@@ -81,33 +66,37 @@ class StatsWindow(QWidget):
 
     def update_stats_ui(self):
         if not self.steam_manager: return
-        
-        # 更新个人信息
-        if "summary" in self.steam_manager.cache:
-            data = self.steam_manager.cache["summary"]
-            self.lbl_name.setText(data.get("personaname", "Unknown"))
-            self.lbl_level.setText(f"Lv. {data.get('steam_level', '?')}")
-            
-            ts = data.get("timecreated", 0)
-            if ts:
-                dt = datetime.datetime.fromtimestamp(ts)
-                self.lbl_created.setText(dt.strftime("%Y-%m-%d"))
-        
-        # 更新游戏统计
-        if "games" in self.steam_manager.cache:
-            data = self.steam_manager.cache["games"]
-            self.lbl_game_count.setText(str(data.get("count", 0)))
-            
-            total_min = data.get("total_playtime", 0)
-            self.lbl_total_time.setText(f"{int(total_min/60)} 小时")
-            
-            # 更新最近列表
-            self.recent_list.clear()
-            top_2weeks = data.get("top_2weeks", [])
-            for game in top_2weeks:
-                name = game.get("name", "Unknown")
-                mins = game.get("playtime_2weeks", 0)
-                self.recent_list.addItem(f"{name} - {round(mins/60, 1)} 小时")
+        datasets = self.steam_manager.get_game_datasets()
+
+        self.tabs.clear()
+
+        if not datasets:
+            empty_tab = self._build_empty_tab()
+            self.tabs.addTab(empty_tab, "总计")
+            return
+
+        fallback_summary = self.steam_manager.cache.get("summary") if self.steam_manager.cache else None
+
+        for entry in datasets:
+            summary_obj = entry.get("summary")
+            if summary_obj is None and entry.get("key") == "primary":
+                summary_obj = fallback_summary
+
+            if entry.get("key") == "total" and summary_obj is None:
+                summary_obj = fallback_summary
+
+            include_summary = entry.get("key") != "total" or summary_obj is not None
+            steam_id_value = entry.get("steam_id")
+            if steam_id_value is None and entry.get("key") == "total":
+                steam_id_value = self.steam_manager.config.get("steam_id")
+            tab_info = self._build_stats_tab(include_summary)
+            self._apply_dataset_to_tab(
+                tab_info,
+                entry.get("data", {}),
+                summary_obj,
+                steam_id_value,
+            )
+            self.tabs.addTab(tab_info["widget"], entry["label"])
 
     def open_all_games_window(self):
         if not self.steam_manager: return
@@ -116,3 +105,100 @@ class StatsWindow(QWidget):
         # 这里保持原样，作为独立窗口打开
         self.all_games_win = AllGamesWindow(self.steam_manager)
         self.all_games_win.show()
+
+    def _build_stats_tab(self, include_summary):
+        tab = QWidget()
+        layout = QVBoxLayout()
+
+        summary_refs = None
+        if include_summary:
+            info_group = QGroupBox("个人信息")
+            info_layout = QFormLayout()
+            lbl_name = QLabel("加载中...")
+            lbl_level = QLabel("Lv. ?")
+            lbl_created = QLabel("?")
+            lbl_sid = QLabel("-")
+            info_layout.addRow("昵称:", lbl_name)
+            info_layout.addRow("等级:", lbl_level)
+            info_layout.addRow("注册时间:", lbl_created)
+            info_layout.addRow("Steam ID:", lbl_sid)
+            info_group.setLayout(info_layout)
+            layout.addWidget(info_group)
+            summary_refs = {
+                "name": lbl_name,
+                "level": lbl_level,
+                "created": lbl_created,
+                "steam_id": lbl_sid,
+            }
+
+        stats_group = QGroupBox("库统计")
+        stats_layout = QFormLayout()
+        lbl_game_count = QLabel("0")
+        lbl_total_time = QLabel("0 小时")
+        stats_layout.addRow("游戏总数:", lbl_game_count)
+        stats_layout.addRow("总游玩时长:", lbl_total_time)
+        stats_group.setLayout(stats_layout)
+        layout.addWidget(stats_group)
+
+        layout.addWidget(QLabel("最近两周游玩 (Top 5):"))
+        recent_list = QListWidget()
+        recent_list.setMaximumHeight(120)
+        layout.addWidget(recent_list)
+
+        layout.addStretch()
+        tab.setLayout(layout)
+
+        return {
+            "widget": tab,
+            "summary": summary_refs,
+            "stats": {
+                "game_count": lbl_game_count,
+                "total_time": lbl_total_time,
+            },
+            "recent_list": recent_list,
+        }
+
+    def _apply_dataset_to_tab(self, tab_info, data, summary, steam_id):
+        stats_refs = tab_info["stats"]
+        stats_refs["game_count"].setText(str(data.get("count", 0)))
+
+        total_min = data.get("total_playtime", 0)
+        total_hours = int(total_min / 60)
+        stats_refs["total_time"].setText(f"{total_hours} 小时")
+
+        recent_list = tab_info["recent_list"]
+        recent_list.clear()
+        for game in data.get("top_2weeks", [])[:5]:
+            name = game.get("name", "Unknown")
+            mins = game.get("playtime_2weeks", 0)
+            recent_list.addItem(f"{name} - {round(mins/60, 1)} 小时")
+
+        if tab_info["summary"] is not None:
+            ref = tab_info["summary"]
+            if summary:
+                ref["name"].setText(summary.get("personaname", "Unknown"))
+                ref["level"].setText(f"Lv. {summary.get('steam_level', '?')}")
+                ts = summary.get("timecreated", 0)
+                if ts:
+                    dt = datetime.datetime.fromtimestamp(ts)
+                    ref["created"].setText(dt.strftime("%Y-%m-%d"))
+                else:
+                    ref["created"].setText("?")
+                sid_text = summary.get("steamid") or steam_id or "-"
+                ref["steam_id"].setText(sid_text)
+            else:
+                ref["name"].setText("未获取")
+                ref["level"].setText("Lv. ?")
+                ref["created"].setText("?")
+                ref["steam_id"].setText(steam_id or "未填写")
+
+    def _build_empty_tab(self):
+        tab = QWidget()
+        layout = QVBoxLayout()
+        layout.addStretch()
+        msg = QLabel("暂无数据，请先填写主账号后刷新。")
+        msg.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(msg)
+        layout.addStretch()
+        tab.setLayout(layout)
+        return tab

@@ -38,19 +38,7 @@ class SteamWorker(QThread):
                 games_data = self.client.get_owned_games(self.steam_id)
                 if games_data:
                     games = games_data.get("games", [])
-                    games_by_playtime = sorted(games, key=lambda x: x.get("playtime_forever", 0), reverse=True)
-                    games_by_recent = sorted(games, key=lambda x: x.get("rtime_last_played", 0), reverse=True)
-                    games_by_2weeks = sorted(games, key=lambda x: x.get("playtime_2weeks", 0), reverse=True)
-                    top_2weeks = [g for g in games_by_2weeks if g.get("playtime_2weeks", 0) > 0][:5]
-
-                    result["data"] = {
-                        "count": games_data.get("game_count", 0),
-                        "all_games": games,
-                        "top_games": games_by_playtime[:5],
-                        "recent_game": games_by_recent[0] if games_by_recent else None,
-                        "top_2weeks": top_2weeks,
-                        "total_playtime": sum(g.get("playtime_forever", 0) for g in games),
-                    }
+                    result["data"] = build_games_payload(games, games_data.get("game_count", 0))
                 else:
                     result["error"] = "Failed to fetch games data (API returned None)"
 
@@ -106,8 +94,43 @@ class SteamWorker(QThread):
                 discounted_games.sort(key=lambda x: x["discount_pct"], reverse=True)
                 result["data"] = discounted_games[:10]
 
+            elif self.task_type == "profile_and_games":
+                players = self.client.get_player_summaries(self.steam_id)
+                level = self.client.get_steam_level(self.steam_id)
+                summary_data = None
+                if players:
+                    summary_data = players[0]
+                    summary_data["steam_level"] = level
+
+                games_data = self.client.get_owned_games(self.steam_id)
+                games_payload = None
+                if games_data:
+                    games = games_data.get("games", [])
+                    games_payload = build_games_payload(games, games_data.get("game_count", 0))
+
+                result["data"] = {
+                    "summary": summary_data,
+                    "games": games_payload,
+                }
+
         except Exception as e:
             result["error"] = str(e)
             print(f"Worker Error: {e}")
 
         self.data_ready.emit(result)
+
+
+def build_games_payload(games, game_count):
+    games_by_playtime = sorted(games, key=lambda x: x.get("playtime_forever", 0), reverse=True)
+    games_by_recent = sorted(games, key=lambda x: x.get("rtime_last_played", 0), reverse=True)
+    games_by_2weeks = sorted(games, key=lambda x: x.get("playtime_2weeks", 0), reverse=True)
+    top_2weeks = [g for g in games_by_2weeks if g.get("playtime_2weeks", 0) > 0][:5]
+
+    return {
+        "count": game_count,
+        "all_games": games,
+        "top_games": games_by_playtime[:5],
+        "recent_game": games_by_recent[0] if games_by_recent else None,
+        "top_2weeks": top_2weeks,
+        "total_playtime": sum(g.get("playtime_forever", 0) for g in games),
+    }

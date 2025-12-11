@@ -1,127 +1,179 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QTableWidgetItem, QHeaderView, QLabel, QHBoxLayout, QPushButton
+from PyQt6.QtWidgets import (
+    QDialog,
+    QVBoxLayout,
+    QTableWidget,
+    QTableWidgetItem,
+    QHeaderView,
+    QLabel,
+    QHBoxLayout,
+    QPushButton,
+    QWidget,
+    QTabWidget,
+)
 from PyQt6.QtCore import Qt
+
 
 class AllGamesWindow(QDialog):
     def __init__(self, steam_manager, parent=None):
         super().__init__(parent)
         self.steam_manager = steam_manager
         self.setWindowTitle("所有游戏统计")
-        self.resize(800, 600)
-        
+        self.resize(820, 620)
+
+        self.dataset_tabs = []
+
         layout = QVBoxLayout()
-        
-        # 顶部统计
-        self.stats_label = QLabel("正在加载数据...")
-        layout.addWidget(self.stats_label)
-        
-        # 按钮区
+
+        self.tabs = QTabWidget()
+        layout.addWidget(self.tabs)
+
         btn_layout = QHBoxLayout()
-        self.calc_price_btn = QPushButton("计算选中/所有游戏价值 (可能较慢)")
+        self.calc_price_btn = QPushButton("计算当前标签页未获取的游戏价格")
         self.calc_price_btn.clicked.connect(self.calculate_prices)
         btn_layout.addWidget(self.calc_price_btn)
         btn_layout.addStretch()
         layout.addLayout(btn_layout)
-        
-        # 表格
-        self.table = QTableWidget()
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["游戏名称", "AppID", "总游玩时长 (小时)", "当前价格 (CNY)"])
-        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
-        self.table.setSortingEnabled(True)
-        layout.addWidget(self.table)
-        
-        self.setLayout(layout)
-        
-        # 连接信号
-        self.steam_manager.on_store_prices.connect(self.update_prices)
-        
-        # 初始化数据
-        self.load_data()
 
-    def load_data(self):
-        if "games" not in self.steam_manager.cache:
+        self.setLayout(layout)
+
+        self.steam_manager.on_store_prices.connect(self.update_prices)
+        self.steam_manager.on_games_stats.connect(self.on_games_stats_updated)
+
+        self.refresh_tabs()
+
+    def refresh_tabs(self):
+        self.tabs.clear()
+        self.dataset_tabs = []
+
+        datasets = self.steam_manager.get_game_datasets()
+        if not datasets:
+            placeholder = QWidget()
+            ph_layout = QVBoxLayout()
+            msg = QLabel("暂无数据，请先刷新 Steam 统计。")
+            msg.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            ph_layout.addStretch()
+            ph_layout.addWidget(msg)
+            ph_layout.addStretch()
+            placeholder.setLayout(ph_layout)
+            self.tabs.addTab(placeholder, "总计")
+            self.calc_price_btn.setEnabled(False)
             return
-            
-        games = self.steam_manager.cache["games"].get("all_games", [])
+
+        self.calc_price_btn.setEnabled(True)
+
+        for entry in datasets:
+            tab_widget = QWidget()
+            tab_layout = QVBoxLayout()
+
+            stats_label = QLabel("正在加载数据...")
+            tab_layout.addWidget(stats_label)
+
+            table = QTableWidget()
+            table.setColumnCount(4)
+            table.setHorizontalHeaderLabels(["游戏名称", "AppID", "总游玩时长 (小时)", "当前价格 (CNY)"])
+            table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+            table.setSortingEnabled(True)
+            tab_layout.addWidget(table)
+
+            tab_widget.setLayout(tab_layout)
+            self.tabs.addTab(tab_widget, entry["label"])
+
+            tab_info = {
+                "entry": entry,
+                "widget": tab_widget,
+                "stats_label": stats_label,
+                "table": table,
+            }
+            self.dataset_tabs.append(tab_info)
+            self.populate_tab(tab_info)
+
+    def populate_tab(self, tab_info):
+        entry = tab_info["entry"]
+        data = entry.get("data") or {}
+        games = data.get("all_games", [])
         prices = self.steam_manager.cache.get("prices", {})
-        
-        self.table.setRowCount(len(games))
-        
+
+        table = tab_info["table"]
+        table.setRowCount(len(games))
+        table.clearContents()
+
         total_playtime = 0
         total_price = 0
         price_count = 0
-        
+
         for row, game in enumerate(games):
             appid = game.get("appid")
             name = game.get("name", "Unknown")
             playtime_min = game.get("playtime_forever", 0)
             playtime_hour = round(playtime_min / 60, 1)
-            
+
             total_playtime += playtime_min
-            
-            # 价格处理
+
             price_str = "未获取"
             price_val = 0
-            if str(appid) in prices:
-                p_data = prices[str(appid)]
-                if p_data.get("success"):
-                    data = p_data.get("data", {})
-                    # 确保 data 是字典 (Steam API 有时会返回空列表)
-                    if isinstance(data, dict):
-                        if data.get("is_free"):
-                            price_str = "免费"
-                        elif "price_overview" in data:
-                            price_val = data["price_overview"].get("final", 0) / 100
-                            price_str = f"¥{price_val:.2f}"
-                            total_price += price_val
-                            price_count += 1
-            
-            # 设置单元格
-            # Name
+            price_entry = prices.get(str(appid))
+            if price_entry and price_entry.get("success"):
+                data_block = price_entry.get("data", {})
+                if isinstance(data_block, dict):
+                    if data_block.get("is_free"):
+                        price_str = "免费"
+                    elif "price_overview" in data_block:
+                        price_val = data_block["price_overview"].get("final", 0) / 100
+                        price_str = f"¥{price_val:.2f}"
+                        total_price += price_val
+                        price_count += 1
+
             item_name = QTableWidgetItem(name)
-            self.table.setItem(row, 0, item_name)
-            
-            # AppID
+            table.setItem(row, 0, item_name)
+
             item_id = QTableWidgetItem(str(appid))
-            self.table.setItem(row, 1, item_id)
-            
-            # Playtime (使用自定义 Item 以支持数字排序)
+            table.setItem(row, 1, item_id)
+
             item_time = QTableWidgetItem()
             item_time.setData(Qt.ItemDataRole.DisplayRole, playtime_hour)
-            self.table.setItem(row, 2, item_time)
-            
-            # Price
-            item_price = QTableWidgetItem(price_str)
-            if price_str != "未获取" and price_str != "免费":
-                 item_price.setData(Qt.ItemDataRole.UserRole, price_val) # 用于排序
-            self.table.setItem(row, 3, item_price)
+            table.setItem(row, 2, item_time)
 
-        # 更新顶部统计
-        self.stats_label.setText(f"共 {len(games)} 款游戏 | 总时长: {int(total_playtime/60)} 小时 | 已统计 {price_count} 款游戏价值: ¥{total_price:.2f}")
+            item_price = QTableWidgetItem(price_str)
+            if price_str not in ("未获取", "免费"):
+                item_price.setData(Qt.ItemDataRole.UserRole, price_val)
+            table.setItem(row, 3, item_price)
+
+        stats_label = tab_info["stats_label"]
+        stats_label.setText(
+            f"共 {len(games)} 款游戏 | 总时长: {int(total_playtime/60)} 小时 | 已统计 {price_count} 款游戏价值: ¥{total_price:.2f}"
+        )
 
     def calculate_prices(self):
-        """触发价格计算"""
-        if "games" not in self.steam_manager.cache:
+        index = self.tabs.currentIndex()
+        if index < 0 or index >= len(self.dataset_tabs):
             return
-            
-        games = self.steam_manager.cache["games"].get("all_games", [])
-        # 找出还没有价格的 appid
+
+        tab_info = self.dataset_tabs[index]
+        data = tab_info["entry"].get("data") or {}
+        games = data.get("all_games", [])
+        if not games:
+            tab_info["stats_label"].setText("当前标签页没有可统计的游戏。")
+            return
+
         prices = self.steam_manager.cache.get("prices", {})
         to_fetch = []
-        
-        # 限制一次获取的数量，防止太久
-        limit = 50 
+        limit = 50
         for game in games:
-            if str(game.get("appid")) not in prices:
-                to_fetch.append(game.get("appid"))
+            appid = game.get("appid")
+            if str(appid) not in prices:
+                to_fetch.append(appid)
                 if len(to_fetch) >= limit:
                     break
-        
+
         if to_fetch:
-            self.stats_label.setText(f"正在获取 {len(to_fetch)} 款游戏的价格，请稍候...")
+            tab_info["stats_label"].setText(f"正在获取 {len(to_fetch)} 款游戏的价格，请稍候...")
             self.steam_manager.fetch_store_prices(to_fetch)
         else:
-            self.stats_label.setText("所有游戏价格已获取 (或已达到单次限制)")
+            tab_info["stats_label"].setText("所有游戏价格已获取或已达到本标签页的限制。")
 
     def update_prices(self, data):
-        self.load_data()
+        for tab_info in self.dataset_tabs:
+            self.populate_tab(tab_info)
+
+    def on_games_stats_updated(self, _data):
+        self.refresh_tabs()
