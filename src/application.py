@@ -14,6 +14,11 @@ from src.feature.menu_composer import MenuComposer
 from src.ui.window_factory import WindowFactory
 from src.ui.tray_manager import TrayManager
 
+from src.feature.handlers.system_handler import SystemFeatureHandler
+from src.feature.handlers.steam_handler import SteamFeatureHandler
+from src.feature.handlers.timer_handler import TimerFeatureHandler
+from src.feature.handlers.pet_handler import PetFeatureHandler
+
 class SteaMissApp:
     def __init__(self, app: QApplication):
         self.app = app
@@ -25,17 +30,25 @@ class SteaMissApp:
         self.timer_manager = TimerManager()
         self.steam_manager = SteamManager(self.config_manager)
         
+        # 初始化 Feature Handlers
+        self.system_handler = SystemFeatureHandler(self.config_manager)
+        self.steam_handler = SteamFeatureHandler(self.steam_manager)
+        self.timer_handler = TimerFeatureHandler(self.timer_manager)
+        self.pet_handler = PetFeatureHandler(self.config_manager)
+        
         self.feature_manager = FeatureManager(
-            self.steam_manager, 
-            self.config_manager, 
-            self.timer_manager
+            self.system_handler,
+            self.steam_handler,
+            self.timer_handler,
+            self.pet_handler
         )
         
         # 初始化菜单组装器
         self.menu_composer = MenuComposer(
             self.feature_manager,
             self.steam_manager,
-            self.config_manager
+            self.config_manager,
+            self.timer_manager
         )
         
         # 初始化窗口工厂

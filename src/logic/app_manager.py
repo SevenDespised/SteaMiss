@@ -4,7 +4,7 @@ from src.ui.timer_overlay import TimerOverlay
 
 # 引入所有管理器
 from src.core.config_manager import ConfigManager
-from src.ai.behavior_manager import BehaviorManager
+from src.logic.behavior_manager import BehaviorManager
 from src.feature.steam_manager import SteamManager
 from src.feature.timer_manager import TimerManager
 from src.core.feature_manager import FeatureManager

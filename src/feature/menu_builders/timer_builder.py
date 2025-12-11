@@ -7,9 +7,13 @@ from .base_builder import BaseMenuBuilder
 class TimerMenuBuilder(BaseMenuBuilder):
     """计时器菜单项构建器"""
     
+    def __init__(self, feature_manager, config_manager, timer_manager):
+        super().__init__(feature_manager, config_manager)
+        self.timer_manager = timer_manager
+
     def build(self):
         """根据计时状态构造菜单项"""
-        tm = getattr(self.feature_manager, "timer_manager", None)
+        tm = self.timer_manager
         if not tm:
             return {
                 'key': 'timer',
