@@ -75,8 +75,6 @@ class UIManager:
         
         # 3. 工具类
         all_items.append(self.tool_builder.build_stats_item())
-        all_items.append(self.tool_builder.build_discounts_item())
-        
         # 4. 计时器
         all_items.append(self.timer_builder.build())
         
