@@ -1,5 +1,5 @@
-from PyQt6.QtWidgets import QApplication
-from src.core.pet import DesktopPet
+from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
+from src.pet import DesktopPet
 from src.ui.timer_overlay import TimerOverlay
 
 # 引入所有管理器
@@ -10,6 +10,9 @@ from src.feature.timer_manager import TimerManager
 from src.core.feature_manager import FeatureManager
 from src.core.resource_manager import ResourceManager
 from src.core.ui_manager import UIManager
+from src.feature.menu_composer import MenuComposer
+from src.ui.window_factory import WindowFactory
+from src.ui.tray_manager import TrayManager
 
 class SteaMissApp:
     def __init__(self, app: QApplication):
@@ -28,11 +31,26 @@ class SteaMissApp:
             self.timer_manager
         )
         
-        self.ui_manager = UIManager(
-            self.feature_manager, 
-            self.steam_manager, 
+        # 初始化菜单组装器
+        self.menu_composer = MenuComposer(
+            self.feature_manager,
+            self.steam_manager,
             self.config_manager
         )
+        
+        # 初始化窗口工厂
+        self.window_factory = WindowFactory(
+            self.steam_manager,
+            self.config_manager
+        )
+        
+        self.ui_manager = UIManager(
+            self.menu_composer, 
+            self.window_factory
+        )
+        
+        # 初始化托盘管理器
+        self.tray_manager = TrayManager(self.app)
 
         # 初始化 TimerOverlay (View Helper)
         self.timer_overlay = TimerOverlay(self.timer_manager)
@@ -51,18 +69,40 @@ class SteaMissApp:
         # self.tray_icon = None # 移至 UIManager
         
         # 4. 设置托盘
-        self.ui_manager.setup_tray(self.app, self.pet)
+        # self.ui_manager.setup_tray(self.app) # 移至 TrayManager
         
         # 5. 显示宠物
         self.pet.show()
         
         # 6. 连接信号以同步状态
-        self.pet.visibility_changed.connect(self.ui_manager.update_visibility_text)
-        self.pet.topmost_changed.connect(self.ui_manager.update_topmost_text)
+        self.pet.visibility_changed.connect(self.tray_manager.update_visibility_text)
+        self.pet.topmost_changed.connect(self.tray_manager.update_topmost_text)
+        
+        # 连接 TrayManager 的请求信号
+        self.tray_manager.request_toggle_visibility.connect(self.toggle_pet_visibility)
+        self.tray_manager.request_toggle_topmost.connect(self.pet.toggle_topmost)
+        self.tray_manager.request_open_settings.connect(self.ui_manager.open_settings)
+        self.tray_manager.request_quit_app.connect(self.quit_app)
         
         # 7. 连接 FeatureManager 信号
         self.feature_manager.request_open_tool.connect(self.ui_manager.open_tool)
-        self.feature_manager.request_hide_pet.connect(self.ui_manager.toggle_pet_visibility)
-        self.feature_manager.request_toggle_topmost.connect(self.ui_manager.toggle_topmost)
-        self.feature_manager.request_say_hello.connect(self.ui_manager.on_say_hello)
-        self.feature_manager.error_occurred.connect(self.ui_manager.on_error_occurred)
+        self.feature_manager.request_hide_pet.connect(self.toggle_pet_visibility)
+        self.feature_manager.request_toggle_topmost.connect(self.pet.toggle_topmost)
+        self.feature_manager.request_say_hello.connect(self.on_say_hello)
+        self.feature_manager.error_occurred.connect(self.on_error_occurred)
+
+    def on_say_hello(self, content):
+        """响应打招呼"""
+        self.tray_manager.show_message("SteaMiss", content)
+        print(f"[Pet Says]: {content}")
+
+    def on_error_occurred(self, error_msg):
+        """响应错误信息"""
+        print(f"[Error]: {error_msg}")
+        self.tray_manager.show_message("错误", error_msg, QSystemTrayIcon.MessageIcon.Warning, 3000)
+
+    def toggle_pet_visibility(self):
+        self.pet.set_visibility(not self.pet.isVisible())
+
+    def quit_app(self):
+        self.app.quit()
