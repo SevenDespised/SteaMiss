@@ -17,3 +17,4 @@ test.py
 # IDE
 .vscode/
 .idea/
+.cursor/
