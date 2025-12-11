@@ -1,142 +1,8 @@
-from PyQt6.QtCore import QObject, QThread, pyqtSignal
-from src.api.steam_client import SteamClient
-import time
+from PyQt6.QtCore import QObject, pyqtSignal
+from src.logic.steam_support.steam_worker import SteamWorker
+from src.logic.steam_support.steam_aggregator import GamesAggregator
 import json
 import os
-
-class SteamWorker(QThread):
-    """
-    后台工作线程，用于执行耗时的网络请求
-    """
-    data_ready = pyqtSignal(dict) # 信号：携带数据字典
-
-    def __init__(self, api_key, steam_id, task_type="summary", extra_data=None):
-        super().__init__()
-        self.client = SteamClient(api_key)
-        self.steam_id = steam_id
-        self.task_type = task_type
-        self.extra_data = extra_data # 用于传递额外参数，如 appids
-
-    def run(self):
-        result = {"type": self.task_type, "data": None, "error": None, "steam_id": self.steam_id}
-        
-        if not self.client.api_key or not self.steam_id:
-            result["error"] = "Missing API Key or Steam ID"
-            self.data_ready.emit(result)
-            return
-
-        try:
-            if self.task_type == "summary":
-                # 获取玩家基本信息
-                players = self.client.get_player_summaries(self.steam_id)
-                # 获取等级
-                level = self.client.get_steam_level(self.steam_id)
-                
-                if players:
-                    data = players[0]
-                    data['steam_level'] = level
-                    result["data"] = data
-                else:
-                    result["error"] = "Failed to fetch player summary"
-            
-            elif self.task_type == "games":
-                # 获取游戏列表
-                games_data = self.client.get_owned_games(self.steam_id)
-                if games_data:
-                    games = games_data.get('games', [])
-                    # 1. 按总时长排序 (用于统计)
-                    games_by_playtime = sorted(games, key=lambda x: x.get('playtime_forever', 0), reverse=True)
-                    
-                    # 2. 按最近游玩时间排序 (用于"最近游玩"功能)
-                    # rtime_last_played 是 Unix 时间戳
-                    games_by_recent = sorted(games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
-                    
-                    # 3. 最近两周游玩时长前5
-                    games_by_2weeks = sorted(games, key=lambda x: x.get('playtime_2weeks', 0), reverse=True)
-                    top_2weeks = [g for g in games_by_2weeks if g.get('playtime_2weeks', 0) > 0][:5]
-
-                    result["data"] = {
-                        "count": games_data.get('game_count', 0),
-                        "all_games": games, # 保存完整列表用于搜索
-                        "top_games": games_by_playtime[:5],
-                        "recent_game": games_by_recent[0] if games_by_recent else None,
-                        "top_2weeks": top_2weeks,
-                        "total_playtime": sum(g.get('playtime_forever', 0) for g in games)
-                    }
-                else:
-                    result["error"] = "Failed to fetch games data (API returned None)"
-
-            elif self.task_type == "store_prices":
-                # 批量获取价格
-                appids = self.extra_data
-                if appids:
-                    # 分批处理，每次 20 个，避免 URL 过长或超时
-                    chunk_size = 20
-                    all_prices = {}
-                    for i in range(0, len(appids), chunk_size):
-                        chunk = appids[i:i+chunk_size]
-                        prices = self.client.get_app_price(chunk)
-                        if prices:
-                            all_prices.update(prices)
-                        time.sleep(0.5) # 礼貌性延迟，防止被封 IP
-                    result["data"] = all_prices
-
-            elif self.task_type == "inventory":
-                # 获取库存 (CS2)
-                inv_data = self.client.get_player_inventory(self.steam_id, 730, 2)
-                if inv_data and 'assets' in inv_data:
-                    result["data"] = {
-                        "total_items": len(inv_data['assets']),
-                        # 这里可以做更多复杂的价值计算，暂时只返回数量
-                    }
-
-            elif self.task_type == "wishlist":
-                # 获取愿望单
-                wishlist_data = self.client.get_wishlist(self.steam_id)
-
-                discounted_games = []
-                for appid, details in wishlist_data.items():
-                    # 必须是可购买的
-                    subs = details.get('subs', [])
-                    if not subs: continue
-                    
-                    # 寻找最大折扣
-                    best_sub = None
-                    max_discount = -1
-                    
-                    for sub in subs:
-                        # discount_pct 有时是 null 或 0
-                        discount = sub.get('discount_pct', 0) or 0
-                        if discount > max_discount:
-                            max_discount = discount
-                            best_sub = sub
-                    
-                    # 只要有折扣就加入 (max_discount > 0)
-                    if best_sub and max_discount > 0:
-                        # 价格通常是格式化好的字符串，如 "¥ 38"
-                        price_str = best_sub.get('price', '')
-                        # 封面图
-                        image_url = details.get('capsule', '')
-                        
-                        discounted_games.append({
-                            "appid": appid,
-                            "name": details.get('name', 'Unknown'),
-                            "discount_pct": max_discount,
-                            "price": price_str,
-                            "image": image_url
-                        })
-                
-                # 按折扣力度降序排序
-                discounted_games.sort(key=lambda x: x['discount_pct'], reverse=True)
-                
-                # 取前 10 个
-                result["data"] = discounted_games[:10]
-
-        except Exception as e:
-            result["error"] = str(e)
-            print(f"Worker Error: {e}")
-        
-        self.data_ready.emit(result)
 
 class SteamManager(QObject):
     """
@@ -156,7 +22,7 @@ class SteamManager(QObject):
         self.cache = {}
         self.worker = None
         self.data_file = "config/steam_data.json"
-        self._games_multi_ctx = None
+        self.games_aggregator = GamesAggregator()
         
         # 1. 加载本地数据
         self.load_local_data()
@@ -226,12 +92,8 @@ class SteamManager(QObject):
         if not key or not ids:
             return
 
-        # 新的多账号上下文，用于聚合统计
-        self._games_multi_ctx = {
-            "pending": len(ids),
-            "results": [],
-            "primary": self.config.get("steam_id") or ids[0]
-        }
+        primary_id = self.config.get("steam_id") or ids[0]
+        self.games_aggregator.begin(ids, primary_id)
 
         for sid in ids:
             self._start_worker(key, sid, "games", steam_id=sid)
@@ -314,11 +176,10 @@ class SteamManager(QObject):
     def _handle_worker_result(self, result):
         if result["error"]:
             # 确保多账号任务不会因为单个账号失败而卡住
-            if result["type"] == "games" and self._games_multi_ctx:
-                self._games_multi_ctx["pending"] -= 1
-                if self._games_multi_ctx["pending"] <= 0:
-                    self._finalize_games_results(self._games_multi_ctx["results"], self._games_multi_ctx.get("primary"))
-                    self._games_multi_ctx = None
+            if result["type"] == "games" and self.games_aggregator:
+                done = self.games_aggregator.mark_error()
+                if done:
+                    self._finalize_games_results()
 
             self.on_error.emit(result["error"])
             return
@@ -333,13 +194,10 @@ class SteamManager(QObject):
             self.cache["summary"] = data
             self.on_player_summary.emit(data)
         elif task_type == "games":
-            if self._games_multi_ctx:
-                self._games_multi_ctx["results"].append({"steam_id": result.get("steam_id"), "data": data})
-                self._games_multi_ctx["pending"] -= 1
-
-                if self._games_multi_ctx["pending"] <= 0:
-                    self._finalize_games_results(self._games_multi_ctx["results"], self._games_multi_ctx.get("primary"))
-                    self._games_multi_ctx = None
+            if self.games_aggregator:
+                done = self.games_aggregator.add_result(result.get("steam_id"), data)
+                if done:
+                    self._finalize_games_results()
             else:
                 # 兼容单账号模式
                 self.cache["games"] = data
@@ -360,72 +218,16 @@ class SteamManager(QObject):
         if task_type != "games":
             self.save_local_data()
 
-    def _finalize_games_results(self, results, primary_id):
-        """合并多账号游戏统计，保留主账号数据供快捷功能使用"""
-        primary_data = None
-        for item in results:
-            if primary_id and item.get("steam_id") == primary_id:
-                primary_data = item["data"]
-                break
-
-        if primary_data is None and results:
-            primary_data = results[0]["data"]
+    def _finalize_games_results(self):
+        primary_data, aggregated = self.games_aggregator.finalize()
 
         if primary_data:
             self.cache["games_primary"] = primary_data
 
-        aggregated = self._merge_games(results)
-        self.cache["games"] = aggregated
-
-        self.on_games_stats.emit(aggregated)
-        self.save_local_data()
-
-    def _merge_games(self, results):
-        """根据多账号结果聚合统计数据"""
-        merged = {}
-
-        for item in results:
-            data = item.get("data") or {}
-            for game in data.get("all_games", []):
-                appid = game.get("appid")
-                if appid is None:
-                    continue
-
-                if appid not in merged:
-                    merged[appid] = {
-                        "appid": appid,
-                        "name": game.get("name", "Unknown"),
-                        "playtime_forever": 0,
-                        "playtime_2weeks": 0,
-                        "rtime_last_played": game.get("rtime_last_played", 0)
-                    }
-
-                merged[appid]["playtime_forever"] += game.get("playtime_forever", 0)
-                merged[appid]["playtime_2weeks"] += game.get("playtime_2weeks", 0)
-                merged[appid]["rtime_last_played"] = max(
-                    merged[appid].get("rtime_last_played", 0),
-                    game.get("rtime_last_played", 0)
-                )
-
-        all_games = list(merged.values())
-
-        # 汇总指标
-        total_playtime = sum(g.get("playtime_forever", 0) for g in all_games)
-
-        # 排序列表
-        games_by_playtime = sorted(all_games, key=lambda x: x.get('playtime_forever', 0), reverse=True)
-        games_by_recent = sorted(all_games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
-        games_by_2weeks = sorted(all_games, key=lambda x: x.get('playtime_2weeks', 0), reverse=True)
-        top_2weeks = [g for g in games_by_2weeks if g.get('playtime_2weeks', 0) > 0][:5]
-
-        return {
-            "count": len(all_games),
-            "all_games": all_games,
-            "top_games": games_by_playtime[:5],
-            "recent_game": games_by_recent[0] if games_by_recent else None,
-            "top_2weeks": top_2weeks,
-            "total_playtime": total_playtime
-        }
+        if aggregated:
+            self.cache["games"] = aggregated
+            self.on_games_stats.emit(aggregated)
+            self.save_local_data()
 
     def _get_primary_games_cache(self):
         if "games_primary" in self.cache:
