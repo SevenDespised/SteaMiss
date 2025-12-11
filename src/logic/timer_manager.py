@@ -1,7 +1,7 @@
 import json
 import os
 import datetime
-from src.logic.timer_logic import GameTimer
+from src.logic.timer_support.timer_logic import GameTimer
 
 
 class TimerManager:
