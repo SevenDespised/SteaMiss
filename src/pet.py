@@ -35,7 +35,6 @@ class DesktopPet(QWidget):
         self.steam_manager = SteamManager(self.config_manager)
         self.timer_manager = TimerManager()
         self.feature_manager = FeatureManager(self.steam_manager, self.config_manager, self.timer_manager)
-        self.feature_manager.set_pet_window(self) # 注入自身引用
         
         # 初始化资源管理器 (一次性加载所有图片)
         self.resource_manager = ResourceManager()

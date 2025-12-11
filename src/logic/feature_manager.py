@@ -1,19 +1,38 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QApplication
-from src.ui.stats_window import StatsWindow
-from src.ui.discount_window import DiscountWindow
+from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtWidgets import QApplication
 import os
 import webbrowser
 
-class FeatureManager:
+class FeatureManager(QObject):
+    request_open_tool = pyqtSignal(str)
+    request_hide_pet = pyqtSignal()
+    request_toggle_topmost = pyqtSignal()
+    request_say_hello = pyqtSignal(str)
+    error_occurred = pyqtSignal(str)
+
     def __init__(self, steam_manager=None, config_manager=None, timer_manager=None):
-        self.active_tools = {}
+        super().__init__()
         self.steam_manager = steam_manager
         self.config_manager = config_manager
         self.timer_manager = timer_manager
-        self.pet_window = None # 引用主窗口
+        
+        self._init_actions()
 
-    def set_pet_window(self, window):
-        self.pet_window = window
+    def _init_actions(self):
+        self.actions = {
+            "say_hello": self.action_say_hello,
+            "open_path": self.action_open_explorer,
+            "hide_pet": self.action_hide_pet,
+            "toggle_topmost": self.action_toggle_topmost,
+            "exit": self.action_exit,
+            "launch_game": self.action_launch_steam_game,
+            "open_url": self.action_open_url,
+            "open_steam_page": self.action_open_steam_page,
+            "toggle_timer": self.action_toggle_timer,
+            "pause_timer": self.action_pause_timer,
+            "resume_timer": self.action_resume_timer,
+            "stop_timer": self.action_stop_timer,
+        }
 
     def set_steam_manager(self, steam_manager):
         self.steam_manager = steam_manager
@@ -28,45 +47,21 @@ class FeatureManager:
         """
         执行非窗口类的动作
         """
-        if action_key == "say_hello":
-            self.action_say_hello()
-        elif action_key == "open_path":
-            path = kwargs.get("path")
-            self.action_open_explorer(path)
-        elif action_key == "hide_pet":
-            self.action_hide_pet()
-        elif action_key == "toggle_topmost":
-            self.action_toggle_topmost()
-        elif action_key == "exit":
-            QApplication.instance().quit()
-        elif action_key == "launch_game":
-            appid = kwargs.get("appid")
-            if appid:
-                self.action_launch_steam_game(appid)
-        elif action_key == "open_url":
-            url = kwargs.get("url")
-            if url:
-                self.action_open_url(url)
-        elif action_key == "open_steam_page":
-            page_type = kwargs.get("page_type")
-            if page_type:
-                self.action_open_steam_page(page_type)
-        elif action_key == "toggle_timer":
-            self.action_toggle_timer()
-        elif action_key == "pause_timer":
-            self.action_pause_timer()
-        elif action_key == "resume_timer":
-            self.action_resume_timer()
-        elif action_key == "stop_timer":
-            self.action_stop_timer()
+        handler = self.actions.get(action_key)
+        if handler:
+            try:
+                handler(**kwargs)
+            except Exception as e:
+                self.error_occurred.emit(f"Error executing {action_key}: {str(e)}")
+        else:
+            print(f"Unknown action: {action_key}")
 
-    def action_say_hello(self):
+    def action_say_hello(self, **kwargs):
         if not self.config_manager: return
         content = self.config_manager.get("say_hello_content", "你好！")
-        print(content)
-        # 这里未来可以扩展为显示气泡等
+        self.request_say_hello.emit(content)
 
-    def action_open_explorer(self, path=None):
+    def action_open_explorer(self, path=None, **kwargs):
         if not self.config_manager: return
         
         if path is None:
@@ -75,23 +70,28 @@ class FeatureManager:
             path = paths[0] if paths else "C:/"
             
         if os.path.exists(path):
-            os.startfile(path)
+            try:
+                os.startfile(path)
+            except Exception as e:
+                self.error_occurred.emit(f"Failed to open path {path}: {e}")
         else:
-            print(f"Path not found: {path}")
+            self.error_occurred.emit(f"Path not found: {path}")
 
-    def action_launch_steam_game(self, appid):
+    def action_launch_steam_game(self, appid=None, **kwargs):
+        if not appid: return
         try:
             os.startfile(f"steam://run/{appid}")
         except Exception as e:
-            print(f"Failed to launch game {appid}: {e}")
+            self.error_occurred.emit(f"Failed to launch game {appid}: {e}")
 
-    def action_open_url(self, url):
+    def action_open_url(self, url=None, **kwargs):
+        if not url: return
         try:
             webbrowser.open(url)
         except Exception as e:
-            print(f"Failed to open URL {url}: {e}")
+            self.error_occurred.emit(f"Failed to open URL {url}: {e}")
 
-    def action_open_steam_page(self, page_type):
+    def action_open_steam_page(self, page_type=None, **kwargs):
         """
         page_type: 'library', 'community', 'store', 'workshop'
         """
@@ -116,80 +116,48 @@ class FeatureManager:
             try:
                 os.startfile(cmd)
             except Exception as e:
-                print(f"Failed to open steam command {cmd}, falling back to web: {e}")
                 if url:
-                    self.action_open_url(url)
+                    self.action_open_url(url=url)
+                else:
+                    self.error_occurred.emit(f"Failed to open steam command {cmd}: {e}")
         elif url:
-            self.action_open_url(url)
+            self.action_open_url(url=url)
 
-    def action_toggle_timer(self):
+    def action_toggle_timer(self, **kwargs):
         if not self.timer_manager:
-            print("TimerManager not configured")
+            self.error_occurred.emit("TimerManager not configured")
             return
         running = self.timer_manager.toggle()
         state = "START" if running else "STOP"
         print(f"Timer state: {state}")
 
-    def action_pause_timer(self):
+    def action_pause_timer(self, **kwargs):
         if self.timer_manager:
             self.timer_manager.pause()
             print("Timer paused")
 
-    def action_resume_timer(self):
+    def action_resume_timer(self, **kwargs):
         if self.timer_manager:
             self.timer_manager.resume()
             print("Timer resumed")
 
-    def action_stop_timer(self):
+    def action_stop_timer(self, **kwargs):
         if self.timer_manager:
             self.timer_manager.stop_and_persist()
             print("Timer stopped and saved")
 
-    def action_hide_pet(self):
-        if self.pet_window:
-            self.pet_window.set_visibility(False)
+    def action_hide_pet(self, **kwargs):
+        self.request_hide_pet.emit()
 
-    def action_toggle_topmost(self):
-        if self.pet_window:
-            self.pet_window.toggle_topmost()
+    def action_toggle_topmost(self, **kwargs):
+        self.request_toggle_topmost.emit()
+        
+    def action_exit(self, **kwargs):
+        QApplication.instance().quit()
+
 
     def open_tool(self, tool_name):
         """
         打开指定的工具，如果已打开则激活
         """
-        if tool_name in self.active_tools:
-            window = self.active_tools[tool_name]
-            # 如果窗口被关闭了（对象还在但不可见），重新显示
-            # 注意：如果窗口被销毁了，这里可能会报错，需要处理 closeEvent
-            try:
-                window.show()
-                window.activateWindow()
-                return
-            except RuntimeError:
-                # 对象已被删除
-                del self.active_tools[tool_name]
-
-        # 工厂模式：根据名字创建对应的工具窗口
-        new_tool = None
-        if tool_name == "memo":
-            # new_tool = self.create_memo_window()
-            pass # 已移除
-        elif tool_name == "stats":
-            new_tool = self.create_stats_window()
-        elif tool_name == "discounts":
-            new_tool = self.create_discount_window()
-            
-        if new_tool:
-            self.active_tools[tool_name] = new_tool
-            new_tool.show()
-
-    def create_stats_window(self):
-        if not self.steam_manager:
-            print("Error: SteamManager not initialized in ToolManager")
-            return None
-        return StatsWindow(self.steam_manager)
-
-    def create_discount_window(self):
-        if not self.steam_manager:
-            return None
-        return DiscountWindow(self.steam_manager)
+        self.request_open_tool.emit(tool_name)

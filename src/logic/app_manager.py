@@ -3,6 +3,8 @@ from PyQt6.QtGui import QIcon, QAction
 from src.utils.path_utils import resource_path
 from src.pet import DesktopPet
 from src.ui.settings_dialog import SettingsDialog
+from src.ui.stats_window import StatsWindow
+from src.ui.discount_window import DiscountWindow
 
 class AppManager:
     def __init__(self, app: QApplication):
@@ -14,6 +16,7 @@ class AppManager:
         # 2. 初始化 UI 组件引用
         self.tray_icon = None
         self.settings_dialog = None
+        self.active_tools = {}
         
         # 3. 设置托盘
         self._setup_tray()
@@ -24,6 +27,13 @@ class AppManager:
         # 5. 连接信号以同步状态
         self.pet.visibility_changed.connect(self.update_visibility_text)
         self.pet.topmost_changed.connect(self.update_topmost_text)
+        
+        # 6. 连接 FeatureManager 信号
+        self.pet.feature_manager.request_open_tool.connect(self.on_open_tool_requested)
+        self.pet.feature_manager.request_hide_pet.connect(self.toggle_pet_visibility)
+        self.pet.feature_manager.request_toggle_topmost.connect(self.toggle_topmost)
+        self.pet.feature_manager.request_say_hello.connect(self.on_say_hello)
+        self.pet.feature_manager.error_occurred.connect(self.on_error_occurred)
 
     def _setup_tray(self):
         """初始化系统托盘"""
@@ -97,3 +107,37 @@ class AppManager:
     def quit_app(self):
         """安全退出程序"""
         self.app.quit()
+
+    def on_say_hello(self, content):
+        """响应打招呼"""
+        # 暂时使用托盘气泡显示，未来可以扩展为宠物气泡
+        if self.tray_icon:
+            self.tray_icon.showMessage("SteaMiss", content, QSystemTrayIcon.MessageIcon.NoIcon, 2000)
+        print(f"[Pet Says]: {content}")
+
+    def on_error_occurred(self, error_msg):
+        """响应错误信息"""
+        print(f"[Error]: {error_msg}")
+        if self.tray_icon:
+            self.tray_icon.showMessage("错误", error_msg, QSystemTrayIcon.MessageIcon.Warning, 3000)
+
+    def on_open_tool_requested(self, tool_name):
+        """响应打开工具的请求"""
+        if tool_name in self.active_tools:
+            window = self.active_tools[tool_name]
+            try:
+                window.show()
+                window.activateWindow()
+                return
+            except RuntimeError:
+                del self.active_tools[tool_name]
+
+        new_tool = None
+        if tool_name == "stats":
+            new_tool = StatsWindow(self.pet.steam_manager)
+        elif tool_name == "discounts":
+            new_tool = DiscountWindow(self.pet.steam_manager)
+            
+        if new_tool:
+            self.active_tools[tool_name] = new_tool
+            new_tool.show()
