@@ -6,7 +6,7 @@ from PyQt6.QtGui import QPainter, QColor, QAction, QCursor, QPixmap
 
 # 引入新的管理器
 from src.logic.behavior_manager import BehaviorManager
-from src.logic.tool_manager import ToolManager
+from src.logic.feature_manager import FeatureManager
 from src.logic.config_manager import ConfigManager
 from src.logic.steam_manager import SteamManager
 from src.logic.ui_manager import UIManager
@@ -34,8 +34,8 @@ class DesktopPet(QWidget):
         self.behavior_manager = BehaviorManager()
         self.steam_manager = SteamManager(self.config_manager)
         self.timer_manager = TimerManager()
-        self.tool_manager = ToolManager(self.steam_manager, self.config_manager, self.timer_manager)
-        self.tool_manager.set_pet_window(self) # 注入自身引用
+        self.feature_manager = FeatureManager(self.steam_manager, self.config_manager, self.timer_manager)
+        self.feature_manager.set_pet_window(self) # 注入自身引用
         
         # 初始化资源管理器 (一次性加载所有图片)
         self.resource_manager = ResourceManager()
@@ -43,7 +43,7 @@ class DesktopPet(QWidget):
         self.timer_overlay = TimerOverlay(self.timer_manager)
         
         # 初始化 UI 管理器
-        self.ui_manager = UIManager(self.tool_manager, self.steam_manager, self.config_manager)
+        self.ui_manager = UIManager(self.feature_manager, self.steam_manager, self.config_manager)
         self.ui_manager.get_radial_menu().hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
@@ -169,7 +169,7 @@ class DesktopPet(QWidget):
         """
         if event.button() == Qt.MouseButton.LeftButton:
             print("双击触发：可以在这里打开搜索框或启动器")
-            # self.tool_manager.open_tool("launcher")
+            # self.feature_manager.open_tool("launcher")
             event.accept()
 
     def contextMenuEvent(self, event):

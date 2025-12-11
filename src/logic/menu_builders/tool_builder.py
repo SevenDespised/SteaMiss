@@ -12,12 +12,12 @@ class ToolMenuBuilder(BaseMenuBuilder):
         return {
             'key': 'stats',
             'label': '游玩统计',
-            'callback': lambda: self.tool_manager.open_tool("stats"),
+            'callback': lambda: self.feature_manager.open_tool("stats"),
             'sub_items': [
                 {
                     'key': 'discounts',
                     'label': '特惠推荐',
-                    'callback': lambda: self.tool_manager.open_tool("discounts")
+                    'callback': lambda: self.feature_manager.open_tool("discounts")
                 },
                 {
                     'key': 'achievements',

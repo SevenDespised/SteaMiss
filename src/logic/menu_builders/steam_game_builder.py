@@ -7,8 +7,8 @@ from .base_builder import BaseMenuBuilder
 class SteamGameMenuBuilder(BaseMenuBuilder):
     """Steam 游戏相关菜单项构建器"""
     
-    def __init__(self, tool_manager, config_manager, steam_manager):
-        super().__init__(tool_manager, config_manager)
+    def __init__(self, feature_manager, config_manager, steam_manager):
+        super().__init__(feature_manager, config_manager)
         self.steam_manager = steam_manager
     
     def build_recent_game_item(self):
@@ -23,7 +23,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
         item = {
             'key': 'launch_recent',
             'label': f"最近:\n{name}",
-            'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
+            'callback': lambda: self.feature_manager.execute_action("launch_game", appid=top1['appid'])
         }
         
         # 如果有更多最近游戏，添加为子选项
@@ -33,7 +33,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
                 sub_name = self._truncate_text(game.get("name", "Unknown"))
                 sub_items.append({
                     'label': sub_name,
-                    'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
+                    'callback': lambda g=game: self.feature_manager.execute_action("launch_game", appid=g['appid'])
                 })
             item['sub_items'] = sub_items
         
@@ -61,7 +61,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
         item = {
             'key': 'launch_favorite',
             'label': f"启动:\n{name}",
-            'callback': lambda: self.tool_manager.execute_action("launch_game", appid=top1['appid'])
+            'callback': lambda: self.feature_manager.execute_action("launch_game", appid=top1['appid'])
         }
         
         if len(final_games) > 1:
@@ -70,7 +70,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
                 sub_name = self._truncate_text(game.get("name", "Unknown"))
                 sub_items.append({
                     'label': sub_name,
-                    'callback': lambda g=game: self.tool_manager.execute_action("launch_game", appid=g['appid'])
+                    'callback': lambda g=game: self.feature_manager.execute_action("launch_game", appid=g['appid'])
                 })
             item['sub_items'] = sub_items
         

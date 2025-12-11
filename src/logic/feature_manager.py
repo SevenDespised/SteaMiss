@@ -2,8 +2,9 @@ from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QApplication
 from src.ui.stats_window import StatsWindow
 from src.ui.discount_window import DiscountWindow
 import os
+import webbrowser
 
-class ToolManager:
+class FeatureManager:
     def __init__(self, steam_manager=None, config_manager=None, timer_manager=None):
         self.active_tools = {}
         self.steam_manager = steam_manager
@@ -42,6 +43,14 @@ class ToolManager:
             appid = kwargs.get("appid")
             if appid:
                 self.action_launch_steam_game(appid)
+        elif action_key == "open_url":
+            url = kwargs.get("url")
+            if url:
+                self.action_open_url(url)
+        elif action_key == "open_steam_page":
+            page_type = kwargs.get("page_type")
+            if page_type:
+                self.action_open_steam_page(page_type)
         elif action_key == "toggle_timer":
             self.action_toggle_timer()
         elif action_key == "pause_timer":
@@ -75,6 +84,43 @@ class ToolManager:
             os.startfile(f"steam://run/{appid}")
         except Exception as e:
             print(f"Failed to launch game {appid}: {e}")
+
+    def action_open_url(self, url):
+        try:
+            webbrowser.open(url)
+        except Exception as e:
+            print(f"Failed to open URL {url}: {e}")
+
+    def action_open_steam_page(self, page_type):
+        """
+        page_type: 'library', 'community', 'store', 'workshop'
+        """
+        steam_commands = {
+            'store': 'steam://store',
+            'community': 'steam://url/CommunityHome',
+            'library': 'steam://nav/games',
+            'workshop': 'steam://url/SteamWorkshop'
+        }
+        
+        web_urls = {
+            'store': 'https://store.steampowered.com/',
+            'community': 'https://steamcommunity.com/',
+            'library': 'https://steamcommunity.com/my/games',
+            'workshop': 'https://steamcommunity.com/workshop/'
+        }
+        
+        cmd = steam_commands.get(page_type)
+        url = web_urls.get(page_type)
+        
+        if cmd:
+            try:
+                os.startfile(cmd)
+            except Exception as e:
+                print(f"Failed to open steam command {cmd}, falling back to web: {e}")
+                if url:
+                    self.action_open_url(url)
+        elif url:
+            self.action_open_url(url)
 
     def action_toggle_timer(self):
         if not self.timer_manager:

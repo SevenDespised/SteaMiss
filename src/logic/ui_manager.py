@@ -13,8 +13,8 @@ class UIManager:
     负责协调各个菜单项构建器，生成环形菜单
     """
     
-    def __init__(self, tool_manager, steam_manager, config_manager):
-        self.tool_manager = tool_manager
+    def __init__(self, feature_manager, steam_manager, config_manager):
+        self.feature_manager = feature_manager
         self.steam_manager = steam_manager
         self.config_manager = config_manager
         
@@ -22,11 +22,11 @@ class UIManager:
         self.radial_menu = RadialMenu()
         
         # 初始化各个菜单项构建器
-        self.path_builder = PathMenuBuilder(tool_manager, config_manager)
-        self.interaction_builder = InteractionMenuBuilder(tool_manager, config_manager)
-        self.timer_builder = TimerMenuBuilder(tool_manager, config_manager)
-        self.steam_game_builder = SteamGameMenuBuilder(tool_manager, config_manager, steam_manager)
-        self.tool_builder = ToolMenuBuilder(tool_manager, config_manager)
+        self.path_builder = PathMenuBuilder(feature_manager, config_manager)
+        self.interaction_builder = InteractionMenuBuilder(feature_manager, config_manager)
+        self.timer_builder = TimerMenuBuilder(feature_manager, config_manager)
+        self.steam_game_builder = SteamGameMenuBuilder(feature_manager, config_manager, steam_manager)
+        self.tool_builder = ToolMenuBuilder(feature_manager, config_manager)
         
     def get_radial_menu(self):
         """提供给 Pet 用于事件连接 (如 hover)"""
