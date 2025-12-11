@@ -9,6 +9,7 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QListWidget,
     QMessageBox,
+    QComboBox,
 )
 
 class SettingsDialog(QDialog):
@@ -45,7 +46,12 @@ class SettingsDialog(QDialog):
         self.init_quick_tab()
         self.tabs.addTab(self.quick_tab, "快速启动")
 
-        # Tab 5: 闹钟 (Empty) (已移除，后续会变更为计时器相关)
+        # Tab 5: Steam页面
+        self.steam_page_tab = QWidget()
+        self.init_steam_page_tab()
+        self.tabs.addTab(self.steam_page_tab, "Steam页面")
+
+        # Tab 6: 闹钟 (Empty) (已移除，后续会变更为计时器相关)
         # self.tabs.addTab(QWidget(), "闹钟")
         
         layout.addWidget(self.tabs)
@@ -346,6 +352,88 @@ class SettingsDialog(QDialog):
             self.selected_game = {"name": name.strip(), "appid": int(appid)}
             # self.fav_label.setText(f"当前选中: {name}") # 移除旧标签引用
 
+    def init_steam_page_tab(self):
+        """初始化Steam页面选择选项卡"""
+        layout = QVBoxLayout()
+        
+        layout.addWidget(QLabel("--- Steam页面选择 (必须选择3个) ---"))
+        layout.addWidget(QLabel("选择要在环形菜单中显示的Steam页面:"))
+        layout.addSpacing(10)
+        
+        self.page_options = {
+            'library': '游戏库',
+            'store': '商店',
+            'community': '社区',
+            'workshop': '创意工坊',
+            'profile': '个人资料',
+            'downloads': '下载',
+            'settings': '设置'
+        }
+        
+        selected_pages = self.config_manager.get("steam_menu_pages", ['library', 'store', 'community'])
+        while len(selected_pages) < 3:
+            selected_pages.append('library')
+        selected_pages = selected_pages[:3]
+        
+        self.page_combos = []
+        labels = ["主选项 (Top 1)", "子选项 1 (Top 2)", "子选项 2 (Top 3)"]
+        self.NONE_VALUE = '__none__'
+        
+        for i in range(3):
+            layout.addWidget(QLabel(f"{labels[i]}:"))
+            combo = QComboBox()
+            
+            # 添加"未选择"选项
+            combo.addItem("未选择", self.NONE_VALUE)
+            
+            # 添加所有页面选项
+            for page_key, page_name in self.page_options.items():
+                combo.addItem(page_name, page_key)
+            
+            # 设置当前选中的页面
+            current_page = selected_pages[i] if i < len(selected_pages) and selected_pages[i] in self.page_options else 'library'
+            if i < len(selected_pages) and selected_pages[i] is None:
+                current_page = self.NONE_VALUE
+            
+            index = combo.findData(current_page)
+            if index >= 0:
+                combo.setCurrentIndex(index)
+            
+            combo.currentIndexChanged.connect(lambda checked, idx=i: self.on_page_selection_changed(idx))
+            
+            self.page_combos.append(combo)
+            layout.addWidget(combo)
+            layout.addSpacing(5)
+        
+        layout.addStretch()
+        self.steam_page_tab.setLayout(layout)
+    
+    def on_page_selection_changed(self, changed_index):
+        """当页面选择改变时，如果重复则将之前的设为未选择"""
+        if not hasattr(self, 'page_combos') or len(self.page_combos) != 3:
+            return
+        
+        if changed_index < 0 or changed_index >= len(self.page_combos):
+            return
+        
+        changed_combo = self.page_combos[changed_index]
+        selected_value = changed_combo.currentData()
+        
+        if selected_value == self.NONE_VALUE:
+            return
+        
+        # 检查其他下拉框是否有相同的选择
+        for i, combo in enumerate(self.page_combos):
+            if i != changed_index:
+                combo_value = combo.currentData()
+                if combo_value == selected_value:
+                    # 找到重复项，将其设置为"未选择"
+                    none_index = combo.findData(self.NONE_VALUE)
+                    if none_index >= 0:
+                        combo.blockSignals(True)
+                        combo.setCurrentIndex(none_index)
+                        combo.blockSignals(False)
+
     def save_settings(self):
         # Save Hello Content
         text = self.hello_input.text()
@@ -376,5 +464,33 @@ class SettingsDialog(QDialog):
         
         # Save Quick Launch Games
         self.config_manager.set("steam_quick_launch_games", self.quick_launch_games)
+        
+        # Save Steam Menu Pages
+        if hasattr(self, 'page_combos') and len(self.page_combos) == 3:
+            selected_pages = []
+            has_none = False
+            none_positions = []
+            
+            for i, combo in enumerate(self.page_combos):
+                data = combo.currentData()
+                if data == self.NONE_VALUE:
+                    has_none = True
+                    none_positions.append(i + 1)
+                    selected_pages.append(None)
+                else:
+                    selected_pages.append(data)
+            
+            if has_none:
+                positions_str = "、".join([f"第{pos}个" for pos in none_positions])
+                QMessageBox.warning(
+                    self,
+                    "提示",
+                    f"检测到{positions_str}选项为\"未选择\"。\n\n"
+                    "请为所有选项选择有效的Steam页面后再保存。",
+                    QMessageBox.StandardButton.Ok
+                )
+                return
+            
+            self.config_manager.set("steam_menu_pages", selected_pages)
         
         self.accept()

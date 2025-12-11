@@ -42,13 +42,13 @@ class DiscountWindow(QWidget):
     def __init__(self, steam_manager):
         super().__init__()
         self.steam_manager = steam_manager
-        self.setWindowTitle("愿望单特惠推荐")
+        self.setWindowTitle("愿望单/关注游戏特惠推荐")
         self.resize(550, 600)
         
         layout = QVBoxLayout()
         
         # 标题
-        title = QLabel("愿望单中的打折游戏 (Top 10)")
+        title = QLabel("愿望单/关注游戏中的打折游戏 (Top 10)")
         title.setStyleSheet("font-size: 16px; font-weight: bold; margin: 10px;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)

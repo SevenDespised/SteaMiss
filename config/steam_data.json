@@ -9,7 +9,7 @@
     "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
     "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
     "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
-    "lastlogoff": 1765421356,
+    "lastlogoff": 1765457035,
     "personastate": 1,
     "realname": "七鄙",
     "primaryclanid": "103582791429521408",
@@ -21,261 +21,6 @@
     "steam_level": 21
   },
   "games_accounts": {
-    "76561199111057229": {
-      "games": {
-        "count": 17,
-        "all_games": [
-          {
-            "appid": 312660,
-            "name": "Sniper Elite 4",
-            "playtime_forever": 70,
-            "img_icon_url": "3a1dbbf59326c0bb78113db7ac0d70b9988b3ce8",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 377530,
-            "name": "侠客风云传(Tale of Wuxia)",
-            "playtime_forever": 3052,
-            "img_icon_url": "2f7e0bfd44e7ffa353bc67f1793ac6d9d64a8585"
-          },
-          {
-            "appid": 412020,
-            "name": "Metro Exodus",
-            "playtime_forever": 77,
-            "img_icon_url": "f9863ed0ffc717b130744488f088ae95fe6e9bd8",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 435150,
-            "name": "神界：原罪2 - 终极版",
-            "playtime_forever": 4167,
-            "img_icon_url": "519a99caef7c5e2b4625c8c2fa0620fb66a752f3",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 524220,
-            "name": "NieR:Automata™",
-            "playtime_forever": 421,
-            "img_icon_url": "ec431ecb2a5178c5a01bb15550f112f93af029bb",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 601150,
-            "name": "Devil May Cry 5",
-            "playtime_forever": 423,
-            "img_icon_url": "7ec2f6fb9069c3ae03af7e83610862090cd757bb",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 632470,
-            "name": "Disco Elysium",
-            "playtime_forever": 74,
-            "img_icon_url": "b681544caa931c7c1a6788e6e3e33cb42892d17c",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 638970,
-            "name": "人中之龙０　誓约的场所",
-            "playtime_forever": 2378,
-            "img_icon_url": "3c19e2140eb09113fddd33b796a3f12185163cb7",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 814380,
-            "name": "Sekiro™: Shadows Die Twice",
-            "playtime_forever": 1465,
-            "img_icon_url": "2704fb9c5465045d00a5b19a0cb1e9bdabbd15cc",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 834530,
-            "name": "人中之龙　极",
-            "playtime_forever": 70,
-            "img_icon_url": "220ff034e362250b2d19637c3dd1af0899a49089",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 927380,
-            "name": "人中之龙　极２",
-            "playtime_forever": 73,
-            "img_icon_url": "c3b2e69aa75de5afae7c0a52176ec2ba8ee16fa5",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 952040,
-            "name": "同步音律喵赛克",
-            "playtime_forever": 70,
-            "img_icon_url": "49cb6ac144ff89e16ce4172c0602d3a0d1d12941",
-            "has_community_visible_stats": true,
-            "has_leaderboards": true
-          },
-          {
-            "appid": 1059980,
-            "name": "吾王保卫战 Just King",
-            "playtime_forever": 72,
-            "img_icon_url": "3f11f88859687b8cf3ef9bcab94d8b677df4c104",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1174180,
-            "name": "Red Dead Redemption 2",
-            "playtime_forever": 11544,
-            "img_icon_url": "5106abd9c1187a97f23295a0ba9470c94804ec6c",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 1213740,
-            "name": "惩戒魅魔",
-            "playtime_forever": 12,
-            "img_icon_url": "d10e1a100030501132ba540f4a7913693b5d0366",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              3,
-              5,
-              4
-            ]
-          },
-          {
-            "appid": 1449560,
-            "name": "Metro Exodus Enhanced Edition",
-            "playtime_forever": 499,
-            "img_icon_url": "f9863ed0ffc717b130744488f088ae95fe6e9bd8",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1483870,
-            "name": "Draw & Guess - 你画我猜",
-            "playtime_forever": 322,
-            "img_icon_url": "fa74c29e304534a16965a53e6044853822830811"
-          }
-        ],
-        "top_games": [
-          {
-            "appid": 1174180,
-            "name": "Red Dead Redemption 2",
-            "playtime_forever": 11544,
-            "img_icon_url": "5106abd9c1187a97f23295a0ba9470c94804ec6c",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 435150,
-            "name": "神界：原罪2 - 终极版",
-            "playtime_forever": 4167,
-            "img_icon_url": "519a99caef7c5e2b4625c8c2fa0620fb66a752f3",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 377530,
-            "name": "侠客风云传(Tale of Wuxia)",
-            "playtime_forever": 3052,
-            "img_icon_url": "2f7e0bfd44e7ffa353bc67f1793ac6d9d64a8585"
-          },
-          {
-            "appid": 638970,
-            "name": "人中之龙０　誓约的场所",
-            "playtime_forever": 2378,
-            "img_icon_url": "3c19e2140eb09113fddd33b796a3f12185163cb7",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 814380,
-            "name": "Sekiro™: Shadows Die Twice",
-            "playtime_forever": 1465,
-            "img_icon_url": "2704fb9c5465045d00a5b19a0cb1e9bdabbd15cc",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          }
-        ],
-        "recent_game": {
-          "appid": 312660,
-          "name": "Sniper Elite 4",
-          "playtime_forever": 70,
-          "img_icon_url": "3a1dbbf59326c0bb78113db7ac0d70b9988b3ce8",
-          "has_community_visible_stats": true,
-          "content_descriptorids": [
-            2,
-            5
-          ]
-        },
-        "top_2weeks": [],
-        "total_playtime": 24789
-      },
-      "summary": {
-        "steamid": "76561199111057229",
-        "communityvisibilitystate": 3,
-        "profilestate": 1,
-        "personaname": "lvwuwjhix",
-        "commentpermission": 1,
-        "profileurl": "https://steamcommunity.com/profiles/76561199111057229/",
-        "avatar": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb.jpg",
-        "avatarmedium": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg",
-        "avatarfull": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
-        "avatarhash": "fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb",
-        "lastlogoff": 1742629903,
-        "personastate": 0,
-        "primaryclanid": "103582791429521408",
-        "timecreated": 1606439825,
-        "personastateflags": 0,
-        "steam_level": 4
-      }
-    },
     "76561199365389945": {
       "games": {
         "count": 31,
@@ -593,6 +338,261 @@
         "personastate": 0,
         "primaryclanid": "103582791429521408",
         "timecreated": 1657008665,
+        "personastateflags": 0,
+        "steam_level": 4
+      }
+    },
+    "76561199111057229": {
+      "games": {
+        "count": 17,
+        "all_games": [
+          {
+            "appid": 312660,
+            "name": "Sniper Elite 4",
+            "playtime_forever": 70,
+            "img_icon_url": "3a1dbbf59326c0bb78113db7ac0d70b9988b3ce8",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 377530,
+            "name": "侠客风云传(Tale of Wuxia)",
+            "playtime_forever": 3052,
+            "img_icon_url": "2f7e0bfd44e7ffa353bc67f1793ac6d9d64a8585"
+          },
+          {
+            "appid": 412020,
+            "name": "Metro Exodus",
+            "playtime_forever": 77,
+            "img_icon_url": "f9863ed0ffc717b130744488f088ae95fe6e9bd8",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 435150,
+            "name": "神界：原罪2 - 终极版",
+            "playtime_forever": 4167,
+            "img_icon_url": "519a99caef7c5e2b4625c8c2fa0620fb66a752f3",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 524220,
+            "name": "NieR:Automata™",
+            "playtime_forever": 421,
+            "img_icon_url": "ec431ecb2a5178c5a01bb15550f112f93af029bb",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 601150,
+            "name": "Devil May Cry 5",
+            "playtime_forever": 423,
+            "img_icon_url": "7ec2f6fb9069c3ae03af7e83610862090cd757bb",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 632470,
+            "name": "Disco Elysium",
+            "playtime_forever": 74,
+            "img_icon_url": "b681544caa931c7c1a6788e6e3e33cb42892d17c",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 638970,
+            "name": "人中之龙０　誓约的场所",
+            "playtime_forever": 2378,
+            "img_icon_url": "3c19e2140eb09113fddd33b796a3f12185163cb7",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 814380,
+            "name": "Sekiro™: Shadows Die Twice",
+            "playtime_forever": 1465,
+            "img_icon_url": "2704fb9c5465045d00a5b19a0cb1e9bdabbd15cc",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 834530,
+            "name": "人中之龙　极",
+            "playtime_forever": 70,
+            "img_icon_url": "220ff034e362250b2d19637c3dd1af0899a49089",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 927380,
+            "name": "人中之龙　极２",
+            "playtime_forever": 73,
+            "img_icon_url": "c3b2e69aa75de5afae7c0a52176ec2ba8ee16fa5",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 952040,
+            "name": "同步音律喵赛克",
+            "playtime_forever": 70,
+            "img_icon_url": "49cb6ac144ff89e16ce4172c0602d3a0d1d12941",
+            "has_community_visible_stats": true,
+            "has_leaderboards": true
+          },
+          {
+            "appid": 1059980,
+            "name": "吾王保卫战 Just King",
+            "playtime_forever": 72,
+            "img_icon_url": "3f11f88859687b8cf3ef9bcab94d8b677df4c104",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1174180,
+            "name": "Red Dead Redemption 2",
+            "playtime_forever": 11544,
+            "img_icon_url": "5106abd9c1187a97f23295a0ba9470c94804ec6c",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 1213740,
+            "name": "惩戒魅魔",
+            "playtime_forever": 12,
+            "img_icon_url": "d10e1a100030501132ba540f4a7913693b5d0366",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              3,
+              5,
+              4
+            ]
+          },
+          {
+            "appid": 1449560,
+            "name": "Metro Exodus Enhanced Edition",
+            "playtime_forever": 499,
+            "img_icon_url": "f9863ed0ffc717b130744488f088ae95fe6e9bd8",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1483870,
+            "name": "Draw & Guess - 你画我猜",
+            "playtime_forever": 322,
+            "img_icon_url": "fa74c29e304534a16965a53e6044853822830811"
+          }
+        ],
+        "top_games": [
+          {
+            "appid": 1174180,
+            "name": "Red Dead Redemption 2",
+            "playtime_forever": 11544,
+            "img_icon_url": "5106abd9c1187a97f23295a0ba9470c94804ec6c",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 435150,
+            "name": "神界：原罪2 - 终极版",
+            "playtime_forever": 4167,
+            "img_icon_url": "519a99caef7c5e2b4625c8c2fa0620fb66a752f3",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 377530,
+            "name": "侠客风云传(Tale of Wuxia)",
+            "playtime_forever": 3052,
+            "img_icon_url": "2f7e0bfd44e7ffa353bc67f1793ac6d9d64a8585"
+          },
+          {
+            "appid": 638970,
+            "name": "人中之龙０　誓约的场所",
+            "playtime_forever": 2378,
+            "img_icon_url": "3c19e2140eb09113fddd33b796a3f12185163cb7",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 814380,
+            "name": "Sekiro™: Shadows Die Twice",
+            "playtime_forever": 1465,
+            "img_icon_url": "2704fb9c5465045d00a5b19a0cb1e9bdabbd15cc",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          }
+        ],
+        "recent_game": {
+          "appid": 312660,
+          "name": "Sniper Elite 4",
+          "playtime_forever": 70,
+          "img_icon_url": "3a1dbbf59326c0bb78113db7ac0d70b9988b3ce8",
+          "has_community_visible_stats": true,
+          "content_descriptorids": [
+            2,
+            5
+          ]
+        },
+        "top_2weeks": [],
+        "total_playtime": 24789
+      },
+      "summary": {
+        "steamid": "76561199111057229",
+        "communityvisibilitystate": 3,
+        "profilestate": 1,
+        "personaname": "lvwuwjhix",
+        "commentpermission": 1,
+        "profileurl": "https://steamcommunity.com/profiles/76561199111057229/",
+        "avatar": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb.jpg",
+        "avatarmedium": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg",
+        "avatarfull": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+        "avatarhash": "fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb",
+        "lastlogoff": 1742629903,
+        "personastate": 0,
+        "primaryclanid": "103582791429521408",
+        "timecreated": 1606439825,
         "personastateflags": 0,
         "steam_level": 4
       }
@@ -1364,7 +1364,7 @@
           {
             "appid": 379430,
             "name": "Kingdom Come: Deliverance",
-            "playtime_2weeks": 57,
+            "playtime_2weeks": 1,
             "playtime_forever": 233,
             "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
             "has_community_visible_stats": true,
@@ -3075,7 +3075,7 @@
         "recent_game": {
           "appid": 379430,
           "name": "Kingdom Come: Deliverance",
-          "playtime_2weeks": 57,
+          "playtime_2weeks": 1,
           "playtime_forever": 233,
           "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
           "has_community_visible_stats": true,
@@ -3108,7 +3108,7 @@
           {
             "appid": 379430,
             "name": "Kingdom Come: Deliverance",
-            "playtime_2weeks": 57,
+            "playtime_2weeks": 1,
             "playtime_forever": 233,
             "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
             "has_community_visible_stats": true,
@@ -3136,7 +3136,7 @@
         "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
         "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
         "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
-        "lastlogoff": 1765421356,
+        "lastlogoff": 1765457035,
         "personastate": 1,
         "realname": "七鄙",
         "primaryclanid": "103582791429521408",
@@ -3915,7 +3915,7 @@
       {
         "appid": 379430,
         "name": "Kingdom Come: Deliverance",
-        "playtime_2weeks": 57,
+        "playtime_2weeks": 1,
         "playtime_forever": 233,
         "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
         "has_community_visible_stats": true,
@@ -5626,7 +5626,7 @@
     "recent_game": {
       "appid": 379430,
       "name": "Kingdom Come: Deliverance",
-      "playtime_2weeks": 57,
+      "playtime_2weeks": 1,
       "playtime_forever": 233,
       "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
       "has_community_visible_stats": true,
@@ -5659,7 +5659,7 @@
       {
         "appid": 379430,
         "name": "Kingdom Come: Deliverance",
-        "playtime_2weeks": 57,
+        "playtime_2weeks": 1,
         "playtime_forever": 233,
         "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
         "has_community_visible_stats": true,
@@ -5680,125 +5680,6 @@
   "games": {
     "count": 210,
     "all_games": [
-      {
-        "appid": 312660,
-        "name": "Sniper Elite 4",
-        "playtime_forever": 70,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 377530,
-        "name": "侠客风云传(Tale of Wuxia)",
-        "playtime_forever": 3052,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 412020,
-        "name": "Metro Exodus",
-        "playtime_forever": 77,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 435150,
-        "name": "神界：原罪2 - 终极版",
-        "playtime_forever": 4167,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 524220,
-        "name": "NieR:Automata™",
-        "playtime_forever": 421,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 601150,
-        "name": "Devil May Cry 5",
-        "playtime_forever": 423,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 632470,
-        "name": "Disco Elysium",
-        "playtime_forever": 74,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 638970,
-        "name": "人中之龙０　誓约的场所",
-        "playtime_forever": 2378,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 814380,
-        "name": "Sekiro™: Shadows Die Twice",
-        "playtime_forever": 1465,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 834530,
-        "name": "人中之龙　极",
-        "playtime_forever": 70,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 927380,
-        "name": "人中之龙　极２",
-        "playtime_forever": 73,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 952040,
-        "name": "同步音律喵赛克",
-        "playtime_forever": 70,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1059980,
-        "name": "吾王保卫战 Just King",
-        "playtime_forever": 72,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1174180,
-        "name": "Red Dead Redemption 2",
-        "playtime_forever": 11544,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1213740,
-        "name": "惩戒魅魔",
-        "playtime_forever": 12,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1449560,
-        "name": "Metro Exodus Enhanced Edition",
-        "playtime_forever": 499,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1483870,
-        "name": "Draw & Guess - 你画我猜",
-        "playtime_forever": 322,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
       {
         "appid": 33230,
         "name": "刺客信条2",
@@ -6013,6 +5894,125 @@
         "appid": 1817070,
         "name": "Marvel’s Spider-Man Remastered",
         "playtime_forever": 2087,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 312660,
+        "name": "Sniper Elite 4",
+        "playtime_forever": 70,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 377530,
+        "name": "侠客风云传(Tale of Wuxia)",
+        "playtime_forever": 3052,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 412020,
+        "name": "Metro Exodus",
+        "playtime_forever": 77,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 435150,
+        "name": "神界：原罪2 - 终极版",
+        "playtime_forever": 4167,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 524220,
+        "name": "NieR:Automata™",
+        "playtime_forever": 421,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 601150,
+        "name": "Devil May Cry 5",
+        "playtime_forever": 423,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 632470,
+        "name": "Disco Elysium",
+        "playtime_forever": 74,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 638970,
+        "name": "人中之龙０　誓约的场所",
+        "playtime_forever": 2378,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 814380,
+        "name": "Sekiro™: Shadows Die Twice",
+        "playtime_forever": 1465,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 834530,
+        "name": "人中之龙　极",
+        "playtime_forever": 70,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 927380,
+        "name": "人中之龙　极２",
+        "playtime_forever": 73,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 952040,
+        "name": "同步音律喵赛克",
+        "playtime_forever": 70,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1059980,
+        "name": "吾王保卫战 Just King",
+        "playtime_forever": 72,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1174180,
+        "name": "Red Dead Redemption 2",
+        "playtime_forever": 11544,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1213740,
+        "name": "惩戒魅魔",
+        "playtime_forever": 12,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1449560,
+        "name": "Metro Exodus Enhanced Edition",
+        "playtime_forever": 499,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1483870,
+        "name": "Draw & Guess - 你画我猜",
+        "playtime_forever": 322,
         "playtime_2weeks": 0,
         "rtime_last_played": 0
       },
@@ -6391,7 +6391,7 @@
         "appid": 379430,
         "name": "Kingdom Come: Deliverance",
         "playtime_forever": 233,
-        "playtime_2weeks": 57,
+        "playtime_2weeks": 1,
         "rtime_last_played": 1765386209
       },
       {
@@ -7192,7 +7192,7 @@
       "appid": 379430,
       "name": "Kingdom Come: Deliverance",
       "playtime_forever": 233,
-      "playtime_2weeks": 57,
+      "playtime_2weeks": 1,
       "rtime_last_played": 1765386209
     },
     "top_2weeks": [
@@ -7207,7 +7207,7 @@
         "appid": 379430,
         "name": "Kingdom Come: Deliverance",
         "playtime_forever": 233,
-        "playtime_2weeks": 57,
+        "playtime_2weeks": 1,
         "rtime_last_played": 1765386209
       }
     ],

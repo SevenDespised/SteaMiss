@@ -11,17 +11,17 @@ class ToolMenuBuilder(BaseMenuBuilder):
         """构建游玩记录菜单项，包含特惠推荐子菜单"""
         return {
             'key': 'stats',
-            'label': '游玩统计',
-            'callback': lambda: self.tool_manager.open_tool("stats"),
+            'label': '游玩\n统计',
+            'callback': lambda: self.feature_manager.open_tool("stats"),
             'sub_items': [
                 {
                     'key': 'discounts',
-                    'label': '特惠推荐',
-                    'callback': lambda: self.tool_manager.open_tool("discounts")
+                    'label': '特惠\n推荐',
+                    'callback': lambda: self.feature_manager.open_tool("discounts")
                 },
                 {
                     'key': 'achievements',
-                    'label': '成就总览',
+                    'label': '成就\n总览',
                     'callback': lambda: print('pass')
                 }
             ]

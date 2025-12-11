@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QObject, pyqtSignal
-from src.logic.steam_support.steam_worker import SteamWorker
-from src.logic.steam_support.steam_aggregator import GamesAggregator
+from src.feature.steam_support.steam_worker import SteamWorker
+from src.feature.steam_support.steam_aggregator import GamesAggregator, merge_games
 import json
 import os
 
@@ -261,6 +261,9 @@ class SteamManager(QObject):
     def get_game_datasets(self):
         datasets = []
 
+        # 尝试从缓存中聚合数据，确保即使没有网络请求也能显示总计
+        self._ensure_aggregated_cache()
+
         aggregated = self.cache.get("games")
         if aggregated:
             datasets.append({
@@ -306,6 +309,37 @@ class SteamManager(QObject):
                     sub_index += 1
 
         return datasets
+
+    def _ensure_aggregated_cache(self):
+        """
+        如果缓存中没有聚合数据，尝试从现有的账号数据中聚合
+        """
+        if self.cache.get("games"):
+            return
+
+        accounts = self.cache.get("games_accounts", {})
+        if not accounts:
+            # 尝试兼容旧的单账号缓存
+            if "games_primary" in self.cache:
+                self.cache["games"] = self.cache["games_primary"]
+            return
+
+        # 收集所有账号的数据进行聚合
+        results = []
+        for sid, data in accounts.items():
+            if data.get("games"):
+                results.append({
+                    "steam_id": sid,
+                    "games": data["games"],
+                    "summary": data.get("summary")
+                })
+        
+        if results:
+            aggregated = merge_games(results)
+            self.cache["games"] = aggregated
+            # 注意：这里不自动保存，以免覆盖可能的网络更新过程中的状态，
+            # 或者可以在确认聚合成功后保存。为了安全起见，仅在内存中更新。
+
 
     def _get_primary_games_cache(self):
         primary_id = self.config.get("steam_id")

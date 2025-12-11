@@ -7,9 +7,13 @@ from .base_builder import BaseMenuBuilder
 class TimerMenuBuilder(BaseMenuBuilder):
     """计时器菜单项构建器"""
     
+    def __init__(self, feature_manager, config_manager, timer_manager):
+        super().__init__(feature_manager, config_manager)
+        self.timer_manager = timer_manager
+
     def build(self):
         """根据计时状态构造菜单项"""
-        tm = getattr(self.tool_manager, "timer_manager", None)
+        tm = self.timer_manager
         if not tm:
             return {
                 'key': 'timer',
@@ -22,11 +26,11 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
-                'callback': lambda: self.tool_manager.execute_action("stop_timer"),
+                'callback': lambda: self.feature_manager.execute_action("stop_timer"),
                 'sub_items': [
                     {
                         'label': "暂停\n计时",
-                        'callback': lambda: self.tool_manager.execute_action("pause_timer")
+                        'callback': lambda: self.feature_manager.execute_action("pause_timer")
                     }
                 ]
             }
@@ -35,11 +39,11 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
-                'callback': lambda: self.tool_manager.execute_action("stop_timer"),
+                'callback': lambda: self.feature_manager.execute_action("stop_timer"),
                 'sub_items': [
                     {
                         'label': "继续\n计时",
-                        'callback': lambda: self.tool_manager.execute_action("resume_timer")
+                        'callback': lambda: self.feature_manager.execute_action("resume_timer")
                     }
                 ]
             }
@@ -48,5 +52,5 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "开始\n计时",
-                'callback': lambda: self.tool_manager.execute_action("toggle_timer")
+                'callback': lambda: self.feature_manager.execute_action("toggle_timer")
             }

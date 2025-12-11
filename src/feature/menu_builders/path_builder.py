@@ -24,7 +24,7 @@ class PathMenuBuilder(BaseMenuBuilder):
         path_item = {
             'key': 'open_path',
             'label': main_label,
-            'callback': lambda: self.tool_manager.execute_action("open_path", path=paths[0])
+            'callback': lambda: self.feature_manager.execute_action("open_path", path=paths[0])
         }
         
         # 构建子选项
@@ -33,7 +33,7 @@ class PathMenuBuilder(BaseMenuBuilder):
             sub_label = self._format_path_for_display(paths[i], alias=aliases[i], is_main=False)
             sub_items.append({
                 'label': sub_label,
-                'callback': lambda p=paths[i]: self.tool_manager.execute_action("open_path", path=p)
+                'callback': lambda p=paths[i]: self.feature_manager.execute_action("open_path", path=p)
             })
         
         path_item['sub_items'] = sub_items
@@ -44,7 +44,7 @@ class PathMenuBuilder(BaseMenuBuilder):
         if alias:
             trunc_alias = self._truncate_text(alias, max_len=8)
             if is_main:
-                return f"打开:\n{trunc_alias}"
+                return f"打开：\n{trunc_alias}"
             else:
                 return trunc_alias
         
