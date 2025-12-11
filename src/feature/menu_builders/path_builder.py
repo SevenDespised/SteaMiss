@@ -44,7 +44,7 @@ class PathMenuBuilder(BaseMenuBuilder):
         if alias:
             trunc_alias = self._truncate_text(alias, max_len=8)
             if is_main:
-                return f"打开:\n{trunc_alias}"
+                return f"打开：\n{trunc_alias}"
             else:
                 return trunc_alias
         

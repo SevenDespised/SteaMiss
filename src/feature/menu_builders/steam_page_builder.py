@@ -39,7 +39,7 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
         
         steam_page_item = {
             'key': 'open_steam_page',
-            'label': f'Steam\n{main_label}',
+            'label': f'跳转：\n{main_label}',
             'callback': lambda p=main_page: self.feature_manager.execute_action("open_steam_page", page_type=p)
         }
         

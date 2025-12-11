@@ -22,7 +22,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
         
         item = {
             'key': 'launch_recent',
-            'label': f"最近:\n{name}",
+            'label': f"最近：\n{name}",
             'callback': lambda: self.feature_manager.execute_action("launch_game", appid=top1['appid'])
         }
         
@@ -60,7 +60,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
         
         item = {
             'key': 'launch_favorite',
-            'label': f"启动:\n{name}",
+            'label': f"启动：\n{name}",
             'callback': lambda: self.feature_manager.execute_action("launch_game", appid=top1['appid'])
         }
         
