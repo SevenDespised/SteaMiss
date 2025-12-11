@@ -13,20 +13,29 @@ class SteamFeatureHandler:
 
     def open_steam_page(self, page_type=None, **kwargs):
         """
-        page_type: 'library', 'community', 'store', 'workshop'
+        打开Steam页面
+        page_type: 'library', 'community', 'store', 'workshop', 'profile', 'friends', 'downloads', 'settings'
         """
         steam_commands = {
             'store': 'steam://store',
             'community': 'steam://url/CommunityHome',
             'library': 'steam://nav/games',
-            'workshop': 'steam://url/SteamWorkshop'
+            'workshop': 'steam://url/SteamWorkshop',
+            'profile': 'steam://url/SteamIDEditPage',
+            'friends': 'steam://friends/',
+            'downloads': 'steam://nav/downloads',
+            'settings': 'steam://settings/'
         }
         
         web_urls = {
             'store': 'https://store.steampowered.com/',
             'community': 'https://steamcommunity.com/',
             'library': 'https://steamcommunity.com/my/games',
-            'workshop': 'https://steamcommunity.com/workshop/'
+            'workshop': 'https://steamcommunity.com/workshop/',
+            'profile': 'https://steamcommunity.com/my/profile/edit',
+            'friends': 'https://steamcommunity.com/my/friends/',
+            'downloads': 'https://store.steampowered.com/account/',
+            'settings': 'https://store.steampowered.com/account/'
         }
         
         cmd = steam_commands.get(page_type)
