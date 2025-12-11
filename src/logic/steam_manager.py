@@ -56,22 +56,18 @@ class SteamManager(QObject):
         except Exception as e:
             print(f"Failed to save local steam data: {e}")
 
-    def _get_primary_credentials(self, allow_alt_fallback=True):
+    def _get_primary_credentials(self):
         key = self.config.get("steam_api_key")
         sid = self.config.get("steam_id")
-
-        if not sid and allow_alt_fallback:
-            alt_ids = self.config.get("steam_alt_ids", [])
-            if isinstance(alt_ids, list) and alt_ids:
-                sid = alt_ids[0]
-
         return key, sid
 
     def _get_all_account_ids(self):
         ids = []
         primary = self.config.get("steam_id")
-        if primary:
-            ids.append(primary)
+        if not primary:
+            return ids
+
+        ids.append(primary)
 
         alt_ids = self.config.get("steam_alt_ids", [])
         if isinstance(alt_ids, list):
@@ -83,6 +79,8 @@ class SteamManager(QObject):
     def fetch_player_summary(self):
         """异步获取玩家信息"""
         key, sid = self._get_primary_credentials()
+        if not key or not sid:
+            return
         self._start_worker(key, sid, "summary")
 
     def fetch_games_stats(self):
@@ -92,7 +90,7 @@ class SteamManager(QObject):
         if not key or not ids:
             return
 
-        primary_id = self.config.get("steam_id") or ids[0]
+        primary_id = ids[0]
         self.games_aggregator.begin(ids, primary_id)
 
         for sid in ids:
@@ -101,11 +99,15 @@ class SteamManager(QObject):
     def fetch_store_prices(self, appids):
         """异步获取游戏价格"""
         key, sid = self._get_primary_credentials()
+        if not key or not sid:
+            return
         self._start_worker(key, sid, "store_prices", extra_data=appids)
 
     def fetch_wishlist(self):
         """异步获取愿望单折扣"""
         key, sid = self._get_primary_credentials()
+        if not key or not sid:
+            return
         self._start_worker(key, sid, "wishlist")
 
     def get_recent_game(self):
@@ -230,6 +232,10 @@ class SteamManager(QObject):
             self.save_local_data()
 
     def _get_primary_games_cache(self):
+        primary_id = self.config.get("steam_id")
+        if not primary_id:
+            return None
+
         if "games_primary" in self.cache:
             return self.cache["games_primary"]
         if "games" in self.cache:

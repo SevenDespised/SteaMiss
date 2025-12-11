@@ -1,4 +1,15 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTabWidget, QWidget, QHBoxLayout, QListWidget
+from PyQt6.QtWidgets import (
+    QDialog,
+    QVBoxLayout,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QTabWidget,
+    QWidget,
+    QHBoxLayout,
+    QListWidget,
+    QMessageBox,
+)
 
 class SettingsDialog(QDialog):
     def __init__(self, config_manager, steam_manager=None, parent=None):
@@ -111,6 +122,7 @@ class SettingsDialog(QDialog):
         self.steam_id_input = QLineEdit()
         self.steam_id_input.setPlaceholderText("例如: 76561198000000000")
         self.steam_id_input.setText(self.config_manager.get("steam_id", ""))
+        self.steam_id_input.textChanged.connect(self.on_primary_id_changed)
         layout.addWidget(self.steam_id_input)
         
         # 小号 Steam ID 列表
@@ -130,8 +142,9 @@ class SettingsDialog(QDialog):
         if not isinstance(alt_ids, list):
             alt_ids = []
 
-        for sid in alt_ids[:3]:
-            self.add_alt_id_input(sid)
+        if self.steam_id_input.text().strip():
+            for sid in alt_ids[:3]:
+                self.add_alt_id_input(sid)
 
         self._update_alt_add_btn_state()
 
@@ -150,6 +163,11 @@ class SettingsDialog(QDialog):
 
     def add_alt_id_input(self, value=""):
         """添加一个小号输入行"""
+        if not self.steam_id_input.text().strip():
+            QMessageBox.warning(self, "提示", "请先填写主账号 Steam ID，再添加小号。")
+            self._update_alt_add_btn_state()
+            return
+
         if len(self.alt_id_inputs) >= 3:
             return
 
@@ -184,7 +202,24 @@ class SettingsDialog(QDialog):
 
     def _update_alt_add_btn_state(self):
         if hasattr(self, "add_alt_btn"):
-            self.add_alt_btn.setEnabled(len(self.alt_id_inputs) < 3)
+            has_primary = bool(self.steam_id_input.text().strip()) if hasattr(self, "steam_id_input") else False
+            self.add_alt_btn.setEnabled(has_primary and len(self.alt_id_inputs) < 3)
+
+    def on_primary_id_changed(self, text: str):
+        text = text.strip()
+        if not text and self.alt_id_inputs:
+            self.clear_all_alt_inputs()
+        self._update_alt_add_btn_state()
+
+    def clear_all_alt_inputs(self):
+        while self.alt_id_inputs:
+            line = self.alt_id_inputs.pop()
+            parent_widget = line.parentWidget()
+            if parent_widget:
+                self.alt_id_container.removeWidget(parent_widget)
+                parent_widget.setParent(None)
+                parent_widget.deleteLater()
+        self._update_alt_add_btn_state()
 
     def init_quick_tab(self):
         layout = QVBoxLayout()
@@ -333,6 +368,8 @@ class SettingsDialog(QDialog):
                 alt_ids.append(sid)
             if len(alt_ids) >= 3:
                 break
+        if not self.steam_id_input.text().strip():
+            alt_ids = []
         self.config_manager.set("steam_alt_ids", alt_ids)
 
         self.config_manager.set("steam_api_key", self.api_key_input.text())

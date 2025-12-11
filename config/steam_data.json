@@ -1,3486 +1,4 @@
 {
-  "games": {
-    "count": 193,
-    "all_games": [
-      {
-        "appid": 33230,
-        "name": "刺客信条2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 35140,
-        "name": "Batman: Arkham Asylum GOTY Edition",
-        "playtime_forever": 257,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 40990,
-        "name": "Mafia",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 48000,
-        "name": "LIMBO",
-        "playtime_forever": 190,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 48190,
-        "name": "刺客信条：兄弟会",
-        "playtime_forever": 1117,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 200260,
-        "name": "Batman: Arkham City GOTY",
-        "playtime_forever": 1004,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1681570280
-      },
-      {
-        "appid": 201870,
-        "name": "刺客信条：启示录",
-        "playtime_forever": 958,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 208650,
-        "name": "Batman™: Arkham Knight",
-        "playtime_forever": 241,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 289650,
-        "name": "刺客信条：大革命",
-        "playtime_forever": 13,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 367520,
-        "name": "Hollow Knight",
-        "playtime_forever": 3950,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 368500,
-        "name": "刺客信条：枭雄",
-        "playtime_forever": 2293,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 386940,
-        "name": "超级鸡马",
-        "playtime_forever": 343,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 458710,
-        "name": "Kingdom Rush Frontiers",
-        "playtime_forever": 243,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 501300,
-        "name": "What Remains of Edith Finch",
-        "playtime_forever": 261,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 527230,
-        "name": "为了吾王 / For The King",
-        "playtime_forever": 189,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 552500,
-        "name": "Warhammer: Vermintide 2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 582010,
-        "name": "Monster Hunter: World",
-        "playtime_forever": 203,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 646570,
-        "name": "Slay the Spire",
-        "playtime_forever": 606,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 701160,
-        "name": "王国：两位君主",
-        "playtime_forever": 325,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742568842
-      },
-      {
-        "appid": 816340,
-        "name": "Kingdom Rush Origins",
-        "playtime_forever": 247,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 880950,
-        "name": "爱上火车-Pure Station-",
-        "playtime_forever": 547,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 976730,
-        "name": "Halo: The Master Chief Collection",
-        "playtime_forever": 279,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1144400,
-        "name": "千恋＊万花",
-        "playtime_forever": 563,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1172380,
-        "name": "《星球大战 绝地：陨落的武士团™》",
-        "playtime_forever": 190,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1293830,
-        "name": "极限竞速：地平线 4",
-        "playtime_forever": 206,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1356670,
-        "name": "天穗之咲稻姬",
-        "playtime_forever": 228,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1366540,
-        "name": "戴森球计划",
-        "playtime_forever": 1733,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1367550,
-        "name": "Kingdom Rush Vengeance",
-        "playtime_forever": 191,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1434480,
-        "name": "爱上火车-Last Run!!-",
-        "playtime_forever": 242,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1659040,
-        "name": "HITMAN World of Assassination",
-        "playtime_forever": 275,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1817070,
-        "name": "Marvel’s Spider-Man Remastered",
-        "playtime_forever": 2087,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 220,
-        "name": "Half-Life 2",
-        "playtime_forever": 84,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457979
-      },
-      {
-        "appid": 320,
-        "name": "Half-Life 2: Deathmatch",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 360,
-        "name": "Half-Life Deathmatch: Source",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 400,
-        "name": "Portal",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 550,
-        "name": "Left 4 Dead 2",
-        "playtime_forever": 114,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1586006454
-      },
-      {
-        "appid": 620,
-        "name": "Portal 2",
-        "playtime_forever": 254,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1689175298
-      },
-      {
-        "appid": 730,
-        "name": "Counter-Strike 2",
-        "playtime_forever": 2712,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1675232900
-      },
-      {
-        "appid": 4000,
-        "name": "Garry's Mod",
-        "playtime_forever": 141,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718373063
-      },
-      {
-        "appid": 7670,
-        "name": "BioShock",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 8190,
-        "name": "Just Cause 2",
-        "playtime_forever": 39,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1500094500
-      },
-      {
-        "appid": 8850,
-        "name": "BioShock 2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 8870,
-        "name": "生化奇兵：无限 完全版",
-        "playtime_forever": 506,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1640602432
-      },
-      {
-        "appid": 34330,
-        "name": "全面战争：幕府将军2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 47810,
-        "name": "Dragon Age: Origins - Ultimate Edition",
-        "playtime_forever": 173,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742548409
-      },
-      {
-        "appid": 49520,
-        "name": "Borderlands 2",
-        "playtime_forever": 58,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718379189
-      },
-      {
-        "appid": 50130,
-        "name": "Mafia II (Classic)",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 65930,
-        "name": "The Bureau: XCOM Declassified",
-        "playtime_forever": 85,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457899
-      },
-      {
-        "appid": 105600,
-        "name": "Terraria",
-        "playtime_forever": 1015,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1728031114
-      },
-      {
-        "appid": 200510,
-        "name": "XCOM: Enemy Unknown",
-        "playtime_forever": 137,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742551323
-      },
-      {
-        "appid": 203160,
-        "name": "Tomb Raider",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 204360,
-        "name": "Castle Crashers",
-        "playtime_forever": 418,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1623512947
-      },
-      {
-        "appid": 204450,
-        "name": "Call of Juarez Gunslinger",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 205100,
-        "name": "Dishonored",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 206440,
-        "name": "To the Moon《去月球》",
-        "playtime_forever": 120,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742558958
-      },
-      {
-        "appid": 213670,
-        "name": "South Park™: The Stick of Truth™",
-        "playtime_forever": 554,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1500357077
-      },
-      {
-        "appid": 218620,
-        "name": "PAYDAY 2",
-        "playtime_forever": 148,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742555943
-      },
-      {
-        "appid": 219740,
-        "name": "饥荒",
-        "playtime_forever": 1006,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1456487435
-      },
-      {
-        "appid": 238460,
-        "name": "BattleBlock Theater",
-        "playtime_forever": 350,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1586052296
-      },
-      {
-        "appid": 239140,
-        "name": "Dying Light",
-        "playtime_forever": 831,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1611405421
-      },
-      {
-        "appid": 242050,
-        "name": "刺客信条4：黑旗",
-        "playtime_forever": 2321,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1668934718
-      },
-      {
-        "appid": 242760,
-        "name": "The Forest",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 250320,
-        "name": "The Wolf Among Us",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 255710,
-        "name": "Cities: Skylines",
-        "playtime_forever": 130,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742575742
-      },
-      {
-        "appid": 260230,
-        "name": "Valiant Hearts: The Great War™ / Soldats Inconnus : Mémoires de la Grande Guerre™",
-        "playtime_forever": 467,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1745642394
-      },
-      {
-        "appid": 261570,
-        "name": "Ori and the Blind Forest",
-        "playtime_forever": 603,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1740658336
-      },
-      {
-        "appid": 268910,
-        "name": "Cuphead",
-        "playtime_forever": 558,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1755235716
-      },
-      {
-        "appid": 273350,
-        "name": "Evolve Stage 2",
-        "playtime_forever": 130,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718376846
-      },
-      {
-        "appid": 282800,
-        "name": "100% Orange Juice",
-        "playtime_forever": 211,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1643725773
-      },
-      {
-        "appid": 286160,
-        "name": "Tabletop Simulator",
-        "playtime_forever": 707,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1588261139
-      },
-      {
-        "appid": 292030,
-        "name": "巫师 3：狂猎",
-        "playtime_forever": 4482,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1672835748
-      },
-      {
-        "appid": 294100,
-        "name": "边缘世界 RimWorld",
-        "playtime_forever": 6620,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1763741440
-      },
-      {
-        "appid": 298630,
-        "name": "The Escapists",
-        "playtime_forever": 134,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742554504
-      },
-      {
-        "appid": 322330,
-        "name": "饥荒联机版",
-        "playtime_forever": 4590,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1720618728
-      },
-      {
-        "appid": 323190,
-        "name": "冰汽时代",
-        "playtime_forever": 105,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742568509
-      },
-      {
-        "appid": 327410,
-        "name": "A Bird Story",
-        "playtime_forever": 183,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742574330
-      },
-      {
-        "appid": 334210,
-        "name": "Fortified",
-        "playtime_forever": 85,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457979
-      },
-      {
-        "appid": 337340,
-        "name": "Finding Paradise 《寻找天堂》",
-        "playtime_forever": 103,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742562241
-      },
-      {
-        "appid": 346110,
-        "name": "ARK: Survival Evolved",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 356190,
-        "name": "Middle-earth™: Shadow of War™",
-        "playtime_forever": 304,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742587771
-      },
-      {
-        "appid": 359550,
-        "name": "彩虹六号：围攻X",
-        "playtime_forever": 221,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1660881874
-      },
-      {
-        "appid": 360430,
-        "name": "Mafia III: Definitive Edition",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 374320,
-        "name": "DARK SOULS™ III",
-        "playtime_forever": 3184,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1729835630
-      },
-      {
-        "appid": 377160,
-        "name": "Fallout 4",
-        "playtime_forever": 52,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1763570011
-      },
-      {
-        "appid": 379430,
-        "name": "Kingdom Come: Deliverance",
-        "playtime_forever": 233,
-        "playtime_2weeks": 57,
-        "rtime_last_played": 1765386209
-      },
-      {
-        "appid": 391540,
-        "name": "Undertale",
-        "playtime_forever": 174,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1712073072
-      },
-      {
-        "appid": 403640,
-        "name": "Dishonored 2",
-        "playtime_forever": 858,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1684495816
-      },
-      {
-        "appid": 407530,
-        "name": "ARK: Survival Of The Fittest",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 409710,
-        "name": "生化奇兵 重制版",
-        "playtime_forever": 86,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457979
-      },
-      {
-        "appid": 409720,
-        "name": "生化奇兵2 重制版",
-        "playtime_forever": 83,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457840
-      },
-      {
-        "appid": 412830,
-        "name": "STEINS;GATE",
-        "playtime_forever": 1709,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1736180023
-      },
-      {
-        "appid": 413150,
-        "name": "Stardew Valley",
-        "playtime_forever": 11206,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1757779903
-      },
-      {
-        "appid": 418240,
-        "name": "Shadow Tactics: Blades of the Shogun",
-        "playtime_forever": 128,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742554082
-      },
-      {
-        "appid": 431960,
-        "name": "Wallpaper Engine：壁纸引擎",
-        "playtime_forever": 4029,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1761321351
-      },
-      {
-        "appid": 447530,
-        "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
-        "playtime_forever": 657,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742543358
-      },
-      {
-        "appid": 457140,
-        "name": "缺氧",
-        "playtime_forever": 977,
-        "playtime_2weeks": 977,
-        "rtime_last_played": 1765278920
-      },
-      {
-        "appid": 477160,
-        "name": "人类一败涂地 / Human Fall Flat",
-        "playtime_forever": 807,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1674655262
-      },
-      {
-        "appid": 489830,
-        "name": "The Elder Scrolls V: Skyrim Special Edition",
-        "playtime_forever": 4257,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1751122569
-      },
-      {
-        "appid": 493340,
-        "name": "过山车之星",
-        "playtime_forever": 233,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1752327555
-      },
-      {
-        "appid": 503300,
-        "name": "Super Star",
-        "playtime_forever": 84,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718457901
-      },
-      {
-        "appid": 504230,
-        "name": "Celeste",
-        "playtime_forever": 243,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1736335924
-      },
-      {
-        "appid": 553640,
-        "name": "ICEY",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 558990,
-        "name": "Opus Magnum",
-        "playtime_forever": 214,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742474888
-      },
-      {
-        "appid": 568220,
-        "name": "Lobotomy Corporation",
-        "playtime_forever": 387,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1735129745
-      },
-      {
-        "appid": 577230,
-        "name": "三国志汉末霸业",
-        "playtime_forever": 157,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742563445
-      },
-      {
-        "appid": 578080,
-        "name": "PUBG: BATTLEGROUNDS",
-        "playtime_forever": 2086,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1666964713
-      },
-      {
-        "appid": 613830,
-        "name": "CHRONO TRIGGER",
-        "playtime_forever": 1680,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1744434716
-      },
-      {
-        "appid": 623990,
-        "name": "Tom Clancy's Rainbow Six Siege - Test Server",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 632300,
-        "name": "Hobo: Tough Life",
-        "playtime_forever": 347,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1760111409
-      },
-      {
-        "appid": 644560,
-        "name": "Mirror",
-        "playtime_forever": 227,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718373058
-      },
-      {
-        "appid": 648100,
-        "name": "Raging Loop",
-        "playtime_forever": 1964,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1714667469
-      },
-      {
-        "appid": 648580,
-        "name": "428 Shibuya Scramble",
-        "playtime_forever": 1553,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1741792376
-      },
-      {
-        "appid": 653530,
-        "name": "Return of the Obra Dinn",
-        "playtime_forever": 535,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1748964678
-      },
-      {
-        "appid": 658850,
-        "name": "Do Not Feed the Monkeys",
-        "playtime_forever": 89,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1747745237
-      },
-      {
-        "appid": 699920,
-        "name": "Despotism 3k",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 718670,
-        "name": "《密教模拟器 (Cultist Simulator)》",
-        "playtime_forever": 216,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1749564411
-      },
-      {
-        "appid": 728880,
-        "name": "Overcooked! 2",
-        "playtime_forever": 124,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742576875
-      },
-      {
-        "appid": 736260,
-        "name": "Baba Is You",
-        "playtime_forever": 104,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1749047220
-      },
-      {
-        "appid": 753640,
-        "name": "Outer Wilds",
-        "playtime_forever": 950,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742910265
-      },
-      {
-        "appid": 779340,
-        "name": "全面战争：三国",
-        "playtime_forever": 22,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1748349450
-      },
-      {
-        "appid": 779640,
-        "name": "妄想症 Deliver Me",
-        "playtime_forever": 128,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742553962
-      },
-      {
-        "appid": 813230,
-        "name": "ANIMAL WELL",
-        "playtime_forever": 759,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1760712035
-      },
-      {
-        "appid": 823130,
-        "name": "Totally Accurate Battlegrounds",
-        "playtime_forever": 19,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1528467319
-      },
-      {
-        "appid": 863550,
-        "name": "HITMAN™ 2",
-        "playtime_forever": 138,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718373065
-      },
-      {
-        "appid": 865180,
-        "name": "Reformers Intl Ver",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 881100,
-        "name": "Noita",
-        "playtime_forever": 807,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1741095321
-      },
-      {
-        "appid": 916440,
-        "name": "纪元1800",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 923890,
-        "name": "Yet another tower defence",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 942970,
-        "name": "疑案追声",
-        "playtime_forever": 282,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1560608827
-      },
-      {
-        "appid": 970600,
-        "name": "Paranoia: Deliver Me",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 972660,
-        "name": "《Spiritfarer®》Farewell版",
-        "playtime_forever": 207,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1748859491
-      },
-      {
-        "appid": 993090,
-        "name": "Lossless Scaling",
-        "playtime_forever": 70,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1743427656
-      },
-      {
-        "appid": 1007350,
-        "name": "Mirror Maker",
-        "playtime_forever": 148,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742556068
-      },
-      {
-        "appid": 1030300,
-        "name": "Hollow Knight: Silksong",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1030830,
-        "name": "四海兄弟II 最终版",
-        "playtime_forever": 309,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1753713474
-      },
-      {
-        "appid": 1030840,
-        "name": " 《四海兄弟: 最终版》​",
-        "playtime_forever": 622,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1752895955
-      },
-      {
-        "appid": 1057090,
-        "name": "Ori and the Will of the Wisps",
-        "playtime_forever": 121,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742575423
-      },
-      {
-        "appid": 1086940,
-        "name": "博德之门3",
-        "playtime_forever": 8011,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1741341925
-      },
-      {
-        "appid": 1091500,
-        "name": "赛博朋克 2077",
-        "playtime_forever": 10813,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1710916625
-      },
-      {
-        "appid": 1097150,
-        "name": "糖豆人",
-        "playtime_forever": 211,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1705058097
-      },
-      {
-        "appid": 1145360,
-        "name": "Hades",
-        "playtime_forever": 142,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718380988
-      },
-      {
-        "appid": 1158310,
-        "name": "Crusader Kings III",
-        "playtime_forever": 5903,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1761223700
-      },
-      {
-        "appid": 1172450,
-        "name": "Carto",
-        "playtime_forever": 296,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1715496126
-      },
-      {
-        "appid": 1182620,
-        "name": "Impostor Factory《影子工厂》",
-        "playtime_forever": 122,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742563744
-      },
-      {
-        "appid": 1205520,
-        "name": "Pentiment",
-        "playtime_forever": 398,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1764169874
-      },
-      {
-        "appid": 1216710,
-        "name": "全网公敌",
-        "playtime_forever": 628,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1715835536
-      },
-      {
-        "appid": 1222140,
-        "name": "底特律：化身为人",
-        "playtime_forever": 180,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1745142792
-      },
-      {
-        "appid": 1222680,
-        "name": "《Need for Speed™ Heat",
-        "playtime_forever": 88,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718458170
-      },
-      {
-        "appid": 1237970,
-        "name": "Titanfall® 2",
-        "playtime_forever": 532,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1713886687
-      },
-      {
-        "appid": 1238840,
-        "name": "Battlefield™ 1",
-        "playtime_forever": 128,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742567776
-      },
-      {
-        "appid": 1245620,
-        "name": "艾尔登法环",
-        "playtime_forever": 8908,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1745243523
-      },
-      {
-        "appid": 1267910,
-        "name": "Melvor Idle 梅尔沃放置",
-        "playtime_forever": 3239,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1744696428
-      },
-      {
-        "appid": 1404850,
-        "name": "幸运房东",
-        "playtime_forever": 678,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1733501212
-      },
-      {
-        "appid": 1426210,
-        "name": "双人成行",
-        "playtime_forever": 396,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1747661074
-      },
-      {
-        "appid": 1451940,
-        "name": "主播女孩重度依赖",
-        "playtime_forever": 172,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742573942
-      },
-      {
-        "appid": 1546570,
-        "name": "仙剑奇侠传",
-        "playtime_forever": 98,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1684677438
-      },
-      {
-        "appid": 1559390,
-        "name": "天命奇御二",
-        "playtime_forever": 3002,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1638700228
-      },
-      {
-        "appid": 1593500,
-        "name": "God of War",
-        "playtime_forever": 1788,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1711381072
-      },
-      {
-        "appid": 1601570,
-        "name": "多重人生",
-        "playtime_forever": 84,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1750694060
-      },
-      {
-        "appid": 1606430,
-        "name": "Rubber Bandits Playtest",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1649080,
-        "name": "双点校园 ",
-        "playtime_forever": 83,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1759243530
-      },
-      {
-        "appid": 1659420,
-        "name": "UNCHARTED™: 盗贼传奇合辑",
-        "playtime_forever": 973,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1709479504
-      },
-      {
-        "appid": 1669980,
-        "name": "火山的女儿",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1718570,
-        "name": "神之天平（ASTLIBRA Revision）",
-        "playtime_forever": 2323,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1734942644
-      },
-      {
-        "appid": 1746030,
-        "name": "山河旅探 - Murders on the Yangtze River",
-        "playtime_forever": 1005,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1708517909
-      },
-      {
-        "appid": 1765350,
-        "name": "候鸟",
-        "playtime_forever": 288,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1732198262
-      },
-      {
-        "appid": 1832640,
-        "name": "Mirror 2: Project X",
-        "playtime_forever": 144,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1686115558
-      },
-      {
-        "appid": 1868140,
-        "name": "潜水员戴夫 DAVE THE DIVER",
-        "playtime_forever": 3828,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1709220189
-      },
-      {
-        "appid": 1876890,
-        "name": "逸剑风云决",
-        "playtime_forever": 3475,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1730273102
-      },
-      {
-        "appid": 1887840,
-        "name": "蟹蟹寻宝奇遇",
-        "playtime_forever": 1040,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1735911291
-      },
-      {
-        "appid": 1903340,
-        "name": "光与影：33号远征队",
-        "playtime_forever": 2693,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1758634126
-      },
-      {
-        "appid": 1931770,
-        "name": "巴别塔圣歌",
-        "playtime_forever": 534,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1708531556
-      },
-      {
-        "appid": 1948980,
-        "name": "大侠立志传：碧血丹心",
-        "playtime_forever": 562,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1758903588
-      },
-      {
-        "appid": 1966720,
-        "name": "Lethal Company",
-        "playtime_forever": 35,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1727711952
-      },
-      {
-        "appid": 2050650,
-        "name": "Resident Evil 4",
-        "playtime_forever": 1121,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1709016531
-      },
-      {
-        "appid": 2095300,
-        "name": "飞越13号房",
-        "playtime_forever": 140,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1718378110
-      },
-      {
-        "appid": 2138710,
-        "name": "Sifu",
-        "playtime_forever": 659,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1737294261
-      },
-      {
-        "appid": 2144740,
-        "name": "幽灵行者 2（Ghostrunner 2）",
-        "playtime_forever": 176,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742574330
-      },
-      {
-        "appid": 2190290,
-        "name": "不双修就去世",
-        "playtime_forever": 309,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1727871153
-      },
-      {
-        "appid": 2194530,
-        "name": "犹格索托斯的庭院",
-        "playtime_forever": 2191,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1739810755
-      },
-      {
-        "appid": 2337860,
-        "name": "呆呆大乱斗",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 2358720,
-        "name": "黑神话：悟空",
-        "playtime_forever": 679,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1725890312
-      },
-      {
-        "appid": 2401970,
-        "name": "逆转检察官1&2 御剑精选集",
-        "playtime_forever": 3104,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1727765135
-      },
-      {
-        "appid": 2421410,
-        "name": "全网公敌2 新世界",
-        "playtime_forever": 123,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742575058
-      },
-      {
-        "appid": 2593370,
-        "name": "饿殍：明末千里行",
-        "playtime_forever": 182,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742551323
-      },
-      {
-        "appid": 2644470,
-        "name": "PICO PARK 2",
-        "playtime_forever": 304,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1738341679
-      },
-      {
-        "appid": 2679460,
-        "name": "暗喻幻想：ReFantazio",
-        "playtime_forever": 3692,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1730116424
-      },
-      {
-        "appid": 2878980,
-        "name": "NBA 2K25",
-        "playtime_forever": 8819,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1759237156
-      },
-      {
-        "appid": 3084280,
-        "name": "三相奇谈",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 3117820,
-        "name": "苏丹的游戏",
-        "playtime_forever": 1722,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1745578832
-      },
-      {
-        "appid": 3167020,
-        "name": "逃离鸭科夫",
-        "playtime_forever": 113,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1763039427
-      },
-      {
-        "appid": 3350200,
-        "name": "情感反诈模拟器",
-        "playtime_forever": 502,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1752246385
-      },
-      {
-        "appid": 3447040,
-        "name": "空之轨迹 the 1st",
-        "playtime_forever": 3064,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1759914059
-      }
-    ],
-    "top_games": [
-      {
-        "appid": 413150,
-        "name": "Stardew Valley",
-        "playtime_forever": 11206,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1757779903
-      },
-      {
-        "appid": 1091500,
-        "name": "赛博朋克 2077",
-        "playtime_forever": 10813,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1710916625
-      },
-      {
-        "appid": 1245620,
-        "name": "艾尔登法环",
-        "playtime_forever": 8908,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1745243523
-      },
-      {
-        "appid": 2878980,
-        "name": "NBA 2K25",
-        "playtime_forever": 8819,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1759237156
-      },
-      {
-        "appid": 1086940,
-        "name": "博德之门3",
-        "playtime_forever": 8011,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1741341925
-      }
-    ],
-    "recent_game": {
-      "appid": 379430,
-      "name": "Kingdom Come: Deliverance",
-      "playtime_forever": 233,
-      "playtime_2weeks": 57,
-      "rtime_last_played": 1765386209
-    },
-    "top_2weeks": [
-      {
-        "appid": 457140,
-        "name": "缺氧",
-        "playtime_forever": 977,
-        "playtime_2weeks": 977,
-        "rtime_last_played": 1765278920
-      },
-      {
-        "appid": 379430,
-        "name": "Kingdom Come: Deliverance",
-        "playtime_forever": 233,
-        "playtime_2weeks": 57,
-        "rtime_last_played": 1765386209
-      }
-    ],
-    "total_playtime": 182645
-  },
-  "summary": {
-    "steamid": "76561198279072437",
-    "communityvisibilitystate": 3,
-    "profilestate": 1,
-    "personaname": "SevenDespised",
-    "profileurl": "https://steamcommunity.com/profiles/76561198279072437/",
-    "avatar": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba.jpg",
-    "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
-    "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
-    "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
-    "lastlogoff": 1765421356,
-    "personastate": 0,
-    "realname": "七鄙",
-    "primaryclanid": "103582791429521408",
-    "timecreated": 1453718318,
-    "personastateflags": 0,
-    "loccountrycode": "CN",
-    "locstatecode": "12",
-    "loccityid": 10400,
-    "steam_level": 21
-  },
-  "wishlist": [
-    {
-      "appid": "275850",
-      "name": "No Man's Sky",
-      "discount_pct": 60,
-      "price": "¥ 70.00",
-      "image": ""
-    },
-    {
-      "appid": "975370",
-      "name": "Unknown",
-      "discount_pct": 20,
-      "price": "¥ 86.40",
-      "image": ""
-    }
-  ],
-  "prices": {
-    "220": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "320": {
-      "success": true,
-      "data": []
-    },
-    "360": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "400": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "550": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "620": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "730": {
-      "success": true,
-      "data": []
-    },
-    "4000": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3600,
-          "final": 3600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 36.00"
-        }
-      }
-    },
-    "7670": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 1600,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 64.00",
-          "final_formatted": "¥ 16.00"
-        }
-      }
-    },
-    "8190": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "8850": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 960,
-          "discount_percent": 85,
-          "initial_formatted": "¥ 64.00",
-          "final_formatted": "¥ 9.60"
-        }
-      }
-    },
-    "8870": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9500,
-          "final": 2375,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 95.00",
-          "final_formatted": "¥ 23.75"
-        }
-      }
-    },
-    "34330": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13300,
-          "final": 2660,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 133.00",
-          "final_formatted": "¥ 26.60"
-        }
-      }
-    },
-    "47810": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 15800,
-          "final": 15800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 158.00"
-        }
-      }
-    },
-    "49520": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 6400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 64.00"
-        }
-      }
-    },
-    "50130": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10500,
-          "final": 10500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 105.00"
-        }
-      }
-    },
-    "65930": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 6400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 64.00"
-        }
-      }
-    },
-    "105600": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "200260": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6800,
-          "final": 6800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 68.00"
-        }
-      }
-    },
-    "200510": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9500,
-          "final": 9500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 95.00"
-        }
-      }
-    },
-    "203160": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9800,
-          "final": 9800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 98.00"
-        }
-      }
-    },
-    "204360": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "204450": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5000,
-          "final": 1000,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 50.00",
-          "final_formatted": "¥ 10.00"
-        }
-      }
-    },
-    "205100": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4100,
-          "final": 4100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 41.00"
-        }
-      }
-    },
-    "206440": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3900,
-          "final": 3900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 39.00"
-        }
-      }
-    },
-    "213670": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 14800,
-          "final": 2960,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 148.00",
-          "final_formatted": "¥ 29.60"
-        }
-      }
-    },
-    "218620": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "219740": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2400,
-          "final": 2400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 24.00"
-        }
-      }
-    },
-    "238460": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "239140": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 17900,
-          "final": 3580,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 179.00",
-          "final_formatted": "¥ 35.80"
-        }
-      }
-    },
-    "242050": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "242760": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7000,
-          "final": 7000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 70.00"
-        }
-      }
-    },
-    "250320": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5000,
-          "final": 5000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 50.00"
-        }
-      }
-    },
-    "255710": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13800,
-          "final": 13800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 138.00"
-        }
-      }
-    },
-    "260230": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7500,
-          "final": 7500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 75.00"
-        }
-      }
-    },
-    "261570": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6800,
-          "final": 6800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 68.00"
-        }
-      }
-    },
-    "268910": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6800,
-          "final": 6800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 68.00"
-        }
-      }
-    },
-    "273350": {
-      "success": true,
-      "data": []
-    },
-    "282800": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2900,
-          "final": 2900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 29.00"
-        }
-      }
-    },
-    "286160": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "292030": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 14900,
-          "final": 1490,
-          "discount_percent": 90,
-          "initial_formatted": "¥ 149.00",
-          "final_formatted": "¥ 14.90"
-        }
-      }
-    },
-    "294100": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 12800,
-          "final": 12800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 128.00"
-        }
-      }
-    },
-    "298630": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7800,
-          "final": 1560,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 78.00",
-          "final_formatted": "¥ 15.60"
-        }
-      }
-    },
-    "322330": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2400,
-          "final": 2400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 24.00"
-        }
-      }
-    },
-    "323190": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10800,
-          "final": 1080,
-          "discount_percent": 90,
-          "initial_formatted": "¥ 108.00",
-          "final_formatted": "¥ 10.80"
-        }
-      }
-    },
-    "327410": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1800,
-          "final": 1800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 18.00"
-        }
-      }
-    },
-    "334210": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "337340": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3900,
-          "final": 3900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 39.00"
-        }
-      }
-    },
-    "346110": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "356190": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 14300,
-          "final": 14300,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 143.00"
-        }
-      }
-    },
-    "359550": {
-      "success": true,
-      "data": []
-    },
-    "360430": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10500,
-          "final": 10500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 105.00"
-        }
-      }
-    },
-    "374320": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 26800,
-          "final": 26800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 268.00"
-        }
-      }
-    },
-    "377160": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8300,
-          "final": 8300,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 83.00"
-        }
-      }
-    },
-    "379430": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 11100,
-          "final": 11100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 111.00"
-        }
-      }
-    },
-    "391540": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3600,
-          "final": 900,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 36.00",
-          "final_formatted": "¥ 9.00"
-        }
-      }
-    },
-    "403640": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 12500,
-          "final": 12500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 125.00"
-        }
-      }
-    },
-    "407530": {
-      "success": true,
-      "data": []
-    },
-    "409710": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 1600,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 64.00",
-          "final_formatted": "¥ 16.00"
-        }
-      }
-    },
-    "409720": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6400,
-          "final": 960,
-          "discount_percent": 85,
-          "initial_formatted": "¥ 64.00",
-          "final_formatted": "¥ 9.60"
-        }
-      }
-    },
-    "412830": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9000,
-          "final": 9000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 90.00"
-        }
-      }
-    },
-    "413150": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "418240": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 16000,
-          "final": 1600,
-          "discount_percent": 90,
-          "initial_formatted": "¥ 160.00",
-          "final_formatted": "¥ 16.00"
-        }
-      }
-    },
-    "431960": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2290,
-          "final": 2290,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 22.90"
-        }
-      }
-    },
-    "447530": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4800,
-          "final": 4800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 48.00"
-        }
-      }
-    },
-    "457140": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "477160": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "489830": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 16500,
-          "final": 16500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 165.00"
-        }
-      }
-    },
-    "493340": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 12200,
-          "final": 12200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 122.00"
-        }
-      }
-    },
-    "503300": {
-      "success": true,
-      "data": []
-    },
-    "504230": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "552500": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10800,
-          "final": 10800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 108.00"
-        }
-      }
-    },
-    "553640": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3800,
-          "final": 3800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 38.00"
-        }
-      }
-    },
-    "558990": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "568220": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8000,
-          "final": 8000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 80.00"
-        }
-      }
-    },
-    "577230": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1800,
-          "final": 1800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 18.00"
-        }
-      }
-    },
-    "578080": {
-      "success": true,
-      "data": []
-    },
-    "613830": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9500,
-          "final": 9500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 95.00"
-        }
-      }
-    },
-    "623990": {
-      "success": false
-    },
-    "632300": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10800,
-          "final": 10800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 108.00"
-        }
-      }
-    },
-    "644560": {
-      "success": false
-    },
-    "648100": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8800,
-          "final": 8800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 88.00"
-        }
-      }
-    },
-    "648580": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13800,
-          "final": 13800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 138.00"
-        }
-      }
-    },
-    "653530": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "658850": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6200,
-          "final": 6200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 62.00"
-        }
-      }
-    },
-    "699920": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3200,
-          "final": 3200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 32.00"
-        }
-      }
-    },
-    "701160": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "718670": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7000,
-          "final": 2800,
-          "discount_percent": 60,
-          "initial_formatted": "¥ 70.00",
-          "final_formatted": "¥ 28.00"
-        }
-      }
-    },
-    "728880": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9800,
-          "final": 2450,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 98.00",
-          "final_formatted": "¥ 24.50"
-        }
-      }
-    },
-    "736260": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5000,
-          "final": 5000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 50.00"
-        }
-      }
-    },
-    "753640": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9500,
-          "final": 9500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 95.00"
-        }
-      }
-    },
-    "779340": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 26800,
-          "final": 5360,
-          "discount_percent": 80,
-          "initial_formatted": "¥ 268.00",
-          "final_formatted": "¥ 53.60"
-        }
-      }
-    },
-    "779640": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "813230": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8500,
-          "final": 5950,
-          "discount_percent": 30,
-          "initial_formatted": "¥ 85.00",
-          "final_formatted": "¥ 59.50"
-        }
-      }
-    },
-    "823130": {
-      "success": true,
-      "data": []
-    },
-    "863550": {
-      "success": true,
-      "data": []
-    },
-    "865180": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "881100": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7000,
-          "final": 7000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 70.00"
-        }
-      }
-    },
-    "916440": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "923890": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "942970": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3800,
-          "final": 3800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 38.00"
-        }
-      }
-    },
-    "970600": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "972660": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10800,
-          "final": 10800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 108.00"
-        }
-      }
-    },
-    "993090": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2900,
-          "final": 2900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 29.00"
-        }
-      }
-    },
-    "1007350": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "1030300": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7600,
-          "final": 7600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 76.00"
-        }
-      }
-    },
-    "1030830": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10500,
-          "final": 10500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 105.00"
-        }
-      }
-    },
-    "1030840": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13900,
-          "final": 13900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 139.00"
-        }
-      }
-    },
-    "1057090": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9000,
-          "final": 9000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 90.00"
-        }
-      }
-    },
-    "1086940": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 29800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 298.00"
-        }
-      }
-    },
-    "1091500": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 10430,
-          "discount_percent": 65,
-          "initial_formatted": "¥ 298.00",
-          "final_formatted": "¥ 104.30"
-        }
-      }
-    },
-    "1097150": {
-      "success": true,
-      "data": []
-    },
-    "1145360": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9200,
-          "final": 9200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 92.00"
-        }
-      }
-    },
-    "1158310": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "1172450": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3800,
-          "final": 3800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 38.00"
-        }
-      }
-    },
-    "1182620": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "1205520": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6900,
-          "final": 6900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 69.00"
-        }
-      }
-    },
-    "1216710": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "1222140": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13600,
-          "final": 13600,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 136.00"
-        }
-      }
-    },
-    "1222680": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 28800,
-          "final": 28800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 288.00"
-        }
-      }
-    },
-    "1237970": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 15800,
-          "final": 15800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 158.00"
-        }
-      }
-    },
-    "1238840": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "1245620": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 29800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 298.00"
-        }
-      }
-    },
-    "1267910": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "1404850": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "1426210": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "1451940": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5400,
-          "final": 5400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 54.00"
-        }
-      }
-    },
-    "1546570": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 2000,
-          "final": 2000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 20.00"
-        }
-      }
-    },
-    "1559390": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8800,
-          "final": 8800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 88.00"
-        }
-      }
-    },
-    "1593500": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 34500,
-          "final": 34500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 345.00"
-        }
-      }
-    },
-    "1601570": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 10900,
-          "final": 7630,
-          "discount_percent": 30,
-          "initial_formatted": "¥ 109.00",
-          "final_formatted": "¥ 76.30"
-        }
-      }
-    },
-    "1606430": {
-      "success": true,
-      "data": []
-    },
-    "1649080": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 4950,
-          "discount_percent": 75,
-          "initial_formatted": "¥ 198.00",
-          "final_formatted": "¥ 49.50"
-        }
-      }
-    },
-    "1659420": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 34500,
-          "final": 34500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 345.00"
-        }
-      }
-    },
-    "1669980": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3500,
-          "final": 3500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 35.00"
-        }
-      }
-    },
-    "1718570": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8000,
-          "final": 8000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 80.00"
-        }
-      }
-    },
-    "1746030": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "1765350": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3900,
-          "final": 3900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 39.00"
-        }
-      }
-    },
-    "1832640": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 1100,
-          "final": 1100,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 11.00"
-        }
-      }
-    },
-    "1868140": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8000,
-          "final": 8000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 80.00"
-        }
-      }
-    },
-    "1876890": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 7800,
-          "final": 7800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 78.00"
-        }
-      }
-    },
-    "1887840": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 9800,
-          "final": 4900,
-          "discount_percent": 50,
-          "initial_formatted": "¥ 98.00",
-          "final_formatted": "¥ 49.00"
-        }
-      }
-    },
-    "1903340": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 21800,
-          "final": 17440,
-          "discount_percent": 20,
-          "initial_formatted": "¥ 218.00",
-          "final_formatted": "¥ 174.40"
-        }
-      }
-    },
-    "1931770": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8000,
-          "final": 8000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 80.00"
-        }
-      }
-    },
-    "1948980": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6900,
-          "final": 6900,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 69.00"
-        }
-      }
-    },
-    "1966720": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4200,
-          "final": 4200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 42.00"
-        }
-      }
-    },
-    "2050650": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "2095300": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3200,
-          "final": 3200,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 32.00"
-        }
-      }
-    },
-    "2138710": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 13900,
-          "final": 5560,
-          "discount_percent": 60,
-          "initial_formatted": "¥ 139.00",
-          "final_formatted": "¥ 55.60"
-        }
-      }
-    },
-    "2144740": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 16800,
-          "final": 16800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 168.00"
-        }
-      }
-    },
-    "2190290": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3600,
-          "final": 1728,
-          "discount_percent": 52,
-          "initial_formatted": "¥ 36.00",
-          "final_formatted": "¥ 17.28"
-        }
-      }
-    },
-    "2194530": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3500,
-          "final": 3500,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 35.00"
-        }
-      }
-    },
-    "2337860": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3300,
-          "final": 3300,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 33.00"
-        }
-      }
-    },
-    "2358720": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 26800,
-          "final": 26800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 268.00"
-        }
-      }
-    },
-    "2401970": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 19800,
-          "final": 19800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 198.00"
-        }
-      }
-    },
-    "2421410": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 6800,
-          "final": 6800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 68.00"
-        }
-      }
-    },
-    "2593370": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3700,
-          "final": 3700,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 37.00"
-        }
-      }
-    },
-    "2644470": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 4000,
-          "final": 4000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 40.00"
-        }
-      }
-    },
-    "2679460": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 29800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 298.00"
-        }
-      }
-    },
-    "2878980": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 29800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 298.00"
-        }
-      }
-    },
-    "3084280": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5400,
-          "final": 5400,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 54.00"
-        }
-      }
-    },
-    "3117820": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 8000,
-          "final": 8000,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 80.00"
-        }
-      }
-    },
-    "3167020": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 5800,
-          "final": 5800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 58.00"
-        }
-      }
-    },
-    "3350200": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 3300,
-          "final": 3300,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 33.00"
-        }
-      }
-    },
-    "3447040": {
-      "success": true,
-      "data": {
-        "price_overview": {
-          "currency": "CNY",
-          "initial": 29800,
-          "final": 29800,
-          "discount_percent": 0,
-          "initial_formatted": "",
-          "final_formatted": "¥ 298.00"
-        }
-      }
-    }
-  },
   "games_primary": {
     "count": 165,
     "all_games": [
@@ -6008,5 +2526,1443 @@
       }
     ],
     "total_playtime": 164505
+  },
+  "games": {
+    "count": 193,
+    "all_games": [
+      {
+        "appid": 33230,
+        "name": "刺客信条2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 35140,
+        "name": "Batman: Arkham Asylum GOTY Edition",
+        "playtime_forever": 257,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 40990,
+        "name": "Mafia",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 48000,
+        "name": "LIMBO",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 48190,
+        "name": "刺客信条：兄弟会",
+        "playtime_forever": 1117,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 200260,
+        "name": "Batman: Arkham City GOTY",
+        "playtime_forever": 1004,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1681570280
+      },
+      {
+        "appid": 201870,
+        "name": "刺客信条：启示录",
+        "playtime_forever": 958,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 208650,
+        "name": "Batman™: Arkham Knight",
+        "playtime_forever": 241,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 289650,
+        "name": "刺客信条：大革命",
+        "playtime_forever": 13,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 367520,
+        "name": "Hollow Knight",
+        "playtime_forever": 3950,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 368500,
+        "name": "刺客信条：枭雄",
+        "playtime_forever": 2293,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 386940,
+        "name": "超级鸡马",
+        "playtime_forever": 343,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 458710,
+        "name": "Kingdom Rush Frontiers",
+        "playtime_forever": 243,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 501300,
+        "name": "What Remains of Edith Finch",
+        "playtime_forever": 261,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 527230,
+        "name": "为了吾王 / For The King",
+        "playtime_forever": 189,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 552500,
+        "name": "Warhammer: Vermintide 2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 582010,
+        "name": "Monster Hunter: World",
+        "playtime_forever": 203,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 646570,
+        "name": "Slay the Spire",
+        "playtime_forever": 606,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 701160,
+        "name": "王国：两位君主",
+        "playtime_forever": 325,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742568842
+      },
+      {
+        "appid": 816340,
+        "name": "Kingdom Rush Origins",
+        "playtime_forever": 247,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 880950,
+        "name": "爱上火车-Pure Station-",
+        "playtime_forever": 547,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 976730,
+        "name": "Halo: The Master Chief Collection",
+        "playtime_forever": 279,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1144400,
+        "name": "千恋＊万花",
+        "playtime_forever": 563,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1172380,
+        "name": "《星球大战 绝地：陨落的武士团™》",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1293830,
+        "name": "极限竞速：地平线 4",
+        "playtime_forever": 206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1356670,
+        "name": "天穗之咲稻姬",
+        "playtime_forever": 228,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1366540,
+        "name": "戴森球计划",
+        "playtime_forever": 1733,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1367550,
+        "name": "Kingdom Rush Vengeance",
+        "playtime_forever": 191,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1434480,
+        "name": "爱上火车-Last Run!!-",
+        "playtime_forever": 242,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1659040,
+        "name": "HITMAN World of Assassination",
+        "playtime_forever": 275,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1817070,
+        "name": "Marvel’s Spider-Man Remastered",
+        "playtime_forever": 2087,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 220,
+        "name": "Half-Life 2",
+        "playtime_forever": 84,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 320,
+        "name": "Half-Life 2: Deathmatch",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 360,
+        "name": "Half-Life Deathmatch: Source",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 400,
+        "name": "Portal",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 550,
+        "name": "Left 4 Dead 2",
+        "playtime_forever": 114,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1586006454
+      },
+      {
+        "appid": 620,
+        "name": "Portal 2",
+        "playtime_forever": 254,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1689175298
+      },
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2",
+        "playtime_forever": 2712,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1675232900
+      },
+      {
+        "appid": 4000,
+        "name": "Garry's Mod",
+        "playtime_forever": 141,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373063
+      },
+      {
+        "appid": 7670,
+        "name": "BioShock",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 8190,
+        "name": "Just Cause 2",
+        "playtime_forever": 39,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1500094500
+      },
+      {
+        "appid": 8850,
+        "name": "BioShock 2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 8870,
+        "name": "生化奇兵：无限 完全版",
+        "playtime_forever": 506,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1640602432
+      },
+      {
+        "appid": 34330,
+        "name": "全面战争：幕府将军2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 47810,
+        "name": "Dragon Age: Origins - Ultimate Edition",
+        "playtime_forever": 173,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742548409
+      },
+      {
+        "appid": 49520,
+        "name": "Borderlands 2",
+        "playtime_forever": 58,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718379189
+      },
+      {
+        "appid": 50130,
+        "name": "Mafia II (Classic)",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 65930,
+        "name": "The Bureau: XCOM Declassified",
+        "playtime_forever": 85,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457899
+      },
+      {
+        "appid": 105600,
+        "name": "Terraria",
+        "playtime_forever": 1015,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1728031114
+      },
+      {
+        "appid": 200510,
+        "name": "XCOM: Enemy Unknown",
+        "playtime_forever": 137,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742551323
+      },
+      {
+        "appid": 203160,
+        "name": "Tomb Raider",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 204360,
+        "name": "Castle Crashers",
+        "playtime_forever": 418,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1623512947
+      },
+      {
+        "appid": 204450,
+        "name": "Call of Juarez Gunslinger",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 205100,
+        "name": "Dishonored",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 206440,
+        "name": "To the Moon《去月球》",
+        "playtime_forever": 120,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742558958
+      },
+      {
+        "appid": 213670,
+        "name": "South Park™: The Stick of Truth™",
+        "playtime_forever": 554,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1500357077
+      },
+      {
+        "appid": 218620,
+        "name": "PAYDAY 2",
+        "playtime_forever": 148,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742555943
+      },
+      {
+        "appid": 219740,
+        "name": "饥荒",
+        "playtime_forever": 1006,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1456487435
+      },
+      {
+        "appid": 238460,
+        "name": "BattleBlock Theater",
+        "playtime_forever": 350,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1586052296
+      },
+      {
+        "appid": 239140,
+        "name": "Dying Light",
+        "playtime_forever": 831,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1611405421
+      },
+      {
+        "appid": 242050,
+        "name": "刺客信条4：黑旗",
+        "playtime_forever": 2321,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1668934718
+      },
+      {
+        "appid": 242760,
+        "name": "The Forest",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 250320,
+        "name": "The Wolf Among Us",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 255710,
+        "name": "Cities: Skylines",
+        "playtime_forever": 130,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575742
+      },
+      {
+        "appid": 260230,
+        "name": "Valiant Hearts: The Great War™ / Soldats Inconnus : Mémoires de la Grande Guerre™",
+        "playtime_forever": 467,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745642394
+      },
+      {
+        "appid": 261570,
+        "name": "Ori and the Blind Forest",
+        "playtime_forever": 603,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1740658336
+      },
+      {
+        "appid": 268910,
+        "name": "Cuphead",
+        "playtime_forever": 558,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1755235716
+      },
+      {
+        "appid": 273350,
+        "name": "Evolve Stage 2",
+        "playtime_forever": 130,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718376846
+      },
+      {
+        "appid": 282800,
+        "name": "100% Orange Juice",
+        "playtime_forever": 211,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1643725773
+      },
+      {
+        "appid": 286160,
+        "name": "Tabletop Simulator",
+        "playtime_forever": 707,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1588261139
+      },
+      {
+        "appid": 292030,
+        "name": "巫师 3：狂猎",
+        "playtime_forever": 4482,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1672835748
+      },
+      {
+        "appid": 294100,
+        "name": "边缘世界 RimWorld",
+        "playtime_forever": 6620,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763741440
+      },
+      {
+        "appid": 298630,
+        "name": "The Escapists",
+        "playtime_forever": 134,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742554504
+      },
+      {
+        "appid": 322330,
+        "name": "饥荒联机版",
+        "playtime_forever": 4590,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1720618728
+      },
+      {
+        "appid": 323190,
+        "name": "冰汽时代",
+        "playtime_forever": 105,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742568509
+      },
+      {
+        "appid": 327410,
+        "name": "A Bird Story",
+        "playtime_forever": 183,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742574330
+      },
+      {
+        "appid": 334210,
+        "name": "Fortified",
+        "playtime_forever": 85,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 337340,
+        "name": "Finding Paradise 《寻找天堂》",
+        "playtime_forever": 103,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742562241
+      },
+      {
+        "appid": 346110,
+        "name": "ARK: Survival Evolved",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 356190,
+        "name": "Middle-earth™: Shadow of War™",
+        "playtime_forever": 304,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742587771
+      },
+      {
+        "appid": 359550,
+        "name": "彩虹六号：围攻X",
+        "playtime_forever": 221,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1660881874
+      },
+      {
+        "appid": 360430,
+        "name": "Mafia III: Definitive Edition",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 374320,
+        "name": "DARK SOULS™ III",
+        "playtime_forever": 3184,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1729835630
+      },
+      {
+        "appid": 377160,
+        "name": "Fallout 4",
+        "playtime_forever": 52,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763570011
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_forever": 233,
+        "playtime_2weeks": 57,
+        "rtime_last_played": 1765386209
+      },
+      {
+        "appid": 391540,
+        "name": "Undertale",
+        "playtime_forever": 174,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1712073072
+      },
+      {
+        "appid": 403640,
+        "name": "Dishonored 2",
+        "playtime_forever": 858,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1684495816
+      },
+      {
+        "appid": 407530,
+        "name": "ARK: Survival Of The Fittest",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 409710,
+        "name": "生化奇兵 重制版",
+        "playtime_forever": 86,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 409720,
+        "name": "生化奇兵2 重制版",
+        "playtime_forever": 83,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457840
+      },
+      {
+        "appid": 412830,
+        "name": "STEINS;GATE",
+        "playtime_forever": 1709,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1736180023
+      },
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 11206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1757779903
+      },
+      {
+        "appid": 418240,
+        "name": "Shadow Tactics: Blades of the Shogun",
+        "playtime_forever": 128,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742554082
+      },
+      {
+        "appid": 431960,
+        "name": "Wallpaper Engine：壁纸引擎",
+        "playtime_forever": 4029,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1761321351
+      },
+      {
+        "appid": 447530,
+        "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
+        "playtime_forever": 657,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742543358
+      },
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_forever": 977,
+        "playtime_2weeks": 977,
+        "rtime_last_played": 1765278920
+      },
+      {
+        "appid": 477160,
+        "name": "人类一败涂地 / Human Fall Flat",
+        "playtime_forever": 807,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1674655262
+      },
+      {
+        "appid": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "playtime_forever": 4257,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1751122569
+      },
+      {
+        "appid": 493340,
+        "name": "过山车之星",
+        "playtime_forever": 233,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752327555
+      },
+      {
+        "appid": 503300,
+        "name": "Super Star",
+        "playtime_forever": 84,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457901
+      },
+      {
+        "appid": 504230,
+        "name": "Celeste",
+        "playtime_forever": 243,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1736335924
+      },
+      {
+        "appid": 553640,
+        "name": "ICEY",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 558990,
+        "name": "Opus Magnum",
+        "playtime_forever": 214,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742474888
+      },
+      {
+        "appid": 568220,
+        "name": "Lobotomy Corporation",
+        "playtime_forever": 387,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1735129745
+      },
+      {
+        "appid": 577230,
+        "name": "三国志汉末霸业",
+        "playtime_forever": 157,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742563445
+      },
+      {
+        "appid": 578080,
+        "name": "PUBG: BATTLEGROUNDS",
+        "playtime_forever": 2086,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1666964713
+      },
+      {
+        "appid": 613830,
+        "name": "CHRONO TRIGGER",
+        "playtime_forever": 1680,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1744434716
+      },
+      {
+        "appid": 623990,
+        "name": "Tom Clancy's Rainbow Six Siege - Test Server",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 632300,
+        "name": "Hobo: Tough Life",
+        "playtime_forever": 347,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1760111409
+      },
+      {
+        "appid": 644560,
+        "name": "Mirror",
+        "playtime_forever": 227,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373058
+      },
+      {
+        "appid": 648100,
+        "name": "Raging Loop",
+        "playtime_forever": 1964,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1714667469
+      },
+      {
+        "appid": 648580,
+        "name": "428 Shibuya Scramble",
+        "playtime_forever": 1553,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741792376
+      },
+      {
+        "appid": 653530,
+        "name": "Return of the Obra Dinn",
+        "playtime_forever": 535,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748964678
+      },
+      {
+        "appid": 658850,
+        "name": "Do Not Feed the Monkeys",
+        "playtime_forever": 89,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1747745237
+      },
+      {
+        "appid": 699920,
+        "name": "Despotism 3k",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 718670,
+        "name": "《密教模拟器 (Cultist Simulator)》",
+        "playtime_forever": 216,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1749564411
+      },
+      {
+        "appid": 728880,
+        "name": "Overcooked! 2",
+        "playtime_forever": 124,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742576875
+      },
+      {
+        "appid": 736260,
+        "name": "Baba Is You",
+        "playtime_forever": 104,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1749047220
+      },
+      {
+        "appid": 753640,
+        "name": "Outer Wilds",
+        "playtime_forever": 950,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742910265
+      },
+      {
+        "appid": 779340,
+        "name": "全面战争：三国",
+        "playtime_forever": 22,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748349450
+      },
+      {
+        "appid": 779640,
+        "name": "妄想症 Deliver Me",
+        "playtime_forever": 128,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742553962
+      },
+      {
+        "appid": 813230,
+        "name": "ANIMAL WELL",
+        "playtime_forever": 759,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1760712035
+      },
+      {
+        "appid": 823130,
+        "name": "Totally Accurate Battlegrounds",
+        "playtime_forever": 19,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1528467319
+      },
+      {
+        "appid": 863550,
+        "name": "HITMAN™ 2",
+        "playtime_forever": 138,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373065
+      },
+      {
+        "appid": 865180,
+        "name": "Reformers Intl Ver",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 881100,
+        "name": "Noita",
+        "playtime_forever": 807,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741095321
+      },
+      {
+        "appid": 916440,
+        "name": "纪元1800",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 923890,
+        "name": "Yet another tower defence",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 942970,
+        "name": "疑案追声",
+        "playtime_forever": 282,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1560608827
+      },
+      {
+        "appid": 970600,
+        "name": "Paranoia: Deliver Me",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 972660,
+        "name": "《Spiritfarer®》Farewell版",
+        "playtime_forever": 207,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748859491
+      },
+      {
+        "appid": 993090,
+        "name": "Lossless Scaling",
+        "playtime_forever": 70,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1743427656
+      },
+      {
+        "appid": 1007350,
+        "name": "Mirror Maker",
+        "playtime_forever": 148,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742556068
+      },
+      {
+        "appid": 1030300,
+        "name": "Hollow Knight: Silksong",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1030830,
+        "name": "四海兄弟II 最终版",
+        "playtime_forever": 309,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1753713474
+      },
+      {
+        "appid": 1030840,
+        "name": " 《四海兄弟: 最终版》​",
+        "playtime_forever": 622,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752895955
+      },
+      {
+        "appid": 1057090,
+        "name": "Ori and the Will of the Wisps",
+        "playtime_forever": 121,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575423
+      },
+      {
+        "appid": 1086940,
+        "name": "博德之门3",
+        "playtime_forever": 8011,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741341925
+      },
+      {
+        "appid": 1091500,
+        "name": "赛博朋克 2077",
+        "playtime_forever": 10813,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1710916625
+      },
+      {
+        "appid": 1097150,
+        "name": "糖豆人",
+        "playtime_forever": 211,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1705058097
+      },
+      {
+        "appid": 1145360,
+        "name": "Hades",
+        "playtime_forever": 142,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718380988
+      },
+      {
+        "appid": 1158310,
+        "name": "Crusader Kings III",
+        "playtime_forever": 5903,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1761223700
+      },
+      {
+        "appid": 1172450,
+        "name": "Carto",
+        "playtime_forever": 296,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1715496126
+      },
+      {
+        "appid": 1182620,
+        "name": "Impostor Factory《影子工厂》",
+        "playtime_forever": 122,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742563744
+      },
+      {
+        "appid": 1205520,
+        "name": "Pentiment",
+        "playtime_forever": 398,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1764169874
+      },
+      {
+        "appid": 1216710,
+        "name": "全网公敌",
+        "playtime_forever": 628,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1715835536
+      },
+      {
+        "appid": 1222140,
+        "name": "底特律：化身为人",
+        "playtime_forever": 180,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745142792
+      },
+      {
+        "appid": 1222680,
+        "name": "《Need for Speed™ Heat",
+        "playtime_forever": 88,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718458170
+      },
+      {
+        "appid": 1237970,
+        "name": "Titanfall® 2",
+        "playtime_forever": 532,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1713886687
+      },
+      {
+        "appid": 1238840,
+        "name": "Battlefield™ 1",
+        "playtime_forever": 128,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742567776
+      },
+      {
+        "appid": 1245620,
+        "name": "艾尔登法环",
+        "playtime_forever": 8908,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745243523
+      },
+      {
+        "appid": 1267910,
+        "name": "Melvor Idle 梅尔沃放置",
+        "playtime_forever": 3239,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1744696428
+      },
+      {
+        "appid": 1404850,
+        "name": "幸运房东",
+        "playtime_forever": 678,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1733501212
+      },
+      {
+        "appid": 1426210,
+        "name": "双人成行",
+        "playtime_forever": 396,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1747661074
+      },
+      {
+        "appid": 1451940,
+        "name": "主播女孩重度依赖",
+        "playtime_forever": 172,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742573942
+      },
+      {
+        "appid": 1546570,
+        "name": "仙剑奇侠传",
+        "playtime_forever": 98,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1684677438
+      },
+      {
+        "appid": 1559390,
+        "name": "天命奇御二",
+        "playtime_forever": 3002,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1638700228
+      },
+      {
+        "appid": 1593500,
+        "name": "God of War",
+        "playtime_forever": 1788,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1711381072
+      },
+      {
+        "appid": 1601570,
+        "name": "多重人生",
+        "playtime_forever": 84,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1750694060
+      },
+      {
+        "appid": 1606430,
+        "name": "Rubber Bandits Playtest",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1649080,
+        "name": "双点校园 ",
+        "playtime_forever": 83,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759243530
+      },
+      {
+        "appid": 1659420,
+        "name": "UNCHARTED™: 盗贼传奇合辑",
+        "playtime_forever": 973,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709479504
+      },
+      {
+        "appid": 1669980,
+        "name": "火山的女儿",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1718570,
+        "name": "神之天平（ASTLIBRA Revision）",
+        "playtime_forever": 2323,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1734942644
+      },
+      {
+        "appid": 1746030,
+        "name": "山河旅探 - Murders on the Yangtze River",
+        "playtime_forever": 1005,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1708517909
+      },
+      {
+        "appid": 1765350,
+        "name": "候鸟",
+        "playtime_forever": 288,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1732198262
+      },
+      {
+        "appid": 1832640,
+        "name": "Mirror 2: Project X",
+        "playtime_forever": 144,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1686115558
+      },
+      {
+        "appid": 1868140,
+        "name": "潜水员戴夫 DAVE THE DIVER",
+        "playtime_forever": 3828,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709220189
+      },
+      {
+        "appid": 1876890,
+        "name": "逸剑风云决",
+        "playtime_forever": 3475,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1730273102
+      },
+      {
+        "appid": 1887840,
+        "name": "蟹蟹寻宝奇遇",
+        "playtime_forever": 1040,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1735911291
+      },
+      {
+        "appid": 1903340,
+        "name": "光与影：33号远征队",
+        "playtime_forever": 2693,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1758634126
+      },
+      {
+        "appid": 1931770,
+        "name": "巴别塔圣歌",
+        "playtime_forever": 534,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1708531556
+      },
+      {
+        "appid": 1948980,
+        "name": "大侠立志传：碧血丹心",
+        "playtime_forever": 562,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1758903588
+      },
+      {
+        "appid": 1966720,
+        "name": "Lethal Company",
+        "playtime_forever": 35,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727711952
+      },
+      {
+        "appid": 2050650,
+        "name": "Resident Evil 4",
+        "playtime_forever": 1121,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709016531
+      },
+      {
+        "appid": 2095300,
+        "name": "飞越13号房",
+        "playtime_forever": 140,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718378110
+      },
+      {
+        "appid": 2138710,
+        "name": "Sifu",
+        "playtime_forever": 659,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1737294261
+      },
+      {
+        "appid": 2144740,
+        "name": "幽灵行者 2（Ghostrunner 2）",
+        "playtime_forever": 176,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742574330
+      },
+      {
+        "appid": 2190290,
+        "name": "不双修就去世",
+        "playtime_forever": 309,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727871153
+      },
+      {
+        "appid": 2194530,
+        "name": "犹格索托斯的庭院",
+        "playtime_forever": 2191,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1739810755
+      },
+      {
+        "appid": 2337860,
+        "name": "呆呆大乱斗",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 2358720,
+        "name": "黑神话：悟空",
+        "playtime_forever": 679,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1725890312
+      },
+      {
+        "appid": 2401970,
+        "name": "逆转检察官1&2 御剑精选集",
+        "playtime_forever": 3104,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727765135
+      },
+      {
+        "appid": 2421410,
+        "name": "全网公敌2 新世界",
+        "playtime_forever": 123,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575058
+      },
+      {
+        "appid": 2593370,
+        "name": "饿殍：明末千里行",
+        "playtime_forever": 182,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742551323
+      },
+      {
+        "appid": 2644470,
+        "name": "PICO PARK 2",
+        "playtime_forever": 304,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1738341679
+      },
+      {
+        "appid": 2679460,
+        "name": "暗喻幻想：ReFantazio",
+        "playtime_forever": 3692,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1730116424
+      },
+      {
+        "appid": 2878980,
+        "name": "NBA 2K25",
+        "playtime_forever": 8819,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759237156
+      },
+      {
+        "appid": 3084280,
+        "name": "三相奇谈",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 3117820,
+        "name": "苏丹的游戏",
+        "playtime_forever": 1722,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745578832
+      },
+      {
+        "appid": 3167020,
+        "name": "逃离鸭科夫",
+        "playtime_forever": 113,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763039427
+      },
+      {
+        "appid": 3350200,
+        "name": "情感反诈模拟器",
+        "playtime_forever": 502,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752246385
+      },
+      {
+        "appid": 3447040,
+        "name": "空之轨迹 the 1st",
+        "playtime_forever": 3064,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759914059
+      }
+    ],
+    "top_games": [
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 11206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1757779903
+      },
+      {
+        "appid": 1091500,
+        "name": "赛博朋克 2077",
+        "playtime_forever": 10813,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1710916625
+      },
+      {
+        "appid": 1245620,
+        "name": "艾尔登法环",
+        "playtime_forever": 8908,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745243523
+      },
+      {
+        "appid": 2878980,
+        "name": "NBA 2K25",
+        "playtime_forever": 8819,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759237156
+      },
+      {
+        "appid": 1086940,
+        "name": "博德之门3",
+        "playtime_forever": 8011,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741341925
+      }
+    ],
+    "recent_game": {
+      "appid": 379430,
+      "name": "Kingdom Come: Deliverance",
+      "playtime_forever": 233,
+      "playtime_2weeks": 57,
+      "rtime_last_played": 1765386209
+    },
+    "top_2weeks": [
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_forever": 977,
+        "playtime_2weeks": 977,
+        "rtime_last_played": 1765278920
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_forever": 233,
+        "playtime_2weeks": 57,
+        "rtime_last_played": 1765386209
+      }
+    ],
+    "total_playtime": 182645
+  },
+  "summary": {
+    "steamid": "76561198279072437",
+    "communityvisibilitystate": 3,
+    "profilestate": 1,
+    "personaname": "SevenDespised",
+    "profileurl": "https://steamcommunity.com/profiles/76561198279072437/",
+    "avatar": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba.jpg",
+    "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
+    "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
+    "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
+    "lastlogoff": 1765421356,
+    "personastate": 0,
+    "realname": "七鄙",
+    "primaryclanid": "103582791429521408",
+    "timecreated": 1453718318,
+    "personastateflags": 0,
+    "loccountrycode": "CN",
+    "locstatecode": "12",
+    "loccityid": 10400,
+    "steam_level": 21
   }
 }
