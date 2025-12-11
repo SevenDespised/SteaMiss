@@ -8,26 +8,34 @@ class SettingsDialog(QDialog):
         self.setWindowTitle("功能设置")
         self.resize(500, 600) # 稍微调大一点
         
+        # 动态存储控件引用
+        self.alt_id_inputs = []
+        
         layout = QVBoxLayout()
         self.tabs = QTabWidget()
+
+        # Tab 1: Steam 设置
+        self.steam_tab = QWidget()
+        self.init_steam_tab()
+        self.tabs.addTab(self.steam_tab, "Steam设置")
         
-        # Tab 1: 打招呼
+        # Tab 2: 打招呼
         self.hello_tab = QWidget()
         self.init_hello_tab()
         self.tabs.addTab(self.hello_tab, "打招呼")
         
-        # Tab 2: 功能设置
+        # Tab 3: 快捷路径
         self.func_tab = QWidget()
         self.init_func_tab()
-        self.tabs.addTab(self.func_tab, "功能")
+        self.tabs.addTab(self.func_tab, "快捷路径")
 
-        # Tab 3: Steam 设置
-        self.steam_tab = QWidget()
-        self.init_steam_tab()
-        self.tabs.addTab(self.steam_tab, "Steam")
+        # Tab 4: 快速启动
+        self.quick_tab = QWidget()
+        self.init_quick_tab()
+        self.tabs.addTab(self.quick_tab, "快速启动")
 
-        # Tab 4: 闹钟 (Empty)
-        self.tabs.addTab(QWidget(), "闹钟")
+        # Tab 5: 闹钟 (Empty) (已移除，后续会变更为计时器相关)
+        # self.tabs.addTab(QWidget(), "闹钟")
         
         layout.addWidget(self.tabs)
         
@@ -98,14 +106,37 @@ class SettingsDialog(QDialog):
     def init_steam_tab(self):
         layout = QVBoxLayout()
         
-        # Steam ID
-        layout.addWidget(QLabel("Steam ID (64位):"))
+        # 主号 Steam ID
+        layout.addWidget(QLabel("主账号 Steam ID (64位):"))
         self.steam_id_input = QLineEdit()
         self.steam_id_input.setPlaceholderText("例如: 76561198000000000")
         self.steam_id_input.setText(self.config_manager.get("steam_id", ""))
         layout.addWidget(self.steam_id_input)
         
+        # 小号 Steam ID 列表
+        layout.addSpacing(6)
+        layout.addWidget(QLabel("小号 Steam ID (最多3个):"))
+        alt_header = QHBoxLayout()
+        self.add_alt_btn = QPushButton("添加小号")
+        self.add_alt_btn.clicked.connect(lambda: self.add_alt_id_input())
+        alt_header.addWidget(self.add_alt_btn)
+        alt_header.addStretch()
+        layout.addLayout(alt_header)
+
+        self.alt_id_container = QVBoxLayout()
+        layout.addLayout(self.alt_id_container)
+
+        alt_ids = self.config_manager.get("steam_alt_ids", [])
+        if not isinstance(alt_ids, list):
+            alt_ids = []
+
+        for sid in alt_ids[:3]:
+            self.add_alt_id_input(sid)
+
+        self._update_alt_add_btn_state()
+
         # API Key
+        layout.addSpacing(10)
         layout.addWidget(QLabel("Steam Web API Key:"))
         self.api_key_input = QLineEdit()
         self.api_key_input.setPlaceholderText("在此输入你的 API Key")
@@ -114,16 +145,57 @@ class SettingsDialog(QDialog):
         self.api_key_input.setText(self.config_manager.get("steam_api_key", ""))
         layout.addWidget(self.api_key_input)
         
-        layout.addSpacing(10)
+        layout.addStretch()
+        self.steam_tab.setLayout(layout)
+
+    def add_alt_id_input(self, value=""):
+        """添加一个小号输入行"""
+        if len(self.alt_id_inputs) >= 3:
+            return
+
+        row_widget = QWidget()
+        row_layout = QHBoxLayout()
+        row_layout.setContentsMargins(0, 0, 0, 0)
+
+        line = QLineEdit()
+        line.setPlaceholderText("例如: 76561198...")
+        line.setText(value)
+        remove_btn = QPushButton("删除")
+        remove_btn.clicked.connect(lambda: self.remove_alt_id_input(row_widget, line))
+
+        row_layout.addWidget(line)
+        row_layout.addWidget(remove_btn)
+        row_widget.setLayout(row_layout)
+
+        self.alt_id_container.addWidget(row_widget)
+        self.alt_id_inputs.append(line)
+        self._update_alt_add_btn_state()
+
+    def remove_alt_id_input(self, row_widget, line_edit):
+        """移除指定的小号输入行"""
+        if line_edit in self.alt_id_inputs:
+            self.alt_id_inputs.remove(line_edit)
+
+        # 从布局中移除并销毁控件
+        self.alt_id_container.removeWidget(row_widget)
+        row_widget.setParent(None)
+        row_widget.deleteLater()
+        self._update_alt_add_btn_state()
+
+    def _update_alt_add_btn_state(self):
+        if hasattr(self, "add_alt_btn"):
+            self.add_alt_btn.setEnabled(len(self.alt_id_inputs) < 3)
+
+    def init_quick_tab(self):
+        layout = QVBoxLayout()
+
         layout.addWidget(QLabel("--- 快速启动设置 (最多3个) ---"))
-        
+
         # 初始化数据
         self.quick_launch_games = self.config_manager.get("steam_quick_launch_games", [None, None, None])
-        # 兼容旧配置：如果列表全空，且有旧的 favorite，则填入第一个
         if not isinstance(self.quick_launch_games, list):
             self.quick_launch_games = [None, None, None]
 
-        # 确保长度为3
         while len(self.quick_launch_games) < 3:
             self.quick_launch_games.append(None)
             
@@ -160,7 +232,7 @@ class SettingsDialog(QDialog):
             
         # 清除按钮
         clear_btn = QPushButton("清除槽位")
-        clear_btn.clicked.connect(self.clear_slot_dialog) # 弹出对话框或简单清除
+        clear_btn.clicked.connect(self.clear_slot_dialog)
         assign_layout.addWidget(clear_btn)
         
         layout.addLayout(assign_layout)
@@ -169,7 +241,7 @@ class SettingsDialog(QDialog):
         self.selected_game = None
         
         layout.addStretch()
-        self.steam_tab.setLayout(layout)
+        self.quick_tab.setLayout(layout)
 
     def assign_to_slot(self, idx):
         if not self.selected_game:
@@ -253,6 +325,16 @@ class SettingsDialog(QDialog):
         
         # Save Steam Config
         self.config_manager.set("steam_id", self.steam_id_input.text())
+
+        alt_ids = []
+        for line in self.alt_id_inputs:
+            sid = line.text().strip()
+            if sid:
+                alt_ids.append(sid)
+            if len(alt_ids) >= 3:
+                break
+        self.config_manager.set("steam_alt_ids", alt_ids)
+
         self.config_manager.set("steam_api_key", self.api_key_input.text())
         
         # Save Quick Launch Games

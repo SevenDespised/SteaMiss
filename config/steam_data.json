@@ -1,2396 +1,1357 @@
 {
   "games": {
-    "count": 165,
+    "count": 193,
     "all_games": [
       {
-        "appid": 220,
-        "name": "Half-Life 2",
-        "playtime_forever": 84,
-        "img_icon_url": "fcfb366051782b8ebf2aa297f3b746395858cb62",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 84,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457979,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 320,
-        "name": "Half-Life 2: Deathmatch",
+        "appid": 33230,
+        "name": "刺客信条2",
         "playtime_forever": 0,
-        "img_icon_url": "795e85364189511f4990861b578084deef086cb1",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 360,
-        "name": "Half-Life Deathmatch: Source",
+        "appid": 35140,
+        "name": "Batman: Arkham Asylum GOTY Edition",
+        "playtime_forever": 257,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 40990,
+        "name": "Mafia",
         "playtime_forever": 0,
-        "img_icon_url": "40b8a62efff5a9ab356e5c56f5c8b0532c8e1aa3",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 400,
-        "name": "Portal",
-        "playtime_forever": 0,
-        "img_icon_url": "cfa928ab4119dd137e50d728e8fe703e4e970aff",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "appid": 48000,
+        "name": "LIMBO",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 550,
-        "name": "Left 4 Dead 2",
-        "playtime_forever": 114,
-        "img_icon_url": "7d5a243f9500d2f8467312822f8af2a2928777ed",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 17,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1586006454,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 620,
-        "name": "Portal 2",
-        "playtime_forever": 254,
-        "img_icon_url": "25a5a16b2423bf7487ac5340b5b0948cef48c5f8",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 115,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1689175298,
-        "has_leaderboards": true,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 730,
-        "name": "Counter-Strike 2",
-        "playtime_forever": 2712,
-        "img_icon_url": "8dbc71957312bbd3baea65848b545be9eae2a355",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1425,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1675232900,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 4000,
-        "name": "Garry's Mod",
-        "playtime_forever": 141,
-        "img_icon_url": "4a6f25cfa2426445d0d9d6e233408de4d371ce8b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 2,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718373063,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 7670,
-        "name": "BioShock",
-        "playtime_forever": 0,
-        "img_icon_url": "9a7c9f640a76e6a32592277dbbc36a0f6da05372",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 8190,
-        "name": "Just Cause 2",
-        "playtime_forever": 39,
-        "img_icon_url": "73582e392a2b9413fe93b011665a5b9cf26ff175",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1500094500,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 8850,
-        "name": "BioShock 2",
-        "playtime_forever": 0,
-        "img_icon_url": "f5eda925c0e57373aaea4cae17b6f175115a8d54",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 8870,
-        "name": "生化奇兵：无限 完全版",
-        "playtime_forever": 506,
-        "img_icon_url": "4ebaf5f9ee74f50152f7ff361debef7553fa0e4e",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 506,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1640602432,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 34330,
-        "name": "全面战争：幕府将军2",
-        "playtime_forever": 0,
-        "img_icon_url": "2fa97296a62daf0329b3867ad6837a2289229fbb",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 47810,
-        "name": "Dragon Age: Origins - Ultimate Edition",
-        "playtime_forever": 173,
-        "img_icon_url": "e5e0b9629b314f7338f493d26227eb2bd1172e77",
-        "playtime_windows_forever": 173,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742548409,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 49520,
-        "name": "Borderlands 2",
-        "playtime_forever": 58,
-        "img_icon_url": "a3f4945226e69b6196074df4c776e342d3e5a3be",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 54,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718379189,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 50130,
-        "name": "Mafia II (Classic)",
-        "playtime_forever": 0,
-        "img_icon_url": "62f1f7324e520be067aec1ab06d1ec6fa56f25bd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 65930,
-        "name": "The Bureau: XCOM Declassified",
-        "playtime_forever": 85,
-        "img_icon_url": "854f133d072a65e5577c2a21bf25ba863e4a6a23",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 85,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457899,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 105600,
-        "name": "Terraria",
-        "playtime_forever": 1015,
-        "img_icon_url": "858961e95fbf869f136e1770d586e0caefd4cfac",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1015,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1728031114,
-        "playtime_disconnected": 0
+        "appid": 48190,
+        "name": "刺客信条：兄弟会",
+        "playtime_forever": 1117,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 200260,
         "name": "Batman: Arkham City GOTY",
-        "playtime_forever": 710,
-        "img_icon_url": "746ecf3ce44b2525eb7ad643e76a3b60913d2662",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 560,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1681570280,
-        "playtime_disconnected": 0
+        "playtime_forever": 1004,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1681570280
       },
       {
-        "appid": 200510,
-        "name": "XCOM: Enemy Unknown",
-        "playtime_forever": 137,
-        "img_icon_url": "48be2fee1d0d511b5c7313e1359beafd36ea92ed",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 124,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742551323,
-        "playtime_disconnected": 0
+        "appid": 201870,
+        "name": "刺客信条：启示录",
+        "playtime_forever": 958,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 203160,
-        "name": "Tomb Raider",
-        "playtime_forever": 0,
-        "img_icon_url": "3ee640a8aba6992678e36f4e40cba9c71c02348b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "appid": 208650,
+        "name": "Batman™: Arkham Knight",
+        "playtime_forever": 241,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 204360,
-        "name": "Castle Crashers",
-        "playtime_forever": 418,
-        "img_icon_url": "9b7625f9b70f103397fd0416fd92abb583db8659",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 34,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1623512947,
-        "playtime_disconnected": 0
+        "appid": 289650,
+        "name": "刺客信条：大革命",
+        "playtime_forever": 13,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 204450,
-        "name": "Call of Juarez Gunslinger",
-        "playtime_forever": 0,
-        "img_icon_url": "b9a00d132852719cd6e6c2be3f3d0fdf669ed7ce",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "appid": 367520,
+        "name": "Hollow Knight",
+        "playtime_forever": 3950,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 205100,
-        "name": "Dishonored",
-        "playtime_forever": 0,
-        "img_icon_url": "74f8ee1ba536e0759e64a9bf801fc013e16c8dd1",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "has_leaderboards": true,
-        "playtime_disconnected": 0
+        "appid": 368500,
+        "name": "刺客信条：枭雄",
+        "playtime_forever": 2293,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 206440,
-        "name": "To the Moon《去月球》",
-        "playtime_forever": 120,
-        "img_icon_url": "6e29eb4076a6253fdbccb987a2a21746d2df54d7",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 120,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742558958,
-        "playtime_disconnected": 0
+        "appid": 386940,
+        "name": "超级鸡马",
+        "playtime_forever": 343,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
-        "appid": 213670,
-        "name": "South Park™: The Stick of Truth™",
-        "playtime_forever": 554,
-        "img_icon_url": "afad8295902080fb2aedd9aaabb3e21c10eecc85",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1500357077,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 218620,
-        "name": "PAYDAY 2",
-        "playtime_forever": 148,
-        "img_icon_url": "a6abc0d0c1e79c0b5b0f5c8ab81ce9076a542414",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 148,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742555943,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 1
-      },
-      {
-        "appid": 219740,
-        "name": "饥荒",
-        "playtime_forever": 1006,
-        "img_icon_url": "03fe647df40dccc4d19bf42a0185cd3e6b9f2953",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1456487435,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 238460,
-        "name": "BattleBlock Theater",
-        "playtime_forever": 350,
-        "img_icon_url": "2f258aaff583d797812cdcf24830d5992f48733b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 90,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1586052296,
-        "has_leaderboards": true,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 239140,
-        "name": "Dying Light",
-        "playtime_forever": 831,
-        "img_icon_url": "d575b4ba3480fe20aaeda8e8f498c3e47033069d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 831,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1611405421,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 242050,
-        "name": "刺客信条4：黑旗",
-        "playtime_forever": 2321,
-        "img_icon_url": "a03c06290af00eed66814815663b68f5fd063882",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 2168,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1668934718,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 242760,
-        "name": "The Forest",
-        "playtime_forever": 0,
-        "img_icon_url": "3a6847f6ac5879e48531db52261771d5e22904ac",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 250320,
-        "name": "The Wolf Among Us",
-        "playtime_forever": 0,
-        "img_icon_url": "dee5f1476ddd237ed9faab86b59cb9ca9b275faa",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 255710,
-        "name": "Cities: Skylines",
-        "playtime_forever": 130,
-        "img_icon_url": "6cf7b10dd29db28448ef79698ed2118a03617d63",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 130,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742575742,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 260230,
-        "name": "Valiant Hearts: The Great War™ / Soldats Inconnus : Mémoires de la Grande Guerre™",
-        "playtime_forever": 467,
-        "img_icon_url": "903f95e08ebcd45dfb78deb171b2f12909892be2",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 467,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1745642394,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 261570,
-        "name": "Ori and the Blind Forest",
-        "playtime_forever": 603,
-        "img_icon_url": "a8b0c1ca89fa421e5061d4ac5c17e2fbf4f08845",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 603,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1740658336,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 268910,
-        "name": "Cuphead",
-        "playtime_forever": 558,
-        "img_icon_url": "c19f1bd916b6d171e94089d03112ec4e4e4da84e",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 558,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1755235716,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 273350,
-        "name": "Evolve Stage 2",
-        "playtime_forever": 130,
-        "img_icon_url": "6b9e205c389185a4b0e079a13090c751e47375d2",
-        "playtime_windows_forever": 43,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718376846,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 282800,
-        "name": "100% Orange Juice",
-        "playtime_forever": 211,
-        "img_icon_url": "baaf4be38deeb8a631567ee6c651ca23b65c834a",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 211,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1643725773,
-        "has_leaderboards": true,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 286160,
-        "name": "Tabletop Simulator",
-        "playtime_forever": 707,
-        "img_icon_url": "19f5b90e3c7084758f885ded843631b13929fa26",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 707,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1588261139,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 292030,
-        "name": "巫师 3：狂猎",
-        "playtime_forever": 4482,
-        "img_icon_url": "78d0ff98b67851f24539cdf2402cf147679134f4",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 4482,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1672835748,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 294100,
-        "name": "边缘世界 RimWorld",
-        "playtime_forever": 6620,
-        "img_icon_url": "addbe3b704b267060b4d5d7649cfb292de61bd70",
-        "playtime_windows_forever": 6620,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1763741440,
-        "playtime_disconnected": 99
-      },
-      {
-        "appid": 298630,
-        "name": "The Escapists",
-        "playtime_forever": 134,
-        "img_icon_url": "bd0870a5fb2b51f11699c9b77d1bc7e7ba688c74",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 134,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742554504,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 322330,
-        "name": "饥荒联机版",
-        "playtime_forever": 4590,
-        "img_icon_url": "a80aa6cff8eebc1cbc18c367d9ab063e1553b0ee",
-        "playtime_windows_forever": 133,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1720618728,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 323190,
-        "name": "冰汽时代",
-        "playtime_forever": 105,
-        "img_icon_url": "0561084dfe24c469c905fe0681da82aa31102836",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 105,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742568509,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 327410,
-        "name": "A Bird Story",
-        "playtime_forever": 183,
-        "img_icon_url": "cef549201cdfcf82ae56d9975cdcf96ea5515760",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 183,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742574330,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 334210,
-        "name": "Fortified",
-        "playtime_forever": 85,
-        "img_icon_url": "535ed4d2687fbab89d9e60d8cd0fffd2cbeb4b4f",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 85,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457979,
-        "playtime_disconnected": 1
-      },
-      {
-        "appid": 337340,
-        "name": "Finding Paradise 《寻找天堂》",
-        "playtime_forever": 103,
-        "img_icon_url": "a73f4efe629814dee218036dfc08e293dea41137",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 103,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742562241,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 346110,
-        "name": "ARK: Survival Evolved",
-        "playtime_forever": 0,
-        "img_icon_url": "fef1799533131c10f538d2dd697bbbd89e663265",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 356190,
-        "name": "Middle-earth™: Shadow of War™",
-        "playtime_forever": 304,
-        "img_icon_url": "316c479e5d51d21e15eb8f82338fce82c42c4115",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 304,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742587771,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 359550,
-        "name": "彩虹六号：围攻X",
-        "playtime_forever": 221,
-        "img_icon_url": "624745d333ac54aedb1ee911013e2edb7722550e",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 42,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1660881874,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 360430,
-        "name": "Mafia III: Definitive Edition",
-        "playtime_forever": 0,
-        "img_icon_url": "3df3ee0dfcb254bedbf15822c93a6983f67b0822",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 374320,
-        "name": "DARK SOULS™ III",
-        "playtime_forever": 3184,
-        "img_icon_url": "7abe1a33129c20cf10d2c74128bbd657a2a2c806",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3184,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1729835630,
-        "playtime_disconnected": 1
-      },
-      {
-        "appid": 377160,
-        "name": "Fallout 4",
-        "playtime_forever": 52,
-        "img_icon_url": "779c4356ebe32af2af7c9f0bbba595dfe872cd7f",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 52,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1763570011,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 379430,
-        "name": "Kingdom Come: Deliverance",
-        "playtime_2weeks": 56,
-        "playtime_forever": 232,
-        "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 232,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1764250872,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 391540,
-        "name": "Undertale",
-        "playtime_forever": 174,
-        "img_icon_url": "2ce672b89b63ec1e70d2f12862e72eb4a33e9268",
-        "playtime_windows_forever": 174,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1712073072,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 403640,
-        "name": "Dishonored 2",
-        "playtime_forever": 858,
-        "img_icon_url": "6d6bac950a234764a353c518607dcd01973f5b65",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 858,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1684495816,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 407530,
-        "name": "ARK: Survival Of The Fittest",
-        "playtime_forever": 0,
-        "img_icon_url": "807c673cddebbfee0700a947a75f4872ad136e9b",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 409710,
-        "name": "生化奇兵 重制版",
-        "playtime_forever": 86,
-        "img_icon_url": "eb72262cd3ccc3219dd76392be3b60a4b6cbfd38",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 86,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457979,
-        "playtime_disconnected": 1
-      },
-      {
-        "appid": 409720,
-        "name": "生化奇兵2 重制版",
-        "playtime_forever": 83,
-        "img_icon_url": "97527a02b36f8ac4aba21005c2d953cc908a08e1",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 83,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457840,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 412830,
-        "name": "STEINS;GATE",
-        "playtime_forever": 1709,
-        "img_icon_url": "adddf0c18983e5b0e2a8967939a774a201589674",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1376,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 332,
-        "playtime_deck_forever": 332,
-        "rtime_last_played": 1736180023,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 1
-      },
-      {
-        "appid": 413150,
-        "name": "Stardew Valley",
-        "playtime_forever": 11206,
-        "img_icon_url": "35d1377200084a4034238c05b0c8930451e2fb40",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 10905,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 301,
-        "playtime_deck_forever": 301,
-        "rtime_last_played": 1757779903,
-        "playtime_disconnected": 14
-      },
-      {
-        "appid": 418240,
-        "name": "Shadow Tactics: Blades of the Shogun",
-        "playtime_forever": 128,
-        "img_icon_url": "7f933b7e1bcb83caf3bbcc9a143aee85b8a677af",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 128,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742554082,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 431960,
-        "name": "Wallpaper Engine：壁纸引擎",
-        "playtime_forever": 4029,
-        "img_icon_url": "72edaed9d748c6cf7397ffb1c83f0b837b9ebd9d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 2566,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1761321351,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 447530,
-        "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
-        "playtime_forever": 657,
-        "img_icon_url": "eb4485232d4ac9ec5a786fa4ba5b9c95fc3e8d63",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 646,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 10,
-        "playtime_deck_forever": 10,
-        "rtime_last_played": 1742543358,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 457140,
-        "name": "缺氧",
-        "playtime_2weeks": 977,
-        "playtime_forever": 977,
-        "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 977,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1765278920,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 477160,
-        "name": "人类一败涂地 / Human Fall Flat",
-        "playtime_forever": 807,
-        "img_icon_url": "15c6f6a4d69633a63ee410b24a2417f16d803b06",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 807,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1674655262,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 489830,
-        "name": "The Elder Scrolls V: Skyrim Special Edition",
-        "playtime_forever": 4257,
-        "img_icon_url": "0dfe3eed5658f9fbd8b62f8021038c0a4190f21d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 4257,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1751122569,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 493340,
-        "name": "过山车之星",
-        "playtime_forever": 233,
-        "img_icon_url": "1b2f29e743dd3048f21fefd9642d86a5f5123968",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 233,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1752327555,
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 503300,
-        "name": "Super Star",
-        "playtime_forever": 84,
-        "img_icon_url": "d0459b4fc36e739a11b2952e79b84caa51164fa5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 84,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718457901,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 504230,
-        "name": "Celeste",
+        "appid": 458710,
+        "name": "Kingdom Rush Frontiers",
         "playtime_forever": 243,
-        "img_icon_url": "04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 243,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1736335924,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 501300,
+        "name": "What Remains of Edith Finch",
+        "playtime_forever": 261,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 527230,
+        "name": "为了吾王 / For The King",
+        "playtime_forever": 189,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 552500,
         "name": "Warhammer: Vermintide 2",
         "playtime_forever": 0,
-        "img_icon_url": "a671f2ddf7359beba9702ac097baf6d50cb07202",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 582010,
+        "name": "Monster Hunter: World",
+        "playtime_forever": 203,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 646570,
+        "name": "Slay the Spire",
+        "playtime_forever": 606,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 701160,
+        "name": "王国：两位君主",
+        "playtime_forever": 325,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742568842
+      },
+      {
+        "appid": 816340,
+        "name": "Kingdom Rush Origins",
+        "playtime_forever": 247,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 880950,
+        "name": "爱上火车-Pure Station-",
+        "playtime_forever": 547,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 976730,
+        "name": "Halo: The Master Chief Collection",
+        "playtime_forever": 279,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1144400,
+        "name": "千恋＊万花",
+        "playtime_forever": 563,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1172380,
+        "name": "《星球大战 绝地：陨落的武士团™》",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1293830,
+        "name": "极限竞速：地平线 4",
+        "playtime_forever": 206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1356670,
+        "name": "天穗之咲稻姬",
+        "playtime_forever": 228,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1366540,
+        "name": "戴森球计划",
+        "playtime_forever": 1733,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1367550,
+        "name": "Kingdom Rush Vengeance",
+        "playtime_forever": 191,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1434480,
+        "name": "爱上火车-Last Run!!-",
+        "playtime_forever": 242,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1659040,
+        "name": "HITMAN World of Assassination",
+        "playtime_forever": 275,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1817070,
+        "name": "Marvel’s Spider-Man Remastered",
+        "playtime_forever": 2087,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 220,
+        "name": "Half-Life 2",
+        "playtime_forever": 84,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 320,
+        "name": "Half-Life 2: Deathmatch",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 360,
+        "name": "Half-Life Deathmatch: Source",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 400,
+        "name": "Portal",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 550,
+        "name": "Left 4 Dead 2",
+        "playtime_forever": 114,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1586006454
+      },
+      {
+        "appid": 620,
+        "name": "Portal 2",
+        "playtime_forever": 254,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1689175298
+      },
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2",
+        "playtime_forever": 2712,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1675232900
+      },
+      {
+        "appid": 4000,
+        "name": "Garry's Mod",
+        "playtime_forever": 141,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373063
+      },
+      {
+        "appid": 7670,
+        "name": "BioShock",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 8190,
+        "name": "Just Cause 2",
+        "playtime_forever": 39,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1500094500
+      },
+      {
+        "appid": 8850,
+        "name": "BioShock 2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 8870,
+        "name": "生化奇兵：无限 完全版",
+        "playtime_forever": 506,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1640602432
+      },
+      {
+        "appid": 34330,
+        "name": "全面战争：幕府将军2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 47810,
+        "name": "Dragon Age: Origins - Ultimate Edition",
+        "playtime_forever": 173,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742548409
+      },
+      {
+        "appid": 49520,
+        "name": "Borderlands 2",
+        "playtime_forever": 58,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718379189
+      },
+      {
+        "appid": 50130,
+        "name": "Mafia II (Classic)",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 65930,
+        "name": "The Bureau: XCOM Declassified",
+        "playtime_forever": 85,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457899
+      },
+      {
+        "appid": 105600,
+        "name": "Terraria",
+        "playtime_forever": 1015,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1728031114
+      },
+      {
+        "appid": 200510,
+        "name": "XCOM: Enemy Unknown",
+        "playtime_forever": 137,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742551323
+      },
+      {
+        "appid": 203160,
+        "name": "Tomb Raider",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 204360,
+        "name": "Castle Crashers",
+        "playtime_forever": 418,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1623512947
+      },
+      {
+        "appid": 204450,
+        "name": "Call of Juarez Gunslinger",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 205100,
+        "name": "Dishonored",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 206440,
+        "name": "To the Moon《去月球》",
+        "playtime_forever": 120,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742558958
+      },
+      {
+        "appid": 213670,
+        "name": "South Park™: The Stick of Truth™",
+        "playtime_forever": 554,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1500357077
+      },
+      {
+        "appid": 218620,
+        "name": "PAYDAY 2",
+        "playtime_forever": 148,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742555943
+      },
+      {
+        "appid": 219740,
+        "name": "饥荒",
+        "playtime_forever": 1006,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1456487435
+      },
+      {
+        "appid": 238460,
+        "name": "BattleBlock Theater",
+        "playtime_forever": 350,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1586052296
+      },
+      {
+        "appid": 239140,
+        "name": "Dying Light",
+        "playtime_forever": 831,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1611405421
+      },
+      {
+        "appid": 242050,
+        "name": "刺客信条4：黑旗",
+        "playtime_forever": 2321,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1668934718
+      },
+      {
+        "appid": 242760,
+        "name": "The Forest",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 250320,
+        "name": "The Wolf Among Us",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 255710,
+        "name": "Cities: Skylines",
+        "playtime_forever": 130,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575742
+      },
+      {
+        "appid": 260230,
+        "name": "Valiant Hearts: The Great War™ / Soldats Inconnus : Mémoires de la Grande Guerre™",
+        "playtime_forever": 467,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745642394
+      },
+      {
+        "appid": 261570,
+        "name": "Ori and the Blind Forest",
+        "playtime_forever": 603,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1740658336
+      },
+      {
+        "appid": 268910,
+        "name": "Cuphead",
+        "playtime_forever": 558,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1755235716
+      },
+      {
+        "appid": 273350,
+        "name": "Evolve Stage 2",
+        "playtime_forever": 130,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718376846
+      },
+      {
+        "appid": 282800,
+        "name": "100% Orange Juice",
+        "playtime_forever": 211,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1643725773
+      },
+      {
+        "appid": 286160,
+        "name": "Tabletop Simulator",
+        "playtime_forever": 707,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1588261139
+      },
+      {
+        "appid": 292030,
+        "name": "巫师 3：狂猎",
+        "playtime_forever": 4482,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1672835748
+      },
+      {
+        "appid": 294100,
+        "name": "边缘世界 RimWorld",
+        "playtime_forever": 6620,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763741440
+      },
+      {
+        "appid": 298630,
+        "name": "The Escapists",
+        "playtime_forever": 134,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742554504
+      },
+      {
+        "appid": 322330,
+        "name": "饥荒联机版",
+        "playtime_forever": 4590,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1720618728
+      },
+      {
+        "appid": 323190,
+        "name": "冰汽时代",
+        "playtime_forever": 105,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742568509
+      },
+      {
+        "appid": 327410,
+        "name": "A Bird Story",
+        "playtime_forever": 183,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742574330
+      },
+      {
+        "appid": 334210,
+        "name": "Fortified",
+        "playtime_forever": 85,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 337340,
+        "name": "Finding Paradise 《寻找天堂》",
+        "playtime_forever": 103,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742562241
+      },
+      {
+        "appid": 346110,
+        "name": "ARK: Survival Evolved",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 356190,
+        "name": "Middle-earth™: Shadow of War™",
+        "playtime_forever": 304,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742587771
+      },
+      {
+        "appid": 359550,
+        "name": "彩虹六号：围攻X",
+        "playtime_forever": 221,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1660881874
+      },
+      {
+        "appid": 360430,
+        "name": "Mafia III: Definitive Edition",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 374320,
+        "name": "DARK SOULS™ III",
+        "playtime_forever": 3184,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1729835630
+      },
+      {
+        "appid": 377160,
+        "name": "Fallout 4",
+        "playtime_forever": 52,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763570011
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_forever": 233,
+        "playtime_2weeks": 57,
+        "rtime_last_played": 1765386209
+      },
+      {
+        "appid": 391540,
+        "name": "Undertale",
+        "playtime_forever": 174,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1712073072
+      },
+      {
+        "appid": 403640,
+        "name": "Dishonored 2",
+        "playtime_forever": 858,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1684495816
+      },
+      {
+        "appid": 407530,
+        "name": "ARK: Survival Of The Fittest",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 409710,
+        "name": "生化奇兵 重制版",
+        "playtime_forever": 86,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457979
+      },
+      {
+        "appid": 409720,
+        "name": "生化奇兵2 重制版",
+        "playtime_forever": 83,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457840
+      },
+      {
+        "appid": 412830,
+        "name": "STEINS;GATE",
+        "playtime_forever": 1709,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1736180023
+      },
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 11206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1757779903
+      },
+      {
+        "appid": 418240,
+        "name": "Shadow Tactics: Blades of the Shogun",
+        "playtime_forever": 128,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742554082
+      },
+      {
+        "appid": 431960,
+        "name": "Wallpaper Engine：壁纸引擎",
+        "playtime_forever": 4029,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1761321351
+      },
+      {
+        "appid": 447530,
+        "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
+        "playtime_forever": 657,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742543358
+      },
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_forever": 977,
+        "playtime_2weeks": 977,
+        "rtime_last_played": 1765278920
+      },
+      {
+        "appid": 477160,
+        "name": "人类一败涂地 / Human Fall Flat",
+        "playtime_forever": 807,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1674655262
+      },
+      {
+        "appid": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "playtime_forever": 4257,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1751122569
+      },
+      {
+        "appid": 493340,
+        "name": "过山车之星",
+        "playtime_forever": 233,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752327555
+      },
+      {
+        "appid": 503300,
+        "name": "Super Star",
+        "playtime_forever": 84,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718457901
+      },
+      {
+        "appid": 504230,
+        "name": "Celeste",
+        "playtime_forever": 243,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1736335924
       },
       {
         "appid": 553640,
         "name": "ICEY",
         "playtime_forever": 0,
-        "img_icon_url": "eae749858940a8b160201e160931c1e672713a9d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 558990,
         "name": "Opus Magnum",
         "playtime_forever": 214,
-        "img_icon_url": "b4495499d1319f1e96f7d86fe880d4e0b11e2562",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 214,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742474888,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742474888
       },
       {
         "appid": 568220,
         "name": "Lobotomy Corporation",
         "playtime_forever": 387,
-        "img_icon_url": "43faff1c904babf6a84888b594f7554afeee494e",
-        "playtime_windows_forever": 387,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1735129745,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1735129745
       },
       {
         "appid": 577230,
         "name": "三国志汉末霸业",
         "playtime_forever": 157,
-        "img_icon_url": "b08891bc5f69e6d082fffb18a563edef08211f24",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 157,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742563445,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 1
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742563445
       },
       {
         "appid": 578080,
         "name": "PUBG: BATTLEGROUNDS",
         "playtime_forever": 2086,
-        "img_icon_url": "609f27278aa70697c13bf99f32c5a0248c381f9d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1836,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1666964713,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1666964713
       },
       {
         "appid": 613830,
         "name": "CHRONO TRIGGER",
         "playtime_forever": 1680,
-        "img_icon_url": "55a9d56a52886b6cbf197894de096eb79fe1c3ab",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1333,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 347,
-        "playtime_deck_forever": 347,
-        "rtime_last_played": 1744434716,
-        "playtime_disconnected": 2056
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1744434716
       },
       {
         "appid": 623990,
         "name": "Tom Clancy's Rainbow Six Siege - Test Server",
         "playtime_forever": 0,
-        "img_icon_url": "20deaf466474f76f2ffdb345fe56f40fe3af74c0",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 632300,
         "name": "Hobo: Tough Life",
         "playtime_forever": 347,
-        "img_icon_url": "1a30df0276b9dc7ec2b9c36e6388619a5d21b859",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 347,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1760111409,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1760111409
       },
       {
         "appid": 644560,
         "name": "Mirror",
         "playtime_forever": 227,
-        "img_icon_url": "557469e128dcd3574436cd970501b59d02661356",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 227,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718373058,
-        "content_descriptorids": [
-          1,
-          3,
-          4,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373058
       },
       {
         "appid": 648100,
         "name": "Raging Loop",
         "playtime_forever": 1964,
-        "img_icon_url": "3621a6acea39d357da1b048ffa40e0a6c2059901",
-        "playtime_windows_forever": 1964,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1714667469,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1714667469
       },
       {
         "appid": 648580,
         "name": "428 Shibuya Scramble",
         "playtime_forever": 1553,
-        "img_icon_url": "c3d415dbfe7b3a965cb1cfd654c83e3114842882",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1432,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 121,
-        "playtime_deck_forever": 121,
-        "rtime_last_played": 1741792376,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741792376
       },
       {
         "appid": 653530,
         "name": "Return of the Obra Dinn",
         "playtime_forever": 535,
-        "img_icon_url": "24c6239385563bff1fccad712f27a0c1fe18349b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 535,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1748964678,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748964678
       },
       {
         "appid": 658850,
         "name": "Do Not Feed the Monkeys",
         "playtime_forever": 89,
-        "img_icon_url": "f8fc175b3a866b5b32b2ddaaefdf00f0858052e3",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 89,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1747745237,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1747745237
       },
       {
         "appid": 699920,
         "name": "Despotism 3k",
         "playtime_forever": 0,
-        "img_icon_url": "be7dca32438ad6df7980047500b0c1a1898fc9fa",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 701160,
-        "name": "王国：两位君主",
-        "playtime_forever": 131,
-        "img_icon_url": "7bf44c4e301a0f6fae78f697b39b5a1268223945",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 131,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742568842,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 718670,
         "name": "《密教模拟器 (Cultist Simulator)》",
         "playtime_forever": 216,
-        "img_icon_url": "45d3323697f801b62bab92ef0bbd2e672d68f504",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 216,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1749564411,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1749564411
       },
       {
         "appid": 728880,
         "name": "Overcooked! 2",
         "playtime_forever": 124,
-        "img_icon_url": "bac36f471109038ae0b40619de4109d475f86a54",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 124,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742576875,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742576875
       },
       {
         "appid": 736260,
         "name": "Baba Is You",
         "playtime_forever": 104,
-        "img_icon_url": "9b9e1838838c21ee443359efe30b6a56cf0531dd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 104,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1749047220,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1749047220
       },
       {
         "appid": 753640,
         "name": "Outer Wilds",
         "playtime_forever": 950,
-        "img_icon_url": "8d0c2dcfc599445affcbad76a34d89478c022780",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 950,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742910265,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742910265
       },
       {
         "appid": 779340,
         "name": "全面战争：三国",
         "playtime_forever": 22,
-        "img_icon_url": "12eb7d5a469812b3dd13d04165cff053f477914d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 22,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1748349450,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748349450
       },
       {
         "appid": 779640,
         "name": "妄想症 Deliver Me",
         "playtime_forever": 128,
-        "img_icon_url": "c9120e53b5d449b8e350ed9de51b12b60fda87c5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 128,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742553962,
-        "playtime_disconnected": 1
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742553962
       },
       {
         "appid": 813230,
         "name": "ANIMAL WELL",
         "playtime_forever": 759,
-        "img_icon_url": "860b275ec0e63d6a74f6f3f9fc8dd75a49065f07",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 759,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1760712035,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1760712035
       },
       {
         "appid": 823130,
         "name": "Totally Accurate Battlegrounds",
         "playtime_forever": 19,
-        "img_icon_url": "920902c516d435c3d9a6c5ef92e3cd4372f9314b",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1528467319,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1528467319
       },
       {
         "appid": 863550,
         "name": "HITMAN™ 2",
         "playtime_forever": 138,
-        "img_icon_url": "3f7c071da7a338e03f6243b73c02c072f1bacee9",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 138,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718373065,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718373065
       },
       {
         "appid": 865180,
         "name": "Reformers Intl Ver",
         "playtime_forever": 0,
-        "img_icon_url": "900a3ed35e4a844fed863ce3ca4f59aca5edf2f5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 881100,
         "name": "Noita",
         "playtime_forever": 807,
-        "img_icon_url": "a21dbd1d3bd01f0a688f2d7029978d5cdbe14e74",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 807,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1741095321,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741095321
       },
       {
         "appid": 916440,
         "name": "纪元1800",
         "playtime_forever": 0,
-        "img_icon_url": "cf7c754267856d5a1b36614855c52867daf72186",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 923890,
         "name": "Yet another tower defence",
         "playtime_forever": 0,
-        "img_icon_url": "c17af7e1ca13fcaaa03d2345eb932fdf9359c9a3",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 942970,
         "name": "疑案追声",
         "playtime_forever": 282,
-        "img_icon_url": "2db120c5515a9dc668fee02bc192fc6dd062b933",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1560608827,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1560608827
       },
       {
         "appid": 970600,
         "name": "Paranoia: Deliver Me",
         "playtime_forever": 0,
-        "img_icon_url": "c9120e53b5d449b8e350ed9de51b12b60fda87c5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 972660,
         "name": "《Spiritfarer®》Farewell版",
         "playtime_forever": 207,
-        "img_icon_url": "21c6c86b51df38e9480231792acf0cfc30f51820",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 207,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1748859491,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1748859491
       },
       {
         "appid": 993090,
         "name": "Lossless Scaling",
         "playtime_forever": 70,
-        "img_icon_url": "42900f430ed7828d2dfa25f07ac02e3de96bc520",
-        "playtime_windows_forever": 70,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1743427656,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1743427656
       },
       {
         "appid": 1007350,
         "name": "Mirror Maker",
         "playtime_forever": 148,
-        "img_icon_url": "c3627fd2e502afc2b0471f10a5465e886cbe2eac",
-        "playtime_windows_forever": 148,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742556068,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742556068
       },
       {
         "appid": 1030300,
         "name": "Hollow Knight: Silksong",
         "playtime_forever": 0,
-        "img_icon_url": "b4a999c1302e3ac123c041fd41bb8a34528c6ab5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 1030830,
         "name": "四海兄弟II 最终版",
         "playtime_forever": 309,
-        "img_icon_url": "f80e173ad5c242ca0d41e30af1f6358d1e64d9b4",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 309,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1753713474,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1753713474
       },
       {
         "appid": 1030840,
         "name": " 《四海兄弟: 最终版》​",
         "playtime_forever": 622,
-        "img_icon_url": "883ceebf7d8ebce37c9244a62777ef4a800393ce",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 622,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1752895955,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752895955
       },
       {
         "appid": 1057090,
         "name": "Ori and the Will of the Wisps",
         "playtime_forever": 121,
-        "img_icon_url": "ea50b151bb1e2c39e7bdd3ff4f8cc5e8738d6983",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 121,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742575423,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575423
       },
       {
         "appid": 1086940,
         "name": "博德之门3",
         "playtime_forever": 8011,
-        "img_icon_url": "d866cae7ea1e471fdbc206287111f1b642373bd9",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8011,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1741341925,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741341925
       },
       {
         "appid": 1091500,
         "name": "赛博朋克 2077",
         "playtime_forever": 10813,
-        "img_icon_url": "42b9b33fa0f0d997beb299c6157592a8fe7d8f68",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 10813,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1710916625,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 87
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1710916625
       },
       {
         "appid": 1097150,
         "name": "糖豆人",
         "playtime_forever": 211,
-        "img_icon_url": "6c027709b9eb1417c993bc7d513b97b232002368",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 211,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1705058097,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1705058097
       },
       {
         "appid": 1145360,
         "name": "Hades",
         "playtime_forever": 142,
-        "img_icon_url": "8a3fca36a00883e8066263ad35dd15d77a1f9abc",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 142,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718380988,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718380988
       },
       {
         "appid": 1158310,
         "name": "Crusader Kings III",
         "playtime_forever": 5903,
-        "img_icon_url": "8a0d88dfaff790ea1aa2b9fcf50d4e3b4f49cf56",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 5903,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1761223700,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 58
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1761223700
       },
       {
         "appid": 1172450,
         "name": "Carto",
         "playtime_forever": 296,
-        "img_icon_url": "d0778570ee1b9bfd4c6984c4c4c9ca00ed05de6a",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 296,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1715496126,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1715496126
       },
       {
         "appid": 1182620,
         "name": "Impostor Factory《影子工厂》",
         "playtime_forever": 122,
-        "img_icon_url": "1480aaf1d4064636ed356d75a696de5f1216b730",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 122,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742563744,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742563744
       },
       {
         "appid": 1205520,
         "name": "Pentiment",
-        "playtime_2weeks": 2,
         "playtime_forever": 398,
-        "img_icon_url": "fb2423048d6ffa29b01f11e3a32d7b3cd1b8c4cd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 398,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1764169874,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1764169874
       },
       {
         "appid": 1216710,
         "name": "全网公敌",
         "playtime_forever": 628,
-        "img_icon_url": "7a65b4ed6f62464394e32192a7a43b218879b21f",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 628,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1715835536,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1715835536
       },
       {
         "appid": 1222140,
         "name": "底特律：化身为人",
         "playtime_forever": 180,
-        "img_icon_url": "3d9f5bc971d44398aef740c0d8e79a358be2e800",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 180,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1745142792,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745142792
       },
       {
         "appid": 1222680,
         "name": "《Need for Speed™ Heat",
         "playtime_forever": 88,
-        "img_icon_url": "98a96955403db8eeed026bc5ff04e51e3329f1b0",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 88,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718458170,
-        "playtime_disconnected": 1
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718458170
       },
       {
         "appid": 1237970,
         "name": "Titanfall® 2",
         "playtime_forever": 532,
-        "img_icon_url": "d73c7e572859bd7490947d1aeab5c33eda18fd64",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 532,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1713886687,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1713886687
       },
       {
         "appid": 1238840,
         "name": "Battlefield™ 1",
         "playtime_forever": 128,
-        "img_icon_url": "325c78f6940b57a43b65468d2dc10e22601b0ec5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 128,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742567776,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742567776
       },
       {
         "appid": 1245620,
         "name": "艾尔登法环",
         "playtime_forever": 8908,
-        "img_icon_url": "b6e290dd5a92ce98f89089a207733c70c41a1871",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8908,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1745243523,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745243523
       },
       {
         "appid": 1267910,
         "name": "Melvor Idle 梅尔沃放置",
         "playtime_forever": 3239,
-        "img_icon_url": "88eca64c662c128de095b4e452881398ac71969c",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3239,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1744696428,
-        "playtime_disconnected": 1558
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1744696428
       },
       {
         "appid": 1404850,
         "name": "幸运房东",
         "playtime_forever": 678,
-        "img_icon_url": "ce8b9c2719ccf0fb47c3b97eb58f758913a268fd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 678,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1733501212,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1733501212
       },
       {
         "appid": 1426210,
         "name": "双人成行",
         "playtime_forever": 396,
-        "img_icon_url": "6b15f6d81c4fc52056f4928b363b7fac591a945b",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 396,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1747661074,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1747661074
       },
       {
         "appid": 1451940,
         "name": "主播女孩重度依赖",
         "playtime_forever": 172,
-        "img_icon_url": "2d9e7f71e6372b3f8b4a7a2a9f1fcfdbd28061c1",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 172,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742573942,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742573942
       },
       {
         "appid": 1546570,
         "name": "仙剑奇侠传",
         "playtime_forever": 98,
-        "img_icon_url": "7b3be840b3562e019f3bd6aebe11e9f5b7e65d48",
-        "playtime_windows_forever": 98,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1684677438,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1684677438
       },
       {
         "appid": 1559390,
         "name": "天命奇御二",
         "playtime_forever": 3002,
-        "img_icon_url": "d4a4211a2b6840ad6d4b8c62e042d7aa77bff492",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3002,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1638700228,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1638700228
       },
       {
         "appid": 1593500,
         "name": "God of War",
         "playtime_forever": 1788,
-        "img_icon_url": "8aa5e7e0e55cad682c7f2e65e075c3bc04dfc1cb",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1788,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1711381072,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1711381072
       },
       {
         "appid": 1601570,
         "name": "多重人生",
         "playtime_forever": 84,
-        "img_icon_url": "d630b33a4739ec61aae711169ade4d88bb45c0ba",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 84,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1750694060,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1750694060
       },
       {
         "appid": 1606430,
         "name": "Rubber Bandits Playtest",
         "playtime_forever": 0,
-        "img_icon_url": "0c2e59a55eccd11a9f438cd54d191a6504e27e7a",
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 1649080,
         "name": "双点校园 ",
         "playtime_forever": 83,
-        "img_icon_url": "c3472700d865f82ac75209c8c5bd136598c42cca",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 83,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1759243530,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759243530
       },
       {
         "appid": 1659420,
         "name": "UNCHARTED™: 盗贼传奇合辑",
         "playtime_forever": 973,
-        "img_icon_url": "b566a403067d6abf75136a3c19f9ed0d2e4fb5b1",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 973,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1709479504,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709479504
       },
       {
         "appid": 1669980,
         "name": "火山的女儿",
         "playtime_forever": 0,
-        "img_icon_url": "af41b6930b60ea5a3d8e21ba04933284253f42cf",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 1718570,
         "name": "神之天平（ASTLIBRA Revision）",
         "playtime_forever": 2323,
-        "img_icon_url": "e7c445fc57e408d34f6d831588026cace13d3150",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1526,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 797,
-        "playtime_deck_forever": 797,
-        "rtime_last_played": 1734942644,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1734942644
       },
       {
         "appid": 1746030,
         "name": "山河旅探 - Murders on the Yangtze River",
         "playtime_forever": 1005,
-        "img_icon_url": "8cc7a3d8ddfbe56e9ecb769c506a652edf4b2b24",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1005,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1708517909,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1708517909
       },
       {
         "appid": 1765350,
         "name": "候鸟",
         "playtime_forever": 288,
-        "img_icon_url": "301483a1a4c9841d7357d9f918b9c6eb0e868aa5",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 288,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1732198262,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1732198262
       },
       {
         "appid": 1832640,
         "name": "Mirror 2: Project X",
         "playtime_forever": 144,
-        "img_icon_url": "623f3f51ba28038b8088061179a93659528a00dd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 144,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1686115558,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1686115558
       },
       {
         "appid": 1868140,
         "name": "潜水员戴夫 DAVE THE DIVER",
         "playtime_forever": 3828,
-        "img_icon_url": "2f19d6889f66eae88e8b5a36727d560ec88a00cb",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3828,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1709220189,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709220189
       },
       {
         "appid": 1876890,
         "name": "逸剑风云决",
         "playtime_forever": 3475,
-        "img_icon_url": "a84d2eb117aa4d7f32781b5020f9e90d567da183",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3475,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1730273102,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1730273102
       },
       {
         "appid": 1887840,
         "name": "蟹蟹寻宝奇遇",
         "playtime_forever": 1040,
-        "img_icon_url": "31fd106b974db959e4ddf2aa5983a5027fc83676",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1040,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1735911291,
-        "playtime_disconnected": 101
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1735911291
       },
       {
         "appid": 1903340,
         "name": "光与影：33号远征队",
         "playtime_forever": 2693,
-        "img_icon_url": "d48fb3ed033a08bad9bf0a2e1ceb145e58ffe0aa",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 2693,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1758634126,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1758634126
       },
       {
         "appid": 1931770,
         "name": "巴别塔圣歌",
         "playtime_forever": 534,
-        "img_icon_url": "99618001a2111dd020f1fc957c5c47c0d6d5d327",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 534,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1708531556,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1708531556
       },
       {
         "appid": 1948980,
         "name": "大侠立志传：碧血丹心",
         "playtime_forever": 562,
-        "img_icon_url": "890a5d1e3b5ff05ca0b38994d899fa96225aefbe",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 562,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1758903588,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1758903588
       },
       {
         "appid": 1966720,
         "name": "Lethal Company",
         "playtime_forever": 35,
-        "img_icon_url": "8393f321a62a9ef0be762c81565d2caea4fb7da6",
-        "playtime_windows_forever": 35,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1727711952,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727711952
       },
       {
         "appid": 2050650,
         "name": "Resident Evil 4",
         "playtime_forever": 1121,
-        "img_icon_url": "817358b8013c55831ea10d031ef9c0b151110826",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1121,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1709016531,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1709016531
       },
       {
         "appid": 2095300,
         "name": "飞越13号房",
         "playtime_forever": 140,
-        "img_icon_url": "109c91341080c842e221babf5621573a64698c28",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 140,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1718378110,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1718378110
       },
       {
         "appid": 2138710,
         "name": "Sifu",
         "playtime_forever": 659,
-        "img_icon_url": "3930eb06cc31a6c91ab243afd4c45f49c9d0c5c1",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 620,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 39,
-        "playtime_deck_forever": 39,
-        "rtime_last_played": 1737294261,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 98
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1737294261
       },
       {
         "appid": 2144740,
         "name": "幽灵行者 2（Ghostrunner 2）",
         "playtime_forever": 176,
-        "img_icon_url": "39fc0a6b7051f744c725f1fc518a8996b859e86d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 176,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742574330,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742574330
       },
       {
         "appid": 2190290,
         "name": "不双修就去世",
         "playtime_forever": 309,
-        "img_icon_url": "340a5a48287abbd48688a6503505ce35899aa434",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 309,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1727871153,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727871153
       },
       {
         "appid": 2194530,
         "name": "犹格索托斯的庭院",
         "playtime_forever": 2191,
-        "img_icon_url": "bdac317428d5a32ee741c1439a6dbb3604b70114",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 2190,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 1,
-        "playtime_deck_forever": 1,
-        "rtime_last_played": 1739810755,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1739810755
       },
       {
         "appid": 2337860,
         "name": "呆呆大乱斗",
         "playtime_forever": 0,
-        "img_icon_url": "0b95584cb73856d092ea9b7ded57d06c023dbc3f",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 2358720,
         "name": "黑神话：悟空",
         "playtime_forever": 679,
-        "img_icon_url": "764ad8ff458f7020d63a3f7f0abf6ad8882c05df",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 679,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1725890312,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1725890312
       },
       {
         "appid": 2401970,
         "name": "逆转检察官1&2 御剑精选集",
         "playtime_forever": 3104,
-        "img_icon_url": "ff9f9345c73a850acfbe861133ee479043c65839",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3104,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1727765135,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1727765135
       },
       {
         "appid": 2421410,
         "name": "全网公敌2 新世界",
         "playtime_forever": 123,
-        "img_icon_url": "aae6ec5fb5c3efc390f797fed323053cf04dd2e2",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 123,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742575058,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742575058
       },
       {
         "appid": 2593370,
         "name": "饿殍：明末千里行",
         "playtime_forever": 182,
-        "img_icon_url": "54a7574438ba0458909b1879bfca1c1992b839a4",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 182,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1742551323,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742551323
       },
       {
         "appid": 2644470,
         "name": "PICO PARK 2",
         "playtime_forever": 304,
-        "img_icon_url": "7d1948eb5efb3d884c5d726591549e1cfd8a7d00",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 300,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 3,
-        "playtime_deck_forever": 3,
-        "rtime_last_played": 1738341679,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1738341679
       },
       {
         "appid": 2679460,
         "name": "暗喻幻想：ReFantazio",
         "playtime_forever": 3692,
-        "img_icon_url": "76497828e18653273818f428323bd2a5684e689d",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3692,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1730116424,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1730116424
       },
       {
         "appid": 2878980,
         "name": "NBA 2K25",
         "playtime_forever": 8819,
-        "img_icon_url": "93a9446ae70548700f36ad84ff960908b8dda1ca",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8819,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1759237156,
-        "playtime_disconnected": 80
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759237156
       },
       {
         "appid": 3084280,
         "name": "三相奇谈",
         "playtime_forever": 0,
-        "img_icon_url": "b5d5369922e83b1d25532524f773e5d26af53c83",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 0,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 0,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
       },
       {
         "appid": 3117820,
         "name": "苏丹的游戏",
         "playtime_forever": 1722,
-        "img_icon_url": "81e37cf744f52d7af999e208dfd4c087a1f3db29",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 1722,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1745578832,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745578832
       },
       {
         "appid": 3167020,
         "name": "逃离鸭科夫",
         "playtime_forever": 113,
-        "img_icon_url": "5bb8d31708442a8f3ddbc100d7be7c3fde530d18",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 113,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1763039427,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1763039427
       },
       {
         "appid": 3350200,
         "name": "情感反诈模拟器",
         "playtime_forever": 502,
-        "img_icon_url": "b8bb31cec008ac2a794458ed5251b75bbe50df14",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 502,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1752246385,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1752246385
       },
       {
         "appid": 3447040,
         "name": "空之轨迹 the 1st",
         "playtime_forever": 3064,
-        "img_icon_url": "47ae886dc4f8d7615a961cda4a820d92e0c1faa7",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 3064,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1759914059,
-        "playtime_disconnected": 91
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759914059
       }
     ],
     "top_games": [
@@ -2398,148 +1359,62 @@
         "appid": 413150,
         "name": "Stardew Valley",
         "playtime_forever": 11206,
-        "img_icon_url": "35d1377200084a4034238c05b0c8930451e2fb40",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 10905,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 301,
-        "playtime_deck_forever": 301,
-        "rtime_last_played": 1757779903,
-        "playtime_disconnected": 14
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1757779903
       },
       {
         "appid": 1091500,
         "name": "赛博朋克 2077",
         "playtime_forever": 10813,
-        "img_icon_url": "42b9b33fa0f0d997beb299c6157592a8fe7d8f68",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 10813,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1710916625,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 87
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1710916625
       },
       {
         "appid": 1245620,
         "name": "艾尔登法环",
         "playtime_forever": 8908,
-        "img_icon_url": "b6e290dd5a92ce98f89089a207733c70c41a1871",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8908,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1745243523,
-        "content_descriptorids": [
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1745243523
       },
       {
         "appid": 2878980,
         "name": "NBA 2K25",
         "playtime_forever": 8819,
-        "img_icon_url": "93a9446ae70548700f36ad84ff960908b8dda1ca",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8819,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1759237156,
-        "playtime_disconnected": 80
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1759237156
       },
       {
         "appid": 1086940,
         "name": "博德之门3",
         "playtime_forever": 8011,
-        "img_icon_url": "d866cae7ea1e471fdbc206287111f1b642373bd9",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 8011,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1741341925,
-        "content_descriptorids": [
-          1,
-          2,
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1741341925
       }
     ],
     "recent_game": {
-      "appid": 457140,
-      "name": "缺氧",
-      "playtime_2weeks": 977,
-      "playtime_forever": 977,
-      "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
-      "has_community_visible_stats": true,
-      "playtime_windows_forever": 977,
-      "playtime_mac_forever": 0,
-      "playtime_linux_forever": 0,
-      "playtime_deck_forever": 0,
-      "rtime_last_played": 1765278920,
-      "playtime_disconnected": 0
+      "appid": 379430,
+      "name": "Kingdom Come: Deliverance",
+      "playtime_forever": 233,
+      "playtime_2weeks": 57,
+      "rtime_last_played": 1765386209
     },
     "top_2weeks": [
       {
         "appid": 457140,
         "name": "缺氧",
-        "playtime_2weeks": 977,
         "playtime_forever": 977,
-        "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 977,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1765278920,
-        "playtime_disconnected": 0
+        "playtime_2weeks": 977,
+        "rtime_last_played": 1765278920
       },
       {
         "appid": 379430,
         "name": "Kingdom Come: Deliverance",
-        "playtime_2weeks": 56,
-        "playtime_forever": 232,
-        "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 232,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1764250872,
-        "content_descriptorids": [
-          1,
-          5
-        ],
-        "playtime_disconnected": 0
-      },
-      {
-        "appid": 1205520,
-        "name": "Pentiment",
-        "playtime_2weeks": 2,
-        "playtime_forever": 398,
-        "img_icon_url": "fb2423048d6ffa29b01f11e3a32d7b3cd1b8c4cd",
-        "has_community_visible_stats": true,
-        "playtime_windows_forever": 398,
-        "playtime_mac_forever": 0,
-        "playtime_linux_forever": 0,
-        "playtime_deck_forever": 0,
-        "rtime_last_played": 1764169874,
-        "content_descriptorids": [
-          5
-        ],
-        "playtime_disconnected": 0
+        "playtime_forever": 233,
+        "playtime_2weeks": 57,
+        "rtime_last_played": 1765386209
       }
     ],
-    "total_playtime": 164504
+    "total_playtime": 182645
   },
   "summary": {
     "steamid": "76561198279072437",
@@ -2551,8 +1426,8 @@
     "avatarmedium": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_medium.jpg",
     "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
     "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
-    "lastlogoff": 1765358733,
-    "personastate": 1,
+    "lastlogoff": 1765421356,
+    "personastate": 0,
     "realname": "七鄙",
     "primaryclanid": "103582791429521408",
     "timecreated": 1453718318,
@@ -2568,6 +1443,13 @@
       "name": "No Man's Sky",
       "discount_pct": 60,
       "price": "¥ 70.00",
+      "image": ""
+    },
+    {
+      "appid": "975370",
+      "name": "Unknown",
+      "discount_pct": 20,
+      "price": "¥ 86.40",
       "image": ""
     }
   ],
@@ -4598,5 +3480,2533 @@
         }
       }
     }
+  },
+  "games_primary": {
+    "count": 165,
+    "all_games": [
+      {
+        "appid": 220,
+        "name": "Half-Life 2",
+        "playtime_forever": 84,
+        "img_icon_url": "fcfb366051782b8ebf2aa297f3b746395858cb62",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 84,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457979,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 320,
+        "name": "Half-Life 2: Deathmatch",
+        "playtime_forever": 0,
+        "img_icon_url": "795e85364189511f4990861b578084deef086cb1",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 360,
+        "name": "Half-Life Deathmatch: Source",
+        "playtime_forever": 0,
+        "img_icon_url": "40b8a62efff5a9ab356e5c56f5c8b0532c8e1aa3",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 400,
+        "name": "Portal",
+        "playtime_forever": 0,
+        "img_icon_url": "cfa928ab4119dd137e50d728e8fe703e4e970aff",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 550,
+        "name": "Left 4 Dead 2",
+        "playtime_forever": 114,
+        "img_icon_url": "7d5a243f9500d2f8467312822f8af2a2928777ed",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 17,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1586006454,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 620,
+        "name": "Portal 2",
+        "playtime_forever": 254,
+        "img_icon_url": "25a5a16b2423bf7487ac5340b5b0948cef48c5f8",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 115,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1689175298,
+        "has_leaderboards": true,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2",
+        "playtime_forever": 2712,
+        "img_icon_url": "8dbc71957312bbd3baea65848b545be9eae2a355",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1425,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1675232900,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 4000,
+        "name": "Garry's Mod",
+        "playtime_forever": 141,
+        "img_icon_url": "4a6f25cfa2426445d0d9d6e233408de4d371ce8b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 2,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718373063,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 7670,
+        "name": "BioShock",
+        "playtime_forever": 0,
+        "img_icon_url": "9a7c9f640a76e6a32592277dbbc36a0f6da05372",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 8190,
+        "name": "Just Cause 2",
+        "playtime_forever": 39,
+        "img_icon_url": "73582e392a2b9413fe93b011665a5b9cf26ff175",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1500094500,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 8850,
+        "name": "BioShock 2",
+        "playtime_forever": 0,
+        "img_icon_url": "f5eda925c0e57373aaea4cae17b6f175115a8d54",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 8870,
+        "name": "生化奇兵：无限 完全版",
+        "playtime_forever": 506,
+        "img_icon_url": "4ebaf5f9ee74f50152f7ff361debef7553fa0e4e",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 506,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1640602432,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 34330,
+        "name": "全面战争：幕府将军2",
+        "playtime_forever": 0,
+        "img_icon_url": "2fa97296a62daf0329b3867ad6837a2289229fbb",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 47810,
+        "name": "Dragon Age: Origins - Ultimate Edition",
+        "playtime_forever": 173,
+        "img_icon_url": "e5e0b9629b314f7338f493d26227eb2bd1172e77",
+        "playtime_windows_forever": 173,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742548409,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 49520,
+        "name": "Borderlands 2",
+        "playtime_forever": 58,
+        "img_icon_url": "a3f4945226e69b6196074df4c776e342d3e5a3be",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 54,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718379189,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 50130,
+        "name": "Mafia II (Classic)",
+        "playtime_forever": 0,
+        "img_icon_url": "62f1f7324e520be067aec1ab06d1ec6fa56f25bd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 65930,
+        "name": "The Bureau: XCOM Declassified",
+        "playtime_forever": 85,
+        "img_icon_url": "854f133d072a65e5577c2a21bf25ba863e4a6a23",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 85,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457899,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 105600,
+        "name": "Terraria",
+        "playtime_forever": 1015,
+        "img_icon_url": "858961e95fbf869f136e1770d586e0caefd4cfac",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1015,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1728031114,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 200260,
+        "name": "Batman: Arkham City GOTY",
+        "playtime_forever": 710,
+        "img_icon_url": "746ecf3ce44b2525eb7ad643e76a3b60913d2662",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 560,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1681570280,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 200510,
+        "name": "XCOM: Enemy Unknown",
+        "playtime_forever": 137,
+        "img_icon_url": "48be2fee1d0d511b5c7313e1359beafd36ea92ed",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 124,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742551323,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 203160,
+        "name": "Tomb Raider",
+        "playtime_forever": 0,
+        "img_icon_url": "3ee640a8aba6992678e36f4e40cba9c71c02348b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 204360,
+        "name": "Castle Crashers",
+        "playtime_forever": 418,
+        "img_icon_url": "9b7625f9b70f103397fd0416fd92abb583db8659",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 34,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1623512947,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 204450,
+        "name": "Call of Juarez Gunslinger",
+        "playtime_forever": 0,
+        "img_icon_url": "b9a00d132852719cd6e6c2be3f3d0fdf669ed7ce",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 205100,
+        "name": "Dishonored",
+        "playtime_forever": 0,
+        "img_icon_url": "74f8ee1ba536e0759e64a9bf801fc013e16c8dd1",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "has_leaderboards": true,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 206440,
+        "name": "To the Moon《去月球》",
+        "playtime_forever": 120,
+        "img_icon_url": "6e29eb4076a6253fdbccb987a2a21746d2df54d7",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 120,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742558958,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 213670,
+        "name": "South Park™: The Stick of Truth™",
+        "playtime_forever": 554,
+        "img_icon_url": "afad8295902080fb2aedd9aaabb3e21c10eecc85",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1500357077,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 218620,
+        "name": "PAYDAY 2",
+        "playtime_forever": 148,
+        "img_icon_url": "a6abc0d0c1e79c0b5b0f5c8ab81ce9076a542414",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 148,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742555943,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 219740,
+        "name": "饥荒",
+        "playtime_forever": 1006,
+        "img_icon_url": "03fe647df40dccc4d19bf42a0185cd3e6b9f2953",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1456487435,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 238460,
+        "name": "BattleBlock Theater",
+        "playtime_forever": 350,
+        "img_icon_url": "2f258aaff583d797812cdcf24830d5992f48733b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 90,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1586052296,
+        "has_leaderboards": true,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 239140,
+        "name": "Dying Light",
+        "playtime_forever": 831,
+        "img_icon_url": "d575b4ba3480fe20aaeda8e8f498c3e47033069d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 831,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1611405421,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 242050,
+        "name": "刺客信条4：黑旗",
+        "playtime_forever": 2321,
+        "img_icon_url": "a03c06290af00eed66814815663b68f5fd063882",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 2168,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1668934718,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 242760,
+        "name": "The Forest",
+        "playtime_forever": 0,
+        "img_icon_url": "3a6847f6ac5879e48531db52261771d5e22904ac",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 250320,
+        "name": "The Wolf Among Us",
+        "playtime_forever": 0,
+        "img_icon_url": "dee5f1476ddd237ed9faab86b59cb9ca9b275faa",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 255710,
+        "name": "Cities: Skylines",
+        "playtime_forever": 130,
+        "img_icon_url": "6cf7b10dd29db28448ef79698ed2118a03617d63",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 130,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742575742,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 260230,
+        "name": "Valiant Hearts: The Great War™ / Soldats Inconnus : Mémoires de la Grande Guerre™",
+        "playtime_forever": 467,
+        "img_icon_url": "903f95e08ebcd45dfb78deb171b2f12909892be2",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 467,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1745642394,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 261570,
+        "name": "Ori and the Blind Forest",
+        "playtime_forever": 603,
+        "img_icon_url": "a8b0c1ca89fa421e5061d4ac5c17e2fbf4f08845",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 603,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1740658336,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 268910,
+        "name": "Cuphead",
+        "playtime_forever": 558,
+        "img_icon_url": "c19f1bd916b6d171e94089d03112ec4e4e4da84e",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 558,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1755235716,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 273350,
+        "name": "Evolve Stage 2",
+        "playtime_forever": 130,
+        "img_icon_url": "6b9e205c389185a4b0e079a13090c751e47375d2",
+        "playtime_windows_forever": 43,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718376846,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 282800,
+        "name": "100% Orange Juice",
+        "playtime_forever": 211,
+        "img_icon_url": "baaf4be38deeb8a631567ee6c651ca23b65c834a",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 211,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1643725773,
+        "has_leaderboards": true,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 286160,
+        "name": "Tabletop Simulator",
+        "playtime_forever": 707,
+        "img_icon_url": "19f5b90e3c7084758f885ded843631b13929fa26",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 707,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1588261139,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 292030,
+        "name": "巫师 3：狂猎",
+        "playtime_forever": 4482,
+        "img_icon_url": "78d0ff98b67851f24539cdf2402cf147679134f4",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 4482,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1672835748,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 294100,
+        "name": "边缘世界 RimWorld",
+        "playtime_forever": 6620,
+        "img_icon_url": "addbe3b704b267060b4d5d7649cfb292de61bd70",
+        "playtime_windows_forever": 6620,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1763741440,
+        "playtime_disconnected": 99
+      },
+      {
+        "appid": 298630,
+        "name": "The Escapists",
+        "playtime_forever": 134,
+        "img_icon_url": "bd0870a5fb2b51f11699c9b77d1bc7e7ba688c74",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 134,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742554504,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 322330,
+        "name": "饥荒联机版",
+        "playtime_forever": 4590,
+        "img_icon_url": "a80aa6cff8eebc1cbc18c367d9ab063e1553b0ee",
+        "playtime_windows_forever": 133,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1720618728,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 323190,
+        "name": "冰汽时代",
+        "playtime_forever": 105,
+        "img_icon_url": "0561084dfe24c469c905fe0681da82aa31102836",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 105,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742568509,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 327410,
+        "name": "A Bird Story",
+        "playtime_forever": 183,
+        "img_icon_url": "cef549201cdfcf82ae56d9975cdcf96ea5515760",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 183,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742574330,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 334210,
+        "name": "Fortified",
+        "playtime_forever": 85,
+        "img_icon_url": "535ed4d2687fbab89d9e60d8cd0fffd2cbeb4b4f",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 85,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457979,
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 337340,
+        "name": "Finding Paradise 《寻找天堂》",
+        "playtime_forever": 103,
+        "img_icon_url": "a73f4efe629814dee218036dfc08e293dea41137",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 103,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742562241,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 346110,
+        "name": "ARK: Survival Evolved",
+        "playtime_forever": 0,
+        "img_icon_url": "fef1799533131c10f538d2dd697bbbd89e663265",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 356190,
+        "name": "Middle-earth™: Shadow of War™",
+        "playtime_forever": 304,
+        "img_icon_url": "316c479e5d51d21e15eb8f82338fce82c42c4115",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 304,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742587771,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 359550,
+        "name": "彩虹六号：围攻X",
+        "playtime_forever": 221,
+        "img_icon_url": "624745d333ac54aedb1ee911013e2edb7722550e",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 42,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1660881874,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 360430,
+        "name": "Mafia III: Definitive Edition",
+        "playtime_forever": 0,
+        "img_icon_url": "3df3ee0dfcb254bedbf15822c93a6983f67b0822",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 374320,
+        "name": "DARK SOULS™ III",
+        "playtime_forever": 3184,
+        "img_icon_url": "7abe1a33129c20cf10d2c74128bbd657a2a2c806",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3184,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1729835630,
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 377160,
+        "name": "Fallout 4",
+        "playtime_forever": 52,
+        "img_icon_url": "779c4356ebe32af2af7c9f0bbba595dfe872cd7f",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 52,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1763570011,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_2weeks": 57,
+        "playtime_forever": 233,
+        "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 233,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1765386209,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 391540,
+        "name": "Undertale",
+        "playtime_forever": 174,
+        "img_icon_url": "2ce672b89b63ec1e70d2f12862e72eb4a33e9268",
+        "playtime_windows_forever": 174,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1712073072,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 403640,
+        "name": "Dishonored 2",
+        "playtime_forever": 858,
+        "img_icon_url": "6d6bac950a234764a353c518607dcd01973f5b65",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 858,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1684495816,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 407530,
+        "name": "ARK: Survival Of The Fittest",
+        "playtime_forever": 0,
+        "img_icon_url": "807c673cddebbfee0700a947a75f4872ad136e9b",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 409710,
+        "name": "生化奇兵 重制版",
+        "playtime_forever": 86,
+        "img_icon_url": "eb72262cd3ccc3219dd76392be3b60a4b6cbfd38",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 86,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457979,
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 409720,
+        "name": "生化奇兵2 重制版",
+        "playtime_forever": 83,
+        "img_icon_url": "97527a02b36f8ac4aba21005c2d953cc908a08e1",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 83,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457840,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 412830,
+        "name": "STEINS;GATE",
+        "playtime_forever": 1709,
+        "img_icon_url": "adddf0c18983e5b0e2a8967939a774a201589674",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1376,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 332,
+        "playtime_deck_forever": 332,
+        "rtime_last_played": 1736180023,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 11206,
+        "img_icon_url": "35d1377200084a4034238c05b0c8930451e2fb40",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 10905,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 301,
+        "playtime_deck_forever": 301,
+        "rtime_last_played": 1757779903,
+        "playtime_disconnected": 14
+      },
+      {
+        "appid": 418240,
+        "name": "Shadow Tactics: Blades of the Shogun",
+        "playtime_forever": 128,
+        "img_icon_url": "7f933b7e1bcb83caf3bbcc9a143aee85b8a677af",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 128,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742554082,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 431960,
+        "name": "Wallpaper Engine：壁纸引擎",
+        "playtime_forever": 4029,
+        "img_icon_url": "72edaed9d748c6cf7397ffb1c83f0b837b9ebd9d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 2566,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1761321351,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 447530,
+        "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
+        "playtime_forever": 657,
+        "img_icon_url": "eb4485232d4ac9ec5a786fa4ba5b9c95fc3e8d63",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 646,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 10,
+        "playtime_deck_forever": 10,
+        "rtime_last_played": 1742543358,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_2weeks": 977,
+        "playtime_forever": 977,
+        "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 977,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1765278920,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 477160,
+        "name": "人类一败涂地 / Human Fall Flat",
+        "playtime_forever": 807,
+        "img_icon_url": "15c6f6a4d69633a63ee410b24a2417f16d803b06",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 807,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1674655262,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "playtime_forever": 4257,
+        "img_icon_url": "0dfe3eed5658f9fbd8b62f8021038c0a4190f21d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 4257,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1751122569,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 493340,
+        "name": "过山车之星",
+        "playtime_forever": 233,
+        "img_icon_url": "1b2f29e743dd3048f21fefd9642d86a5f5123968",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 233,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1752327555,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 503300,
+        "name": "Super Star",
+        "playtime_forever": 84,
+        "img_icon_url": "d0459b4fc36e739a11b2952e79b84caa51164fa5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 84,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718457901,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 504230,
+        "name": "Celeste",
+        "playtime_forever": 243,
+        "img_icon_url": "04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 243,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1736335924,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 552500,
+        "name": "Warhammer: Vermintide 2",
+        "playtime_forever": 0,
+        "img_icon_url": "a671f2ddf7359beba9702ac097baf6d50cb07202",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 553640,
+        "name": "ICEY",
+        "playtime_forever": 0,
+        "img_icon_url": "eae749858940a8b160201e160931c1e672713a9d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 558990,
+        "name": "Opus Magnum",
+        "playtime_forever": 214,
+        "img_icon_url": "b4495499d1319f1e96f7d86fe880d4e0b11e2562",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 214,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742474888,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 568220,
+        "name": "Lobotomy Corporation",
+        "playtime_forever": 387,
+        "img_icon_url": "43faff1c904babf6a84888b594f7554afeee494e",
+        "playtime_windows_forever": 387,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1735129745,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 577230,
+        "name": "三国志汉末霸业",
+        "playtime_forever": 157,
+        "img_icon_url": "b08891bc5f69e6d082fffb18a563edef08211f24",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 157,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742563445,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 578080,
+        "name": "PUBG: BATTLEGROUNDS",
+        "playtime_forever": 2086,
+        "img_icon_url": "609f27278aa70697c13bf99f32c5a0248c381f9d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1836,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1666964713,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 613830,
+        "name": "CHRONO TRIGGER",
+        "playtime_forever": 1680,
+        "img_icon_url": "55a9d56a52886b6cbf197894de096eb79fe1c3ab",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1333,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 347,
+        "playtime_deck_forever": 347,
+        "rtime_last_played": 1744434716,
+        "playtime_disconnected": 2056
+      },
+      {
+        "appid": 623990,
+        "name": "Tom Clancy's Rainbow Six Siege - Test Server",
+        "playtime_forever": 0,
+        "img_icon_url": "20deaf466474f76f2ffdb345fe56f40fe3af74c0",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 632300,
+        "name": "Hobo: Tough Life",
+        "playtime_forever": 347,
+        "img_icon_url": "1a30df0276b9dc7ec2b9c36e6388619a5d21b859",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 347,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1760111409,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 644560,
+        "name": "Mirror",
+        "playtime_forever": 227,
+        "img_icon_url": "557469e128dcd3574436cd970501b59d02661356",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 227,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718373058,
+        "content_descriptorids": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 648100,
+        "name": "Raging Loop",
+        "playtime_forever": 1964,
+        "img_icon_url": "3621a6acea39d357da1b048ffa40e0a6c2059901",
+        "playtime_windows_forever": 1964,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1714667469,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 648580,
+        "name": "428 Shibuya Scramble",
+        "playtime_forever": 1553,
+        "img_icon_url": "c3d415dbfe7b3a965cb1cfd654c83e3114842882",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1432,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 121,
+        "playtime_deck_forever": 121,
+        "rtime_last_played": 1741792376,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 653530,
+        "name": "Return of the Obra Dinn",
+        "playtime_forever": 535,
+        "img_icon_url": "24c6239385563bff1fccad712f27a0c1fe18349b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 535,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1748964678,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 658850,
+        "name": "Do Not Feed the Monkeys",
+        "playtime_forever": 89,
+        "img_icon_url": "f8fc175b3a866b5b32b2ddaaefdf00f0858052e3",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 89,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1747745237,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 699920,
+        "name": "Despotism 3k",
+        "playtime_forever": 0,
+        "img_icon_url": "be7dca32438ad6df7980047500b0c1a1898fc9fa",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 701160,
+        "name": "王国：两位君主",
+        "playtime_forever": 131,
+        "img_icon_url": "7bf44c4e301a0f6fae78f697b39b5a1268223945",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 131,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742568842,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 718670,
+        "name": "《密教模拟器 (Cultist Simulator)》",
+        "playtime_forever": 216,
+        "img_icon_url": "45d3323697f801b62bab92ef0bbd2e672d68f504",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 216,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1749564411,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 728880,
+        "name": "Overcooked! 2",
+        "playtime_forever": 124,
+        "img_icon_url": "bac36f471109038ae0b40619de4109d475f86a54",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 124,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742576875,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 736260,
+        "name": "Baba Is You",
+        "playtime_forever": 104,
+        "img_icon_url": "9b9e1838838c21ee443359efe30b6a56cf0531dd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 104,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1749047220,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 753640,
+        "name": "Outer Wilds",
+        "playtime_forever": 950,
+        "img_icon_url": "8d0c2dcfc599445affcbad76a34d89478c022780",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 950,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742910265,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 779340,
+        "name": "全面战争：三国",
+        "playtime_forever": 22,
+        "img_icon_url": "12eb7d5a469812b3dd13d04165cff053f477914d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 22,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1748349450,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 779640,
+        "name": "妄想症 Deliver Me",
+        "playtime_forever": 128,
+        "img_icon_url": "c9120e53b5d449b8e350ed9de51b12b60fda87c5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 128,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742553962,
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 813230,
+        "name": "ANIMAL WELL",
+        "playtime_forever": 759,
+        "img_icon_url": "860b275ec0e63d6a74f6f3f9fc8dd75a49065f07",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 759,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1760712035,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 823130,
+        "name": "Totally Accurate Battlegrounds",
+        "playtime_forever": 19,
+        "img_icon_url": "920902c516d435c3d9a6c5ef92e3cd4372f9314b",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1528467319,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 863550,
+        "name": "HITMAN™ 2",
+        "playtime_forever": 138,
+        "img_icon_url": "3f7c071da7a338e03f6243b73c02c072f1bacee9",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 138,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718373065,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 865180,
+        "name": "Reformers Intl Ver",
+        "playtime_forever": 0,
+        "img_icon_url": "900a3ed35e4a844fed863ce3ca4f59aca5edf2f5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 881100,
+        "name": "Noita",
+        "playtime_forever": 807,
+        "img_icon_url": "a21dbd1d3bd01f0a688f2d7029978d5cdbe14e74",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 807,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1741095321,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 916440,
+        "name": "纪元1800",
+        "playtime_forever": 0,
+        "img_icon_url": "cf7c754267856d5a1b36614855c52867daf72186",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 923890,
+        "name": "Yet another tower defence",
+        "playtime_forever": 0,
+        "img_icon_url": "c17af7e1ca13fcaaa03d2345eb932fdf9359c9a3",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 942970,
+        "name": "疑案追声",
+        "playtime_forever": 282,
+        "img_icon_url": "2db120c5515a9dc668fee02bc192fc6dd062b933",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1560608827,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 970600,
+        "name": "Paranoia: Deliver Me",
+        "playtime_forever": 0,
+        "img_icon_url": "c9120e53b5d449b8e350ed9de51b12b60fda87c5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 972660,
+        "name": "《Spiritfarer®》Farewell版",
+        "playtime_forever": 207,
+        "img_icon_url": "21c6c86b51df38e9480231792acf0cfc30f51820",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 207,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1748859491,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 993090,
+        "name": "Lossless Scaling",
+        "playtime_forever": 70,
+        "img_icon_url": "42900f430ed7828d2dfa25f07ac02e3de96bc520",
+        "playtime_windows_forever": 70,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1743427656,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1007350,
+        "name": "Mirror Maker",
+        "playtime_forever": 148,
+        "img_icon_url": "c3627fd2e502afc2b0471f10a5465e886cbe2eac",
+        "playtime_windows_forever": 148,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742556068,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1030300,
+        "name": "Hollow Knight: Silksong",
+        "playtime_forever": 0,
+        "img_icon_url": "b4a999c1302e3ac123c041fd41bb8a34528c6ab5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1030830,
+        "name": "四海兄弟II 最终版",
+        "playtime_forever": 309,
+        "img_icon_url": "f80e173ad5c242ca0d41e30af1f6358d1e64d9b4",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 309,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1753713474,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1030840,
+        "name": " 《四海兄弟: 最终版》​",
+        "playtime_forever": 622,
+        "img_icon_url": "883ceebf7d8ebce37c9244a62777ef4a800393ce",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 622,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1752895955,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1057090,
+        "name": "Ori and the Will of the Wisps",
+        "playtime_forever": 121,
+        "img_icon_url": "ea50b151bb1e2c39e7bdd3ff4f8cc5e8738d6983",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 121,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742575423,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1086940,
+        "name": "博德之门3",
+        "playtime_forever": 8011,
+        "img_icon_url": "d866cae7ea1e471fdbc206287111f1b642373bd9",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8011,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1741341925,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1091500,
+        "name": "赛博朋克 2077",
+        "playtime_forever": 10813,
+        "img_icon_url": "42b9b33fa0f0d997beb299c6157592a8fe7d8f68",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 10813,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1710916625,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 87
+      },
+      {
+        "appid": 1097150,
+        "name": "糖豆人",
+        "playtime_forever": 211,
+        "img_icon_url": "6c027709b9eb1417c993bc7d513b97b232002368",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 211,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1705058097,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1145360,
+        "name": "Hades",
+        "playtime_forever": 142,
+        "img_icon_url": "8a3fca36a00883e8066263ad35dd15d77a1f9abc",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 142,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718380988,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1158310,
+        "name": "Crusader Kings III",
+        "playtime_forever": 5903,
+        "img_icon_url": "8a0d88dfaff790ea1aa2b9fcf50d4e3b4f49cf56",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 5903,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1761223700,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 58
+      },
+      {
+        "appid": 1172450,
+        "name": "Carto",
+        "playtime_forever": 296,
+        "img_icon_url": "d0778570ee1b9bfd4c6984c4c4c9ca00ed05de6a",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 296,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1715496126,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1182620,
+        "name": "Impostor Factory《影子工厂》",
+        "playtime_forever": 122,
+        "img_icon_url": "1480aaf1d4064636ed356d75a696de5f1216b730",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 122,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742563744,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1205520,
+        "name": "Pentiment",
+        "playtime_forever": 398,
+        "img_icon_url": "fb2423048d6ffa29b01f11e3a32d7b3cd1b8c4cd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 398,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1764169874,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1216710,
+        "name": "全网公敌",
+        "playtime_forever": 628,
+        "img_icon_url": "7a65b4ed6f62464394e32192a7a43b218879b21f",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 628,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1715835536,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1222140,
+        "name": "底特律：化身为人",
+        "playtime_forever": 180,
+        "img_icon_url": "3d9f5bc971d44398aef740c0d8e79a358be2e800",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 180,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1745142792,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1222680,
+        "name": "《Need for Speed™ Heat",
+        "playtime_forever": 88,
+        "img_icon_url": "98a96955403db8eeed026bc5ff04e51e3329f1b0",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 88,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718458170,
+        "playtime_disconnected": 1
+      },
+      {
+        "appid": 1237970,
+        "name": "Titanfall® 2",
+        "playtime_forever": 532,
+        "img_icon_url": "d73c7e572859bd7490947d1aeab5c33eda18fd64",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 532,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1713886687,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1238840,
+        "name": "Battlefield™ 1",
+        "playtime_forever": 128,
+        "img_icon_url": "325c78f6940b57a43b65468d2dc10e22601b0ec5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 128,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742567776,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1245620,
+        "name": "艾尔登法环",
+        "playtime_forever": 8908,
+        "img_icon_url": "b6e290dd5a92ce98f89089a207733c70c41a1871",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8908,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1745243523,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1267910,
+        "name": "Melvor Idle 梅尔沃放置",
+        "playtime_forever": 3239,
+        "img_icon_url": "88eca64c662c128de095b4e452881398ac71969c",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3239,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1744696428,
+        "playtime_disconnected": 1558
+      },
+      {
+        "appid": 1404850,
+        "name": "幸运房东",
+        "playtime_forever": 678,
+        "img_icon_url": "ce8b9c2719ccf0fb47c3b97eb58f758913a268fd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 678,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1733501212,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1426210,
+        "name": "双人成行",
+        "playtime_forever": 396,
+        "img_icon_url": "6b15f6d81c4fc52056f4928b363b7fac591a945b",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 396,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1747661074,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1451940,
+        "name": "主播女孩重度依赖",
+        "playtime_forever": 172,
+        "img_icon_url": "2d9e7f71e6372b3f8b4a7a2a9f1fcfdbd28061c1",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 172,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742573942,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1546570,
+        "name": "仙剑奇侠传",
+        "playtime_forever": 98,
+        "img_icon_url": "7b3be840b3562e019f3bd6aebe11e9f5b7e65d48",
+        "playtime_windows_forever": 98,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1684677438,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1559390,
+        "name": "天命奇御二",
+        "playtime_forever": 3002,
+        "img_icon_url": "d4a4211a2b6840ad6d4b8c62e042d7aa77bff492",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3002,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1638700228,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1593500,
+        "name": "God of War",
+        "playtime_forever": 1788,
+        "img_icon_url": "8aa5e7e0e55cad682c7f2e65e075c3bc04dfc1cb",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1788,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1711381072,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1601570,
+        "name": "多重人生",
+        "playtime_forever": 84,
+        "img_icon_url": "d630b33a4739ec61aae711169ade4d88bb45c0ba",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 84,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1750694060,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1606430,
+        "name": "Rubber Bandits Playtest",
+        "playtime_forever": 0,
+        "img_icon_url": "0c2e59a55eccd11a9f438cd54d191a6504e27e7a",
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1649080,
+        "name": "双点校园 ",
+        "playtime_forever": 83,
+        "img_icon_url": "c3472700d865f82ac75209c8c5bd136598c42cca",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 83,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1759243530,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1659420,
+        "name": "UNCHARTED™: 盗贼传奇合辑",
+        "playtime_forever": 973,
+        "img_icon_url": "b566a403067d6abf75136a3c19f9ed0d2e4fb5b1",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 973,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1709479504,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1669980,
+        "name": "火山的女儿",
+        "playtime_forever": 0,
+        "img_icon_url": "af41b6930b60ea5a3d8e21ba04933284253f42cf",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1718570,
+        "name": "神之天平（ASTLIBRA Revision）",
+        "playtime_forever": 2323,
+        "img_icon_url": "e7c445fc57e408d34f6d831588026cace13d3150",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1526,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 797,
+        "playtime_deck_forever": 797,
+        "rtime_last_played": 1734942644,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1746030,
+        "name": "山河旅探 - Murders on the Yangtze River",
+        "playtime_forever": 1005,
+        "img_icon_url": "8cc7a3d8ddfbe56e9ecb769c506a652edf4b2b24",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1005,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1708517909,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1765350,
+        "name": "候鸟",
+        "playtime_forever": 288,
+        "img_icon_url": "301483a1a4c9841d7357d9f918b9c6eb0e868aa5",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 288,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1732198262,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1832640,
+        "name": "Mirror 2: Project X",
+        "playtime_forever": 144,
+        "img_icon_url": "623f3f51ba28038b8088061179a93659528a00dd",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 144,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1686115558,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1868140,
+        "name": "潜水员戴夫 DAVE THE DIVER",
+        "playtime_forever": 3828,
+        "img_icon_url": "2f19d6889f66eae88e8b5a36727d560ec88a00cb",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3828,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1709220189,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1876890,
+        "name": "逸剑风云决",
+        "playtime_forever": 3475,
+        "img_icon_url": "a84d2eb117aa4d7f32781b5020f9e90d567da183",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3475,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1730273102,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1887840,
+        "name": "蟹蟹寻宝奇遇",
+        "playtime_forever": 1040,
+        "img_icon_url": "31fd106b974db959e4ddf2aa5983a5027fc83676",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1040,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1735911291,
+        "playtime_disconnected": 101
+      },
+      {
+        "appid": 1903340,
+        "name": "光与影：33号远征队",
+        "playtime_forever": 2693,
+        "img_icon_url": "d48fb3ed033a08bad9bf0a2e1ceb145e58ffe0aa",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 2693,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1758634126,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1931770,
+        "name": "巴别塔圣歌",
+        "playtime_forever": 534,
+        "img_icon_url": "99618001a2111dd020f1fc957c5c47c0d6d5d327",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 534,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1708531556,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1948980,
+        "name": "大侠立志传：碧血丹心",
+        "playtime_forever": 562,
+        "img_icon_url": "890a5d1e3b5ff05ca0b38994d899fa96225aefbe",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 562,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1758903588,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 1966720,
+        "name": "Lethal Company",
+        "playtime_forever": 35,
+        "img_icon_url": "8393f321a62a9ef0be762c81565d2caea4fb7da6",
+        "playtime_windows_forever": 35,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1727711952,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2050650,
+        "name": "Resident Evil 4",
+        "playtime_forever": 1121,
+        "img_icon_url": "817358b8013c55831ea10d031ef9c0b151110826",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1121,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1709016531,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2095300,
+        "name": "飞越13号房",
+        "playtime_forever": 140,
+        "img_icon_url": "109c91341080c842e221babf5621573a64698c28",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 140,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1718378110,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2138710,
+        "name": "Sifu",
+        "playtime_forever": 659,
+        "img_icon_url": "3930eb06cc31a6c91ab243afd4c45f49c9d0c5c1",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 620,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 39,
+        "playtime_deck_forever": 39,
+        "rtime_last_played": 1737294261,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 98
+      },
+      {
+        "appid": 2144740,
+        "name": "幽灵行者 2（Ghostrunner 2）",
+        "playtime_forever": 176,
+        "img_icon_url": "39fc0a6b7051f744c725f1fc518a8996b859e86d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 176,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742574330,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2190290,
+        "name": "不双修就去世",
+        "playtime_forever": 309,
+        "img_icon_url": "340a5a48287abbd48688a6503505ce35899aa434",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 309,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1727871153,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2194530,
+        "name": "犹格索托斯的庭院",
+        "playtime_forever": 2191,
+        "img_icon_url": "bdac317428d5a32ee741c1439a6dbb3604b70114",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 2190,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 1,
+        "playtime_deck_forever": 1,
+        "rtime_last_played": 1739810755,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2337860,
+        "name": "呆呆大乱斗",
+        "playtime_forever": 0,
+        "img_icon_url": "0b95584cb73856d092ea9b7ded57d06c023dbc3f",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2358720,
+        "name": "黑神话：悟空",
+        "playtime_forever": 679,
+        "img_icon_url": "764ad8ff458f7020d63a3f7f0abf6ad8882c05df",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 679,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1725890312,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2401970,
+        "name": "逆转检察官1&2 御剑精选集",
+        "playtime_forever": 3104,
+        "img_icon_url": "ff9f9345c73a850acfbe861133ee479043c65839",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3104,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1727765135,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2421410,
+        "name": "全网公敌2 新世界",
+        "playtime_forever": 123,
+        "img_icon_url": "aae6ec5fb5c3efc390f797fed323053cf04dd2e2",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 123,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742575058,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2593370,
+        "name": "饿殍：明末千里行",
+        "playtime_forever": 182,
+        "img_icon_url": "54a7574438ba0458909b1879bfca1c1992b839a4",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 182,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1742551323,
+        "content_descriptorids": [
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2644470,
+        "name": "PICO PARK 2",
+        "playtime_forever": 304,
+        "img_icon_url": "7d1948eb5efb3d884c5d726591549e1cfd8a7d00",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 300,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 3,
+        "playtime_deck_forever": 3,
+        "rtime_last_played": 1738341679,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2679460,
+        "name": "暗喻幻想：ReFantazio",
+        "playtime_forever": 3692,
+        "img_icon_url": "76497828e18653273818f428323bd2a5684e689d",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3692,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1730116424,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2878980,
+        "name": "NBA 2K25",
+        "playtime_forever": 8819,
+        "img_icon_url": "93a9446ae70548700f36ad84ff960908b8dda1ca",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8819,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1759237156,
+        "playtime_disconnected": 80
+      },
+      {
+        "appid": 3084280,
+        "name": "三相奇谈",
+        "playtime_forever": 0,
+        "img_icon_url": "b5d5369922e83b1d25532524f773e5d26af53c83",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 0,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 0,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 3117820,
+        "name": "苏丹的游戏",
+        "playtime_forever": 1722,
+        "img_icon_url": "81e37cf744f52d7af999e208dfd4c087a1f3db29",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 1722,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1745578832,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 3167020,
+        "name": "逃离鸭科夫",
+        "playtime_forever": 113,
+        "img_icon_url": "5bb8d31708442a8f3ddbc100d7be7c3fde530d18",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 113,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1763039427,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 3350200,
+        "name": "情感反诈模拟器",
+        "playtime_forever": 502,
+        "img_icon_url": "b8bb31cec008ac2a794458ed5251b75bbe50df14",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 502,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1752246385,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 3447040,
+        "name": "空之轨迹 the 1st",
+        "playtime_forever": 3064,
+        "img_icon_url": "47ae886dc4f8d7615a961cda4a820d92e0c1faa7",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 3064,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1759914059,
+        "playtime_disconnected": 91
+      }
+    ],
+    "top_games": [
+      {
+        "appid": 413150,
+        "name": "Stardew Valley",
+        "playtime_forever": 11206,
+        "img_icon_url": "35d1377200084a4034238c05b0c8930451e2fb40",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 10905,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 301,
+        "playtime_deck_forever": 301,
+        "rtime_last_played": 1757779903,
+        "playtime_disconnected": 14
+      },
+      {
+        "appid": 1091500,
+        "name": "赛博朋克 2077",
+        "playtime_forever": 10813,
+        "img_icon_url": "42b9b33fa0f0d997beb299c6157592a8fe7d8f68",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 10813,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1710916625,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 87
+      },
+      {
+        "appid": 1245620,
+        "name": "艾尔登法环",
+        "playtime_forever": 8908,
+        "img_icon_url": "b6e290dd5a92ce98f89089a207733c70c41a1871",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8908,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1745243523,
+        "content_descriptorids": [
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 2878980,
+        "name": "NBA 2K25",
+        "playtime_forever": 8819,
+        "img_icon_url": "93a9446ae70548700f36ad84ff960908b8dda1ca",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8819,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1759237156,
+        "playtime_disconnected": 80
+      },
+      {
+        "appid": 1086940,
+        "name": "博德之门3",
+        "playtime_forever": 8011,
+        "img_icon_url": "d866cae7ea1e471fdbc206287111f1b642373bd9",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 8011,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1741341925,
+        "content_descriptorids": [
+          1,
+          2,
+          5
+        ],
+        "playtime_disconnected": 0
+      }
+    ],
+    "recent_game": {
+      "appid": 379430,
+      "name": "Kingdom Come: Deliverance",
+      "playtime_2weeks": 57,
+      "playtime_forever": 233,
+      "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
+      "has_community_visible_stats": true,
+      "playtime_windows_forever": 233,
+      "playtime_mac_forever": 0,
+      "playtime_linux_forever": 0,
+      "playtime_deck_forever": 0,
+      "rtime_last_played": 1765386209,
+      "content_descriptorids": [
+        1,
+        5
+      ],
+      "playtime_disconnected": 0
+    },
+    "top_2weeks": [
+      {
+        "appid": 457140,
+        "name": "缺氧",
+        "playtime_2weeks": 977,
+        "playtime_forever": 977,
+        "img_icon_url": "d37534163ebac8351e0bda0bf30f8f2174c921b6",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 977,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1765278920,
+        "playtime_disconnected": 0
+      },
+      {
+        "appid": 379430,
+        "name": "Kingdom Come: Deliverance",
+        "playtime_2weeks": 57,
+        "playtime_forever": 233,
+        "img_icon_url": "915ec515c36645855abed0476b5b0891d8a4e47a",
+        "has_community_visible_stats": true,
+        "playtime_windows_forever": 233,
+        "playtime_mac_forever": 0,
+        "playtime_linux_forever": 0,
+        "playtime_deck_forever": 0,
+        "rtime_last_played": 1765386209,
+        "content_descriptorids": [
+          1,
+          5
+        ],
+        "playtime_disconnected": 0
+      }
+    ],
+    "total_playtime": 164505
   }
 }

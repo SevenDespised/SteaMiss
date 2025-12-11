@@ -18,7 +18,7 @@ class SteamWorker(QThread):
         self.extra_data = extra_data # 用于传递额外参数，如 appids
 
     def run(self):
-        result = {"type": self.task_type, "data": None, "error": None}
+        result = {"type": self.task_type, "data": None, "error": None, "steam_id": self.steam_id}
         
         if not self.client.api_key or not self.steam_id:
             result["error"] = "Missing API Key or Steam ID"
@@ -156,12 +156,13 @@ class SteamManager(QObject):
         self.cache = {}
         self.worker = None
         self.data_file = "config/steam_data.json"
+        self._games_multi_ctx = None
         
         # 1. 加载本地数据
         self.load_local_data()
         
         # 2. 如果配置齐全，尝试自动更新
-        key, sid = self._get_credentials()
+        key, sid = self._get_primary_credentials()
         if key and sid:
             # 延迟一点启动，避免拖慢启动速度
             # 这里直接调用，因为 Worker 是异步的
@@ -189,33 +190,67 @@ class SteamManager(QObject):
         except Exception as e:
             print(f"Failed to save local steam data: {e}")
 
-    def _get_credentials(self):
-        return self.config.get("steam_api_key"), self.config.get("steam_id")
+    def _get_primary_credentials(self, allow_alt_fallback=True):
+        key = self.config.get("steam_api_key")
+        sid = self.config.get("steam_id")
+
+        if not sid and allow_alt_fallback:
+            alt_ids = self.config.get("steam_alt_ids", [])
+            if isinstance(alt_ids, list) and alt_ids:
+                sid = alt_ids[0]
+
+        return key, sid
+
+    def _get_all_account_ids(self):
+        ids = []
+        primary = self.config.get("steam_id")
+        if primary:
+            ids.append(primary)
+
+        alt_ids = self.config.get("steam_alt_ids", [])
+        if isinstance(alt_ids, list):
+            for sid in alt_ids:
+                if sid and sid not in ids:
+                    ids.append(sid)
+        return ids
 
     def fetch_player_summary(self):
         """异步获取玩家信息"""
-        key, sid = self._get_credentials()
+        key, sid = self._get_primary_credentials()
         self._start_worker(key, sid, "summary")
 
     def fetch_games_stats(self):
         """异步获取游戏统计"""
-        key, sid = self._get_credentials()
-        self._start_worker(key, sid, "games")
+        key = self.config.get("steam_api_key")
+        ids = self._get_all_account_ids()
+        if not key or not ids:
+            return
+
+        # 新的多账号上下文，用于聚合统计
+        self._games_multi_ctx = {
+            "pending": len(ids),
+            "results": [],
+            "primary": self.config.get("steam_id") or ids[0]
+        }
+
+        for sid in ids:
+            self._start_worker(key, sid, "games", steam_id=sid)
 
     def fetch_store_prices(self, appids):
         """异步获取游戏价格"""
-        key, sid = self._get_credentials()
+        key, sid = self._get_primary_credentials()
         self._start_worker(key, sid, "store_prices", extra_data=appids)
 
     def fetch_wishlist(self):
         """异步获取愿望单折扣"""
-        key, sid = self._get_credentials()
+        key, sid = self._get_primary_credentials()
         self._start_worker(key, sid, "wishlist")
 
     def get_recent_game(self):
         """从缓存中获取最近游玩的游戏"""
-        if "games" in self.cache and self.cache["games"].get("recent_game"):
-            return self.cache["games"]["recent_game"]
+        games_cache = self._get_primary_games_cache()
+        if games_cache and games_cache.get("recent_game"):
+            return games_cache["recent_game"]
         return None
 
     def get_recent_games(self, limit=3):
@@ -223,10 +258,11 @@ class SteamManager(QObject):
         获取最近游玩的游戏列表 (Top N)
         如果不足 N 个，则用其他游戏填充 (通过排序自动实现)
         """
-        if "games" not in self.cache or not self.cache["games"].get("all_games"):
+        games_cache = self._get_primary_games_cache()
+        if not games_cache or not games_cache.get("all_games"):
             return []
         
-        all_games = self.cache["games"]["all_games"]
+        all_games = games_cache["all_games"]
         # 按 rtime_last_played 降序
         sorted_games = sorted(all_games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
         
@@ -237,25 +273,26 @@ class SteamManager(QObject):
         在缓存的游戏列表中搜索
         返回匹配的游戏列表 [{"name": "xxx", "appid": 123}, ...]
         """
-        if "games" not in self.cache or not self.cache["games"].get("all_games"):
+        games_cache = self._get_primary_games_cache()
+        if not games_cache or not games_cache.get("all_games"):
             return []
-        
+
         keyword = keyword.lower()
         results = []
-        for game in self.cache["games"]["all_games"]:
+        for game in games_cache["all_games"]:
             name = game.get("name", "").lower()
             if keyword in name:
                 results.append(game)
         return results
 
-    def _start_worker(self, key, sid, task_type, extra_data=None):
+    def _start_worker(self, key, sid, task_type, extra_data=None, steam_id=None):
         # 简单的任务队列机制
         # 如果当前有 worker 在运行，我们不能直接 return，否则并发请求会丢失
         # 这里我们简单地创建新的 worker 实例来处理并发请求
         # 注意：这可能会导致多个线程同时运行，对于简单的应用是可以接受的
         # 更好的做法是实现一个任务队列，但为了保持代码简单，我们允许并发
         
-        worker = SteamWorker(key, sid, task_type, extra_data)
+        worker = SteamWorker(key, steam_id or sid, task_type, extra_data)
         worker.data_ready.connect(self._handle_worker_result)
         
         # 我们需要保持对 worker 的引用，防止被垃圾回收
@@ -276,9 +313,14 @@ class SteamManager(QObject):
 
     def _handle_worker_result(self, result):
         if result["error"]:
+            # 确保多账号任务不会因为单个账号失败而卡住
+            if result["type"] == "games" and self._games_multi_ctx:
+                self._games_multi_ctx["pending"] -= 1
+                if self._games_multi_ctx["pending"] <= 0:
+                    self._finalize_games_results(self._games_multi_ctx["results"], self._games_multi_ctx.get("primary"))
+                    self._games_multi_ctx = None
+
             self.on_error.emit(result["error"])
-            # 即使出错，如果本地有旧数据，也可以考虑通知 UI 使用旧数据
-            # 但目前的逻辑是 UI 直接查 cache，所以只要 cache 里有旧数据，UI 就能查到
             return
 
         task_type = result["type"]
@@ -291,8 +333,19 @@ class SteamManager(QObject):
             self.cache["summary"] = data
             self.on_player_summary.emit(data)
         elif task_type == "games":
-            self.cache["games"] = data
-            self.on_games_stats.emit(data)
+            if self._games_multi_ctx:
+                self._games_multi_ctx["results"].append({"steam_id": result.get("steam_id"), "data": data})
+                self._games_multi_ctx["pending"] -= 1
+
+                if self._games_multi_ctx["pending"] <= 0:
+                    self._finalize_games_results(self._games_multi_ctx["results"], self._games_multi_ctx.get("primary"))
+                    self._games_multi_ctx = None
+            else:
+                # 兼容单账号模式
+                self.cache["games"] = data
+                self.cache["games_primary"] = data
+                self.on_games_stats.emit(data)
+                self.save_local_data()
         elif task_type == "store_prices":
             # 合并价格数据到缓存
             if "prices" not in self.cache:
@@ -304,4 +357,79 @@ class SteamManager(QObject):
             self.on_wishlist_data.emit(data)
             
         # 每次更新成功后，保存到本地
+        if task_type != "games":
+            self.save_local_data()
+
+    def _finalize_games_results(self, results, primary_id):
+        """合并多账号游戏统计，保留主账号数据供快捷功能使用"""
+        primary_data = None
+        for item in results:
+            if primary_id and item.get("steam_id") == primary_id:
+                primary_data = item["data"]
+                break
+
+        if primary_data is None and results:
+            primary_data = results[0]["data"]
+
+        if primary_data:
+            self.cache["games_primary"] = primary_data
+
+        aggregated = self._merge_games(results)
+        self.cache["games"] = aggregated
+
+        self.on_games_stats.emit(aggregated)
         self.save_local_data()
+
+    def _merge_games(self, results):
+        """根据多账号结果聚合统计数据"""
+        merged = {}
+
+        for item in results:
+            data = item.get("data") or {}
+            for game in data.get("all_games", []):
+                appid = game.get("appid")
+                if appid is None:
+                    continue
+
+                if appid not in merged:
+                    merged[appid] = {
+                        "appid": appid,
+                        "name": game.get("name", "Unknown"),
+                        "playtime_forever": 0,
+                        "playtime_2weeks": 0,
+                        "rtime_last_played": game.get("rtime_last_played", 0)
+                    }
+
+                merged[appid]["playtime_forever"] += game.get("playtime_forever", 0)
+                merged[appid]["playtime_2weeks"] += game.get("playtime_2weeks", 0)
+                merged[appid]["rtime_last_played"] = max(
+                    merged[appid].get("rtime_last_played", 0),
+                    game.get("rtime_last_played", 0)
+                )
+
+        all_games = list(merged.values())
+
+        # 汇总指标
+        total_playtime = sum(g.get("playtime_forever", 0) for g in all_games)
+
+        # 排序列表
+        games_by_playtime = sorted(all_games, key=lambda x: x.get('playtime_forever', 0), reverse=True)
+        games_by_recent = sorted(all_games, key=lambda x: x.get('rtime_last_played', 0), reverse=True)
+        games_by_2weeks = sorted(all_games, key=lambda x: x.get('playtime_2weeks', 0), reverse=True)
+        top_2weeks = [g for g in games_by_2weeks if g.get('playtime_2weeks', 0) > 0][:5]
+
+        return {
+            "count": len(all_games),
+            "all_games": all_games,
+            "top_games": games_by_playtime[:5],
+            "recent_game": games_by_recent[0] if games_by_recent else None,
+            "top_2weeks": top_2weeks,
+            "total_playtime": total_playtime
+        }
+
+    def _get_primary_games_cache(self):
+        if "games_primary" in self.cache:
+            return self.cache["games_primary"]
+        if "games" in self.cache:
+            return self.cache["games"]
+        return None

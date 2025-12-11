@@ -8,7 +8,8 @@ class ConfigManager:
             "say_hello_content": "你好！我是你的桌面宠物。",
             "explorer_paths": ["C:/", "C:/", "C:/"],
             "steam_api_key": "",
-            "steam_id": ""
+            "steam_id": "",
+            "steam_alt_ids": []
         }
         self.load_config()
 
