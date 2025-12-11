@@ -4,14 +4,6 @@ from PyQt6.QtWidgets import QWidget, QApplication, QMenu
 from PyQt6.QtCore import Qt, QPoint, QTimer, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QAction, QCursor, QPixmap
 
-# 引入新的管理器
-from src.logic.behavior_manager import BehaviorManager
-from src.logic.feature_manager import FeatureManager
-from src.logic.config_manager import ConfigManager
-from src.logic.steam_manager import SteamManager
-from src.logic.ui_manager import UIManager
-from src.logic.resource_manager import ResourceManager
-from src.logic.timer_manager import TimerManager
 from src.ui.timer_overlay import TimerOverlay
 
 class DesktopPet(QWidget):
@@ -19,7 +11,7 @@ class DesktopPet(QWidget):
     visibility_changed = pyqtSignal(bool)
     topmost_changed = pyqtSignal(bool)
 
-    def __init__(self):
+    def __init__(self, behavior_manager, resource_manager, ui_manager, timer_manager, feature_manager):
         super().__init__()
         
         # 1. 初始化窗口属性
@@ -29,20 +21,17 @@ class DesktopPet(QWidget):
         self.is_dragging = False
         self.drag_position = QPoint()
         
-        # 3. 初始化管理器
-        self.config_manager = ConfigManager()
-        self.behavior_manager = BehaviorManager()
-        self.steam_manager = SteamManager(self.config_manager)
-        self.timer_manager = TimerManager()
-        self.feature_manager = FeatureManager(self.steam_manager, self.config_manager, self.timer_manager)
+        # 3. 注入依赖
+        self.behavior_manager = behavior_manager
+        self.resource_manager = resource_manager
+        self.ui_manager = ui_manager
+        self.timer_manager = timer_manager
+        self.feature_manager = feature_manager
         
-        # 初始化资源管理器 (一次性加载所有图片)
-        self.resource_manager = ResourceManager()
         # 初始化计时器绘制器
         self.timer_overlay = TimerOverlay(self.timer_manager)
         
-        # 初始化 UI 管理器
-        self.ui_manager = UIManager(self.feature_manager, self.steam_manager, self.config_manager)
+        # 连接 UI 管理器信号
         self.ui_manager.get_radial_menu().hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
