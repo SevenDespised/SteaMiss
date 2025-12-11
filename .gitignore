@@ -5,7 +5,7 @@ __pycache__/
 venv/
 
 # Configuration (Secrets)
-config/settings.json
+config/
 
 # Build files
 build/
