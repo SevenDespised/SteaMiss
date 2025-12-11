@@ -96,6 +96,7 @@ class SteaMissApp:
         self.tray_manager.request_toggle_topmost.connect(self.pet.toggle_topmost)
         self.tray_manager.request_open_settings.connect(self.ui_manager.open_settings)
         self.tray_manager.request_quit_app.connect(self.quit_app)
+        self.tray_manager.request_activate_pet.connect(self.activate_pet)
         
         # 7. 连接 FeatureManager 信号
         self.feature_manager.request_open_tool.connect(self.ui_manager.open_tool)
@@ -116,6 +117,15 @@ class SteaMissApp:
 
     def toggle_pet_visibility(self):
         self.pet.set_visibility(not self.pet.isVisible())
+    
+    def activate_pet(self):
+        """
+        激活宠物窗口：如果隐藏则显示，然后激活窗口获得焦点
+        """
+        if not self.pet.isVisible():
+            self.pet.show()
+        self.pet.activateWindow()
+        self.pet.raise_()
 
     def quit_app(self):
         self.app.quit()

@@ -21,9 +21,5 @@ class InteractionMenuBuilder(BaseMenuBuilder):
         return {
             'key': 'say_hello',
             'label': '互动：\n打招呼',
-            'callback': lambda: self.feature_manager.execute_action("say_hello"),
-            'sub_items': [
-                {'label': '隐藏', 'callback': lambda: self.feature_manager.execute_action("hide_pet")},
-                {'label': topmost_label, 'callback': lambda: self.feature_manager.execute_action("toggle_topmost")},
-            ]
+            'callback': lambda: self.feature_manager.execute_action("say_hello")
         }

@@ -13,7 +13,6 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
         'community': '社区',
         'workshop': '创意工坊',
         'profile': '个人资料',
-        'friends': '好友',
         'downloads': '下载',
         'settings': '设置'
     }

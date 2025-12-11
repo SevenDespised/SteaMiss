@@ -4,6 +4,7 @@ from src.feature.menu_builders.timer_builder import TimerMenuBuilder
 from src.feature.menu_builders.steam_game_builder import SteamGameMenuBuilder
 from src.feature.menu_builders.steam_page_builder import SteamPageMenuBuilder
 from src.feature.menu_builders.tool_builder import ToolMenuBuilder
+from src.feature.menu_builders.exit_builder import ExitMenuBuilder
 
 class MenuComposer:
     """
@@ -23,6 +24,7 @@ class MenuComposer:
         self.steam_game_builder = SteamGameMenuBuilder(feature_manager, config_manager, steam_manager)
         self.steam_page_builder = SteamPageMenuBuilder(feature_manager, config_manager)
         self.tool_builder = ToolMenuBuilder(feature_manager, config_manager)
+        self.exit_builder = ExitMenuBuilder(feature_manager, config_manager)
 
     def compose(self):
         """
@@ -30,8 +32,14 @@ class MenuComposer:
         """
         # 定义排序顺序
         order = [
-            "say_hello", "launch_recent", "discounts",
-            "timer", "stats", "launch_favorite", "open_path", "open_steam_page"
+            "exit",
+            "open_path",
+            "open_steam_page",
+            "stats",
+            "timer",
+            "launch_recent",
+            "launch_favorite",
+            "say_hello"
         ]
         
         # 收集所有菜单项
@@ -61,6 +69,11 @@ class MenuComposer:
         steam_page_item = self.steam_page_builder.build()
         if steam_page_item:
             all_items.append(steam_page_item)
+        
+        # 7. 退出
+        opts_item = self.exit_builder.build()
+        if opts_item:
+            all_items.append(opts_item)
         
         # 排序并填充空位
         items_map = {item['key']: item for item in all_items}

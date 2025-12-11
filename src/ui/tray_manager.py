@@ -12,6 +12,7 @@ class TrayManager(QObject):
     request_toggle_topmost = pyqtSignal()
     request_open_settings = pyqtSignal()
     request_quit_app = pyqtSignal()
+    request_activate_pet = pyqtSignal()  # 双击托盘图标时激活宠物窗口
 
     def __init__(self, app):
         super().__init__()
@@ -58,7 +59,20 @@ class TrayManager(QObject):
         tray_menu.addAction(action_quit)
         
         self.tray_icon.setContextMenu(tray_menu)
+        
+        # 连接托盘图标激活信号（双击）
+        self.tray_icon.activated.connect(self.on_tray_activated)
+        
         self.tray_icon.show()
+    
+    def on_tray_activated(self, reason):
+        """
+        处理托盘图标激活事件
+        reason: QSystemTrayIcon.ActivationReason
+        """
+        # 双击时激活宠物窗口
+        if reason == QSystemTrayIcon.ActivationReason.DoubleClick:
+            self.request_activate_pet.emit()
 
     def update_visibility_text(self, visible):
         if self.action_toggle:

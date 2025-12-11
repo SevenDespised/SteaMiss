@@ -14,7 +14,7 @@ class SteamFeatureHandler:
     def open_steam_page(self, page_type=None, **kwargs):
         """
         打开Steam页面
-        page_type: 'library', 'community', 'store', 'workshop', 'profile', 'friends', 'downloads', 'settings'
+        page_type: 'library', 'community', 'store', 'workshop', 'profile', 'downloads', 'settings'
         """
         steam_commands = {
             'store': 'steam://store',
@@ -22,7 +22,6 @@ class SteamFeatureHandler:
             'library': 'steam://nav/games',
             'workshop': 'steam://url/SteamWorkshop',
             'profile': 'steam://url/SteamIDEditPage',
-            'friends': 'steam://friends/',
             'downloads': 'steam://nav/downloads',
             'settings': 'steam://settings/'
         }
@@ -33,7 +32,6 @@ class SteamFeatureHandler:
             'library': 'https://steamcommunity.com/my/games',
             'workshop': 'https://steamcommunity.com/workshop/',
             'profile': 'https://steamcommunity.com/my/profile/edit',
-            'friends': 'https://steamcommunity.com/my/friends/',
             'downloads': 'https://store.steampowered.com/account/',
             'settings': 'https://store.steampowered.com/account/'
         }
