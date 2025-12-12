@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QListWidget, 
                              QListWidgetItem, QPushButton, QHBoxLayout)
-from PyQt6.QtCore import Qt, QSize, QUrl
+from PyQt6.QtCore import Qt, QSize, QUrl, pyqtSignal
 from PyQt6.QtGui import QDesktopServices
 
 class DiscountItemWidget(QWidget):
@@ -39,9 +39,10 @@ class DiscountItemWidget(QWidget):
         self.setLayout(layout)
 
 class DiscountWindow(QWidget):
-    def __init__(self, steam_manager):
+    request_refresh = pyqtSignal()
+
+    def __init__(self):
         super().__init__()
-        self.steam_manager = steam_manager
         self.setWindowTitle("愿望单/关注游戏特惠推荐")
         self.resize(550, 600)
         
@@ -61,35 +62,26 @@ class DiscountWindow(QWidget):
         
         # 刷新按钮
         self.refresh_btn = QPushButton("刷新数据")
-        self.refresh_btn.clicked.connect(self.refresh_data)
+        self.refresh_btn.clicked.connect(self._on_refresh_clicked)
         self.refresh_btn.setMinimumHeight(40)
         layout.addWidget(self.refresh_btn)
         
         self.setLayout(layout)
         
-        # 连接信号
-        if self.steam_manager:
-            self.steam_manager.on_wishlist_data.connect(self.update_list)
-            
-        # 初始加载
-        # 如果缓存有数据则显示
-        if self.steam_manager and "wishlist" in self.steam_manager.cache:
-            self.update_list(self.steam_manager.cache["wishlist"])
-        else:
-            self.refresh_data()
+        # 初始显示空状态
+        self.update_data([])
 
-    def refresh_data(self):
-        if not self.steam_manager: return
+    def _on_refresh_clicked(self):
         self.refresh_btn.setEnabled(False)
         self.refresh_btn.setText("正在获取愿望单数据...")
-        self.steam_manager.fetch_wishlist()
+        self.request_refresh.emit()
         
         # 简单的超时恢复
         from PyQt6.QtCore import QTimer
         QTimer.singleShot(8000, lambda: self.refresh_btn.setEnabled(True))
         QTimer.singleShot(8000, lambda: self.refresh_btn.setText("刷新数据"))
 
-    def update_list(self, games):
+    def update_data(self, games):
         self.refresh_btn.setEnabled(True)
         self.refresh_btn.setText("刷新数据")
         self.list_widget.clear()
@@ -106,3 +98,4 @@ class DiscountWindow(QWidget):
             
             widget = DiscountItemWidget(game)
             self.list_widget.setItemWidget(item, widget)
+

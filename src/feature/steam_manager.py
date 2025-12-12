@@ -213,16 +213,7 @@ class SteamManager(QObject):
                     done = self.games_aggregator.add_result(steam_id, games_data, summary_data)
                     if done:
                         self._finalize_games_results()
-            else:
-                # 兼容单账号模式
-                if games_data:
-                    self.cache["games"] = games_data
-                    self.cache["games_primary"] = games_data
-                    if summary_data:
-                        self.cache["summary"] = summary_data
-                        self.on_player_summary.emit(summary_data)
-                    self.on_games_stats.emit(games_data)
-                    self.save_local_data()
+
         elif task_type == "store_prices":
             # 合并价格数据到缓存
             if "prices" not in self.cache:
