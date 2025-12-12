@@ -7,11 +7,11 @@ class FeatureRouter(QObject):
     request_say_hello = pyqtSignal(str)
     error_occurred = pyqtSignal(str)
 
-    def __init__(self, system_handler, steam_manager, timer_manager, pet_handler):
+    def __init__(self, system_handler, steam_manager, timer_handler, pet_handler):
         super().__init__()
         self.system_handler = system_handler
         self.steam_manager = steam_manager
-        self.timer_manager = timer_manager
+        self.timer_handler = timer_handler
         self.pet_handler = pet_handler
         
         self._init_actions()
@@ -28,10 +28,10 @@ class FeatureRouter(QObject):
             "open_steam_page": self.steam_manager.open_page,
             
             # Timer
-            "toggle_timer": self.timer_manager.toggle,
-            "pause_timer": self.timer_manager.pause,
-            "resume_timer": self.timer_manager.resume,
-            "stop_timer": self.timer_manager.stop_and_persist,
+            "toggle_timer": self.timer_handler.toggle,
+            "pause_timer": self.timer_handler.pause,
+            "resume_timer": self.timer_handler.resume,
+            "stop_timer": self.timer_handler.stop_and_persist,
             
             # Pet (Special handling for signals)
             "say_hello": self._handle_say_hello,

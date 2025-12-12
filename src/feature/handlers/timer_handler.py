@@ -4,7 +4,7 @@ import datetime
 from src.feature.timer_support.timer_logic import GameTimer
 
 
-class TimerManager:
+class TimerHandler:
     """计时器业务层：负责开始/结束、持久化以及状态查询。"""
 
     def __init__(self, log_path=None):
@@ -55,6 +55,26 @@ class TimerManager:
     def get_display_time(self):
         # 返回 (h, m, s)
         return self.timer.get_time_parts()
+
+    def get_overlay_context(self):
+        """
+        获取用于 UI 覆盖层显示的上下文数据。
+        封装了“何时显示”以及“显示什么”的业务逻辑。
+        """
+        running = self.is_running()
+        elapsed = self.get_elapsed_seconds()
+        
+        # 业务规则：只有在运行中，或者暂停且有累计时间时才显示
+        if not running and elapsed <= 0:
+            return None
+            
+        h, m, s = self.get_display_time()
+        return {
+            "h": h,
+            "m": m,
+            "s": s,
+            "is_running": running
+        }
 
     def reset(self):
         self.timer.reset()

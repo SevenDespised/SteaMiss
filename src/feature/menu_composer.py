@@ -11,16 +11,16 @@ class MenuComposer:
     菜单组装器
     负责协调各个菜单项构建器，生成最终的菜单数据列表
     """
-    def __init__(self, feature_router, steam_manager, config_manager, timer_manager):
+    def __init__(self, feature_router, steam_manager, config_manager, timer_handler):
         self.feature_router = feature_router
         self.steam_manager = steam_manager
         self.config_manager = config_manager
-        self.timer_manager = timer_manager
+        self.timer_handler = timer_handler
         
         # 初始化各个菜单项构建器
         self.path_builder = PathMenuBuilder(feature_router, config_manager)
         self.interaction_builder = InteractionMenuBuilder(feature_router, config_manager)
-        self.timer_builder = TimerMenuBuilder(feature_router, config_manager, timer_manager)
+        self.timer_builder = TimerMenuBuilder(feature_router, config_manager, timer_handler)
         self.steam_game_builder = SteamGameMenuBuilder(feature_router, config_manager, steam_manager)
         self.steam_page_builder = SteamPageMenuBuilder(feature_router, config_manager)
         self.tool_builder = ToolMenuBuilder(feature_router, config_manager)

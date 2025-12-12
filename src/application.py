@@ -6,7 +6,7 @@ from src.ui.timer_overlay import TimerOverlay
 from src.core.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
 from src.feature.steam_manager import SteamManager
-from src.feature.timer_manager import TimerManager
+from src.feature.handlers.timer_handler import TimerHandler
 from src.core.feature_router import FeatureRouter
 from src.core.resource_manager import ResourceManager
 from src.core.ui_manager import UIManager
@@ -27,7 +27,7 @@ class SteaMissApp:
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.resource_manager = ResourceManager()
-        self.timer_manager = TimerManager()
+        self.timer_handler = TimerHandler()
         self.steam_manager = SteamManager(self.config_manager)
         
         # 初始化 Feature Handlers
@@ -39,7 +39,7 @@ class SteaMissApp:
         self.feature_router = FeatureRouter(
             self.system_handler,
             self.steam_manager,
-            self.timer_manager,
+            self.timer_handler,
             self.pet_handler
         )
         
@@ -48,7 +48,7 @@ class SteaMissApp:
             self.feature_router,
             self.steam_manager,
             self.config_manager,
-            self.timer_manager
+            self.timer_handler
         )
         
         # 初始化窗口工厂
@@ -66,7 +66,7 @@ class SteaMissApp:
         self.tray_manager = TrayManager(self.app)
 
         # 初始化 TimerOverlay (View Helper)
-        self.timer_overlay = TimerOverlay(self.timer_manager)
+        self.timer_overlay = TimerOverlay(self.timer_handler)
 
         # 2. 初始化核心组件 (注入依赖)
         self.pet = DesktopPet(
