@@ -5,8 +5,8 @@
 class BaseMenuBuilder:
     """菜单项构建器基类"""
     
-    def __init__(self, feature_manager, config_manager):
-        self.feature_manager = feature_manager
+    def __init__(self, feature_router, config_manager):
+        self.feature_router = feature_router
         self.config_manager = config_manager
     
     def build(self):

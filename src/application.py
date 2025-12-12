@@ -7,7 +7,7 @@ from src.core.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
 from src.feature.steam_manager import SteamManager
 from src.feature.timer_manager import TimerManager
-from src.core.feature_manager import FeatureManager
+from src.core.feature_router import FeatureRouter
 from src.core.resource_manager import ResourceManager
 from src.core.ui_manager import UIManager
 from src.feature.menu_composer import MenuComposer
@@ -36,7 +36,7 @@ class SteaMissApp:
         # self.timer_handler = TimerFeatureHandler(self.timer_manager) # Removed
         self.pet_handler = PetFeatureHandler(self.config_manager)
         
-        self.feature_manager = FeatureManager(
+        self.feature_router = FeatureRouter(
             self.system_handler,
             self.steam_manager,
             self.timer_manager,
@@ -45,7 +45,7 @@ class SteaMissApp:
         
         # 初始化菜单组装器
         self.menu_composer = MenuComposer(
-            self.feature_manager,
+            self.feature_router,
             self.steam_manager,
             self.config_manager,
             self.timer_manager
@@ -90,7 +90,7 @@ class SteaMissApp:
         
         # 连接宠物交互信号
         self.pet.right_clicked.connect(self.ui_manager.handle_right_click)
-        self.pet.double_clicked.connect(lambda: self.feature_manager.execute_action("say_hello"))
+        self.pet.double_clicked.connect(lambda: self.feature_router.execute_action("say_hello"))
         self.ui_manager.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
         
         # 连接 TrayManager 的请求信号
@@ -100,12 +100,12 @@ class SteaMissApp:
         self.tray_manager.request_quit_app.connect(self.quit_app)
         self.tray_manager.request_activate_pet.connect(self.activate_pet)
         
-        # 7. 连接 FeatureManager 信号
-        self.feature_manager.request_open_tool.connect(self.ui_manager.open_tool)
-        self.feature_manager.request_hide_pet.connect(self.toggle_pet_visibility)
-        self.feature_manager.request_toggle_topmost.connect(self.pet.toggle_topmost)
-        self.feature_manager.request_say_hello.connect(self.on_say_hello)
-        self.feature_manager.error_occurred.connect(self.on_error_occurred)
+        # 7. 连接 FeatureRouter 信号
+        self.feature_router.request_open_tool.connect(self.ui_manager.open_tool)
+        self.feature_router.request_hide_pet.connect(self.toggle_pet_visibility)
+        self.feature_router.request_toggle_topmost.connect(self.pet.toggle_topmost)
+        self.feature_router.request_say_hello.connect(self.on_say_hello)
+        self.feature_router.error_occurred.connect(self.on_error_occurred)
 
     def on_say_hello(self, content):
         """响应打招呼"""

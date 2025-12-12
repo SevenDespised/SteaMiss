@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 
-class FeatureManager(QObject):
+class FeatureRouter(QObject):
     request_open_tool = pyqtSignal(str)
     request_hide_pet = pyqtSignal()
     request_toggle_topmost = pyqtSignal()

@@ -217,7 +217,7 @@ SteaMiss/
 │   ├── api/               # API 客户端
 │   ├── core/              # 核心功能模块
 │   │   ├── config_manager.py    # 配置管理
-│   │   ├── feature_manager.py  # 功能管理
+│   │   ├── feature_router.py  # 功能管理
 │   │   ├── resource_manager.py # 资源管理
 │   │   └── ui_manager.py        # UI 管理
 │   ├── feature/           # 功能模块

@@ -7,8 +7,8 @@ from .base_builder import BaseMenuBuilder
 class TimerMenuBuilder(BaseMenuBuilder):
     """计时器菜单项构建器"""
     
-    def __init__(self, feature_manager, config_manager, timer_manager):
-        super().__init__(feature_manager, config_manager)
+    def __init__(self, feature_router, config_manager, timer_manager):
+        super().__init__(feature_router, config_manager)
         self.timer_manager = timer_manager
 
     def build(self):

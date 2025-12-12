@@ -14,10 +14,10 @@ class ExitMenuBuilder(BaseMenuBuilder):
         return {
             'key': 'exit',
             'label': '退出',
-            'callback': lambda: self.feature_manager.execute_action("exit"),
+            'callback': lambda: self.feature_router.execute_action("exit"),
             'sub_items': [
-                {'label': '隐藏', 'callback': lambda: self.feature_manager.execute_action("hide_pet")},
-                {'label': topmost_label, 'callback': lambda: self.feature_manager.execute_action("toggle_topmost")},
+                {'label': '隐藏', 'callback': lambda: self.feature_router.execute_action("hide_pet")},
+                {'label': topmost_label, 'callback': lambda: self.feature_router.execute_action("toggle_topmost")},
             ]
         }
 

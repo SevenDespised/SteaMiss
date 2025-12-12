@@ -39,7 +39,7 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
         steam_page_item = {
             'key': 'open_steam_page',
             'label': f'跳转：\n{main_label}',
-            'callback': lambda p=main_page: self.feature_manager.execute_action("open_steam_page", page_type=p)
+            'callback': lambda p=main_page: self.feature_router.execute_action("open_steam_page", page_type=p)
         }
         
         # 构建子选项
@@ -49,7 +49,7 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
             label = self.PAGE_TYPES.get(page, page)
             sub_items.append({
                 'label': label,
-                'callback': lambda p=page: self.feature_manager.execute_action("open_steam_page", page_type=p)
+                'callback': lambda p=page: self.feature_router.execute_action("open_steam_page", page_type=p)
             })
         
         steam_page_item['sub_items'] = sub_items
