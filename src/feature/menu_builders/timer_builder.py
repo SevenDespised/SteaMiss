@@ -26,11 +26,11 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
-                'callback': lambda: self.feature_manager.execute_action("stop_timer"),
+                'callback': lambda: self.timer_manager.stop_and_persist(),
                 'sub_items': [
                     {
                         'label': "暂停\n计时",
-                        'callback': lambda: self.feature_manager.execute_action("pause_timer")
+                        'callback': lambda: self.timer_manager.pause()
                     }
                 ]
             }
@@ -39,11 +39,11 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
-                'callback': lambda: self.feature_manager.execute_action("stop_timer"),
+                'callback': lambda: self.timer_manager.stop_and_persist(),
                 'sub_items': [
                     {
                         'label': "继续\n计时",
-                        'callback': lambda: self.feature_manager.execute_action("resume_timer")
+                        'callback': lambda: self.timer_manager.resume()
                     }
                 ]
             }
@@ -52,5 +52,5 @@ class TimerMenuBuilder(BaseMenuBuilder):
             return {
                 'key': 'timer',
                 'label': "开始\n计时",
-                'callback': lambda: self.feature_manager.execute_action("toggle_timer")
+                'callback': lambda: self.timer_manager.toggle()
             }

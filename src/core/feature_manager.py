@@ -7,11 +7,11 @@ class FeatureManager(QObject):
     request_say_hello = pyqtSignal(str)
     error_occurred = pyqtSignal(str)
 
-    def __init__(self, system_handler, steam_handler, timer_handler, pet_handler):
+    def __init__(self, system_handler, steam_manager, timer_manager, pet_handler):
         super().__init__()
         self.system_handler = system_handler
-        self.steam_handler = steam_handler
-        self.timer_handler = timer_handler
+        self.steam_manager = steam_manager
+        self.timer_manager = timer_manager
         self.pet_handler = pet_handler
         
         self._init_actions()
@@ -24,14 +24,14 @@ class FeatureManager(QObject):
             "exit": self.system_handler.exit_app,
             
             # Steam
-            "launch_game": self.steam_handler.launch_game,
-            "open_steam_page": self.steam_handler.open_steam_page,
+            "launch_game": self.steam_manager.launch_game,
+            "open_steam_page": self.steam_manager.open_page,
             
             # Timer
-            "toggle_timer": self.timer_handler.toggle_timer,
-            "pause_timer": self.timer_handler.pause_timer,
-            "resume_timer": self.timer_handler.resume_timer,
-            "stop_timer": self.timer_handler.stop_timer,
+            "toggle_timer": self.timer_manager.toggle,
+            "pause_timer": self.timer_manager.pause,
+            "resume_timer": self.timer_manager.resume,
+            "stop_timer": self.timer_manager.stop_and_persist,
             
             # Pet (Special handling for signals)
             "say_hello": self._handle_say_hello,

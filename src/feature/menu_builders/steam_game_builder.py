@@ -23,7 +23,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
         item = {
             'key': 'launch_recent',
             'label': f"最近：\n{name}",
-            'callback': lambda: self.feature_manager.execute_action("launch_game", appid=top1['appid'])
+            'callback': lambda: self.steam_manager.launch_game(top1['appid'])
         }
         
         # 如果有更多最近游戏，添加为子选项
@@ -33,7 +33,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
                 sub_name = self._truncate_text(game.get("name", "Unknown"))
                 sub_items.append({
                     'label': sub_name,
-                    'callback': lambda g=game: self.feature_manager.execute_action("launch_game", appid=g['appid'])
+                    'callback': lambda g=game: self.steam_manager.launch_game(g['appid'])
                 })
             item['sub_items'] = sub_items
         

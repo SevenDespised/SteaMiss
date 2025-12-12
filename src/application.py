@@ -15,8 +15,8 @@ from src.ui.window_factory import WindowFactory
 from src.ui.tray_manager import TrayManager
 
 from src.feature.handlers.system_handler import SystemFeatureHandler
-from src.feature.handlers.steam_handler import SteamFeatureHandler
-from src.feature.handlers.timer_handler import TimerFeatureHandler
+# from src.feature.handlers.steam_handler import SteamFeatureHandler
+# from src.feature.handlers.timer_handler import TimerFeatureHandler
 from src.feature.handlers.pet_handler import PetFeatureHandler
 
 class SteaMissApp:
@@ -32,14 +32,14 @@ class SteaMissApp:
         
         # 初始化 Feature Handlers
         self.system_handler = SystemFeatureHandler(self.config_manager)
-        self.steam_handler = SteamFeatureHandler(self.steam_manager)
-        self.timer_handler = TimerFeatureHandler(self.timer_manager)
+        # self.steam_handler = SteamFeatureHandler(self.steam_manager) # Removed
+        # self.timer_handler = TimerFeatureHandler(self.timer_manager) # Removed
         self.pet_handler = PetFeatureHandler(self.config_manager)
         
         self.feature_manager = FeatureManager(
             self.system_handler,
-            self.steam_handler,
-            self.timer_handler,
+            self.steam_manager,
+            self.timer_manager,
             self.pet_handler
         )
         
