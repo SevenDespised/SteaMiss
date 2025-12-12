@@ -91,17 +91,15 @@ class StatsWindow(QWidget):
             self.tabs.addTab(tab_info["widget"], entry["label"])
 
     def open_all_games_window(self):
-        # 此方法已废弃，改用信号 request_open_all_games
-        pass
+
 
 
     def open_all_games_window(self):
-        if not self.steam_manager: return
-        # 注意：这里 AllGamesWindow 是 QDialog，如果 StatsWindow 是 QWidget，
-        # 我们可能希望它是非模态的，或者模态的。
-        # 这里保持原样，作为独立窗口打开
-        self.all_games_win = AllGamesWindow(self.steam_manager)
-        self.all_games_win.show()
+        #if not self.steam_manager: return
+        #self.all_games_win = AllGamesWindow(self.steam_manager)
+        #self.all_games_win.show()
+        # 此方法已废弃，改用信号 request_open_all_games
+        pass
 
     def _build_stats_tab(self, include_summary):
         tab = QWidget()
