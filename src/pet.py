@@ -10,8 +10,12 @@ class DesktopPet(QWidget):
     # 定义信号，用于通知状态变化
     visibility_changed = pyqtSignal(bool)
     topmost_changed = pyqtSignal(bool)
+    
+    # 交互信号
+    right_clicked = pyqtSignal(QPoint)
+    double_clicked = pyqtSignal()
 
-    def __init__(self, behavior_manager, resource_manager, ui_manager, timer_manager, feature_manager, timer_overlay):
+    def __init__(self, behavior_manager, resource_manager, timer_overlay):
         super().__init__()
         
         # 1. 初始化窗口属性
@@ -24,18 +28,7 @@ class DesktopPet(QWidget):
         # 3. 注入依赖
         self.behavior_manager = behavior_manager
         self.resource_manager = resource_manager
-        self.ui_manager = ui_manager
-        self.timer_manager = timer_manager
-        self.feature_manager = feature_manager
         self.timer_overlay = timer_overlay
-        
-        # 初始化计时器绘制器
-        # self.timer_overlay = TimerOverlay(self.timer_manager)
-        # TODO: 应该通过依赖注入获取 TimerOverlay，目前暂时保留，等待进一步重构
-        # self.timer_overlay = TimerOverlay(self.timer_manager)
-        
-        # 连接 UI 管理器信号
-        self.ui_manager.menu_hovered_changed.connect(self.on_menu_hover_changed)
         
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle" # 当前行为状态
@@ -159,8 +152,7 @@ class DesktopPet(QWidget):
         预留给：快速启动器、搜索框、或者唤醒功能
         """
         if event.button() == Qt.MouseButton.LeftButton:
-            print("双击触发：可以在这里打开搜索框或启动器")
-            # self.feature_manager.open_tool("launcher")
+            self.double_clicked.emit()
             event.accept()
 
     def contextMenuEvent(self, event):
@@ -169,9 +161,7 @@ class DesktopPet(QWidget):
         """
         # 使用窗口中心作为菜单中心，确保宠物在圆环正中央
         center_pos = self.mapToGlobal(self.rect().center())
-        
-        # 委托给 UI Manager 处理交互逻辑
-        self.ui_manager.handle_right_click(center_pos)
+        self.right_clicked.emit(center_pos)
 
     def on_menu_hover_changed(self, index):
         """

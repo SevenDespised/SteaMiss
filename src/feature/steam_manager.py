@@ -265,7 +265,8 @@ class SteamManager(QObject):
         self._ensure_aggregated_cache()
 
         aggregated = self.cache.get("games")
-        if aggregated:
+        # 只要 aggregated 不是 None，就显示总计（即使是空数据）
+        if aggregated is not None:
             datasets.append({
                 "key": "total",
                 "label": "总计",
@@ -314,8 +315,9 @@ class SteamManager(QObject):
         """
         如果缓存中没有聚合数据，尝试从现有的账号数据中聚合
         """
-        if self.cache.get("games"):
-            return
+        # 移除直接返回的逻辑，强制检查并聚合，确保数据一致性
+        # if self.cache.get("games"):
+        #     return
 
         accounts = self.cache.get("games_accounts", {})
         if not accounts:

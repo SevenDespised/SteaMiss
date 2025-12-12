@@ -9,14 +9,16 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QTabWidget,
 )
-from PyQt6.QtCore import Qt
-from src.ui.all_games_window import AllGamesWindow
+from PyQt6.QtCore import Qt, pyqtSignal
 import datetime
 
 class StatsWindow(QWidget):
-    def __init__(self, steam_manager):
+    # 定义信号
+    request_refresh = pyqtSignal()
+    request_open_all_games = pyqtSignal()
+
+    def __init__(self):
         super().__init__()
-        self.steam_manager = steam_manager
         self.setWindowTitle("游玩记录")
         self.resize(500, 600)
         
@@ -28,11 +30,11 @@ class StatsWindow(QWidget):
         # 4. 按钮
         btn_layout = QHBoxLayout()
         self.btn_refresh = QPushButton("刷新数据")
-        self.btn_refresh.clicked.connect(self.refresh_stats)
+        self.btn_refresh.clicked.connect(self._on_refresh_clicked)
         btn_layout.addWidget(self.btn_refresh)
         
         self.btn_all_games = QPushButton("查看所有库存游戏 & 价值统计")
-        self.btn_all_games.clicked.connect(self.open_all_games_window)
+        self.btn_all_games.clicked.connect(self.request_open_all_games.emit)
         btn_layout.addWidget(self.btn_all_games)
         
         layout.addLayout(btn_layout)
@@ -40,42 +42,32 @@ class StatsWindow(QWidget):
         layout.addStretch()
         self.setLayout(layout)
         
-        # 连接信号
-        if self.steam_manager:
-            self.steam_manager.on_player_summary.connect(self.update_stats_ui)
-            self.steam_manager.on_games_stats.connect(self.update_stats_ui)
-            
-        # 初始化显示
-        self.update_stats_ui()
+        # 初始化显示空状态
+        self.update_data([], {}, {})
 
-    def showEvent(self, event):
-        super().showEvent(event)
-        self.update_stats_ui()
-
-    def refresh_stats(self):
-        """手动刷新统计数据"""
-        if not self.steam_manager: return
+    def _on_refresh_clicked(self):
         self.btn_refresh.setEnabled(False)
         self.btn_refresh.setText("刷新中...")
-        self.steam_manager.fetch_player_summary()
-        self.steam_manager.fetch_games_stats()
+        self.request_refresh.emit()
         
+        # 简单的 UI 恢复逻辑，实际应该由外部控制或通过回调
         from PyQt6.QtCore import QTimer
         QTimer.singleShot(3000, lambda: self.btn_refresh.setEnabled(True))
         QTimer.singleShot(3000, lambda: self.btn_refresh.setText("刷新数据"))
 
-    def update_stats_ui(self):
-        if not self.steam_manager: return
-        datasets = self.steam_manager.get_game_datasets()
-
+    def update_data(self, datasets, fallback_summary, config):
+        """
+        更新 UI 数据
+        :param datasets: 游戏数据集列表
+        :param fallback_summary: 默认的玩家信息摘要
+        :param config: 配置信息 (用于获取 steam_id)
+        """
         self.tabs.clear()
 
         if not datasets:
             empty_tab = self._build_empty_tab()
             self.tabs.addTab(empty_tab, "总计")
             return
-
-        fallback_summary = self.steam_manager.cache.get("summary") if self.steam_manager.cache else None
 
         for entry in datasets:
             summary_obj = entry.get("summary")
@@ -88,7 +80,7 @@ class StatsWindow(QWidget):
             include_summary = entry.get("key") != "total" or summary_obj is not None
             steam_id_value = entry.get("steam_id")
             if steam_id_value is None and entry.get("key") == "total":
-                steam_id_value = self.steam_manager.config.get("steam_id")
+                steam_id_value = config.get("steam_id")
             tab_info = self._build_stats_tab(include_summary)
             self._apply_dataset_to_tab(
                 tab_info,
@@ -97,6 +89,11 @@ class StatsWindow(QWidget):
                 steam_id_value,
             )
             self.tabs.addTab(tab_info["widget"], entry["label"])
+
+    def open_all_games_window(self):
+        # 此方法已废弃，改用信号 request_open_all_games
+        pass
+
 
     def open_all_games_window(self):
         if not self.steam_manager: return

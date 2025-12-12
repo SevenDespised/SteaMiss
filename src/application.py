@@ -72,9 +72,6 @@ class SteaMissApp:
         self.pet = DesktopPet(
             behavior_manager=self.behavior_manager,
             resource_manager=self.resource_manager,
-            ui_manager=self.ui_manager,
-            timer_manager=self.timer_manager,
-            feature_manager=self.feature_manager,
             timer_overlay=self.timer_overlay
         )
         
@@ -90,6 +87,11 @@ class SteaMissApp:
         # 6. 连接信号以同步状态
         self.pet.visibility_changed.connect(self.tray_manager.update_visibility_text)
         self.pet.topmost_changed.connect(self.tray_manager.update_topmost_text)
+        
+        # 连接宠物交互信号
+        self.pet.right_clicked.connect(self.ui_manager.handle_right_click)
+        self.pet.double_clicked.connect(lambda: self.feature_manager.execute_action("say_hello"))
+        self.ui_manager.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
         
         # 连接 TrayManager 的请求信号
         self.tray_manager.request_toggle_visibility.connect(self.toggle_pet_visibility)

@@ -35,8 +35,6 @@ class UIManager(QObject):
         
         self.settings_dialog = None
         self.active_tools = {}
-        # self.tray_icon = None # 移至 TrayManager
-        # self.pet = None # 移除直接依赖
         self.app = None
         
     def open_settings(self):
@@ -64,6 +62,10 @@ class UIManager(QObject):
         new_tool = None
         if tool_name == "stats":
             new_tool = self.window_factory.create_stats_window()
+            # 连接 StatsWindow 的跳转信号
+            new_tool.request_open_all_games.connect(lambda: self.open_tool("all_games"))
+        elif tool_name == "all_games":
+            new_tool = self.window_factory.create_all_games_window()
         elif tool_name == "discounts":
             new_tool = self.window_factory.create_discount_window()
             
