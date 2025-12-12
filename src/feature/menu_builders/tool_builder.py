@@ -22,7 +22,7 @@ class ToolMenuBuilder(BaseMenuBuilder):
                 {
                     'key': 'achievements',
                     'label': '成就\n总览',
-                    'callback': lambda: print('pass')
+                    'callback': lambda: self.feature_manager.open_tool("achievements")
                 }
             ]
         }

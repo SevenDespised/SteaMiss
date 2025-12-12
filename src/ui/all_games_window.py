@@ -1,96 +1,42 @@
 from PyQt6.QtWidgets import (
-    QDialog,
-    QVBoxLayout,
-    QTableWidget,
     QTableWidgetItem,
     QHeaderView,
-    QLabel,
-    QHBoxLayout,
     QPushButton,
-    QWidget,
-    QTabWidget,
 )
 from PyQt6.QtCore import Qt, pyqtSignal
+from src.ui.base_game_list_window import BaseGameListWindow
 
-
-class AllGamesWindow(QDialog):
+class AllGamesWindow(BaseGameListWindow):
     request_fetch_prices = pyqtSignal(list)
 
     def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("所有游戏统计")
-        self.resize(820, 620)
-
-        self.dataset_tabs = []
-        self.current_datasets = []
+        super().__init__("所有游戏统计", parent)
+        
         self.current_prices = {}
 
-        layout = QVBoxLayout()
-
-        self.tabs = QTabWidget()
-        layout.addWidget(self.tabs)
-
-        btn_layout = QHBoxLayout()
         self.calc_price_btn = QPushButton("计算当前标签页未获取的游戏价格")
         self.calc_price_btn.clicked.connect(self.calculate_prices)
-        btn_layout.addWidget(self.calc_price_btn)
-        btn_layout.addStretch()
-        layout.addLayout(btn_layout)
-
-        self.setLayout(layout)
+        self.toolbar_layout.addWidget(self.calc_price_btn)
+        self.toolbar_layout.addStretch()
         
         # 初始化空状态
-        self.update_data([], {})
+        self.update_data([])
 
-    def update_data(self, datasets, prices):
-        self.current_datasets = datasets
-        self.current_prices = prices
-        self.refresh_tabs()
+    def on_data_updated(self, **kwargs):
+        self.current_prices = kwargs.get("prices", {})
 
-    def refresh_tabs(self):
-        self.tabs.clear()
-        self.dataset_tabs = []
-
-        if not self.current_datasets:
-            placeholder = QWidget()
-            ph_layout = QVBoxLayout()
-            msg = QLabel("暂无数据，请先刷新 Steam 统计。")
-            msg.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            ph_layout.addStretch()
-            ph_layout.addWidget(msg)
-            ph_layout.addStretch()
-            placeholder.setLayout(ph_layout)
-            self.tabs.addTab(placeholder, "总计")
-            self.calc_price_btn.setEnabled(False)
-            return
-
+    def on_tabs_refresh_start(self):
         self.calc_price_btn.setEnabled(True)
 
-        for entry in self.current_datasets:
-            tab_widget = QWidget()
-            tab_layout = QVBoxLayout()
+    def show_empty_state(self):
+        super().show_empty_state()
+        self.calc_price_btn.setEnabled(False)
 
-            stats_label = QLabel("正在加载数据...")
-            tab_layout.addWidget(stats_label)
-
-            table = QTableWidget()
-            table.setColumnCount(4)
-            table.setHorizontalHeaderLabels(["游戏名称", "AppID", "总游玩时长 (小时)", "当前价格 (CNY)"])
-            table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
-            table.setSortingEnabled(True)
-            tab_layout.addWidget(table)
-
-            tab_widget.setLayout(tab_layout)
-            self.tabs.addTab(tab_widget, entry["label"])
-
-            tab_info = {
-                "entry": entry,
-                "widget": tab_widget,
-                "stats_label": stats_label,
-                "table": table,
-            }
-            self.dataset_tabs.append(tab_info)
-            self.populate_tab(tab_info)
+    def setup_table(self, table):
+        table.setColumnCount(4)
+        table.setHorizontalHeaderLabels(["游戏名称", "AppID", "总游玩时长 (小时)", "当前价格 (CNY)"])
+        table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        table.setSortingEnabled(True)
 
     def populate_tab(self, tab_info):
         entry = tab_info["entry"]
@@ -103,7 +49,6 @@ class AllGamesWindow(QDialog):
         table.clearContents()
 
         total_playtime = 0
-
         total_price = 0
         price_count = 0
 
@@ -161,7 +106,11 @@ class AllGamesWindow(QDialog):
             tab_info["stats_label"].setText("当前标签页没有可统计的游戏。")
             return
 
-        prices = self.steam_manager.cache.get("prices", {})
+        # 注意：这里不再直接访问 steam_manager，而是依赖 current_prices
+        # 但 calculate_prices 需要知道哪些价格缺失。
+        # current_prices 应该包含所有已知的价格。
+        
+        prices = self.current_prices
         to_fetch = []
         limit = 50
         for game in games:
@@ -177,5 +126,4 @@ class AllGamesWindow(QDialog):
         else:
             tab_info["stats_label"].setText("所有游戏价格已获取或已达到本标签页的限制。")
 
-    # update_prices 和 on_games_stats_updated 已被 update_data 替代，移除
 

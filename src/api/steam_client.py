@@ -100,6 +100,27 @@ class SteamClient:
         except Exception as e:
             print(f"Steam Store API Error: {e}")
             return {}
+
+    def get_player_achievements(self, steam_id, app_id):
+        """
+        获取玩家在特定游戏的成就统计
+        调用 ISteamUserStats.GetPlayerAchievements
+        """
+        self._ensure_api()
+        if not self.api: return None
+        
+        try:
+            # 注意：GetPlayerAchievements 需要游戏有成就系统，否则可能报错或返回空
+            response = self.api.ISteamUserStats.GetPlayerAchievements(
+                steamid=steam_id,
+                appid=app_id,
+                l='schinese'
+            )
+            return response.get('playerstats', {})
+        except Exception as e:
+            # 很多游戏没有成就，或者 API 调用失败是正常的
+            # print(f"Steam API Error (GetPlayerAchievements {app_id}): {e}")
+            return None
             
     def get_all_apps(self, include_games=True, include_dlc=False, include_software=False, 
                      include_videos=False, include_hardware=False, if_modified_since=None, max_results=50000):

@@ -113,6 +113,28 @@ class SteamWorker(QThread):
                     "games": games_payload,
                 }
 
+            elif self.task_type == "achievements":
+                appids = self.extra_data
+                if appids:
+                    achievements_data = {}
+                    for appid in appids:
+                        stats = self.client.get_player_achievements(self.steam_id, appid)
+                        if stats and "achievements" in stats:
+                            ach_list = stats["achievements"]
+                            total = len(ach_list)
+                            unlocked = sum(1 for a in ach_list if a.get("achieved") == 1)
+                            achievements_data[str(appid)] = {
+                                "total": total,
+                                "unlocked": unlocked
+                            }
+                        else:
+                            # 标记为无成就或获取失败
+                            achievements_data[str(appid)] = {"total": 0, "unlocked": 0}
+                        
+                        # 简单的限流
+                        time.sleep(0.1)
+                    result["data"] = achievements_data
+
         except Exception as e:
             result["error"] = str(e)
             print(f"Worker Error: {e}")

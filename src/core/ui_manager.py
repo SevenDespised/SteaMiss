@@ -68,6 +68,8 @@ class UIManager(QObject):
             new_tool = self.window_factory.create_all_games_window()
         elif tool_name == "discounts":
             new_tool = self.window_factory.create_discount_window()
+        elif tool_name == "achievements":
+            new_tool = self.window_factory.create_achievement_window()
             
         if new_tool:
             self.active_tools[tool_name] = new_tool

@@ -2,6 +2,7 @@ from src.ui.settings_dialog import SettingsDialog
 from src.ui.stats_window import StatsWindow
 from src.ui.discount_window import DiscountWindow
 from src.ui.all_games_window import AllGamesWindow
+from src.ui.achievement_window import AchievementWindow
 
 class WindowFactory:
     """
@@ -36,16 +37,6 @@ class WindowFactory:
                 # 我们可以在这里连接一次性信号，或者让 UI 显示“正在更新”
                 # 为了简单，我们先返回空，并触发更新
                 self.steam_manager.fetch_games_stats()
-                
-                # 定义一个临时回调，当数据更新时再次搜索
-                # 注意：这可能会有内存泄漏风险如果信号没断开，
-                # 但由于 WindowFactory 是长生命周期，且这里是闭包，
-                # 我们需要小心。
-                # 更好的做法是让 SteamManager 有一个 search_async 方法，
-                # 或者让 UI 监听 on_games_stats。
-                # 这里我们采用简单策略：让 UI 知道没搜到，UI 自己决定是否提示用户等待
-                pass
-            
             window.update_search_results(results)
             
         # 为了支持“更新后自动刷新搜索结果”，我们需要让 Window 也能响应数据更新
@@ -60,12 +51,9 @@ class WindowFactory:
             # 简单起见，我们只处理同步搜索。如果需要异步更新后搜索，
             # 用户可以再次点击搜索按钮。
             pass
-
         window.request_search_games.connect(handle_search)
-        
         # 额外：如果 Steam 数据更新了，可能需要刷新搜索结果（如果用户正在搜索）
         # 这里为了简化，暂不自动刷新搜索结果，依靠用户手动重试。
-        
         return window
 
     def create_stats_window(self):
@@ -97,7 +85,7 @@ class WindowFactory:
         def update_window_data():
             datasets = self.steam_manager.get_game_datasets()
             prices = self.steam_manager.cache.get("prices", {})
-            window.update_data(datasets, prices)
+            window.update_data(datasets, prices=prices)
             
         # 连接数据源信号
         self.steam_manager.on_games_stats.connect(update_window_data)
@@ -105,6 +93,26 @@ class WindowFactory:
         
         # 连接 UI 请求
         window.request_fetch_prices.connect(self.steam_manager.fetch_store_prices)
+        
+        # 初始加载
+        update_window_data()
+        
+        return window
+
+    def create_achievement_window(self):
+        window = AchievementWindow()
+        
+        def update_window_data():
+            datasets = self.steam_manager.get_game_datasets()
+            achievements = self.steam_manager.cache.get("achievements", {})
+            window.update_data(datasets, achievements=achievements)
+            
+        # 连接数据源信号
+        self.steam_manager.on_games_stats.connect(update_window_data)
+        self.steam_manager.on_achievements_data.connect(update_window_data)
+        
+        # 连接 UI 请求
+        window.request_fetch_achievements.connect(self.steam_manager.fetch_achievements)
         
         # 初始加载
         update_window_data()

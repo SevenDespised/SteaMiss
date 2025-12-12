@@ -1,6 +1,9 @@
 from PyQt6.QtCore import QObject, pyqtSignal
-from src.feature.steam_support.steam_worker import SteamWorker
+# from src.feature.steam_support.steam_worker import SteamWorker
 from src.feature.steam_support.steam_aggregator import GamesAggregator, merge_games
+from src.feature.steam_support.steam_launcher import SteamLauncher
+from src.feature.steam_support.steam_repository import SteamRepository
+from src.feature.steam_support.steam_service import SteamService
 import json
 import os
 
@@ -14,18 +17,27 @@ class SteamManager(QObject):
     on_games_stats = pyqtSignal(dict)
     on_store_prices = pyqtSignal(dict) # 商店价格信号
     on_wishlist_data = pyqtSignal(list) # 愿望单数据信号
+    on_achievements_data = pyqtSignal(dict) # 成就数据信号
     on_error = pyqtSignal(str)
 
     def __init__(self, config_manager):
         super().__init__()
         self.config = config_manager
         self.cache = {}
-        self.worker = None
-        self.data_file = "config/steam_data.json"
+        # self.worker = None
+        # self.data_file = "config/steam_data.json" # 移至 Repository
         self.games_aggregator = GamesAggregator()
+        self.launcher = SteamLauncher()
+        self.repository = SteamRepository()
+        self.service = SteamService()
+        
+        # 连接 Launcher 错误信号
+        self.launcher.error_occurred.connect(self.on_error.emit)
+        self.repository.error_occurred.connect(self.on_error.emit)
+        self.service.task_finished.connect(self._handle_worker_result)
         
         # 1. 加载本地数据
-        self.load_local_data()
+        self.cache = self.repository.load_data()
         
         # 2. 如果配置齐全，尝试自动更新
         key, sid = self._get_primary_credentials()
@@ -34,27 +46,6 @@ class SteamManager(QObject):
             # 这里直接调用，因为 Worker 是异步的
             self.fetch_games_stats()
             self.fetch_player_summary()
-
-    def load_local_data(self):
-        """加载本地缓存数据"""
-        if os.path.exists(self.data_file):
-            try:
-                with open(self.data_file, 'r', encoding='utf-8') as f:
-                    self.cache = json.load(f)
-                print(f"Loaded local steam data from {self.data_file}")
-            except Exception as e:
-                print(f"Failed to load local steam data: {e}")
-
-    def save_local_data(self):
-        """保存缓存数据到本地"""
-        try:
-            # 确保目录存在
-            os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
-            with open(self.data_file, 'w', encoding='utf-8') as f:
-                json.dump(self.cache, f, ensure_ascii=False, indent=2)
-            print(f"Saved steam data to {self.data_file}")
-        except Exception as e:
-            print(f"Failed to save local steam data: {e}")
 
     def _get_primary_credentials(self):
         key = self.config.get("steam_api_key")
@@ -81,7 +72,7 @@ class SteamManager(QObject):
         key, sid = self._get_primary_credentials()
         if not key or not sid:
             return
-        self._start_worker(key, sid, "summary")
+        self.service.start_task(key, sid, "summary")
 
     def fetch_games_stats(self):
         """异步获取游戏统计"""
@@ -94,21 +85,28 @@ class SteamManager(QObject):
         self.games_aggregator.begin(ids, primary_id)
 
         for sid in ids:
-            self._start_worker(key, sid, "profile_and_games", steam_id=sid)
+            self.service.start_task(key, sid, "profile_and_games", steam_id=sid)
 
     def fetch_store_prices(self, appids):
         """异步获取游戏价格"""
         key, sid = self._get_primary_credentials()
         if not key or not sid:
             return
-        self._start_worker(key, sid, "store_prices", extra_data=appids)
+        self.service.start_task(key, sid, "store_prices", extra_data=appids)
 
     def fetch_wishlist(self):
         """异步获取愿望单折扣"""
         key, sid = self._get_primary_credentials()
         if not key or not sid:
             return
-        self._start_worker(key, sid, "wishlist")
+        self.service.start_task(key, sid, "wishlist")
+
+    def fetch_achievements(self, appids):
+        """异步获取游戏成就统计"""
+        key, sid = self._get_primary_credentials()
+        if not key or not sid:
+            return
+        self.service.start_task(key, sid, "achievements", extra_data=appids)
 
     def get_recent_game(self):
         """从缓存中获取最近游玩的游戏"""
@@ -149,31 +147,7 @@ class SteamManager(QObject):
                 results.append(game)
         return results
 
-    def _start_worker(self, key, sid, task_type, extra_data=None, steam_id=None):
-        # 简单的任务队列机制
-        # 如果当前有 worker 在运行，我们不能直接 return，否则并发请求会丢失
-        # 这里我们简单地创建新的 worker 实例来处理并发请求
-        # 注意：这可能会导致多个线程同时运行，对于简单的应用是可以接受的
-        # 更好的做法是实现一个任务队列，但为了保持代码简单，我们允许并发
-        
-        worker = SteamWorker(key, steam_id or sid, task_type, extra_data)
-        worker.data_ready.connect(self._handle_worker_result)
-        
-        # 我们需要保持对 worker 的引用，防止被垃圾回收
-        # 可以使用一个列表来管理所有活跃的 worker
-        if not hasattr(self, 'active_workers'):
-            self.active_workers = []
-            
-        self.active_workers.append(worker)
-        
-        # 当 worker 完成时，从列表中移除
-        worker.finished.connect(lambda: self._cleanup_worker(worker))
-        
-        worker.start()
 
-    def _cleanup_worker(self, worker):
-        if hasattr(self, 'active_workers') and worker in self.active_workers:
-            self.active_workers.remove(worker)
 
     def _handle_worker_result(self, result):
         if result["error"]:
@@ -223,10 +197,15 @@ class SteamManager(QObject):
         elif task_type == "wishlist":
             self.cache["wishlist"] = data
             self.on_wishlist_data.emit(data)
+        elif task_type == "achievements":
+            if "achievements" not in self.cache:
+                self.cache["achievements"] = {}
+            self.cache["achievements"].update(data)
+            self.on_achievements_data.emit(data)
             
         # 每次更新成功后，保存到本地
         if task_type != "games":
-            self.save_local_data()
+            self.repository.save_data(self.cache)
 
     def _finalize_games_results(self):
         primary_data, aggregated, account_map = self.games_aggregator.finalize()
@@ -247,7 +226,7 @@ class SteamManager(QObject):
         if aggregated:
             self.cache["games"] = aggregated
             self.on_games_stats.emit(aggregated)
-            self.save_local_data()
+            self.repository.save_data(self.cache)
 
     def get_game_datasets(self):
         datasets = []
@@ -344,3 +323,15 @@ class SteamManager(QObject):
         if "games" in self.cache:
             return self.cache["games"]
         return None
+
+    def launch_game(self, appid):
+        """启动 Steam 游戏"""
+        self.launcher.launch_game(appid)
+
+    def open_page(self, page_type):
+        """
+        打开 Steam 页面
+        page_type: 'library', 'community', 'store', 'workshop', 'profile', 'downloads', 'settings'
+        """
+        self.launcher.open_page(page_type)
+
