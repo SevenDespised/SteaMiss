@@ -26,7 +26,3 @@ class ToolMenuBuilder(BaseMenuBuilder):
                 }
             ]
         }
-    
-    def build_discounts_item(self):
-        """构建特惠推荐菜单项 - 已移入游玩记录子菜单"""
-        return None

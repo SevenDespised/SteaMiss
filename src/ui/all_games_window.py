@@ -106,7 +106,7 @@ class AllGamesWindow(BaseGameListWindow):
             tab_info["stats_label"].setText("当前标签页没有可统计的游戏。")
             return
 
-        # 注意：这里不再直接访问 steam_manager，而是依赖 current_prices
+        # 注意：这里不再直接访问 steam manager，而是依赖 current_prices
         # 但 calculate_prices 需要知道哪些价格缺失。
         # current_prices 应该包含所有已知的价格。
         

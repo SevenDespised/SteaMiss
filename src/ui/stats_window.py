@@ -90,13 +90,6 @@ class StatsWindow(QWidget):
             )
             self.tabs.addTab(tab_info["widget"], entry["label"])
 
-    def open_all_games_window(self):
-        #if not self.steam_manager: return
-        #self.all_games_win = AllGamesWindow(self.steam_manager)
-        #self.all_games_win.show()
-        # 此方法已废弃，改用信号 request_open_all_games
-        pass
-
     def _build_stats_tab(self, include_summary):
         tab = QWidget()
         layout = QVBoxLayout()

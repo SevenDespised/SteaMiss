@@ -32,8 +32,6 @@ class SteaMissApp:
         
         # 初始化 Feature Handlers
         self.system_handler = SystemFeatureHandler(self.config_manager)
-        # self.steam_handler = SteamFeatureHandler(self.steam_manager) # Removed
-        # self.timer_handler = TimerFeatureHandler(self.timer_manager) # Removed
         self.pet_handler = PetFeatureHandler(self.config_manager)
         
         self.feature_router = FeatureRouter(
@@ -73,23 +71,17 @@ class SteaMissApp:
         # 初始化 TimerOverlay (View Helper)
         self.timer_overlay = TimerOverlay(self.timer_handler)
 
-        # 2. 初始化核心组件 (注入依赖)
+        # 初始化核心组件 (注入依赖)
         self.pet = DesktopPet(
             behavior_manager=self.behavior_manager,
             resource_manager=self.resource_manager,
             timer_overlay=self.timer_overlay
         )
         
-        # 3. 初始化 UI 组件引用
-        # self.tray_icon = None # 移至 UIManager
-        
-        # 4. 设置托盘
-        # self.ui_manager.setup_tray(self.app) # 移至 TrayManager
-        
-        # 5. 显示宠物
+        # 显示宠物
         self.pet.show()
         
-        # 6. 连接信号以同步状态
+        # 连接信号以同步状态
         self.pet.visibility_changed.connect(self.tray_manager.update_visibility_text)
         self.pet.topmost_changed.connect(self.tray_manager.update_topmost_text)
         
@@ -105,7 +97,7 @@ class SteaMissApp:
         self.tray_manager.request_quit_app.connect(self.quit_app)
         self.tray_manager.request_activate_pet.connect(self.activate_pet)
         
-        # 7. 连接 FeatureRouter 信号
+        # 连接 FeatureRouter 信号
         self.feature_router.request_open_tool.connect(self.ui_manager.open_tool)
         self.feature_router.request_hide_pet.connect(self.toggle_pet_visibility)
         self.feature_router.request_toggle_topmost.connect(self.pet.toggle_topmost)

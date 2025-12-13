@@ -1,6 +1,12 @@
 feat：steam小号支持
 feat: 常用网站启动
 refa: window factory解耦
+refa: window 抽象
+refa: window factory 的 window 和 window api manager （steam service manager）交互（通过ui manager？）
+refa：ui manager 换成直接调用工厂的创建方法，工厂来枚举窗口。窗口设置一个基类。（x）窗口的信号发射逻辑都集中给ui manager 
+refa：steam manager 切分成steam handler(给feature用)和 steam service manager
+
+doc： 画一下结构图，重要！
 style: 
 
 view
@@ -10,17 +16,19 @@ view
                 -timer display
                 -timer logic
 ui_core
-        -ui manager   
+        -ui manager  (废弃,拆分成下面3个handler) 
         -ui handlers
                 -tray handler
+                -window handler
+                -radial handler
         -ratial composer
                 -menu composer
                 -menu builders
 feature_core
-        -steam manager
+        -steam service manager
         -feature router
         -feature handlers
-                -
+                -steam_handler
         -steam support
                 -steam client
 storage
