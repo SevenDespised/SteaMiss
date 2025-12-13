@@ -23,6 +23,7 @@ class TimerHandler:
         self.config_manager = config_manager
         self.notifier = notifier
         self.reminder_settings = self._load_reminder_settings()
+        self.reminder_presets = self._load_presets()
 
         # 提醒调度状态
         self._next_remind_at = None
@@ -38,6 +39,10 @@ class TimerHandler:
         self._auto_resume_timer = QTimer()
         self._auto_resume_timer.setSingleShot(True)
         self._auto_resume_timer.timeout.connect(self._auto_resume)
+
+    def __del__(self):
+        """析构时确保内部定时器停止，避免悬挂任务。"""
+        self.shutdown()
 
     def set_notifier(self, notifier):
         """
@@ -159,6 +164,32 @@ class TimerHandler:
         """获取当前提醒设置的副本"""
         return dict(self.reminder_settings)
 
+    # 预设管理
+    def get_presets(self):
+        return list(self.reminder_presets)
+
+    def save_preset(self, name, preset_data):
+        if not self.config_manager:
+            return
+        presets = [p for p in self.reminder_presets if p.get("name") != name]
+        presets.append({"name": name, **preset_data})
+        self.reminder_presets = presets
+        self._save_presets()
+
+    def delete_preset(self, name):
+        """按名称删除预设"""
+        presets = [p for p in self.reminder_presets if p.get("name") != name]
+        if len(presets) == len(self.reminder_presets):
+            return
+        self.reminder_presets = presets
+        self._save_presets()
+
+    def load_preset(self, name):
+        for p in self.reminder_presets:
+            if p.get("name") == name:
+                return dict(p)
+        return None
+
     # --- 内部：提醒与结束调度 ---
     def _load_reminder_settings(self):
         settings = dict(self.DEFAULT_REMINDER_SETTINGS)
@@ -172,10 +203,19 @@ class TimerHandler:
                 })
         return settings
 
+    def _load_presets(self):
+        if self.config_manager:
+            presets = self.config_manager.get("timer_reminder_presets", [])
+            if isinstance(presets, list):
+                return presets
+        return []
+
     def _save_reminder_settings(self):
         if not self.config_manager:
             return
         self.config_manager.set("timer_reminder", dict(self.reminder_settings))
+        # 同步保存预设列表
+        self._save_presets()
 
     def _sync_next_reminder(self):
         """根据当前累计时间和配置计算下一次提醒时刻"""
@@ -254,3 +294,21 @@ class TimerHandler:
         self._next_remind_at = None
         self._auto_resume_timer.stop()
         self._auto_paused = False
+
+    def shutdown(self):
+        """停止内部 Qt 定时器，释放资源。"""
+        try:
+            if self._tick_timer.isActive():
+                self._tick_timer.stop()
+        except Exception:
+            pass
+        try:
+            if self._auto_resume_timer.isActive():
+                self._auto_resume_timer.stop()
+        except Exception:
+            pass
+
+    def _save_presets(self):
+        if not self.config_manager:
+            return
+        self.config_manager.set("timer_reminder_presets", list(self.reminder_presets))

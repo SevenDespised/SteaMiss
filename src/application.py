@@ -66,6 +66,8 @@ class SteaMissApp:
         self.tray_manager = TrayManager(self.app)
         # 将托盘提醒作为计时提醒通知器
         self.timer_handler.set_notifier(self.tray_manager.show_message)
+        # 退出时关闭计时器内部 Qt 定时器
+        self.app.aboutToQuit.connect(self.timer_handler.shutdown)
 
         # 初始化 TimerOverlay (View Helper)
         self.timer_overlay = TimerOverlay(self.timer_handler)

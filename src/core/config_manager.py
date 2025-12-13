@@ -10,7 +10,8 @@ class ConfigManager:
             "steam_api_key": "",
             "steam_id": "",
             "steam_alt_ids": [],
-            "timer_reminder": {}
+            "timer_reminder": {},
+            "timer_reminder_presets": []
         }
         self.load_config()
 
