@@ -8,7 +8,7 @@ from src.ui.timer_display import TimerDisplay
 class TimerOverlay:
     """负责在给定区域内绘制计时器，解耦宠物窗口与计时器绘制细节。"""
 
-    def __init__(self, timer_handler, display: TimerDisplay | None = None, margin: int = 5):
+    def __init__(self, timer_handler: TimerHandler, display: TimerDisplay | None = None, margin: int = 5):
         self.timer_handler = timer_handler
         self.display = display or TimerDisplay()
         self.margin = margin
