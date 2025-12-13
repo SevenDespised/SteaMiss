@@ -1,7 +1,9 @@
 """
 计时器菜单项构建器
 """
+from PyQt6.QtWidgets import QApplication
 from .base_builder import BaseMenuBuilder
+from src.ui.reminder_settings_dialog import ReminderSettingsDialog
 
 
 class TimerMenuBuilder(BaseMenuBuilder):
@@ -22,7 +24,7 @@ class TimerMenuBuilder(BaseMenuBuilder):
             }
         
         if tm.is_running():
-            # 正在计时：主按钮结束，子按钮暂停
+            # 正在计时：主按钮结束，子按钮暂停/提醒设置
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
@@ -31,11 +33,12 @@ class TimerMenuBuilder(BaseMenuBuilder):
                     {
                         'label': "暂停\n计时",
                         'callback': lambda: self.feature_router.execute_action("pause_timer")
-                    }
+                    },
+                    self._reminder_sub_item()
                 ]
             }
         elif tm.is_paused():
-            # 暂停中：主按钮结束，子按钮继续
+            # 暂停中：主按钮结束，子按钮继续/提醒设置
             return {
                 'key': 'timer',
                 'label': "结束\n计时",
@@ -44,13 +47,32 @@ class TimerMenuBuilder(BaseMenuBuilder):
                     {
                         'label': "继续\n计时",
                         'callback': lambda: self.feature_router.execute_action("resume_timer")
-                    }
+                    },
+                    self._reminder_sub_item()
                 ]
             }
         else:
-            # 未计时：主按钮开始
+            # 未计时：主按钮开始 + 提醒设置
             return {
                 'key': 'timer',
                 'label': "开始\n计时",
-                'callback': lambda: self.feature_router.execute_action("toggle_timer")
+                'callback': lambda: self.feature_router.execute_action("toggle_timer"),
+                'sub_items': [self._reminder_sub_item()]
             }
+
+    def _reminder_sub_item(self):
+        """构造提醒设置子项"""
+        return {
+            'label': "提醒\n设置",
+            'callback': self._open_reminder_dialog
+        }
+
+    def _open_reminder_dialog(self):
+        """打开提醒设置对话框"""
+        if not self.timer_handler:
+            return
+        # 确保存在应用实例
+        app = QApplication.instance()
+        parent = app.activeWindow() if app else None
+        dialog = ReminderSettingsDialog(self.timer_handler, parent=parent)
+        dialog.exec()

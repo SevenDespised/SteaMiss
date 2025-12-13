@@ -9,7 +9,8 @@ class ConfigManager:
             "explorer_paths": ["C:/", "C:/", "C:/"],
             "steam_api_key": "",
             "steam_id": "",
-            "steam_alt_ids": []
+            "steam_alt_ids": [],
+            "timer_reminder": {}
         }
         self.load_config()
 

@@ -27,7 +27,7 @@ class SteaMissApp:
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.resource_manager = ResourceManager()
-        self.timer_handler = TimerHandler()
+        self.timer_handler = TimerHandler(config_manager=self.config_manager)
         self.steam_manager = SteamManager(self.config_manager)
         
         # 初始化 Feature Handlers
@@ -64,6 +64,8 @@ class SteaMissApp:
         
         # 初始化托盘管理器
         self.tray_manager = TrayManager(self.app)
+        # 将托盘提醒作为计时提醒通知器
+        self.timer_handler.set_notifier(self.tray_manager.show_message)
 
         # 初始化 TimerOverlay (View Helper)
         self.timer_overlay = TimerOverlay(self.timer_handler)
