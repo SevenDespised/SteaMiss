@@ -1,0 +1,44 @@
+feat：steam小号支持
+feat: 常用网站启动
+refa: window factory解耦
+style: 
+
+view
+        -pet
+        -timer_overlay
+        -timer_support
+                -timer display
+                -timer logic
+ui_core
+        -ui manager   
+        -ui handlers
+                -tray handler
+        -ratial composer
+                -menu composer
+                -menu builders
+feature_core
+        -steam manager
+        -feature router
+        -feature handlers
+                -
+        -steam support
+                -steam client
+storage
+        -config_manager 改名
+        -resource_manager
+        -logger (未编写，包含timer logger和调试logger 调试logger存到另外的debug文件夹)
+        -steam_repo
+ai
+        -behaviour manager
+ui
+        -window
+                -
+        -menu
+                - tray
+
+
+
+
+future: 更改显示逻辑。
+        游玩记录：游玩记录，成就追踪，推荐页面（特惠推荐，游戏新闻，常用网站）
+        互动：互动，喂食，对话

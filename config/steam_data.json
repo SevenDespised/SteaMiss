@@ -10,7 +10,7 @@
     "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
     "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
     "lastlogoff": 1765469528,
-    "personastate": 4,
+    "personastate": 1,
     "realname": "七鄙",
     "primaryclanid": "103582791429521408",
     "timecreated": 1453718318,
@@ -21,327 +21,6 @@
     "steam_level": 21
   },
   "games_accounts": {
-    "76561199365389945": {
-      "games": {
-        "count": 31,
-        "all_games": [
-          {
-            "appid": 33230,
-            "name": "刺客信条2",
-            "playtime_forever": 0,
-            "img_icon_url": "0492d8ee860ac99168e46efeb003029c3224cb38",
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 35140,
-            "name": "Batman: Arkham Asylum GOTY Edition",
-            "playtime_forever": 257,
-            "img_icon_url": "e52f91ecb0d3f20263e96fe188de1bcc8c91643e",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 40990,
-            "name": "Mafia",
-            "playtime_forever": 0,
-            "img_icon_url": "3c86a0fd4f94a97b6f4ce31b5c31532e2098fe7b",
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 48000,
-            "name": "LIMBO",
-            "playtime_forever": 190,
-            "img_icon_url": "463f57855017564301b17050fba73804b3bd86d6",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 48190,
-            "name": "刺客信条：兄弟会",
-            "playtime_forever": 1117,
-            "img_icon_url": "6a87d0b61e45e8075decd1f8ace549300b036a52"
-          },
-          {
-            "appid": 200260,
-            "name": "Batman: Arkham City GOTY",
-            "playtime_forever": 294,
-            "img_icon_url": "746ecf3ce44b2525eb7ad643e76a3b60913d2662",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 201870,
-            "name": "刺客信条：启示录",
-            "playtime_forever": 958,
-            "img_icon_url": "08f7266496718dbd5d2f93e4776d3f5dc368ad54",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 208650,
-            "name": "Batman™: Arkham Knight",
-            "playtime_forever": 241,
-            "img_icon_url": "f6c2ce13796844750dfbd01685fb009eeac4bf70",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 289650,
-            "name": "刺客信条：大革命",
-            "playtime_forever": 13,
-            "img_icon_url": "0629ffe7fc7d88011c5b9705625bfe3791fe0afe",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 367520,
-            "name": "Hollow Knight",
-            "playtime_forever": 3950,
-            "img_icon_url": "f6ab055c2366237200b1a31cccbd6cf81e436d72",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 368500,
-            "name": "刺客信条：枭雄",
-            "playtime_forever": 2293,
-            "img_icon_url": "4f67f650e621319029fa884755dbd89a2d7076f6",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 386940,
-            "name": "超级鸡马",
-            "playtime_forever": 343,
-            "img_icon_url": "07e45651fd2e37fde1d512c4cb77238ff5ce97c0",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 458710,
-            "name": "Kingdom Rush Frontiers",
-            "playtime_forever": 243,
-            "img_icon_url": "5830f91eb62be434e08f053b59bbfa95f0e53424",
-            "has_community_visible_stats": true,
-            "has_leaderboards": true
-          },
-          {
-            "appid": 501300,
-            "name": "What Remains of Edith Finch",
-            "playtime_forever": 261,
-            "img_icon_url": "f71d2d0caa02bf35eafb5031a3d50c034a389605",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 527230,
-            "name": "为了吾王 / For The King",
-            "playtime_forever": 189,
-            "img_icon_url": "790411a4c44e243fa19fe8b3b6a8ca15679c7fbf",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 552500,
-            "name": "Warhammer: Vermintide 2",
-            "playtime_forever": 0,
-            "img_icon_url": "a671f2ddf7359beba9702ac097baf6d50cb07202",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 582010,
-            "name": "Monster Hunter: World",
-            "playtime_forever": 203,
-            "img_icon_url": "6ec147f2d423f435e15eb79b3d82f771913de634",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 646570,
-            "name": "Slay the Spire",
-            "playtime_forever": 606,
-            "img_icon_url": "33ea124ea8c03a9ce7012d34c3b348a351612fca",
-            "has_community_visible_stats": true,
-            "has_leaderboards": true
-          },
-          {
-            "appid": 701160,
-            "name": "王国：两位君主",
-            "playtime_forever": 194,
-            "img_icon_url": "7bf44c4e301a0f6fae78f697b39b5a1268223945",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 816340,
-            "name": "Kingdom Rush Origins",
-            "playtime_forever": 247,
-            "img_icon_url": "e25b57417e1d0b8f5ee41959254bd4f4ec14f017",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 880950,
-            "name": "爱上火车-Pure Station-",
-            "playtime_forever": 547,
-            "img_icon_url": "f9b8b101dddcfa9ef8bb44f26849f4b7d188701d",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 976730,
-            "name": "Halo: The Master Chief Collection",
-            "playtime_forever": 279,
-            "img_icon_url": "196a45d8df1981ff6b6b1872a38dc38f6c22875d",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 1144400,
-            "name": "千恋＊万花",
-            "playtime_forever": 563,
-            "img_icon_url": "52bb7ecf2ec4e08b37206e52bd43e328d785fabb",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              5
-            ]
-          },
-          {
-            "appid": 1172380,
-            "name": "《星球大战 绝地：陨落的武士团™》",
-            "playtime_forever": 190,
-            "img_icon_url": "0ea1d285a8ee6fbeef0e8f7f3b2d7fa4cbcb423b",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1293830,
-            "name": "极限竞速：地平线 4",
-            "playtime_forever": 206,
-            "img_icon_url": "7c993f9089d54fe2767efec47b75a7009cdd632e",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1356670,
-            "name": "天穗之咲稻姬",
-            "playtime_forever": 228,
-            "img_icon_url": "7b07a95c3cd07e671473e59f0fc9f18eff9c6b73",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1366540,
-            "name": "戴森球计划",
-            "playtime_forever": 1733,
-            "img_icon_url": "55fa75b8e6586427da47f58f320e975e990a460b",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1367550,
-            "name": "Kingdom Rush Vengeance",
-            "playtime_forever": 191,
-            "img_icon_url": "f6eda841719d02a0b0248b5043f36dfd1fdec335",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1434480,
-            "name": "爱上火车-Last Run!!-",
-            "playtime_forever": 242,
-            "img_icon_url": "2288fcf042cf788504be1b9a9c8337cac19ce4ba",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              1,
-              5
-            ]
-          },
-          {
-            "appid": 1659040,
-            "name": "HITMAN World of Assassination",
-            "playtime_forever": 275,
-            "img_icon_url": "552be1d38866afd1c33f682323d325130e7d0ce6",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              2,
-              5
-            ]
-          },
-          {
-            "appid": 1817070,
-            "name": "Marvel’s Spider-Man Remastered",
-            "playtime_forever": 2087,
-            "img_icon_url": "346333cb340139ad8b697005e5c79a3162c387b0",
-            "has_community_visible_stats": true
-          }
-        ],
-        "top_games": [
-          {
-            "appid": 367520,
-            "name": "Hollow Knight",
-            "playtime_forever": 3950,
-            "img_icon_url": "f6ab055c2366237200b1a31cccbd6cf81e436d72",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 368500,
-            "name": "刺客信条：枭雄",
-            "playtime_forever": 2293,
-            "img_icon_url": "4f67f650e621319029fa884755dbd89a2d7076f6",
-            "has_community_visible_stats": true,
-            "content_descriptorids": [
-              5
-            ]
-          },
-          {
-            "appid": 1817070,
-            "name": "Marvel’s Spider-Man Remastered",
-            "playtime_forever": 2087,
-            "img_icon_url": "346333cb340139ad8b697005e5c79a3162c387b0",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 1366540,
-            "name": "戴森球计划",
-            "playtime_forever": 1733,
-            "img_icon_url": "55fa75b8e6586427da47f58f320e975e990a460b",
-            "has_community_visible_stats": true
-          },
-          {
-            "appid": 48190,
-            "name": "刺客信条：兄弟会",
-            "playtime_forever": 1117,
-            "img_icon_url": "6a87d0b61e45e8075decd1f8ace549300b036a52"
-          }
-        ],
-        "recent_game": {
-          "appid": 33230,
-          "name": "刺客信条2",
-          "playtime_forever": 0,
-          "img_icon_url": "0492d8ee860ac99168e46efeb003029c3224cb38",
-          "content_descriptorids": [
-            5
-          ]
-        },
-        "top_2weeks": [],
-        "total_playtime": 18140
-      },
-      "summary": {
-        "steamid": "76561199365389945",
-        "communityvisibilitystate": 3,
-        "profilestate": 1,
-        "personaname": "r8nl3657008584",
-        "commentpermission": 1,
-        "profileurl": "https://steamcommunity.com/profiles/76561199365389945/",
-        "avatar": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75.jpg",
-        "avatarmedium": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_medium.jpg",
-        "avatarfull": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_full.jpg",
-        "avatarhash": "f4f2fc58620a769dfcc51defda89ed5cb8fa7d75",
-        "lastlogoff": 1742872634,
-        "personastate": 0,
-        "primaryclanid": "103582791429521408",
-        "timecreated": 1657008665,
-        "personastateflags": 0,
-        "steam_level": 4
-      }
-    },
     "76561198279072437": {
       "games": {
         "count": 165,
@@ -2882,7 +2561,7 @@
         "avatarfull": "https://avatars.steamstatic.com/5076cb4b31180b9fb9b6520693e7906f4c89b8ba_full.jpg",
         "avatarhash": "5076cb4b31180b9fb9b6520693e7906f4c89b8ba",
         "lastlogoff": 1765469528,
-        "personastate": 4,
+        "personastate": 1,
         "realname": "七鄙",
         "primaryclanid": "103582791429521408",
         "timecreated": 1453718318,
@@ -3156,6 +2835,327 @@
         "personastate": 0,
         "primaryclanid": "103582791429521408",
         "timecreated": 1606439825,
+        "personastateflags": 0,
+        "steam_level": 4
+      }
+    },
+    "76561199365389945": {
+      "games": {
+        "count": 31,
+        "all_games": [
+          {
+            "appid": 33230,
+            "name": "刺客信条2",
+            "playtime_forever": 0,
+            "img_icon_url": "0492d8ee860ac99168e46efeb003029c3224cb38",
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 35140,
+            "name": "Batman: Arkham Asylum GOTY Edition",
+            "playtime_forever": 257,
+            "img_icon_url": "e52f91ecb0d3f20263e96fe188de1bcc8c91643e",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 40990,
+            "name": "Mafia",
+            "playtime_forever": 0,
+            "img_icon_url": "3c86a0fd4f94a97b6f4ce31b5c31532e2098fe7b",
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 48000,
+            "name": "LIMBO",
+            "playtime_forever": 190,
+            "img_icon_url": "463f57855017564301b17050fba73804b3bd86d6",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 48190,
+            "name": "刺客信条：兄弟会",
+            "playtime_forever": 1117,
+            "img_icon_url": "6a87d0b61e45e8075decd1f8ace549300b036a52"
+          },
+          {
+            "appid": 200260,
+            "name": "Batman: Arkham City GOTY",
+            "playtime_forever": 294,
+            "img_icon_url": "746ecf3ce44b2525eb7ad643e76a3b60913d2662",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 201870,
+            "name": "刺客信条：启示录",
+            "playtime_forever": 958,
+            "img_icon_url": "08f7266496718dbd5d2f93e4776d3f5dc368ad54",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 208650,
+            "name": "Batman™: Arkham Knight",
+            "playtime_forever": 241,
+            "img_icon_url": "f6c2ce13796844750dfbd01685fb009eeac4bf70",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 289650,
+            "name": "刺客信条：大革命",
+            "playtime_forever": 13,
+            "img_icon_url": "0629ffe7fc7d88011c5b9705625bfe3791fe0afe",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 367520,
+            "name": "Hollow Knight",
+            "playtime_forever": 3950,
+            "img_icon_url": "f6ab055c2366237200b1a31cccbd6cf81e436d72",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 368500,
+            "name": "刺客信条：枭雄",
+            "playtime_forever": 2293,
+            "img_icon_url": "4f67f650e621319029fa884755dbd89a2d7076f6",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 386940,
+            "name": "超级鸡马",
+            "playtime_forever": 343,
+            "img_icon_url": "07e45651fd2e37fde1d512c4cb77238ff5ce97c0",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 458710,
+            "name": "Kingdom Rush Frontiers",
+            "playtime_forever": 243,
+            "img_icon_url": "5830f91eb62be434e08f053b59bbfa95f0e53424",
+            "has_community_visible_stats": true,
+            "has_leaderboards": true
+          },
+          {
+            "appid": 501300,
+            "name": "What Remains of Edith Finch",
+            "playtime_forever": 261,
+            "img_icon_url": "f71d2d0caa02bf35eafb5031a3d50c034a389605",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 527230,
+            "name": "为了吾王 / For The King",
+            "playtime_forever": 189,
+            "img_icon_url": "790411a4c44e243fa19fe8b3b6a8ca15679c7fbf",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 552500,
+            "name": "Warhammer: Vermintide 2",
+            "playtime_forever": 0,
+            "img_icon_url": "a671f2ddf7359beba9702ac097baf6d50cb07202",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 582010,
+            "name": "Monster Hunter: World",
+            "playtime_forever": 203,
+            "img_icon_url": "6ec147f2d423f435e15eb79b3d82f771913de634",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 646570,
+            "name": "Slay the Spire",
+            "playtime_forever": 606,
+            "img_icon_url": "33ea124ea8c03a9ce7012d34c3b348a351612fca",
+            "has_community_visible_stats": true,
+            "has_leaderboards": true
+          },
+          {
+            "appid": 701160,
+            "name": "王国：两位君主",
+            "playtime_forever": 194,
+            "img_icon_url": "7bf44c4e301a0f6fae78f697b39b5a1268223945",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 816340,
+            "name": "Kingdom Rush Origins",
+            "playtime_forever": 247,
+            "img_icon_url": "e25b57417e1d0b8f5ee41959254bd4f4ec14f017",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 880950,
+            "name": "爱上火车-Pure Station-",
+            "playtime_forever": 547,
+            "img_icon_url": "f9b8b101dddcfa9ef8bb44f26849f4b7d188701d",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 976730,
+            "name": "Halo: The Master Chief Collection",
+            "playtime_forever": 279,
+            "img_icon_url": "196a45d8df1981ff6b6b1872a38dc38f6c22875d",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 1144400,
+            "name": "千恋＊万花",
+            "playtime_forever": 563,
+            "img_icon_url": "52bb7ecf2ec4e08b37206e52bd43e328d785fabb",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              5
+            ]
+          },
+          {
+            "appid": 1172380,
+            "name": "《星球大战 绝地：陨落的武士团™》",
+            "playtime_forever": 190,
+            "img_icon_url": "0ea1d285a8ee6fbeef0e8f7f3b2d7fa4cbcb423b",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1293830,
+            "name": "极限竞速：地平线 4",
+            "playtime_forever": 206,
+            "img_icon_url": "7c993f9089d54fe2767efec47b75a7009cdd632e",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1356670,
+            "name": "天穗之咲稻姬",
+            "playtime_forever": 228,
+            "img_icon_url": "7b07a95c3cd07e671473e59f0fc9f18eff9c6b73",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1366540,
+            "name": "戴森球计划",
+            "playtime_forever": 1733,
+            "img_icon_url": "55fa75b8e6586427da47f58f320e975e990a460b",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1367550,
+            "name": "Kingdom Rush Vengeance",
+            "playtime_forever": 191,
+            "img_icon_url": "f6eda841719d02a0b0248b5043f36dfd1fdec335",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1434480,
+            "name": "爱上火车-Last Run!!-",
+            "playtime_forever": 242,
+            "img_icon_url": "2288fcf042cf788504be1b9a9c8337cac19ce4ba",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              1,
+              5
+            ]
+          },
+          {
+            "appid": 1659040,
+            "name": "HITMAN World of Assassination",
+            "playtime_forever": 275,
+            "img_icon_url": "552be1d38866afd1c33f682323d325130e7d0ce6",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              2,
+              5
+            ]
+          },
+          {
+            "appid": 1817070,
+            "name": "Marvel’s Spider-Man Remastered",
+            "playtime_forever": 2087,
+            "img_icon_url": "346333cb340139ad8b697005e5c79a3162c387b0",
+            "has_community_visible_stats": true
+          }
+        ],
+        "top_games": [
+          {
+            "appid": 367520,
+            "name": "Hollow Knight",
+            "playtime_forever": 3950,
+            "img_icon_url": "f6ab055c2366237200b1a31cccbd6cf81e436d72",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 368500,
+            "name": "刺客信条：枭雄",
+            "playtime_forever": 2293,
+            "img_icon_url": "4f67f650e621319029fa884755dbd89a2d7076f6",
+            "has_community_visible_stats": true,
+            "content_descriptorids": [
+              5
+            ]
+          },
+          {
+            "appid": 1817070,
+            "name": "Marvel’s Spider-Man Remastered",
+            "playtime_forever": 2087,
+            "img_icon_url": "346333cb340139ad8b697005e5c79a3162c387b0",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 1366540,
+            "name": "戴森球计划",
+            "playtime_forever": 1733,
+            "img_icon_url": "55fa75b8e6586427da47f58f320e975e990a460b",
+            "has_community_visible_stats": true
+          },
+          {
+            "appid": 48190,
+            "name": "刺客信条：兄弟会",
+            "playtime_forever": 1117,
+            "img_icon_url": "6a87d0b61e45e8075decd1f8ace549300b036a52"
+          }
+        ],
+        "recent_game": {
+          "appid": 33230,
+          "name": "刺客信条2",
+          "playtime_forever": 0,
+          "img_icon_url": "0492d8ee860ac99168e46efeb003029c3224cb38",
+          "content_descriptorids": [
+            5
+          ]
+        },
+        "top_2weeks": [],
+        "total_playtime": 18140
+      },
+      "summary": {
+        "steamid": "76561199365389945",
+        "communityvisibilitystate": 3,
+        "profilestate": 1,
+        "personaname": "r8nl3657008584",
+        "commentpermission": 1,
+        "profileurl": "https://steamcommunity.com/profiles/76561199365389945/",
+        "avatar": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75.jpg",
+        "avatarmedium": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_medium.jpg",
+        "avatarfull": "https://avatars.steamstatic.com/f4f2fc58620a769dfcc51defda89ed5cb8fa7d75_full.jpg",
+        "avatarhash": "f4f2fc58620a769dfcc51defda89ed5cb8fa7d75",
+        "lastlogoff": 1742872634,
+        "personastate": 0,
+        "primaryclanid": "103582791429521408",
+        "timecreated": 1657008665,
         "personastateflags": 0,
         "steam_level": 4
       }
@@ -5716,223 +5716,6 @@
     "count": 211,
     "all_games": [
       {
-        "appid": 33230,
-        "name": "刺客信条2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 35140,
-        "name": "Batman: Arkham Asylum GOTY Edition",
-        "playtime_forever": 257,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 40990,
-        "name": "Mafia",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 48000,
-        "name": "LIMBO",
-        "playtime_forever": 190,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 48190,
-        "name": "刺客信条：兄弟会",
-        "playtime_forever": 1117,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 200260,
-        "name": "Batman: Arkham City GOTY",
-        "playtime_forever": 1004,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1681570280
-      },
-      {
-        "appid": 201870,
-        "name": "刺客信条：启示录",
-        "playtime_forever": 958,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 208650,
-        "name": "Batman™: Arkham Knight",
-        "playtime_forever": 241,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 289650,
-        "name": "刺客信条：大革命",
-        "playtime_forever": 13,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 367520,
-        "name": "Hollow Knight",
-        "playtime_forever": 3950,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 368500,
-        "name": "刺客信条：枭雄",
-        "playtime_forever": 2293,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 386940,
-        "name": "超级鸡马",
-        "playtime_forever": 343,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 458710,
-        "name": "Kingdom Rush Frontiers",
-        "playtime_forever": 243,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 501300,
-        "name": "What Remains of Edith Finch",
-        "playtime_forever": 261,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 527230,
-        "name": "为了吾王 / For The King",
-        "playtime_forever": 189,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 552500,
-        "name": "Warhammer: Vermintide 2",
-        "playtime_forever": 0,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 582010,
-        "name": "Monster Hunter: World",
-        "playtime_forever": 203,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 646570,
-        "name": "Slay the Spire",
-        "playtime_forever": 606,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 701160,
-        "name": "王国：两位君主",
-        "playtime_forever": 325,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 1742568842
-      },
-      {
-        "appid": 816340,
-        "name": "Kingdom Rush Origins",
-        "playtime_forever": 247,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 880950,
-        "name": "爱上火车-Pure Station-",
-        "playtime_forever": 547,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 976730,
-        "name": "Halo: The Master Chief Collection",
-        "playtime_forever": 279,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1144400,
-        "name": "千恋＊万花",
-        "playtime_forever": 563,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1172380,
-        "name": "《星球大战 绝地：陨落的武士团™》",
-        "playtime_forever": 190,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1293830,
-        "name": "极限竞速：地平线 4",
-        "playtime_forever": 206,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1356670,
-        "name": "天穗之咲稻姬",
-        "playtime_forever": 228,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1366540,
-        "name": "戴森球计划",
-        "playtime_forever": 1733,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1367550,
-        "name": "Kingdom Rush Vengeance",
-        "playtime_forever": 191,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1434480,
-        "name": "爱上火车-Last Run!!-",
-        "playtime_forever": 242,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1659040,
-        "name": "HITMAN World of Assassination",
-        "playtime_forever": 275,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
-        "appid": 1817070,
-        "name": "Marvel’s Spider-Man Remastered",
-        "playtime_forever": 2087,
-        "playtime_2weeks": 0,
-        "rtime_last_played": 0
-      },
-      {
         "appid": 220,
         "name": "Half-Life 2",
         "playtime_forever": 84,
@@ -6057,6 +5840,13 @@
         "playtime_forever": 1015,
         "playtime_2weeks": 0,
         "rtime_last_played": 1728031114
+      },
+      {
+        "appid": 200260,
+        "name": "Batman: Arkham City GOTY",
+        "playtime_forever": 1004,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1681570280
       },
       {
         "appid": 200510,
@@ -6423,6 +6213,13 @@
         "rtime_last_played": 1736335924
       },
       {
+        "appid": 552500,
+        "name": "Warhammer: Vermintide 2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
         "appid": 553640,
         "name": "ICEY",
         "playtime_forever": 0,
@@ -6519,6 +6316,13 @@
         "playtime_forever": 0,
         "playtime_2weeks": 0,
         "rtime_last_played": 0
+      },
+      {
+        "appid": 701160,
+        "name": "王国：两位君主",
+        "playtime_forever": 325,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 1742568842
       },
       {
         "appid": 718670,
@@ -7189,6 +6993,202 @@
         "appid": 3717340,
         "name": "人中之龙 极２",
         "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 33230,
+        "name": "刺客信条2",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 35140,
+        "name": "Batman: Arkham Asylum GOTY Edition",
+        "playtime_forever": 257,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 40990,
+        "name": "Mafia",
+        "playtime_forever": 0,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 48000,
+        "name": "LIMBO",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 48190,
+        "name": "刺客信条：兄弟会",
+        "playtime_forever": 1117,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 201870,
+        "name": "刺客信条：启示录",
+        "playtime_forever": 958,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 208650,
+        "name": "Batman™: Arkham Knight",
+        "playtime_forever": 241,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 289650,
+        "name": "刺客信条：大革命",
+        "playtime_forever": 13,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 367520,
+        "name": "Hollow Knight",
+        "playtime_forever": 3950,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 368500,
+        "name": "刺客信条：枭雄",
+        "playtime_forever": 2293,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 386940,
+        "name": "超级鸡马",
+        "playtime_forever": 343,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 458710,
+        "name": "Kingdom Rush Frontiers",
+        "playtime_forever": 243,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 501300,
+        "name": "What Remains of Edith Finch",
+        "playtime_forever": 261,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 527230,
+        "name": "为了吾王 / For The King",
+        "playtime_forever": 189,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 582010,
+        "name": "Monster Hunter: World",
+        "playtime_forever": 203,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 646570,
+        "name": "Slay the Spire",
+        "playtime_forever": 606,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 816340,
+        "name": "Kingdom Rush Origins",
+        "playtime_forever": 247,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 880950,
+        "name": "爱上火车-Pure Station-",
+        "playtime_forever": 547,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 976730,
+        "name": "Halo: The Master Chief Collection",
+        "playtime_forever": 279,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1144400,
+        "name": "千恋＊万花",
+        "playtime_forever": 563,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1172380,
+        "name": "《星球大战 绝地：陨落的武士团™》",
+        "playtime_forever": 190,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1293830,
+        "name": "极限竞速：地平线 4",
+        "playtime_forever": 206,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1356670,
+        "name": "天穗之咲稻姬",
+        "playtime_forever": 228,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1366540,
+        "name": "戴森球计划",
+        "playtime_forever": 1733,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1367550,
+        "name": "Kingdom Rush Vengeance",
+        "playtime_forever": 191,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1434480,
+        "name": "爱上火车-Last Run!!-",
+        "playtime_forever": 242,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1659040,
+        "name": "HITMAN World of Assassination",
+        "playtime_forever": 275,
+        "playtime_2weeks": 0,
+        "rtime_last_played": 0
+      },
+      {
+        "appid": 1817070,
+        "name": "Marvel’s Spider-Man Remastered",
+        "playtime_forever": 2087,
         "playtime_2weeks": 0,
         "rtime_last_played": 0
       }
@@ -8615,6 +8615,114 @@
     },
     "3717340": {
       "total": 59,
+      "unlocked": 0
+    },
+    "320": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "360": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "400": {
+      "total": 15,
+      "unlocked": 0
+    },
+    "7670": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "8850": {
+      "total": 68,
+      "unlocked": 0
+    },
+    "34330": {
+      "total": 106,
+      "unlocked": 0
+    },
+    "50130": {
+      "total": 67,
+      "unlocked": 0
+    },
+    "203160": {
+      "total": 50,
+      "unlocked": 0
+    },
+    "204450": {
+      "total": 26,
+      "unlocked": 0
+    },
+    "205100": {
+      "total": 80,
+      "unlocked": 0
+    },
+    "242760": {
+      "total": 45,
+      "unlocked": 0
+    },
+    "250320": {
+      "total": 35,
+      "unlocked": 0
+    },
+    "346110": {
+      "total": 32,
+      "unlocked": 0
+    },
+    "360430": {
+      "total": 85,
+      "unlocked": 0
+    },
+    "407530": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "553640": {
+      "total": 34,
+      "unlocked": 0
+    },
+    "623990": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "699920": {
+      "total": 30,
+      "unlocked": 0
+    },
+    "865180": {
+      "total": 23,
+      "unlocked": 0
+    },
+    "916440": {
+      "total": 112,
+      "unlocked": 0
+    },
+    "923890": {
+      "total": 48,
+      "unlocked": 0
+    },
+    "970600": {
+      "total": 20,
+      "unlocked": 0
+    },
+    "1030300": {
+      "total": 52,
+      "unlocked": 0
+    },
+    "1606430": {
+      "total": 0,
+      "unlocked": 0
+    },
+    "1669980": {
+      "total": 234,
+      "unlocked": 0
+    },
+    "2337860": {
+      "total": 15,
+      "unlocked": 0
+    },
+    "3084280": {
+      "total": 21,
       "unlocked": 0
     }
   }
