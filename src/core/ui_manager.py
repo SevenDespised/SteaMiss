@@ -1,14 +1,6 @@
 from PyQt6.QtCore import QPoint, QObject, pyqtSignal
+from PyQt6.QtWidgets import QApplication
 from src.ui.radial_menu import RadialMenu
-# from src.ui.settings_dialog import SettingsDialog
-# from src.ui.stats_window import StatsWindow
-# from src.ui.discount_window import DiscountWindow
-# from src.feature.menu_builders.path_builder import PathMenuBuilder
-# from src.feature.menu_builders.interaction_builder import InteractionMenuBuilder
-# from src.feature.menu_builders.timer_builder import TimerMenuBuilder
-# from src.feature.menu_builders.steam_game_builder import SteamGameMenuBuilder
-# from src.feature.menu_builders.tool_builder import ToolMenuBuilder
-
 
 class UIManager(QObject):
     """
@@ -70,6 +62,8 @@ class UIManager(QObject):
             new_tool = self.window_factory.create_discount_window()
         elif tool_name == "achievements":
             new_tool = self.window_factory.create_achievement_window()
+        elif tool_name == "reminder_settings":
+            new_tool = self.window_factory.create_reminder_settings_window()
             
         if new_tool:
             self.active_tools[tool_name] = new_tool

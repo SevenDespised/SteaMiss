@@ -54,7 +54,8 @@ class SteaMissApp:
         # 初始化窗口工厂
         self.window_factory = WindowFactory(
             self.steam_manager,
-            self.config_manager
+            self.config_manager,
+            self.timer_handler
         )
         
         self.ui_manager = UIManager(

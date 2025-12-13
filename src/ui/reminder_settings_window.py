@@ -16,9 +16,9 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt
 
 
-class ReminderSettingsDialog(QDialog):
+class ReminderSettingsWindow(QDialog):
     """
-    提醒设置对话框
+    提醒设置窗口
     负责收集结束时间、提醒间隔、提醒后暂停间隔三个参数。
     """
 

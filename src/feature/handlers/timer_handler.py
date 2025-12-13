@@ -229,20 +229,22 @@ class TimerHandler:
 
     def _on_tick(self):
         """每秒检查结束/提醒条件"""
-        if not self.is_running() and not self.is_paused():
+        running = self.is_running()
+        paused = self.is_paused()
+        if not running and not paused:
             return
 
         elapsed = self.get_elapsed_seconds()
 
-        # 结束时间检测
+        # 仅在计时进行中检查结束时间，避免暂停期误触发
         end_seconds = self.reminder_settings.get("timer_end_seconds")
-        if end_seconds is not None and elapsed >= end_seconds:
+        if running and end_seconds is not None and elapsed >= end_seconds:
             self.stop_and_persist()
             self._notify("计时结束", "已达到设定的结束时间。")
             return
 
         # 暂停状态不做提醒，以免重复触发
-        if not self.is_running():
+        if not running:
             return
 
         # 提醒检测

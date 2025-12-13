@@ -3,15 +3,23 @@ from src.ui.stats_window import StatsWindow
 from src.ui.discount_window import DiscountWindow
 from src.ui.all_games_window import AllGamesWindow
 from src.ui.achievement_window import AchievementWindow
+from src.ui.reminder_settings_window import ReminderSettingsWindow
 
 class WindowFactory:
     """
     窗口工厂
     负责创建各种子窗口，封装依赖注入细节
     """
-    def __init__(self, steam_manager, config_manager):
+    def __init__(self, steam_manager, config_manager, timer_handler):
         self.steam_manager = steam_manager
         self.config_manager = config_manager
+        self.timer_handler = timer_handler
+
+    def create_reminder_settings_window(self, parent=None):
+        """
+        创建提醒设置窗口
+        """
+        return ReminderSettingsWindow(self.timer_handler, parent=parent)
 
     def create_settings_dialog(self):
         window = SettingsDialog()
@@ -23,8 +31,6 @@ class WindowFactory:
         def handle_save(settings):
             for key, value in settings.items():
                 self.config_manager.set(key, value)
-            # 可能需要触发一些更新，比如重新加载 Steam 数据
-            # 但 ConfigManager 可能会自动处理，或者由其他组件监听 Config 变化
             
         window.request_save.connect(handle_save)
         
@@ -39,21 +45,9 @@ class WindowFactory:
                 self.steam_manager.fetch_games_stats()
             window.update_search_results(results)
             
-        # 为了支持“更新后自动刷新搜索结果”，我们需要让 Window 也能响应数据更新
         def on_games_updated(data):
-            # 如果窗口还开着，且有搜索关键词（这个状态在 UI 里），
-            # 我们可以再次触发搜索。
-            # 但由于这是被动视图，Window 不应该自己决定逻辑。
-            # 我们可以简单地通知 Window 数据更新了，让它自己决定是否重试搜索
-            # 或者，我们在 Window 里保留了 refresh_search_results 逻辑？
-            # 不，Window 里已经移除了 steam_manager 依赖。
-            # 所以，我们需要在这里处理。
-            # 简单起见，我们只处理同步搜索。如果需要异步更新后搜索，
-            # 用户可以再次点击搜索按钮。
             pass
         window.request_search_games.connect(handle_search)
-        # 额外：如果 Steam 数据更新了，可能需要刷新搜索结果（如果用户正在搜索）
-        # 这里为了简化，暂不自动刷新搜索结果，依靠用户手动重试。
         return window
 
     def create_stats_window(self):

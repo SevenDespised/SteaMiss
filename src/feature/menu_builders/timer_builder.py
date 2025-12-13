@@ -1,9 +1,7 @@
 """
 计时器菜单项构建器
 """
-from PyQt6.QtWidgets import QApplication
 from .base_builder import BaseMenuBuilder
-from src.ui.reminder_settings_dialog import ReminderSettingsDialog
 
 
 class TimerMenuBuilder(BaseMenuBuilder):
@@ -64,15 +62,5 @@ class TimerMenuBuilder(BaseMenuBuilder):
         """构造提醒设置子项"""
         return {
             'label': "提醒\n设置",
-            'callback': self._open_reminder_dialog
+            'callback': lambda: self.feature_router.open_tool("reminder_settings")
         }
-
-    def _open_reminder_dialog(self):
-        """打开提醒设置对话框"""
-        if not self.timer_handler:
-            return
-        # 确保存在应用实例
-        app = QApplication.instance()
-        parent = app.activeWindow() if app else None
-        dialog = ReminderSettingsDialog(self.timer_handler, parent=parent)
-        dialog.exec()
