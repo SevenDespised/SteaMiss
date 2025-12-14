@@ -435,8 +435,8 @@ class SteamClient:
             app_info_map = self.get_apps_info(app_ids)
 
             # 2.2 获取价格 (Store API)
-            # 分批查询，每次 20 个
-            chunk_size = 20
+            # 分批查询，每次 50 个
+            chunk_size = 50
             for i in range(0, len(app_ids), chunk_size):
                 chunk = app_ids[i:i+chunk_size]
                 details_map = self.get_app_price(chunk)
