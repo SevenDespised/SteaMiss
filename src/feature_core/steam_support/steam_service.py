@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QObject, pyqtSignal
-from src.feature.steam_support.steam_worker import SteamWorker
+from src.feature_core.steam_support.steam_worker import SteamWorker
 
 class SteamService(QObject):
     """

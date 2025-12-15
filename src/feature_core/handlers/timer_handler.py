@@ -3,7 +3,7 @@ import json
 import math
 import os
 from PyQt6.QtCore import QTimer
-from src.feature.timer_support.timer_logic import GameTimer
+from src.feature_core.timer_support.timer_logic import GameTimer
 
 
 class TimerHandler:

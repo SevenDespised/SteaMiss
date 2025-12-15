@@ -1,15 +1,15 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 # from src.feature.steam_support.steam_worker import SteamWorker
-from src.feature.steam_support.steam_aggregator import GamesAggregator, merge_games
-from src.feature.steam_support.steam_launcher import SteamLauncher
-from src.feature.steam_support.steam_repository import SteamRepository
-from src.feature.steam_support.steam_service import SteamService
+from src.feature_core.steam_support.steam_aggregator import GamesAggregator, merge_games
+from src.feature_core.steam_support.steam_launcher import SteamLauncher
+from src.storage.steam_repository import SteamRepository
+from src.feature_core.steam_support.steam_service import SteamService
 import json
 import os
 
 class SteamManager(QObject):
     """
-    业务逻辑管理器
+    Steam逻辑管理器
     负责协调 UI 和 Worker，管理数据缓存
     """
     # 定义一些信号供 UI 连接

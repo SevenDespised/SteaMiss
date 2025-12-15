@@ -1,8 +1,8 @@
 import typing
 from PyQt6.QtCore import QRect
 from PyQt6.QtGui import QPainter
-from src.feature.handlers.timer_handler import TimerHandler
-from src.ui.timer_display import TimerDisplay
+from src.feature_core.handlers.timer_handler import TimerHandler
+from src.view.timer_display import TimerDisplay
 
 
 class TimerOverlay:

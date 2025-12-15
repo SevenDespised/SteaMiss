@@ -1,24 +1,24 @@
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
-from src.pet import DesktopPet
-from src.ui.timer_overlay import TimerOverlay
+from src.view.pet import DesktopPet
+from src.view.timer_overlay import TimerOverlay
 
 # 引入所有管理器
-from src.core.config_manager import ConfigManager
+from src.storage.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
-from src.feature.steam_manager import SteamManager
-from src.feature.handlers.timer_handler import TimerHandler
-from src.core.feature_router import FeatureRouter
-from src.core.resource_manager import ResourceManager
+from src.feature_core.steam_manager import SteamManager
+from src.feature_core.handlers.timer_handler import TimerHandler
+from src.feature_core.feature_router import FeatureRouter
+from src.storage.resource_manager import ResourceManager
 from src.ui_core.handlers.window_handler import WindowHandler
 from src.ui_core.handlers.radial_handler import RadialHandler
 from src.ui_core.radial_composer.menu_composer import MenuComposer
 from src.ui.window_factory import WindowFactory
 from src.ui_core.handlers.tray_handler import TrayHandler
 
-from src.feature.handlers.system_handler import SystemFeatureHandler
+from src.feature_core.handlers.system_handler import SystemFeatureHandler
 # from src.feature.handlers.steam_handler import SteamFeatureHandler
 # from src.feature.handlers.timer_handler import TimerFeatureHandler
-from src.feature.handlers.pet_handler import PetFeatureHandler
+from src.feature_core.handlers.pet_handler import PetFeatureHandler
 
 class SteaMissApp:
     def __init__(self, app: QApplication):

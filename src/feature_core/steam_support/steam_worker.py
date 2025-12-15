@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QThread, pyqtSignal
 import time
-from src.api.steam_client import SteamClient
+from src.feature_core.steam_support.steam_client import SteamClient
 
 class SteamWorker(QThread):
     """后台工作线程，用于执行耗时的网络请求"""
