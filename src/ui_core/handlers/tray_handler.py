@@ -3,24 +3,24 @@ from PyQt6.QtGui import QIcon, QAction
 from PyQt6.QtCore import QObject, pyqtSignal
 from src.utils.path_utils import resource_path
 
-class TrayManager(QObject):
+class TrayHandler(QObject):
     """
     系统托盘管理器
     负责管理托盘图标、菜单以及相关动作
     """
     request_toggle_visibility = pyqtSignal()
     request_toggle_topmost = pyqtSignal()
-    request_open_settings = pyqtSignal()
     request_quit_app = pyqtSignal()
     request_activate_pet = pyqtSignal()  # 双击托盘图标时激活宠物窗口
 
-    def __init__(self, app):
+    def __init__(self, window_factory, app):
         super().__init__()
+        self.window_factory = window_factory
         self.app = app
         self.tray_icon = None
         self.action_toggle = None
         self.action_topmost = None
-        
+        self.settings_dialog = None
         self._setup_tray()
 
     def _setup_tray(self):
@@ -48,7 +48,7 @@ class TrayManager(QObject):
         
         # 动作：设置
         action_settings = QAction("功能设置", self.app)
-        action_settings.triggered.connect(self.request_open_settings.emit)
+        action_settings.triggered.connect(self.open_settings)
         tray_menu.addAction(action_settings)
         
         tray_menu.addSeparator()
@@ -64,6 +64,17 @@ class TrayManager(QObject):
         self.tray_icon.activated.connect(self.on_tray_activated)
         
         self.tray_icon.show()
+
+    def open_settings(self):
+        """打开或激活设置窗口"""
+        if self.settings_dialog is not None and self.settings_dialog.isVisible():
+            self.settings_dialog.raise_()
+            self.settings_dialog.activateWindow()
+            return
+
+        # 懒加载：只有点击时才创建窗口
+        self.settings_dialog = self.window_factory.create_settings_dialog()
+        self.settings_dialog.show()
     
     def on_tray_activated(self, reason):
         """

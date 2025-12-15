@@ -1,10 +1,10 @@
-from src.feature.menu_builders.path_builder import PathMenuBuilder
-from src.feature.menu_builders.interaction_builder import InteractionMenuBuilder
-from src.feature.menu_builders.timer_builder import TimerMenuBuilder
-from src.feature.menu_builders.steam_game_builder import SteamGameMenuBuilder
-from src.feature.menu_builders.steam_page_builder import SteamPageMenuBuilder
-from src.feature.menu_builders.tool_builder import ToolMenuBuilder
-from src.feature.menu_builders.exit_builder import ExitMenuBuilder
+from src.ui_core.radial_composer.menu_builders.path_builder import PathMenuBuilder
+from src.ui_core.radial_composer.menu_builders.interaction_builder import InteractionMenuBuilder
+from src.ui_core.radial_composer.menu_builders.timer_builder import TimerMenuBuilder
+from src.ui_core.radial_composer.menu_builders.steam_game_builder import SteamGameMenuBuilder
+from src.ui_core.radial_composer.menu_builders.steam_page_builder import SteamPageMenuBuilder
+from src.ui_core.radial_composer.menu_builders.tool_builder import ToolMenuBuilder
+from src.ui_core.radial_composer.menu_builders.exit_builder import ExitMenuBuilder
 
 class MenuComposer:
     """

@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 
 class FeatureRouter(QObject):
-    request_open_tool = pyqtSignal(str)
+    request_open_window = pyqtSignal(str)
     request_hide_pet = pyqtSignal()
     request_toggle_topmost = pyqtSignal()
     request_say_hello = pyqtSignal(str)
@@ -63,9 +63,9 @@ class FeatureRouter(QObject):
     def _handle_toggle_topmost(self, **kwargs):
         self.request_toggle_topmost.emit()
 
-    def open_tool(self, tool_name):
+    def open_window(self, tool_name):
         """
         打开指定的工具，如果已打开则激活
         """
-        self.request_open_tool.emit(tool_name)
+        self.request_open_window.emit(tool_name)
 

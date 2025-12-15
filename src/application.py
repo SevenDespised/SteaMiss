@@ -9,10 +9,11 @@ from src.feature.steam_manager import SteamManager
 from src.feature.handlers.timer_handler import TimerHandler
 from src.core.feature_router import FeatureRouter
 from src.core.resource_manager import ResourceManager
-from src.core.ui_manager import UIManager
-from src.feature.menu_composer import MenuComposer
+from src.ui_core.handlers.window_handler import WindowHandler
+from src.ui_core.handlers.radial_handler import RadialHandler
+from src.ui_core.radial_composer.menu_composer import MenuComposer
 from src.ui.window_factory import WindowFactory
-from src.ui.tray_manager import TrayManager
+from src.ui_core.handlers.tray_handler import TrayHandler
 
 from src.feature.handlers.system_handler import SystemFeatureHandler
 # from src.feature.handlers.steam_handler import SteamFeatureHandler
@@ -56,15 +57,17 @@ class SteaMissApp:
             self.timer_handler
         )
         
-        self.ui_manager = UIManager(
-            self.menu_composer, 
+        self.radial_handler = RadialHandler(
+            self.menu_composer
+        )
+        self.window_handler = WindowHandler(
             self.window_factory
         )
         
         # 初始化托盘管理器
-        self.tray_manager = TrayManager(self.app)
+        self.tray_handler = TrayHandler(self.window_factory, self.app)
         # 将托盘提醒作为计时提醒通知器
-        self.timer_handler.set_notifier(self.tray_manager.show_message)
+        self.timer_handler.set_notifier(self.tray_handler.show_message)
         # 退出时关闭计时器内部 Qt 定时器
         self.app.aboutToQuit.connect(self.timer_handler.shutdown)
 
@@ -82,23 +85,22 @@ class SteaMissApp:
         self.pet.show()
         
         # 连接信号以同步状态
-        self.pet.visibility_changed.connect(self.tray_manager.update_visibility_text)
-        self.pet.topmost_changed.connect(self.tray_manager.update_topmost_text)
+        self.pet.visibility_changed.connect(self.tray_handler.update_visibility_text)
+        self.pet.topmost_changed.connect(self.tray_handler.update_topmost_text)
         
         # 连接宠物交互信号
-        self.pet.right_clicked.connect(self.ui_manager.handle_right_click)
+        self.pet.right_clicked.connect(self.radial_handler.handle_right_click)
         self.pet.double_clicked.connect(lambda: self.feature_router.execute_action("say_hello"))
-        self.ui_manager.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
+        self.radial_handler.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
         
-        # 连接 TrayManager 的请求信号
-        self.tray_manager.request_toggle_visibility.connect(self.toggle_pet_visibility)
-        self.tray_manager.request_toggle_topmost.connect(self.pet.toggle_topmost)
-        self.tray_manager.request_open_settings.connect(self.ui_manager.open_settings)
-        self.tray_manager.request_quit_app.connect(self.quit_app)
-        self.tray_manager.request_activate_pet.connect(self.activate_pet)
+        # 连接 TrayHandler 的请求信号
+        self.tray_handler.request_toggle_visibility.connect(self.toggle_pet_visibility)
+        self.tray_handler.request_toggle_topmost.connect(self.pet.toggle_topmost)
+        self.tray_handler.request_quit_app.connect(self.quit_app)
+        self.tray_handler.request_activate_pet.connect(self.activate_pet)
         
         # 连接 FeatureRouter 信号
-        self.feature_router.request_open_tool.connect(self.ui_manager.open_tool)
+        self.feature_router.request_open_window.connect(self.window_handler.open_window)
         self.feature_router.request_hide_pet.connect(self.toggle_pet_visibility)
         self.feature_router.request_toggle_topmost.connect(self.pet.toggle_topmost)
         self.feature_router.request_say_hello.connect(self.on_say_hello)
@@ -106,13 +108,13 @@ class SteaMissApp:
 
     def on_say_hello(self, content):
         """响应打招呼"""
-        self.tray_manager.show_message("SteaMiss", content)
+        self.tray_handler.show_message("SteaMiss", content)
         print(f"[Pet Says]: {content}")
 
     def on_error_occurred(self, error_msg):
         """响应错误信息"""
         print(f"[Error]: {error_msg}")
-        self.tray_manager.show_message("错误", error_msg, QSystemTrayIcon.MessageIcon.Warning, 3000)
+        self.tray_handler.show_message("错误", error_msg, QSystemTrayIcon.MessageIcon.Warning, 3000)
 
     def toggle_pet_visibility(self):
         self.pet.set_visibility(not self.pet.isVisible())

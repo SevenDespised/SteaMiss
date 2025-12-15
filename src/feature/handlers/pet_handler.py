@@ -16,6 +16,3 @@ class PetFeatureHandler(QObject):
         content = self.config_manager.get("say_hello_content", "你好！")
         return content # 返回内容，由 FeatureRouter 发射信号
 
-    # hide_pet 和 toggle_topmost 实际上是纯信号触发，
-    # 逻辑在 Application/UIManager 中处理，Handler 这里其实没什么业务逻辑可写
-    # 但为了统一，我们还是保留接口

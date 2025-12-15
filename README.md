@@ -219,7 +219,7 @@ SteaMiss/
 │   │   ├── config_manager.py    # 配置管理
 │   │   ├── feature_router.py  # 功能管理
 │   │   ├── resource_manager.py # 资源管理
-│   │   └── ui_manager.py        # UI 管理
+│   │   └── radial_handler.py        # UI 管理
 │   ├── feature/           # 功能模块
 │   │   ├── handlers/      # 功能处理器
 │   │   ├── menu_builders/ # 菜单构建器

@@ -62,5 +62,5 @@ class TimerMenuBuilder(BaseMenuBuilder):
         """构造提醒设置子项"""
         return {
             'label': "提醒\n设置",
-            'callback': lambda: self.feature_router.open_tool("reminder_settings")
+            'callback': lambda: self.feature_router.open_window("reminder_settings")
         }
