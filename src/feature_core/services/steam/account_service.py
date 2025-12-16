@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
-from src.feature_core.services.steam.account_models import SteamAccountPolicy
+from src.feature_core.domain.steam_account_models import SteamAccountPolicy
 
 
 class SteamAccountService:

@@ -1,18 +1,14 @@
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 
 class GamesAggregator:
-    """管理多账号游戏统计的聚合上下文"""
+    """管理多账号游戏统计的聚合上下文（纯 Python）。"""
 
     def __init__(self):
         self._ctx: Optional[Dict[str, Any]] = None
 
     def begin(self, account_ids: List[str], primary_id: str):
-        self._ctx = {
-            "pending": len(account_ids),
-            "primary": primary_id,
-            "results": [],
-        }
+        self._ctx = {"pending": len(account_ids), "primary": primary_id, "results": []}
 
     def add_result(
         self,
@@ -23,13 +19,7 @@ class GamesAggregator:
         if not self._ctx:
             return False
 
-        self._ctx["results"].append(
-            {
-                "steam_id": steam_id,
-                "games": games,
-                "summary": summary,
-            }
-        )
+        self._ctx["results"].append({"steam_id": steam_id, "games": games, "summary": summary})
         self._ctx["pending"] -= 1
         return self._ctx["pending"] <= 0
 
@@ -56,10 +46,7 @@ class GamesAggregator:
             games = item.get("games")
             summary = item.get("summary")
             if sid and games:
-                account_map[sid] = {
-                    "games": games,
-                    "summary": summary,
-                }
+                account_map[sid] = {"games": games, "summary": summary}
 
         return primary_data, aggregated, account_map
 
@@ -102,13 +89,9 @@ def merge_games(results: List[Dict[str, Any]]):
 
             merged[appid]["playtime_forever"] += game.get("playtime_forever", 0)
             merged[appid]["playtime_2weeks"] += game.get("playtime_2weeks", 0)
-            merged[appid]["rtime_last_played"] = max(
-                merged[appid].get("rtime_last_played", 0),
-                game.get("rtime_last_played", 0),
-            )
+            merged[appid]["rtime_last_played"] = max(merged[appid].get("rtime_last_played", 0), game.get("rtime_last_played", 0))
 
     all_games = list(merged.values())
-
     total_playtime = sum(g.get("playtime_forever", 0) for g in all_games)
 
     games_by_playtime = sorted(all_games, key=lambda x: x.get("playtime_forever", 0), reverse=True)
@@ -124,3 +107,8 @@ def merge_games(results: List[Dict[str, Any]]):
         "top_2weeks": top_2weeks,
         "total_playtime": total_playtime,
     }
+
+
+__all__ = ["GamesAggregator", "merge_games"]
+
+

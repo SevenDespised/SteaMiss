@@ -1,11 +1,17 @@
 import time
 
+
 class GameTimer:
+    """
+    计时器领域对象（纯 Python）：
+    - 负责累计时间、暂停/继续、格式化
+    - 不依赖 Qt
+    """
+
     def __init__(self):
         self.start_time = 0.0
         self.accumulated_time = 0.0
         self.is_running = False
-        # 最大时间：99小时 59分 59秒
         self.max_seconds = 99 * 3600 + 59 * 60 + 59
 
     def start(self):
@@ -31,27 +37,24 @@ class GameTimer:
         total = self.accumulated_time
         if self.is_running:
             total += time.time() - self.start_time
-        
         if total > self.max_seconds:
             return float(self.max_seconds)
         return total
 
     def get_time_parts(self):
-        """
-        获取时分秒
-        :return: (hours, minutes, seconds)
-        """
+        """获取时分秒 (hours, minutes, seconds)"""
         total_seconds = int(self.get_total_seconds())
-        
         hours = total_seconds // 3600
         minutes = (total_seconds % 3600) // 60
         seconds = total_seconds % 60
-        
         return hours, minutes, seconds
 
     def get_formatted_string(self):
-        """
-        获取格式化字符串 HH:MM:SS
-        """
+        """获取格式化字符串 HH:MM:SS"""
         h, m, s = self.get_time_parts()
         return f"{h:02d}:{m:02d}:{s:02d}"
+
+
+__all__ = ["GameTimer"]
+
+

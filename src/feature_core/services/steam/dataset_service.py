@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from src.feature_core.steam_support.steam_aggregator import merge_games
+from src.feature_core.services.steam.games_aggregator import merge_games
 
 
 class SteamDatasetService:

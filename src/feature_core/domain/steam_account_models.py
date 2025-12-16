@@ -7,7 +7,8 @@ from typing import List, Optional
 @dataclass(frozen=True)
 class SteamAccountPolicy:
     """
-    Steam 账号策略（纯数据）：
+    Steam 账号策略（纯数据）。
+
     - api_key: Steam Web API Key
     - primary_id: 主账号 steam_id
     - alt_ids: 子账号 steam_id 列表（保持配置顺序）

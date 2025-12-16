@@ -5,7 +5,7 @@ Steam 业务服务（services/steam）：
 """
 
 from src.feature_core.services.steam.achievement_service import SteamAchievementService
-from src.feature_core.services.steam.account_models import SteamAccountPolicy
+from src.feature_core.domain.steam_account_models import SteamAccountPolicy
 from src.feature_core.services.steam.account_service import SteamAccountService
 from src.feature_core.services.steam.dataset_service import SteamDatasetService
 from src.feature_core.services.steam.games_service import SteamGamesService
@@ -14,6 +14,10 @@ from src.feature_core.services.steam.price_service import SteamPriceService
 from src.feature_core.services.steam.profile_service import SteamProfileService
 from src.feature_core.services.steam.query_service import SteamQueryService
 from src.feature_core.services.steam.wishlist_service import SteamWishlistService
+from src.feature_core.services.steam.launcher_service import LaunchPlan, SteamLauncherService
+from src.feature_core.services.steam.games_payload_service import build_games_payload
+from src.feature_core.services.steam.wishlist_discount_service import build_discounted_wishlist_items
+from src.feature_core.services.steam.achievement_stats_service import summarize_achievements
 
 __all__ = [
     "SteamAchievementService",
@@ -22,10 +26,15 @@ __all__ = [
     "SteamDatasetService",
     "SteamGamesAggregationService",
     "SteamGamesService",
+    "LaunchPlan",
+    "SteamLauncherService",
     "SteamPriceService",
     "SteamProfileService",
     "SteamQueryService",
     "SteamWishlistService",
+    "build_games_payload",
+    "build_discounted_wishlist_items",
+    "summarize_achievements",
 ]
 
 

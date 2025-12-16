@@ -2,11 +2,16 @@ from PyQt6.QtCore import QObject, pyqtSignal
 
 from typing import Optional
 
-from src.feature_core.steam_support.steam_aggregator import GamesAggregator
-from src.feature_core.steam_support.steam_launcher import SteamLauncher
-from src.feature_core.steam_support.steam_service import SteamService
+from src.feature_core.services.steam.games_aggregator import GamesAggregator
+import os
+
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QDesktopServices
+
+from src.feature_core.services.steam.launcher_service import SteamLauncherService
+from src.feature_core.adapters.qt.steam_task_service_qt import SteamTaskServiceQt
 from src.feature_core.services.steam.account_service import SteamAccountService
-from src.feature_core.services.steam.account_models import SteamAccountPolicy
+from src.feature_core.domain.steam_account_models import SteamAccountPolicy
 from src.feature_core.services.steam.query_service import SteamQueryService
 from src.feature_core.services.steam.dataset_service import SteamDatasetService
 from src.feature_core.services.steam.games_aggregation_service import SteamGamesAggregationService
@@ -38,9 +43,9 @@ class SteamFacadeQt(QObject):
         self._policy_cache: Optional[SteamAccountPolicy] = None
 
         self.games_aggregator = GamesAggregator()
-        self.launcher = SteamLauncher()
+        self.launcher_service = SteamLauncherService()
         self.repository = SteamRepository()
-        self.service = SteamService()  # Qt worker：异步抓取
+        self.service = SteamTaskServiceQt()  # Qt worker：异步抓取
         # 纯业务子域（不依赖 Qt）：现阶段不做“多 service 协同”，Qt 直接调用这些子域
         self.account_service = SteamAccountService()
         self.query_service = SteamQueryService()
@@ -51,7 +56,6 @@ class SteamFacadeQt(QObject):
         self.wishlist_service = SteamWishlistService()
         self.achievement_service = SteamAchievementService()
 
-        self.launcher.error_occurred.connect(self.on_error.emit)
         self.repository.error_occurred.connect(self.on_error.emit)
         self.service.task_finished.connect(self._handle_worker_result)
 
@@ -227,10 +231,28 @@ class SteamFacadeQt(QObject):
         return self.query_service.get_primary_games_cache(self.cache, primary_id)
 
     def launch_game(self, appid):
-        self.launcher.launch_game(appid)
+        plan = self.launcher_service.build_launch_game(appid)
+        if not plan:
+            return
+        try:
+            os.startfile(plan.primary_uri)
+        except Exception as e:
+            self.on_error.emit(f"Failed to launch game {appid}: {e}")
 
     def open_page(self, page_type):
-        self.launcher.open_page(page_type)
+        plan = self.launcher_service.build_open_page(page_type)
+        if not plan:
+            return
+        try:
+            os.startfile(plan.primary_uri)
+        except Exception as e:
+            if plan.fallback_url:
+                try:
+                    QDesktopServices.openUrl(QUrl(plan.fallback_url))
+                    return
+                except Exception:
+                    pass
+            self.on_error.emit(f"Failed to open steam page {page_type}: {e}")
 
 
 __all__ = ["SteamFacadeQt"]

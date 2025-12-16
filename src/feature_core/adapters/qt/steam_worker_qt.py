@@ -1,18 +1,23 @@
 from PyQt6.QtCore import QThread, pyqtSignal
 import time
-from src.feature_core.steam_support.steam_client import SteamClient
+
+from src.feature_core.adapters.http.steam_client import SteamClient
+from src.feature_core.services.steam.achievement_stats_service import summarize_achievements
+from src.feature_core.services.steam.games_payload_service import build_games_payload
+from src.feature_core.services.steam.wishlist_discount_service import build_discounted_wishlist_items
+
 
 class SteamWorker(QThread):
-    """后台工作线程，用于执行耗时的网络请求"""
+    """后台工作线程，用于执行耗时的网络请求（Qt）。"""
 
-    data_ready = pyqtSignal(dict)  # 信号：携带数据字典
+    data_ready = pyqtSignal(dict)
 
     def __init__(self, api_key, steam_id, task_type="summary", extra_data=None):
         super().__init__()
         self.client = SteamClient(api_key)
         self.steam_id = steam_id
         self.task_type = task_type
-        self.extra_data = extra_data  # 用于传递额外参数，如 appids
+        self.extra_data = extra_data
 
     def run(self):
         result = {"type": self.task_type, "data": None, "error": None, "steam_id": self.steam_id}
@@ -52,7 +57,7 @@ class SteamWorker(QThread):
                         prices = self.client.get_app_price(chunk)
                         if prices:
                             all_prices.update(prices)
-                        time.sleep(0.5)  # 礼貌性延迟，防止被封 IP
+                        time.sleep(0.5)
                     result["data"] = all_prices
 
             elif self.task_type == "inventory":
@@ -62,37 +67,7 @@ class SteamWorker(QThread):
 
             elif self.task_type == "wishlist":
                 wishlist_data = self.client.get_wishlist(self.steam_id)
-
-                discounted_games = []
-                for appid, details in wishlist_data.items():
-                    subs = details.get("subs", [])
-                    if not subs:
-                        continue
-
-                    best_sub = None
-                    max_discount = -1
-
-                    for sub in subs:
-                        discount = sub.get("discount_pct", 0) or 0
-                        if discount > max_discount:
-                            max_discount = discount
-                            best_sub = sub
-
-                    if best_sub and max_discount > 0:
-                        price_str = best_sub.get("price", "")
-                        image_url = details.get("capsule", "")
-                        discounted_games.append(
-                            {
-                                "appid": appid,
-                                "name": details.get("name", "Unknown"),
-                                "discount_pct": max_discount,
-                                "price": price_str,
-                                "image": image_url,
-                            }
-                        )
-
-                discounted_games.sort(key=lambda x: x["discount_pct"], reverse=True)
-                result["data"] = discounted_games[:10]
+                result["data"] = build_discounted_wishlist_items(wishlist_data, limit=10)
 
             elif self.task_type == "profile_and_games":
                 players = self.client.get_player_summaries(self.steam_id)
@@ -108,10 +83,7 @@ class SteamWorker(QThread):
                     games = games_data.get("games", [])
                     games_payload = build_games_payload(games, games_data.get("game_count", 0))
 
-                result["data"] = {
-                    "summary": summary_data,
-                    "games": games_payload,
-                }
+                result["data"] = {"summary": summary_data, "games": games_payload}
 
             elif self.task_type == "achievements":
                 appids = self.extra_data
@@ -119,19 +91,8 @@ class SteamWorker(QThread):
                     achievements_data = {}
                     for appid in appids:
                         stats = self.client.get_player_achievements(self.steam_id, appid)
-                        if stats and "achievements" in stats:
-                            ach_list = stats["achievements"]
-                            total = len(ach_list)
-                            unlocked = sum(1 for a in ach_list if a.get("achieved") == 1)
-                            achievements_data[str(appid)] = {
-                                "total": total,
-                                "unlocked": unlocked
-                            }
-                        else:
-                            # 标记为无成就或获取失败
-                            achievements_data[str(appid)] = {"total": 0, "unlocked": 0}
-                        
-                        # 简单的限流
+                        achievements_data[str(appid)] = summarize_achievements(stats)
+
                         time.sleep(0.1)
                     result["data"] = achievements_data
 
@@ -140,19 +101,6 @@ class SteamWorker(QThread):
             print(f"Worker Error: {e}")
 
         self.data_ready.emit(result)
+__all__ = ["SteamWorker"]
 
 
-def build_games_payload(games, game_count):
-    games_by_playtime = sorted(games, key=lambda x: x.get("playtime_forever", 0), reverse=True)
-    games_by_recent = sorted(games, key=lambda x: x.get("rtime_last_played", 0), reverse=True)
-    games_by_2weeks = sorted(games, key=lambda x: x.get("playtime_2weeks", 0), reverse=True)
-    top_2weeks = [g for g in games_by_2weeks if g.get("playtime_2weeks", 0) > 0][:5]
-
-    return {
-        "count": game_count,
-        "all_games": games,
-        "top_games": games_by_playtime[:5],
-        "recent_game": games_by_recent[0] if games_by_recent else None,
-        "top_2weeks": top_2weeks,
-        "total_playtime": sum(g.get("playtime_forever", 0) for g in games),
-    }

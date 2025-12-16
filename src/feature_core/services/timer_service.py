@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from src.feature_core.domain.timer_models import ReminderSettings
-from src.feature_core.timer_support.timer_logic import GameTimer
+from src.feature_core.domain.game_timer import GameTimer
 
 
 @dataclass(frozen=True)
