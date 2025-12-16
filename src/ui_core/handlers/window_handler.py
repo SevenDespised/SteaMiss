@@ -1,5 +1,4 @@
-from PyQt6.QtCore import QPoint, QObject, pyqtSignal
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QObject
 
 class WindowHandler(QObject):
     """
@@ -22,21 +21,21 @@ class WindowHandler(QObject):
             except RuntimeError:
                 del self.active_windows[window_name]
 
-        new_tool = None
+        new_window = None
         if window_name == "stats":
-            new_tool = self.window_factory.create_stats_window()
+            new_window = self.window_factory.create_stats_window()
             # 连接 StatsWindow 的跳转信号
-            new_tool.request_open_all_games.connect(lambda: self.open_window("all_games"))
+            new_window.request_open_all_games.connect(lambda: self.open_window("all_games"))
         elif window_name == "all_games":
-            new_tool = self.window_factory.create_all_games_window()
+            new_window = self.window_factory.create_all_games_window()
         elif window_name == "discounts":
-            new_tool = self.window_factory.create_discount_window()
+            new_window = self.window_factory.create_discount_window()
         elif window_name == "achievements":
-            new_tool = self.window_factory.create_achievement_window()
+            new_window = self.window_factory.create_achievement_window()
         elif window_name == "reminder_settings":
-            new_tool = self.window_factory.create_reminder_settings_window()
+            new_window = self.window_factory.create_reminder_settings_window()
             
-        if new_tool:
-            self.active_windows[window_name] = new_tool
-            new_tool.show()
+        if new_window:
+            self.active_windows[window_name] = new_window
+            new_window.show()
     
