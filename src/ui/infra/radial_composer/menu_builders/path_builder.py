@@ -5,6 +5,7 @@
 import os
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class PathMenuBuilder(BaseMenuBuilder):
@@ -25,7 +26,7 @@ class PathMenuBuilder(BaseMenuBuilder):
             "key": "open_path",
             "label": main_label,
             # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
-            "callback": (lambda p=paths[0]: self.feature_router.execute_action("open_path", path=p)),
+            "callback": (lambda p=paths[0]: self.action_bus.execute(Action.OPEN_PATH, path=p)),
         }
 
         sub_items = []
@@ -34,7 +35,7 @@ class PathMenuBuilder(BaseMenuBuilder):
             sub_items.append(
                 {
                     "label": sub_label,
-                    "callback": (lambda p=paths[i]: self.feature_router.execute_action("open_path", path=p)),
+                    "callback": (lambda p=paths[i]: self.action_bus.execute(Action.OPEN_PATH, path=p)),
                 }
             )
 

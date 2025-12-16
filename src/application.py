@@ -7,7 +7,9 @@ from src.storage.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
 from src.feature_core.steam_manager import SteamManager
 from src.feature_core.handlers.timer_handler import TimerHandler
-from src.feature_core.feature_router import FeatureRouter
+from src.feature_core.app.action_bus import ActionBus
+from src.feature_core.app.actions import Action
+from src.feature_core.app.ui_intents_qt import UiIntents
 from src.storage.resource_manager import ResourceManager
 from src.ui.infra.handlers.window_handler import WindowHandler
 from src.ui.infra.handlers.radial_handler import RadialHandler
@@ -41,22 +43,48 @@ class SteaMissApp:
         # 初始化 Feature Handlers
         self.system_handler = SystemFeatureHandler(self.config_manager)
         self.pet_handler = PetFeatureHandler(self.config_manager)
-        
-        self.feature_router = FeatureRouter(
-            self.system_handler,
-            self.steam_manager,
-            self.timer_handler,
-            self.pet_handler
-        )
+
+        # ActionBus + UI intents（替代旧 FeatureRouter）
+        self.ui_intents = UiIntents()
+        self.action_bus = ActionBus()
+
+        def _emit_error(e: Exception, action: Action, kwargs: dict) -> None:
+            self.ui_intents.error.emit(f"{action.value} failed: {e}")
+
+        self.action_bus.set_error_handler(_emit_error)
+
+        # 注册动作（Action -> handler）
+        self.action_bus.register(Action.OPEN_PATH, self.system_handler.open_explorer)
+        self.action_bus.register(Action.OPEN_URL, self.system_handler.open_url)
+        self.action_bus.register(Action.EXIT, self.system_handler.exit_app)
+
+        self.action_bus.register(Action.LAUNCH_GAME, self.steam_manager.launch_game)
+        self.action_bus.register(Action.OPEN_STEAM_PAGE, self.steam_manager.open_page)
+
+        self.action_bus.register(Action.TOGGLE_TIMER, self.timer_handler.toggle)
+        self.action_bus.register(Action.PAUSE_TIMER, self.timer_handler.pause)
+        self.action_bus.register(Action.RESUME_TIMER, self.timer_handler.resume)
+        self.action_bus.register(Action.STOP_TIMER, self.timer_handler.stop_and_persist)
+
+        # UI intents via actions
+        def _say_hello(**kwargs) -> None:
+            content = self.pet_handler.say_hello(**kwargs)
+            if content:
+                self.ui_intents.say_hello.emit(content)
+
+        self.action_bus.register(Action.SAY_HELLO, _say_hello)
+        self.action_bus.register(Action.HIDE_PET, lambda **_: self.ui_intents.hide_pet.emit())
+        self.action_bus.register(Action.TOGGLE_TOPMOST, lambda **_: self.ui_intents.toggle_topmost.emit())
+        self.action_bus.register(Action.OPEN_WINDOW, lambda window_name, **_: self.ui_intents.open_window.emit(window_name))
         
         # 初始化菜单 builders（builder 充当 provider，避免 MenuComposer 硬编码依赖）
-        path_builder = PathMenuBuilder(self.feature_router, self.config_manager)
-        interaction_builder = InteractionMenuBuilder(self.feature_router, self.config_manager)
-        timer_builder = TimerMenuBuilder(self.feature_router, self.config_manager, self.timer_handler)
-        steam_game_builder = SteamGameMenuBuilder(self.feature_router, self.config_manager, self.steam_manager)
-        steam_page_builder = SteamPageMenuBuilder(self.feature_router, self.config_manager)
-        tool_builder = ToolMenuBuilder(self.feature_router, self.config_manager)
-        exit_builder = ExitMenuBuilder(self.feature_router, self.config_manager)
+        path_builder = PathMenuBuilder(self.action_bus, self.config_manager)
+        interaction_builder = InteractionMenuBuilder(self.action_bus, self.config_manager)
+        timer_builder = TimerMenuBuilder(self.action_bus, self.config_manager, self.timer_handler)
+        steam_game_builder = SteamGameMenuBuilder(self.action_bus, self.config_manager, self.steam_manager)
+        steam_page_builder = SteamPageMenuBuilder(self.action_bus, self.config_manager)
+        tool_builder = ToolMenuBuilder(self.action_bus, self.config_manager)
+        exit_builder = ExitMenuBuilder(self.action_bus, self.config_manager)
 
         # 菜单项 provider 列表（每个 provider 返回 dict 或 None）
         menu_providers = [
@@ -128,7 +156,7 @@ class SteaMissApp:
         
         # 连接宠物交互信号
         self.pet.right_clicked.connect(self.radial_handler.handle_right_click)
-        self.pet.double_clicked.connect(lambda: self.feature_router.execute_action("say_hello"))
+        self.pet.double_clicked.connect(lambda: self.action_bus.execute(Action.SAY_HELLO))
         self.radial_handler.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
         
         # 连接 TrayHandler 的请求信号
@@ -137,12 +165,12 @@ class SteaMissApp:
         self.tray_handler.request_quit_app.connect(self.quit_app)
         self.tray_handler.request_activate_pet.connect(self.activate_pet)
         
-        # 连接 FeatureRouter 信号
-        self.feature_router.request_open_window.connect(self.window_handler.open_window)
-        self.feature_router.request_hide_pet.connect(self.toggle_pet_visibility)
-        self.feature_router.request_toggle_topmost.connect(self.pet.toggle_topmost)
-        self.feature_router.request_say_hello.connect(self.on_say_hello)
-        self.feature_router.error_occurred.connect(self.on_error_occurred)
+        # 连接 UI intents（由 ActionBus 触发）
+        self.ui_intents.open_window.connect(self.window_handler.open_window)
+        self.ui_intents.hide_pet.connect(self.toggle_pet_visibility)
+        self.ui_intents.toggle_topmost.connect(self.pet.toggle_topmost)
+        self.ui_intents.say_hello.connect(self.on_say_hello)
+        self.ui_intents.error.connect(self.on_error_occurred)
 
     def on_say_hello(self, content):
         """响应打招呼"""

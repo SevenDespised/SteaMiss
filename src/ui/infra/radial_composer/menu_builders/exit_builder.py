@@ -3,6 +3,7 @@
 """
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class ExitMenuBuilder(BaseMenuBuilder):
@@ -13,10 +14,10 @@ class ExitMenuBuilder(BaseMenuBuilder):
         return {
             "key": "exit",
             "label": "退出",
-            "callback": lambda: self.feature_router.execute_action("exit"),
+            "callback": lambda: self.action_bus.execute(Action.EXIT),
             "sub_items": [
-                {"label": "隐藏", "callback": lambda: self.feature_router.execute_action("hide_pet")},
-                {"label": topmost_label, "callback": lambda: self.feature_router.execute_action("toggle_topmost")},
+                {"label": "隐藏", "callback": lambda: self.action_bus.execute(Action.HIDE_PET)},
+                {"label": topmost_label, "callback": lambda: self.action_bus.execute(Action.TOGGLE_TOPMOST)},
             ],
         }
 

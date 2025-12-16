@@ -3,13 +3,14 @@ Steam 游戏菜单项构建器。
 """
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class SteamGameMenuBuilder(BaseMenuBuilder):
     """Steam 游戏相关菜单项构建器"""
 
-    def __init__(self, feature_router, config_manager, steam_manager):
-        super().__init__(feature_router, config_manager)
+    def __init__(self, action_bus, config_manager, steam_manager):
+        super().__init__(action_bus, config_manager)
         self.steam_manager = steam_manager
 
     def build_recent_game_item(self):
@@ -24,7 +25,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
             "key": "launch_recent",
             "label": f"最近：\n{name}",
             # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
-            "callback": (lambda appid=top1_appid: self.feature_router.execute_action("launch_game", appid=appid)),
+            "callback": (lambda appid=top1_appid: self.action_bus.execute(Action.LAUNCH_GAME, appid=appid)),
         }
 
         if len(recent_games) > 1:
@@ -32,7 +33,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
             for game in recent_games[1:]:
                 sub_name = self._truncate_text(game.get("name", "Unknown"))
                 sub_items.append(
-                    {"label": sub_name, "callback": (lambda g=game: self.feature_router.execute_action("launch_game", appid=g["appid"]))}
+                    {"label": sub_name, "callback": (lambda g=game: self.action_bus.execute(Action.LAUNCH_GAME, appid=g["appid"]))}
                 )
             item["sub_items"] = sub_items
 
@@ -55,7 +56,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
             "key": "launch_favorite",
             "label": f"启动：\n{name}",
             # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
-            "callback": (lambda appid=top1_appid: self.feature_router.execute_action("launch_game", appid=appid)),
+            "callback": (lambda appid=top1_appid: self.action_bus.execute(Action.LAUNCH_GAME, appid=appid)),
         }
 
         if len(final_games) > 1:
@@ -63,7 +64,7 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
             for game in final_games[1:]:
                 sub_name = self._truncate_text(game.get("name", "Unknown"))
                 sub_items.append(
-                    {"label": sub_name, "callback": (lambda g=game: self.feature_router.execute_action("launch_game", appid=g["appid"]))}
+                    {"label": sub_name, "callback": (lambda g=game: self.action_bus.execute(Action.LAUNCH_GAME, appid=g["appid"]))}
                 )
             item["sub_items"] = sub_items
 

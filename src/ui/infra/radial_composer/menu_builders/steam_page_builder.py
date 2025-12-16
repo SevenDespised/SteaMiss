@@ -3,6 +3,7 @@ Steam 页面菜单项构建器。
 """
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class SteamPageMenuBuilder(BaseMenuBuilder):
@@ -36,7 +37,7 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
         steam_page_item = {
             "key": "open_steam_page",
             "label": f"跳转：\n{main_label}",
-            "callback": (lambda p=main_page: self.feature_router.execute_action("open_steam_page", page_type=p)),
+            "callback": (lambda p=main_page: self.action_bus.execute(Action.OPEN_STEAM_PAGE, page_type=p)),
         }
 
         sub_items = []
@@ -44,7 +45,7 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
             page = selected_pages[i]
             label = self.PAGE_TYPES.get(page, page)
             sub_items.append(
-                {"label": label, "callback": (lambda p=page: self.feature_router.execute_action("open_steam_page", page_type=p))}
+                {"label": label, "callback": (lambda p=page: self.action_bus.execute(Action.OPEN_STEAM_PAGE, page_type=p))}
             )
 
         steam_page_item["sub_items"] = sub_items

@@ -3,6 +3,7 @@
 """
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class ToolMenuBuilder(BaseMenuBuilder):
@@ -12,10 +13,10 @@ class ToolMenuBuilder(BaseMenuBuilder):
         return {
             "key": "stats",
             "label": "游玩\n统计",
-            "callback": lambda: self.feature_router.open_window("stats"),
+            "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="stats"),
             "sub_items": [
-                {"key": "discounts", "label": "特惠\n推荐", "callback": lambda: self.feature_router.open_window("discounts")},
-                {"key": "achievements", "label": "成就\n总览", "callback": lambda: self.feature_router.open_window("achievements")},
+                {"key": "discounts", "label": "特惠\n推荐", "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="discounts")},
+                {"key": "achievements", "label": "成就\n总览", "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="achievements")},
             ],
         }
 

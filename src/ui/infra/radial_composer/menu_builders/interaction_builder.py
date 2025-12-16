@@ -3,6 +3,7 @@
 """
 
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
+from src.feature_core.app.actions import Action
 
 
 class InteractionMenuBuilder(BaseMenuBuilder):
@@ -12,7 +13,7 @@ class InteractionMenuBuilder(BaseMenuBuilder):
         return {
             "key": "say_hello",
             "label": "互动：\n打招呼",
-            "callback": lambda: self.feature_router.execute_action("say_hello"),
+            "callback": lambda: self.action_bus.execute(Action.SAY_HELLO),
         }
 
 
