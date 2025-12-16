@@ -13,29 +13,41 @@ class PathMenuBuilder(BaseMenuBuilder):
 
     def build(self):
         """构建路径菜单项"""
-        paths = self.config_manager.get("explorer_paths", ["C:/", "C:/", "C:/"])
-        aliases = self.config_manager.get("explorer_path_aliases", ["", "", ""])
+        # 注意：ConfigManager.get() 直接返回 settings 内部对象的引用（可变 list）。
+        # 若在这里对 list 做 append，会“就地修改配置”，导致后续菜单闭包读取到陈旧/错位数据。
+        # 因此必须在 build 时创建快照（copy），并只在快照上做补齐与回调捕获。
+        raw_paths = self.config_manager.get("explorer_paths", ["C:/", "C:/", "C:/"])
+        raw_aliases = self.config_manager.get("explorer_path_aliases", ["", "", ""])
 
+        paths = list(raw_paths) if isinstance(raw_paths, list) else ["C:/", "C:/", "C:/"]
+        aliases = list(raw_aliases) if isinstance(raw_aliases, list) else ["", "", ""]
+
+        # 固定输出 3 个槽位（主 + 2 个子项），不足则补齐默认值；不修改原配置。
         while len(paths) < 3:
             paths.append("C:/")
         while len(aliases) < 3:
             aliases.append("")
 
-        main_label = self._format_path_for_display(paths[0], alias=aliases[0], is_main=True)
+        # 使用不可变快照，避免后续对 paths/aliases 的任何修改影响已创建回调
+        path_snapshot = tuple(paths[:3])
+        alias_snapshot = tuple(aliases[:3])
+
+        main_path = path_snapshot[0]
+        main_label = self._format_path_for_display(main_path, alias=alias_snapshot[0], is_main=True)
         path_item = {
             "key": "open_path",
             "label": main_label,
-            # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
-            "callback": (lambda p=paths[0]: self.action_bus.execute(Action.OPEN_PATH, path=p)),
+            # 用默认参数捕获“值快照”，避免闭包引用可变 list
+            "callback": (lambda p=main_path: self.action_bus.execute(Action.OPEN_PATH, path=p)),
         }
 
         sub_items = []
-        for i in range(1, 3):
-            sub_label = self._format_path_for_display(paths[i], alias=aliases[i], is_main=False)
+        for p, a in zip(path_snapshot[1:3], alias_snapshot[1:3]):
+            sub_label = self._format_path_for_display(p, alias=a, is_main=False)
             sub_items.append(
                 {
                     "label": sub_label,
-                    "callback": (lambda p=paths[i]: self.action_bus.execute(Action.OPEN_PATH, path=p)),
+                    "callback": (lambda p=p: self.action_bus.execute(Action.OPEN_PATH, path=p)),
                 }
             )
 
