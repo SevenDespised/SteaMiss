@@ -12,7 +12,7 @@ class AllGamesWindow(BaseGameListWindow):
 
         self.current_prices = {}
 
-        self.calc_price_btn = QPushButton("计算当前标签页未获取的游戏价格")
+        self.calc_price_btn = QPushButton("获取当前标签页未获取的游戏价格")
         self.calc_price_btn.clicked.connect(self.calculate_prices)
         self.toolbar_layout.addWidget(self.calc_price_btn)
         self.toolbar_layout.addStretch()
@@ -104,18 +104,22 @@ class AllGamesWindow(BaseGameListWindow):
             return
 
         prices = self.current_prices
-        to_fetch = []
+        to_fetch_all = []
         limit = 50
         for game in games:
             appid = game.get("appid")
             if str(appid) not in prices:
-                to_fetch.append(appid)
-                if len(to_fetch) >= limit:
-                    break
+                to_fetch_all.append(appid)
 
-        if to_fetch:
-            tab_info["stats_label"].setText(f"正在获取 {len(to_fetch)} 款游戏的价格，请稍候...")
-            self.request_fetch_prices.emit(to_fetch)
+        if to_fetch_all:
+            total = len(to_fetch_all)
+            batches = (total + limit - 1) // limit
+            tab_info["stats_label"].setText(f"将分 {batches} 批获取价格（每批≤{limit}），共 {total} 款，请稍候…")
+
+            # 单次点击：自动分批把所有 appid 发送出去（每批≤50）
+            for i in range(0, total, limit):
+                chunk = to_fetch_all[i : i + limit]
+                self.request_fetch_prices.emit(chunk)
         else:
             tab_info["stats_label"].setText("所有游戏价格已获取或已达到本标签页的限制。")
 

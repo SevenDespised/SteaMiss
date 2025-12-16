@@ -110,20 +110,23 @@ class AchievementWindow(BaseGameListWindow):
         if not games:
             return
 
-        to_fetch = []
+        to_fetch_all = []
         limit = 50
-
         sorted_games = sorted(games, key=lambda x: x.get("rtime_last_played", 0), reverse=True)
         for game in sorted_games:
             appid = game.get("appid")
             if str(appid) not in self.current_achievements:
-                to_fetch.append(appid)
-                if len(to_fetch) >= limit:
-                    break
+                to_fetch_all.append(appid)
 
-        if to_fetch:
-            tab_info["stats_label"].setText(f"正在获取 {len(to_fetch)} 款游戏的成就数据，请稍候...")
-            self.request_fetch_achievements.emit(to_fetch)
+        if to_fetch_all:
+            total = len(to_fetch_all)
+            batches = (total + limit - 1) // limit
+            tab_info["stats_label"].setText(f"将分 {batches} 批获取成就（每批≤{limit}），共 {total} 款，请稍候…")
+
+            # 单次点击：自动分批把所有 appid 发送出去（每批≤50）
+            for i in range(0, total, limit):
+                chunk = to_fetch_all[i : i + limit]
+                self.request_fetch_achievements.emit(chunk)
         else:
             QMessageBox.information(self, "提示", "当前列表成就数据已获取。")
 
