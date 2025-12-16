@@ -28,9 +28,17 @@ class PathMenuBuilder(BaseMenuBuilder):
         while len(aliases) < 3:
             aliases.append("")
 
+        normalized_paths: list[str] = []
+        normalized_aliases: list[str] = []
+        for p, a in zip(paths[:3], aliases[:3]):
+            has_real_path = isinstance(p, str) and bool(p.strip())
+            normalized_paths.append(p.strip() if has_real_path else "C:/")
+            # 未配置路径时不允许设置别名，避免 UI 显示与行为不一致
+            normalized_aliases.append(a if (has_real_path and isinstance(a, str)) else "")
+
         # 使用不可变快照，避免后续对 paths/aliases 的任何修改影响已创建回调
-        path_snapshot = tuple(paths[:3])
-        alias_snapshot = tuple(aliases[:3])
+        path_snapshot = tuple(normalized_paths)
+        alias_snapshot = tuple(normalized_aliases)
 
         main_path = path_snapshot[0]
         main_label = self._format_path_for_display(main_path, alias=alias_snapshot[0], is_main=True)
