@@ -20,7 +20,9 @@ class SteamPageMenuBuilder(BaseMenuBuilder):
     }
 
     def build(self):
-        selected_pages = self.config_manager.get("steam_menu_pages", ["library", "store", "community"])
+        # 注意：ConfigManager.get() 可能直接返回 settings 内部对象的引用（可变 list）。
+        raw_pages = self.config_manager.get("steam_menu_pages", ["library", "store", "community"])
+        selected_pages = list(raw_pages) if isinstance(raw_pages, list) else ["library", "store", "community"]
 
         while len(selected_pages) < 3:
             selected_pages.append("library")
