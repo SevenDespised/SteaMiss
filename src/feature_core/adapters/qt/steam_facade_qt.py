@@ -1,8 +1,19 @@
 from PyQt6.QtCore import QObject, pyqtSignal
 
-from src.feature_core.steam_support.steam_aggregator import GamesAggregator, merge_games
+from typing import Optional
+
+from src.feature_core.steam_support.steam_aggregator import GamesAggregator
 from src.feature_core.steam_support.steam_launcher import SteamLauncher
 from src.feature_core.steam_support.steam_service import SteamService
+from src.feature_core.services.steam.account_service import SteamAccountService
+from src.feature_core.services.steam.account_models import SteamAccountPolicy
+from src.feature_core.services.steam.query_service import SteamQueryService
+from src.feature_core.services.steam.dataset_service import SteamDatasetService
+from src.feature_core.services.steam.games_aggregation_service import SteamGamesAggregationService
+from src.feature_core.services.steam.profile_service import SteamProfileService
+from src.feature_core.services.steam.price_service import SteamPriceService
+from src.feature_core.services.steam.wishlist_service import SteamWishlistService
+from src.feature_core.services.steam.achievement_service import SteamAchievementService
 from src.storage.steam_repository import SteamRepository
 
 
@@ -24,11 +35,21 @@ class SteamFacadeQt(QObject):
         super().__init__()
         self.config = config_manager
         self.cache = {}
+        self._policy_cache: Optional[SteamAccountPolicy] = None
 
         self.games_aggregator = GamesAggregator()
         self.launcher = SteamLauncher()
         self.repository = SteamRepository()
-        self.service = SteamService()
+        self.service = SteamService()  # Qt worker：异步抓取
+        # 纯业务子域（不依赖 Qt）：现阶段不做“多 service 协同”，Qt 直接调用这些子域
+        self.account_service = SteamAccountService()
+        self.query_service = SteamQueryService()
+        self.dataset_service = SteamDatasetService()
+        self.games_aggregation_service = SteamGamesAggregationService()
+        self.profile_service = SteamProfileService()
+        self.price_service = SteamPriceService()
+        self.wishlist_service = SteamWishlistService()
+        self.achievement_service = SteamAchievementService()
 
         self.launcher.error_occurred.connect(self.on_error.emit)
         self.repository.error_occurred.connect(self.on_error.emit)
@@ -36,29 +57,44 @@ class SteamFacadeQt(QObject):
 
         self.cache = self.repository.load_data()
 
-        key, sid = self._get_primary_credentials()
-        if key and sid:
-            self.fetch_games_stats()
-            self.fetch_player_summary()
+        self.fetch_games_stats()
+        self.fetch_player_summary()
+
+    def invalidate_account_policy_cache(self) -> None:
+        """
+        使账号策略缓存失效。
+        当你在运行时修改了 config（steam_api_key/steam_id/steam_alt_ids）后，可手动调用一次。
+        """
+        self._policy_cache = None
+
+    def on_credentials_changed(self) -> None:
+        """
+        账号凭证发生变化后的最小刷新动作：
+        - 失效账号策略缓存
+        - 重新抓取 games_stats + player_summary
+
+        说明：
+        - 不清理旧 cache（历史数据保留符合你的预期）
+        - 不自动抓取 wishlist/achievements/prices（这些较慢，继续由用户手动触发）
+        """
+        self.invalidate_account_policy_cache()
+        self.fetch_games_stats()
+        self.fetch_player_summary()
+
+    def _policy(self) -> SteamAccountPolicy:
+        """
+        统一入口：获取账号策略（带缓存）。
+        """
+        if self._policy_cache is None:
+            self._policy_cache = self.account_service.build_policy(self.config)
+        return self._policy_cache
 
     def _get_primary_credentials(self):
-        key = self.config.get("steam_api_key")
-        sid = self.config.get("steam_id")
-        return key, sid
+        policy = self._policy()
+        return policy.api_key, policy.primary_id
 
     def _get_all_account_ids(self):
-        ids = []
-        primary = self.config.get("steam_id")
-        if not primary:
-            return ids
-
-        ids.append(primary)
-        alt_ids = self.config.get("steam_alt_ids", [])
-        if isinstance(alt_ids, list):
-            for sid in alt_ids:
-                if sid and sid not in ids:
-                    ids.append(sid)
-        return ids
+        return list(self._policy().account_ids)
 
     def fetch_player_summary(self):
         key, sid = self._get_primary_credentials()
@@ -67,12 +103,13 @@ class SteamFacadeQt(QObject):
         self.service.start_task(key, sid, "summary")
 
     def fetch_games_stats(self):
-        key = self.config.get("steam_api_key")
-        ids = self._get_all_account_ids()
+        policy = self._policy()
+        key = policy.api_key
+        ids = policy.account_ids
         if not key or not ids:
             return
 
-        primary_id = ids[0]
+        primary_id = policy.primary_id or ids[0]
         self.games_aggregator.begin(ids, primary_id)
 
         for sid in ids:
@@ -97,25 +134,12 @@ class SteamFacadeQt(QObject):
         self.service.start_task(key, sid, "achievements", extra_data=appids)
 
     def get_recent_games(self, limit=3):
-        games_cache = self._get_primary_games_cache()
-        if not games_cache or not games_cache.get("all_games"):
-            return []
-        all_games = games_cache["all_games"]
-        return sorted(all_games, key=lambda x: x.get("rtime_last_played", 0), reverse=True)[:limit]
+        primary_id = self._policy().primary_id
+        return self.query_service.get_recent_games(self.cache, primary_id, limit=limit)
 
     def search_games(self, keyword):
-        games_cache = self._get_primary_games_cache()
-        if not games_cache or not games_cache.get("all_games"):
-            return []
-        keyword = (keyword or "").lower()
-        if not keyword:
-            return []
-        results = []
-        for game in games_cache["all_games"]:
-            name = (game.get("name", "") or "").lower()
-            if keyword in name:
-                results.append(game)
-        return results
+        primary_id = self._policy().primary_id
+        return self.query_service.search_games(self.cache, primary_id, keyword)
 
     def _handle_worker_result(self, result):
         if result.get("error"):
@@ -132,8 +156,10 @@ class SteamFacadeQt(QObject):
             return
 
         if task_type == "summary":
-            self.cache["summary"] = data
-            self.on_player_summary.emit(data)
+            updates = self.profile_service.apply_summary(self.cache, data)
+            summary_to_emit = updates.get("summary_to_emit")
+            if summary_to_emit:
+                self.on_player_summary.emit(summary_to_emit)
         elif task_type in ("games", "profile_and_games"):
             steam_id = result.get("steam_id")
             if task_type == "profile_and_games":
@@ -154,18 +180,20 @@ class SteamFacadeQt(QObject):
                         self._finalize_games_results()
 
         elif task_type == "store_prices":
-            if "prices" not in self.cache:
-                self.cache["prices"] = {}
-            self.cache["prices"].update(data)
-            self.on_store_prices.emit(data)
+            updates = self.price_service.apply_store_prices(self.cache, data)
+            prices_to_emit = updates.get("prices_to_emit")
+            if prices_to_emit is not None:
+                self.on_store_prices.emit(prices_to_emit)
         elif task_type == "wishlist":
-            self.cache["wishlist"] = data
-            self.on_wishlist_data.emit(data)
+            updates = self.wishlist_service.apply_wishlist(self.cache, data)
+            wishlist_to_emit = updates.get("wishlist_to_emit")
+            if wishlist_to_emit is not None:
+                self.on_wishlist_data.emit(wishlist_to_emit)
         elif task_type == "achievements":
-            if "achievements" not in self.cache:
-                self.cache["achievements"] = {}
-            self.cache["achievements"].update(data)
-            self.on_achievements_data.emit(data)
+            updates = self.achievement_service.apply_achievements(self.cache, data)
+            achievements_to_emit = updates.get("achievements_to_emit")
+            if achievements_to_emit is not None:
+                self.on_achievements_data.emit(achievements_to_emit)
 
         if task_type != "games":
             self.repository.save_data(self.cache)
@@ -173,93 +201,30 @@ class SteamFacadeQt(QObject):
     def _finalize_games_results(self):
         primary_data, aggregated, account_map = self.games_aggregator.finalize()
 
-        if account_map:
-            self.cache["games_accounts"] = account_map
+        primary_id = self._policy().primary_id
+        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, primary_data, aggregated, account_map)
 
-        primary_id = self.config.get("steam_id")
-        if primary_data:
-            self.cache["games_primary"] = primary_data
+        summary_to_emit = updates.get("summary_to_emit")
+        if summary_to_emit:
+            self.on_player_summary.emit(summary_to_emit)
 
-        if primary_id and account_map and primary_id in account_map:
-            primary_summary = account_map[primary_id].get("summary")
-            if primary_summary:
-                self.cache["summary"] = primary_summary
-                self.on_player_summary.emit(primary_summary)
+        games_to_emit = updates.get("games_to_emit")
+        if games_to_emit is not None:
+            self.on_games_stats.emit(games_to_emit)
 
-        if aggregated is not None:
-            self.cache["games"] = aggregated
-            self.on_games_stats.emit(aggregated)
+        if updates.get("should_save"):
             self.repository.save_data(self.cache)
 
     def get_game_datasets(self):
-        datasets = []
-        self._ensure_aggregated_cache()
-
-        aggregated = self.cache.get("games")
-        if aggregated is not None:
-            datasets.append({"key": "total", "label": "总计", "steam_id": None, "data": aggregated, "summary": None})
-
-        accounts = dict(self.cache.get("games_accounts", {}) or {})
-        primary_id = self.config.get("steam_id")
-        if primary_id and primary_id not in accounts and "games_primary" in self.cache:
-            accounts[primary_id] = {"games": self.cache["games_primary"], "summary": self.cache.get("summary")}
-        if primary_id and primary_id in accounts:
-            primary_entry = accounts[primary_id]
-            games_data = primary_entry.get("games")
-            if games_data:
-                datasets.append(
-                    {
-                        "key": "primary",
-                        "label": "主账号",
-                        "steam_id": primary_id,
-                        "data": games_data,
-                        "summary": primary_entry.get("summary") or self.cache.get("summary"),
-                    }
-                )
-
-        alt_ids = self.config.get("steam_alt_ids", [])
-        if isinstance(alt_ids, list):
-            sub_index = 1
-            for sid in alt_ids:
-                entry = accounts.get(sid)
-                if entry and entry.get("games"):
-                    datasets.append(
-                        {
-                            "key": f"sub_{sub_index}",
-                            "label": f"子账号{sub_index}",
-                            "steam_id": sid,
-                            "data": entry.get("games"),
-                            "summary": entry.get("summary"),
-                        }
-                    )
-                    sub_index += 1
-
-        return datasets
+        policy = self._policy()
+        return self.dataset_service.build_game_datasets(self.cache, policy.primary_id, policy.alt_ids)
 
     def _ensure_aggregated_cache(self):
-        accounts = self.cache.get("games_accounts", {})
-        if not accounts:
-            if "games_primary" in self.cache:
-                self.cache["games"] = self.cache["games_primary"]
-            return
-
-        results = []
-        for sid, data in accounts.items():
-            if data.get("games"):
-                results.append({"steam_id": sid, "games": data["games"], "summary": data.get("summary")})
-
-        if results:
-            self.cache["games"] = merge_games(results)
+        self.dataset_service.ensure_aggregated_cache(self.cache)
 
     def _get_primary_games_cache(self):
-        primary_id = self.config.get("steam_id")
-        if not primary_id:
-            return None
-        if "games_primary" in self.cache:
-            return self.cache["games_primary"]
-        if "games" in self.cache:
-            return self.cache["games"]
-        return None
+        primary_id = self._policy().primary_id
+        return self.query_service.get_primary_games_cache(self.cache, primary_id)
 
     def launch_game(self, appid):
         self.launcher.launch_game(appid)
