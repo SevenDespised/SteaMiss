@@ -1,5 +1,6 @@
 feat：steam小号支持
 feat: 常用网站启动
+feat: 成就窗口加搜索 加重新统计
 refa: window factory解耦 feature router解耦
 refa: window 抽象
 refa: window factory 的 window 和 window api manager （steam service manager）交互（通过ui manager？）
