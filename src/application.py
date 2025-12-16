@@ -5,11 +5,11 @@ from src.ui.widgets.timer_overlay import TimerOverlay
 # 引入所有管理器
 from src.storage.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
-from src.feature_core.steam_manager import SteamManager
-from src.feature_core.handlers.timer_handler import TimerHandler
+from src.feature_core.adapters.qt.steam_facade_qt import SteamFacadeQt
+from src.feature_core.adapters.qt.timer_facade_qt import TimerFacadeQt
 from src.feature_core.app.action_bus import ActionBus
 from src.feature_core.app.actions import Action
-from src.feature_core.app.ui_intents_qt import UiIntents
+from src.feature_core.app.ui_intents_qt import UiIntentsQt
 from src.storage.resource_manager import ResourceManager
 from src.ui.infra.handlers.window_handler import WindowHandler
 from src.ui.infra.handlers.radial_handler import RadialHandler
@@ -37,15 +37,15 @@ class SteaMissApp:
         self.config_manager = ConfigManager()
         self.behavior_manager = BehaviorManager()
         self.resource_manager = ResourceManager()
-        self.timer_handler = TimerHandler(config_manager=self.config_manager)
-        self.steam_manager = SteamManager(self.config_manager)
+        self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
+        self.steam_manager = SteamFacadeQt(self.config_manager)
         
         # 初始化 Feature Handlers
         self.system_handler = SystemFeatureHandler(self.config_manager)
         self.pet_handler = PetFeatureHandler(self.config_manager)
 
         # ActionBus + UI intents（替代旧 FeatureRouter）
-        self.ui_intents = UiIntents()
+        self.ui_intents = UiIntentsQt()
         self.action_bus = ActionBus()
 
         def _emit_error(e: Exception, action: Action, kwargs: dict) -> None:

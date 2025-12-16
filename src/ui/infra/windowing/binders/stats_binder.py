@@ -5,7 +5,7 @@ from src.ui.infra.windowing.context import WindowContext
 
 class StatsWindowBinder:
     """
-    StatsWindow 绑定器：连接 SteamManager 信号/请求，并处理窗口内部跳转意图。
+    StatsWindow 绑定器：连接 SteamFacadeQt 信号/请求，并处理窗口内部跳转意图。
     """
 
     def bind(self, view: object, ctx: WindowContext) -> None:

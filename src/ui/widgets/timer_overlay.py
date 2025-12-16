@@ -5,7 +5,7 @@
 from PyQt6.QtCore import QRect
 from PyQt6.QtGui import QPainter
 
-from src.feature_core.handlers.timer_handler import TimerHandler
+from src.feature_core.adapters.qt.timer_facade_qt import TimerFacadeQt
 from src.ui.widgets.timer_display import TimerDisplay
 
 
@@ -14,9 +14,9 @@ class TimerOverlay:
     负责在给定区域内绘制计时器，解耦宠物窗口与计时器绘制细节。
     """
 
-    def __init__(self, timer_handler: TimerHandler, display: TimerDisplay | None = None, margin: int = 5):
+    def __init__(self, timer_handler: TimerFacadeQt, display: TimerDisplay | None = None, margin: int = 5):
         """
-        @param timer_handler: TimerHandler（提供 overlay context）
+        @param timer_handler: TimerFacadeQt（提供 overlay context）
         @param display: TimerDisplay（渲染资源与绘制）
         @param margin: 距离容器底部的边距
         """
