@@ -14,6 +14,13 @@ from src.ui.infra.handlers.radial_handler import RadialHandler
 from src.ui.infra.radial_composer.menu_composer import MenuComposer
 from src.ui.infra.windowing.window_factory import WindowFactory
 from src.ui.infra.handlers.tray_handler import TrayHandler
+from src.ui.infra.radial_composer.menu_builders.exit_builder import ExitMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.interaction_builder import InteractionMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.path_builder import PathMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.steam_game_builder import SteamGameMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.steam_page_builder import SteamPageMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.timer_builder import TimerMenuBuilder
+from src.ui.infra.radial_composer.menu_builders.tool_builder import ToolMenuBuilder
 
 from src.feature_core.handlers.system_handler import SystemFeatureHandler
 # from src.feature.handlers.steam_handler import SteamFeatureHandler
@@ -42,12 +49,43 @@ class SteaMissApp:
             self.pet_handler
         )
         
-        # 初始化菜单组装器
+        # 初始化菜单 builders（builder 充当 provider，避免 MenuComposer 硬编码依赖）
+        path_builder = PathMenuBuilder(self.feature_router, self.config_manager)
+        interaction_builder = InteractionMenuBuilder(self.feature_router, self.config_manager)
+        timer_builder = TimerMenuBuilder(self.feature_router, self.config_manager, self.timer_handler)
+        steam_game_builder = SteamGameMenuBuilder(self.feature_router, self.config_manager, self.steam_manager)
+        steam_page_builder = SteamPageMenuBuilder(self.feature_router, self.config_manager)
+        tool_builder = ToolMenuBuilder(self.feature_router, self.config_manager)
+        exit_builder = ExitMenuBuilder(self.feature_router, self.config_manager)
+
+        # 菜单项 provider 列表（每个 provider 返回 dict 或 None）
+        menu_providers = [
+            lambda: exit_builder.build(),
+            lambda: path_builder.build(),
+            lambda: steam_page_builder.build(),
+            lambda: tool_builder.build_stats_item(),
+            lambda: timer_builder.build(),
+            lambda: steam_game_builder.build_recent_game_item(),
+            lambda: steam_game_builder.build_quick_launch_item(),
+            lambda: interaction_builder.build(),
+        ]
+
+        # 菜单布局顺序：由顶层注入，避免耦合在 MenuComposer 中
+        menu_layout_keys = [
+            "exit",
+            "open_path",
+            "open_steam_page",
+            "stats",
+            "timer",
+            "launch_recent",
+            "launch_favorite",
+            "say_hello",
+        ]
+
         self.menu_composer = MenuComposer(
-            self.feature_router,
-            self.steam_manager,
-            self.config_manager,
-            self.timer_handler
+            providers=menu_providers,
+            layout_keys=menu_layout_keys,
+            fill_to=len(menu_layout_keys),
         )
         
         # 初始化窗口工厂

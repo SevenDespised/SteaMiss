@@ -1,74 +1,71 @@
-from src.ui.infra.radial_composer.menu_builders.exit_builder import ExitMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.interaction_builder import InteractionMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.path_builder import PathMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.steam_game_builder import SteamGameMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.steam_page_builder import SteamPageMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.timer_builder import TimerMenuBuilder
-from src.ui.infra.radial_composer.menu_builders.tool_builder import ToolMenuBuilder
+from __future__ import annotations
+
+from typing import Callable, Iterable, Optional, Union
 
 
 class MenuComposer:
     """
-    菜单组装器：协调各菜单项构建器，生成最终的菜单数据列表。
+    菜单组装器（纯聚合器）：
+    - 不负责创建/持有具体 builder；
+    - 不内置排序规则；
+    - 只负责调用 providers 收集菜单项，并按注入的 layout_keys 输出固定扇区列表。
     """
 
-    def __init__(self, feature_router, steam_manager, config_manager, timer_handler):
-        self.feature_router = feature_router
-        self.steam_manager = steam_manager
-        self.config_manager = config_manager
-        self.timer_handler = timer_handler
+    MenuItem = dict
+    ProviderResult = Union[None, MenuItem, list[MenuItem], tuple[MenuItem, ...]]
+    Provider = Callable[[], ProviderResult]
 
-        self.path_builder = PathMenuBuilder(feature_router, config_manager)
-        self.interaction_builder = InteractionMenuBuilder(feature_router, config_manager)
-        self.timer_builder = TimerMenuBuilder(feature_router, config_manager, timer_handler)
-        self.steam_game_builder = SteamGameMenuBuilder(feature_router, config_manager, steam_manager)
-        self.steam_page_builder = SteamPageMenuBuilder(feature_router, config_manager)
-        self.tool_builder = ToolMenuBuilder(feature_router, config_manager)
-        self.exit_builder = ExitMenuBuilder(feature_router, config_manager)
+    def __init__(
+        self,
+        providers: Iterable[Provider],
+        layout_keys: list[str],
+        fill_to: Optional[int] = None,
+    ):
+        """
+        @param providers: provider 列表（builder 充当 provider 时，可注入 lambda: builder.build_xxx()）
+        @param layout_keys: 菜单扇区 key 顺序（完全由顶层注入，composer 不维护）
+        @param fill_to: 固定输出长度；默认使用 layout_keys 长度
+        """
+        self.providers = list(providers)
+        self.layout_keys = list(layout_keys)
+        self.fill_to = fill_to if fill_to is not None else len(self.layout_keys)
 
     def compose(self):
         """
-        构建排序好的菜单项列表。
+        构建排序好的菜单项列表（按 layout_keys 输出；缺失项用 None 填充）。
         """
-        order = [
-            "exit",
-            "open_path",
-            "open_steam_page",
-            "stats",
-            "timer",
-            "launch_recent",
-            "launch_favorite",
-            "say_hello",
-        ]
+        items: list[MenuComposer.MenuItem] = []
 
-        all_items = []
-        all_items.append(self.path_builder.build())
-        all_items.append(self.interaction_builder.build())
-        all_items.append(self.tool_builder.build_stats_item())
-        all_items.append(self.timer_builder.build())
+        for provider in self.providers:
+            try:
+                result = provider()
+            except Exception:
+                # provider 出错时不阻塞整个菜单渲染（保持 UI 可用）
+                continue
 
-        recent_item = self.steam_game_builder.build_recent_game_item()
-        if recent_item:
-            all_items.append(recent_item)
+            if result is None:
+                continue
+            if isinstance(result, dict):
+                items.append(result)
+                continue
+            if isinstance(result, (list, tuple)):
+                for it in result:
+                    if isinstance(it, dict):
+                        items.append(it)
 
-        quick_launch_item = self.steam_game_builder.build_quick_launch_item()
-        if quick_launch_item:
-            all_items.append(quick_launch_item)
+        # key -> item（后写覆盖前写，避免重复 key）
+        items_map = {item.get("key"): item for item in items if item and item.get("key")}
 
-        steam_page_item = self.steam_page_builder.build()
-        if steam_page_item:
-            all_items.append(steam_page_item)
+        output: list[Optional[dict]] = []
+        for key in self.layout_keys:
+            output.append(items_map.get(key))
 
-        opts_item = self.exit_builder.build()
-        if opts_item:
-            all_items.append(opts_item)
+        # 若 fill_to > layout_keys，则补齐 None
+        while len(output) < int(self.fill_to or 0):
+            output.append(None)
 
-        items_map = {item["key"]: item for item in all_items}
-        sorted_items = []
-        for key in order:
-            sorted_items.append(items_map.get(key))
-
-        return sorted_items
+        # 若 fill_to < layout_keys，则截断
+        return output[: int(self.fill_to or len(output))]
 
 
 __all__ = ["MenuComposer"]
