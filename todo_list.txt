@@ -1,11 +1,16 @@
-feat：steam小号支持
+feat：steam小号支持 已完成
 feat: 常用网站启动
 feat: 成就窗口加搜索 加重新统计
+feat: 所有窗口唤出时置顶
+feat: 所有chunk搜索自动迭代
+feat: 账号id合法性校验和重复校验
+feat: config自动订阅机制。
 refa: window factory解耦 feature router解耦
 refa: window 抽象
 refa: window factory 的 window 和 window api manager （steam service manager）交互（通过ui manager？）
 refa：ui manager 换成直接调用工厂的创建方法，工厂来枚举窗口。窗口设置一个基类。（x）窗口的信号发射逻辑都集中给ui manager 
-refa：steam manager 切分成steam handler(给feature用)和 steam service manager
+refa：steam manager 改名字，各种handler改名字
+refa: 可选； 是否将各builder对于各service的耦合删除？可以。将信号下沉到steam qt层而不是直接注入
 
 doc： 画一下结构图，重要！
 style: 
