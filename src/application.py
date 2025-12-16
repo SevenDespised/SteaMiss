@@ -75,26 +75,27 @@ class SteaMissApp:
         self.action_bus.register(Action.HIDE_PET, lambda **_: self.ui_intents.hide_pet.emit())
         self.action_bus.register(Action.TOGGLE_TOPMOST, lambda **_: self.ui_intents.toggle_topmost.emit())
         self.action_bus.register(Action.OPEN_WINDOW, lambda window_name, **_: self.ui_intents.open_window.emit(window_name))
-        
-        # 初始化菜单 builders（builder 充当 provider，避免 MenuComposer 硬编码依赖）
-        path_builder = PathMenuBuilder(self.action_bus, self.config_manager)
-        interaction_builder = InteractionMenuBuilder(self.action_bus, self.config_manager)
-        timer_builder = TimerMenuBuilder(self.action_bus, self.config_manager, self.timer_handler)
-        steam_game_builder = SteamGameMenuBuilder(self.action_bus, self.config_manager, self.steam_manager)
-        steam_page_builder = SteamPageMenuBuilder(self.action_bus, self.config_manager)
-        tool_builder = ToolMenuBuilder(self.action_bus, self.config_manager)
-        exit_builder = ExitMenuBuilder(self.action_bus, self.config_manager)
 
         # 菜单项 provider 列表（每个 provider 返回 dict 或 None）
+        #
+        # 注意：provider 在渲染时才会被调用（见 MenuComposer.compose），
+        # 因此不要在外层创建/复用 builder 实例并在此处通过闭包引用它们，
+        # 否则一旦 builder 引入可变状态（缓存、临时字段等），就可能出现“陈旧菜单状态”。
+        # 这里采用“每次调用都新建 builder 并立即 build”的方式，消除隐性共享状态风险。
+        action_bus = self.action_bus
+        config_manager = self.config_manager
+        timer_handler = self.timer_handler
+        steam_manager = self.steam_manager
+
         menu_providers = [
-            lambda: exit_builder.build(),
-            lambda: path_builder.build(),
-            lambda: steam_page_builder.build(),
-            lambda: tool_builder.build_stats_item(),
-            lambda: timer_builder.build(),
-            lambda: steam_game_builder.build_recent_game_item(),
-            lambda: steam_game_builder.build_quick_launch_item(),
-            lambda: interaction_builder.build(),
+            lambda ab=action_bus, cm=config_manager: ExitMenuBuilder(ab, cm).build(),
+            lambda ab=action_bus, cm=config_manager: PathMenuBuilder(ab, cm).build(),
+            lambda ab=action_bus, cm=config_manager: SteamPageMenuBuilder(ab, cm).build(),
+            lambda ab=action_bus, cm=config_manager: ToolMenuBuilder(ab, cm).build_stats_item(),
+            lambda ab=action_bus, cm=config_manager, th=timer_handler: TimerMenuBuilder(ab, cm, th).build(),
+            lambda ab=action_bus, cm=config_manager, sm=steam_manager: SteamGameMenuBuilder(ab, cm, sm).build_recent_game_item(),
+            lambda ab=action_bus, cm=config_manager, sm=steam_manager: SteamGameMenuBuilder(ab, cm, sm).build_quick_launch_item(),
+            lambda ab=action_bus, cm=config_manager: InteractionMenuBuilder(ab, cm).build(),
         ]
 
         # 菜单布局顺序：由顶层注入，避免耦合在 MenuComposer 中

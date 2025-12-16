@@ -22,7 +22,7 @@ class MenuComposer:
         fill_to: Optional[int] = None,
     ):
         """
-        @param providers: provider 列表（builder 充当 provider 时，可注入 lambda: builder.build_xxx()）
+        @param providers: provider 列表（建议 provider 内部按需创建 builder 并立即 build，避免复用可变 builder 导致陈旧状态）
         @param layout_keys: 菜单扇区 key 顺序（完全由顶层注入，composer 不维护）
         @param fill_to: 固定输出长度；默认使用 layout_keys 长度
         """
