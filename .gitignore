@@ -18,3 +18,7 @@ test.py
 .vscode/
 .idea/
 .cursor/
+
+# github
+.github/agents/
+.github/copilot-*

@@ -1,6 +1,6 @@
 feat：steam小号支持
 feat: 常用网站启动
-refa: window factory解耦
+refa: window factory解耦 feature router解耦
 refa: window 抽象
 refa: window factory 的 window 和 window api manager （steam service manager）交互（通过ui manager？）
 refa：ui manager 换成直接调用工厂的创建方法，工厂来枚举窗口。窗口设置一个基类。（x）窗口的信号发射逻辑都集中给ui manager 
