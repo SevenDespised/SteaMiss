@@ -19,10 +19,12 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
 
         top1 = recent_games[0]
         name = self._truncate_text(top1.get("name", "Unknown"))
+        top1_appid = top1.get("appid")
         item = {
             "key": "launch_recent",
             "label": f"最近：\n{name}",
-            "callback": lambda: self.feature_router.execute_action("launch_game", appid=top1["appid"]),
+            # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
+            "callback": (lambda appid=top1_appid: self.feature_router.execute_action("launch_game", appid=appid)),
         }
 
         if len(recent_games) > 1:
@@ -48,10 +50,12 @@ class SteamGameMenuBuilder(BaseMenuBuilder):
 
         top1 = final_games[0]
         name = self._truncate_text(top1.get("name", "Unknown"))
+        top1_appid = top1.get("appid")
         item = {
             "key": "launch_favorite",
             "label": f"启动：\n{name}",
-            "callback": lambda: self.feature_router.execute_action("launch_game", appid=top1["appid"]),
+            # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
+            "callback": (lambda appid=top1_appid: self.feature_router.execute_action("launch_game", appid=appid)),
         }
 
         if len(final_games) > 1:

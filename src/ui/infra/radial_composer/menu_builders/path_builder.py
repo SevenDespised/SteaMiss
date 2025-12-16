@@ -24,7 +24,8 @@ class PathMenuBuilder(BaseMenuBuilder):
         path_item = {
             "key": "open_path",
             "label": main_label,
-            "callback": lambda: self.feature_router.execute_action("open_path", path=paths[0]),
+            # 主项也使用默认参数捕获，避免闭包对外部变量引用不一致
+            "callback": (lambda p=paths[0]: self.feature_router.execute_action("open_path", path=p)),
         }
 
         sub_items = []
