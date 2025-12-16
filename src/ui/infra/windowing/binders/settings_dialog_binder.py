@@ -12,8 +12,23 @@ class SettingsDialogBinder:
 
         # 2) 保存请求
         def handle_save(settings: dict) -> None:
+            # 保存前记录账号相关字段，便于判断是否需要刷新 Steam 凭证
+            old_api_key = ctx.config_manager.get("steam_api_key")
+            old_steam_id = ctx.config_manager.get("steam_id")
+            old_alt_ids = ctx.config_manager.get("steam_alt_ids", [])
+
             for key, value in settings.items():
                 ctx.config_manager.set(key, value)
+
+            # 账号凭证变更：仅做“失效 + 重新抓取 games/summary”，不清理旧 cache，也不自动抓取慢接口
+            new_api_key = ctx.config_manager.get("steam_api_key")
+            new_steam_id = ctx.config_manager.get("steam_id")
+            new_alt_ids = ctx.config_manager.get("steam_alt_ids", [])
+            if (new_api_key != old_api_key) or (new_steam_id != old_steam_id) or (new_alt_ids != old_alt_ids):
+                try:
+                    ctx.steam_manager.on_credentials_changed()
+                except Exception:
+                    pass
 
         view.request_save.connect(handle_save)
 
