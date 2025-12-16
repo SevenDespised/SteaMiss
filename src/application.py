@@ -24,10 +24,8 @@ from src.ui.infra.radial_composer.menu_builders.steam_page_builder import SteamP
 from src.ui.infra.radial_composer.menu_builders.timer_builder import TimerMenuBuilder
 from src.ui.infra.radial_composer.menu_builders.tool_builder import ToolMenuBuilder
 
-from src.feature_core.handlers.system_handler import SystemFeatureHandler
-# from src.feature.handlers.steam_handler import SteamFeatureHandler
-# from src.feature.handlers.timer_handler import TimerFeatureHandler
-from src.feature_core.handlers.pet_handler import PetFeatureHandler
+from src.feature_core.adapters.qt.system_facade_qt import SystemFacadeQt
+from src.feature_core.services.pet_service import PetService
 
 class SteaMissApp:
     def __init__(self, app: QApplication):
@@ -40,9 +38,9 @@ class SteaMissApp:
         self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
         self.steam_manager = SteamFacadeQt(self.config_manager)
         
-        # 初始化 Feature Handlers
-        self.system_handler = SystemFeatureHandler(self.config_manager)
-        self.pet_handler = PetFeatureHandler(self.config_manager)
+        # System/Pet：分别落在 adapters/qt 与 services
+        self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
+        self.pet_service = PetService(self.config_manager)
 
         # ActionBus + UI intents（替代旧 FeatureRouter）
         self.ui_intents = UiIntentsQt()
@@ -54,9 +52,9 @@ class SteaMissApp:
         self.action_bus.set_error_handler(_emit_error)
 
         # 注册动作（Action -> handler）
-        self.action_bus.register(Action.OPEN_PATH, self.system_handler.open_explorer)
-        self.action_bus.register(Action.OPEN_URL, self.system_handler.open_url)
-        self.action_bus.register(Action.EXIT, self.system_handler.exit_app)
+        self.action_bus.register(Action.OPEN_PATH, self.system_facade.open_explorer)
+        self.action_bus.register(Action.OPEN_URL, self.system_facade.open_url)
+        self.action_bus.register(Action.EXIT, self.system_facade.exit_app)
 
         self.action_bus.register(Action.LAUNCH_GAME, self.steam_manager.launch_game)
         self.action_bus.register(Action.OPEN_STEAM_PAGE, self.steam_manager.open_page)
@@ -68,7 +66,8 @@ class SteaMissApp:
 
         # UI intents via actions
         def _say_hello(**kwargs) -> None:
-            content = self.pet_handler.say_hello(**kwargs)
+            _ = kwargs
+            content = self.pet_service.get_say_hello_content()
             if content:
                 self.ui_intents.say_hello.emit(content)
 
