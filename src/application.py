@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
-from src.view.pet import DesktopPet
-from src.view.timer_overlay import TimerOverlay
+from src.ui.pet.pet import DesktopPet
+from src.ui.widgets.timer_overlay import TimerOverlay
 
 # 引入所有管理器
 from src.storage.config_manager import ConfigManager
@@ -9,11 +9,11 @@ from src.feature_core.steam_manager import SteamManager
 from src.feature_core.handlers.timer_handler import TimerHandler
 from src.feature_core.feature_router import FeatureRouter
 from src.storage.resource_manager import ResourceManager
-from src.ui_core.handlers.window_handler import WindowHandler
-from src.ui_core.handlers.radial_handler import RadialHandler
-from src.ui_core.radial_composer.menu_composer import MenuComposer
-from src.ui.window_factory import WindowFactory
-from src.ui_core.handlers.tray_handler import TrayHandler
+from src.ui.infra.handlers.window_handler import WindowHandler
+from src.ui.infra.handlers.radial_handler import RadialHandler
+from src.ui.infra.radial_composer.menu_composer import MenuComposer
+from src.ui.infra.windowing.window_factory import WindowFactory
+from src.ui.infra.handlers.tray_handler import TrayHandler
 
 from src.feature_core.handlers.system_handler import SystemFeatureHandler
 # from src.feature.handlers.steam_handler import SteamFeatureHandler
