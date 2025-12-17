@@ -61,13 +61,12 @@ class SteamFacadeQt(QObject):
 
         self.cache = self.repository.load_data()
 
-        self.fetch_games_stats()
         self.fetch_player_summary()
+        self.fetch_games_stats() 
 
     def invalidate_account_policy_cache(self) -> None:
         """
         使账号策略缓存失效。
-        当你在运行时修改了 config（steam_api_key/steam_id/steam_alt_ids）后，可手动调用一次。
         """
         self._policy_cache = None
 
