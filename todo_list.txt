@@ -1,7 +1,8 @@
 feat：steam小号支持 已完成
 feat: 常用网站启动
-feat: 成就窗口加搜索 加重新统计
-feat: 所有窗口唤出时置顶
+feat: 成就窗口加搜索 加重新统计 重要
+feat: 所有窗口唤出时置顶 重要
+feat: 功能菜单添加删除所有数据（仅保留steamkey 和 id）功能  重要
 feat: 所有chunk搜索自动迭代
 feat: 账号id合法性校验和重复校验
 feat: config自动订阅机制。
