@@ -14,45 +14,10 @@ refa：ui manager 换成直接调用工厂的创建方法，工厂来枚举窗�
 refa：steam manager 改名字，各种handler改名字
 refa: 可选； 是否将各builder对于各service的耦合删除？可以。将信号下沉到steam qt层而不是直接注入
 
+未能复现的bug：
+1. 主账号设置无误时，在游戏价值统计窗口曾错误显示子账号的游戏列表。在这种情况下，主账号的summary也未能显示。
 doc： 画一下结构图，重要！
 style: 
-
-view
-        -pet
-        -timer_overlay
-        -timer_support
-                -timer display
-                -timer logic
-ui_core
-        -ui manager  (废弃,拆分成下面3个handler) 
-        -ui handlers
-                -tray handler
-                -window handler
-                -radial handler
-        -ratial composer
-                -menu composer
-                -menu builders
-feature_core
-        -steam service manager
-        -feature router
-        -feature handlers
-                -steam_handler
-        -steam support
-                -steam client
-storage
-        -config_manager 改名
-        -resource_manager
-        -logger (未编写，包含timer logger和调试logger 调试logger存到另外的debug文件夹)
-        -steam_repo
-ai
-        -behaviour manager
-ui
-        -window
-                -
-        -menu
-                - tray
-
-
 
 
 future: 更改显示逻辑。
