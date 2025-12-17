@@ -1,4 +1,4 @@
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QComboBox,
     QDialog,
@@ -20,6 +20,7 @@ class SettingsDialog(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, True)  # 永久置顶
         self.setWindowTitle("功能设置")
         self.resize(500, 600)
 

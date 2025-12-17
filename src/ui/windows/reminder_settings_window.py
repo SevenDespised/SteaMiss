@@ -23,6 +23,7 @@ class ReminderSettingsWindow(QDialog):
 
     def __init__(self, timer_handler, parent=None):
         super().__init__(parent)
+        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, True)  # 永久置顶
         self.timer_handler = timer_handler
         self.setWindowTitle("提醒设置")
         self.setModal(True)
