@@ -40,8 +40,8 @@ class DiscountItemWidget(QWidget):
 class DiscountWindow(QWidget):
     request_refresh = pyqtSignal()
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setWindowTitle("愿望单/关注游戏特惠推荐")
         self.resize(550, 600)
 

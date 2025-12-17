@@ -52,25 +52,6 @@ class WindowFactory:
             spec.binder.bind(view, self._ctx)
         return view
 
-    # --- 兼容封装（旧调用点仍可用） ---
-    def create_reminder_settings_window(self, parent=None):
-        return self.create_window("reminder_settings", parent=parent)
-
-    def create_settings_dialog(self):
-        return self.create_window("settings")
-
-    def create_stats_window(self):
-        return self.create_window("stats")
-
-    def create_all_games_window(self):
-        return self.create_window("all_games")
-
-    def create_achievement_window(self):
-        return self.create_window("achievements")
-
-    def create_discount_window(self):
-        return self.create_window("discounts")
-
 
 __all__ = ["WindowFactory"]
 

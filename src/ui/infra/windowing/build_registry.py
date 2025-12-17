@@ -31,7 +31,7 @@ def build_window_registry() -> WindowRegistry:
         from src.ui.windows.stats_window import StatsWindow
 
         _ = (ctx, parent)
-        return StatsWindow()
+        return StatsWindow(parent=parent)
 
     def create_all_games(ctx: WindowContext, parent: Optional[object] = None) -> object:
         from src.ui.windows.all_games_window import AllGamesWindow
@@ -42,7 +42,7 @@ def build_window_registry() -> WindowRegistry:
         from src.ui.windows.discount_window import DiscountWindow
 
         _ = (ctx, parent)
-        return DiscountWindow()
+        return DiscountWindow(parent=parent)
 
     def create_achievements(ctx: WindowContext, parent: Optional[object] = None) -> object:
         from src.ui.windows.achievement_window import AchievementWindow

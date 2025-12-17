@@ -149,7 +149,6 @@ class SteaMissApp:
         
         # 显示宠物
         self.pet.show()
-        
         # 连接信号以同步状态
         self.pet.visibility_changed.connect(self.tray_handler.update_visibility_text)
         self.pet.topmost_changed.connect(self.tray_handler.update_topmost_text)

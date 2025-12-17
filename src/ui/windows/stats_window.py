@@ -18,8 +18,8 @@ class StatsWindow(QWidget):
     request_refresh = pyqtSignal()
     request_open_all_games = pyqtSignal()
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setWindowTitle("游玩记录")
         self.resize(500, 600)
 
