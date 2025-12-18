@@ -54,5 +54,3 @@ class WindowFactory:
 
 
 __all__ = ["WindowFactory"]
-
-

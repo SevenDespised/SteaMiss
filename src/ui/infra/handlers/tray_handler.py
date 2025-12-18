@@ -64,7 +64,7 @@ class TrayHandler(QObject):
             self.settings_dialog.activateWindow()
             return
 
-        self.settings_dialog = self.window_factory.create_settings_dialog()
+        self.settings_dialog = self.window_factory.create_window("settings")
         self.settings_dialog.show()
 
     def on_tray_activated(self, reason):
