@@ -213,95 +213,37 @@ class SteamClient:
 
         return all_apps
 
-    def get_apps_info(self, app_ids, max_results=50000):
-        self._ensure_api()
-        if not app_ids or not self.api:
+    def get_apps_info(self, app_ids):
+        """
+        获取游戏基本信息 (名称, 图标等)
+        由于 appdetails 接口多 ID 查询不稳定，改为逐个查询。
+        """
+        if not app_ids:
             return {}
 
-        app_info_map = {}
-        app_id_set = set(int(aid) for aid in app_ids)
-        found_ids = set()
+        result = {}
         import time
 
-        try:
-            sorted_ids = sorted(app_id_set)
-            min_appid = sorted_ids[0]
-            max_appid = sorted_ids[-1]
-
-            last_appid = min_appid - 1
-            while len(found_ids) < len(app_id_set):
-                try:
-                    response = self.api.IStoreService.GetAppList(
-                        include_games=True,
-                        include_dlc=True,
-                        include_software=False,
-                        include_videos=False,
-                        include_hardware=False,
-                        max_results=max_results,
-                        last_appid=last_appid if last_appid > 0 else None,
-                    )
-                    data = response.get("response", {})
-                    apps = data.get("apps", [])
-                except TypeError:
-                    url = "https://api.steampowered.com/IStoreService/GetAppList/v1/"
-                    params = {
-                        "key": self.api_key,
-                        "include_games": "true",
-                        "include_dlc": "true",
-                        "include_software": "false",
-                        "include_videos": "false",
-                        "include_hardware": "false",
-                        "max_results": max_results,
-                        "language": "schinese",
-                    }
-                    if last_appid > 0:
-                        params["last_appid"] = last_appid
-                    resp = requests.get(url, params=params, timeout=30)
-                    if resp.status_code != 200:
-                        break
-                    data = resp.json().get("response", {})
-                    apps = data.get("apps", [])
-
-                if not apps:
-                    break
-
-                for app in apps:
-                    appid = app["appid"]
-                    if appid in app_id_set and appid not in found_ids:
-                        app_info_map[str(appid)] = app
-                        found_ids.add(appid)
-
-                last_appid = apps[-1]["appid"]
-
-                have_more_results = data.get("have_more_results", False)
-                if not have_more_results:
-                    break
-
-                if apps[0]["appid"] > max_appid:
-                    break
-
-                time.sleep(0.3)
-
-            missing_ids = app_id_set - found_ids
-            if missing_ids:
-                for appid in sorted(missing_ids):
-                    try:
-                        store_url = "https://store.steampowered.com/api/appdetails"
-                        store_params = {"appids": appid, "l": "schinese", "cc": "cn"}
-                        store_resp = requests.get(store_url, params=store_params, timeout=5)
-                        if store_resp.status_code == 200:
-                            store_data = store_resp.json()
-                            if str(appid) in store_data and store_data[str(appid)].get("success"):
-                                data = store_data[str(appid)].get("data", {})
-                                app_info_map[str(appid)] = {"appid": appid, "name": data.get("name", "Unknown")}
-                        time.sleep(0.1)
-                    except Exception:
-                        pass
-
-        except Exception as e:
-            print(f"Steam API Error (get_apps_info): {e}")
-
-        return app_info_map
+        url = "https://store.steampowered.com/api/appdetails"
+        
+        for appid in app_ids:
+            # 逐个查询，使用 filters=basic 减少数据量
+            params = {"appids": appid, "filters": "basic", "cc": "cn", "l": "schinese"}
+            try:
+                response = requests.get(url, params=params, timeout=5)
+                if response.status_code == 200:
+                    data = response.json()
+                    # data 结构: {"730": {"success": true, "data": {...}}}
+                    appid_str = str(appid)
+                    if appid_str in data and data[appid_str].get("success"):
+                        result[appid_str] = data[appid_str].get("data", {})
+                
+                # 避免请求过快
+                time.sleep(0.1)
+            except Exception as e:
+                print(f"Steam API Error (get_apps_info - {appid}): {e}")
+        
+        return result
 
     def get_wishlist_app(self, steam_id):
         self._ensure_api()
