@@ -41,3 +41,8 @@ class ConfigManager:
     def set(self, key, value):
         self.settings[key] = value
         self.save_config()
+
+    def update_dict(self, settings_dict):
+        """批量更新配置"""
+        self.settings.update(settings_dict)
+        self.save_config()

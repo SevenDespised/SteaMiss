@@ -25,7 +25,7 @@ def build_window_registry() -> WindowRegistry:
     def create_settings(ctx: WindowContext, parent: Optional[object] = None) -> object:
         from src.ui.windows.settings_dialog import SettingsDialog
 
-        return SettingsDialog(parent=parent)
+        return SettingsDialog(prompt_manager=ctx.prompt_manager, parent=parent)
 
     def create_stats(ctx: WindowContext, parent: Optional[object] = None) -> object:
         from src.ui.windows.stats_window import StatsWindow

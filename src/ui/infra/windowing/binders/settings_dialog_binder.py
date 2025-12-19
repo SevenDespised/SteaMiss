@@ -17,8 +17,8 @@ class SettingsDialogBinder:
             old_steam_id = ctx.config_manager.get("steam_id")
             old_alt_ids = ctx.config_manager.get("steam_alt_ids", [])
 
-            for key, value in settings.items():
-                ctx.config_manager.set(key, value)
+            # 批量更新配置，避免多次 IO
+            ctx.config_manager.update_dict(settings)
 
             # 账号凭证变更：仅做“失效 + 重新抓取 games/summary”，不清理旧 cache，也不自动抓取慢接口
             new_api_key = ctx.config_manager.get("steam_api_key")

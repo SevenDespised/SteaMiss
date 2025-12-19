@@ -11,16 +11,19 @@ from PyQt6.QtWidgets import (
     QTabWidget,
     QVBoxLayout,
     QWidget,
+    QTextEdit,
 )
 from src.feature_core.services.llm_service import LLMService
+from src.storage.prompt_manager import PromptManager
 
 
 class SettingsDialog(QDialog):
     request_save = pyqtSignal(dict)
     request_search_games = pyqtSignal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, prompt_manager: PromptManager = None, parent=None):
         super().__init__(parent)
+        self.prompt_manager = prompt_manager or PromptManager()
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, True)  # 永久置顶
         self.setWindowTitle("功能设置")
         self.resize(500, 600)
@@ -52,6 +55,9 @@ class SettingsDialog(QDialog):
         self.init_steam_page_tab()
         self.tabs.addTab(self.steam_page_tab, "Steam启动")
 
+        self.prompt_tab = QWidget()
+        self.init_prompt_tab()
+        self.tabs.addTab(self.prompt_tab, "Prompt设置")
 
         layout.addWidget(self.tabs)
 
@@ -466,8 +472,112 @@ class SettingsDialog(QDialog):
                     QMessageBox.StandardButton.Ok,
                 )
 
+        # 保存当前正在编辑的 Prompt
+        if hasattr(self, "prompt_combo") and hasattr(self, "prompt_edit"):
+            current_key = self.prompt_combo.currentData()
+            if current_key:
+                self.prompt_manager.update_prompt(current_key, self.prompt_edit.toPlainText())
+        
+        # 持久化 Prompt
+        self.prompt_manager.save_prompts()
+
         self.request_save.emit(settings)
         self.accept()
+
+    def init_prompt_tab(self):
+        layout = QVBoxLayout()
+        
+        # 顶部说明
+        layout.addWidget(QLabel("在此处自定义 AI 的 Prompt 模板。"))
+        
+        # 下拉框选择 Prompt 类型
+        hbox = QHBoxLayout()
+        hbox.addWidget(QLabel("选择模板:"))
+        self.prompt_combo = QComboBox()
+        
+        # 从 PromptManager 获取定义并填充下拉框
+        defs = self.prompt_manager.get_definitions()
+        for key, meta in defs.items():
+            self.prompt_combo.addItem(meta["name"], key)
+            
+        self.prompt_combo.currentIndexChanged.connect(self.on_prompt_type_changed)
+        hbox.addWidget(self.prompt_combo, 1)
+        layout.addLayout(hbox)
+        
+        # 占位符提示
+        self.prompt_hint_label = QLabel("可用占位符: ")
+        self.prompt_hint_label.setStyleSheet("color: gray; font-style: italic;")
+        self.prompt_hint_label.setWordWrap(True)
+        layout.addWidget(self.prompt_hint_label)
+        
+        # 文本编辑框
+        self.prompt_edit = QTextEdit()
+        layout.addWidget(self.prompt_edit)
+        
+        # 底部按钮：恢复默认
+        reset_btn = QPushButton("恢复该模板默认值")
+        reset_btn.clicked.connect(self.reset_current_prompt)
+        layout.addWidget(reset_btn)
+        
+        self.prompt_tab.setLayout(layout)
+        
+        # 初始化显示第一个选项的内容
+        if self.prompt_combo.count() > 0:
+            self.on_prompt_type_changed(0)
+
+    def on_prompt_type_changed(self, index):
+        """切换 Prompt 类型时，保存上一个（内存中），加载新的"""
+        # 注意：这里简化处理，切换时只加载新的。
+        # 因为 update_prompt 是更新内存，所以我们需要在切换前保存当前编辑的内容到内存
+        # 但由于 currentIndexChanged 触发时已经是新的 index，我们很难获取“上一个”是什么
+        # 所以更好的策略是：每次文本变动都更新内存？或者在 save_settings 时只保存当前显示的？
+        # 为了防止切换丢失，我们在切换前应该保存。
+        # 由于 Qt 信号机制，我们无法在 index 改变“之前”拦截。
+        # 简单的做法：用一个成员变量记录 last_index，或者每次 edit 失去焦点时保存。
+        # 这里采用：在 textChanged 时实时更新内存（简单粗暴但有效）
+        
+        key = self.prompt_combo.itemData(index)
+        if not key:
+            return
+            
+        # 加载内容
+        content = self.prompt_manager.get_raw_prompt(key)
+        
+        # 临时断开 textChanged 信号，避免加载时触发更新
+        try:
+            self.prompt_edit.blockSignals(True)
+            self.prompt_edit.setPlainText(content)
+        finally:
+            self.prompt_edit.blockSignals(False)
+            
+        # 更新提示
+        defs = self.prompt_manager.get_definitions()
+        meta = defs.get(key, {})
+        placeholders = meta.get("placeholders", [])
+        if placeholders:
+            hint_text = "可用占位符: " + ", ".join(placeholders)
+        else:
+            hint_text = "此模板无可用占位符。"
+        self.prompt_hint_label.setText(hint_text)
+
+        # 重新连接信号（确保只连接一次，或者使用 unique connection）
+        try:
+            self.prompt_edit.textChanged.disconnect()
+        except TypeError:
+            pass # 还没连接过
+        self.prompt_edit.textChanged.connect(lambda: self.prompt_manager.update_prompt(key, self.prompt_edit.toPlainText()))
+
+    def reset_current_prompt(self):
+        """恢复当前选中的 Prompt 为默认值"""
+        key = self.prompt_combo.currentData()
+        if not key:
+            return
+            
+        defs = self.prompt_manager.get_definitions()
+        default_content = defs.get(key, {}).get("default", "")
+        
+        self.prompt_edit.setPlainText(default_content)
+        # textChanged 会自动触发 update_prompt
 
 
 __all__ = ["SettingsDialog"]

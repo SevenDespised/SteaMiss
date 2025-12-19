@@ -27,6 +27,7 @@ from src.ui.infra.radial_composer.menu_builders.tool_builder import ToolMenuBuil
 from src.feature_core.adapters.qt.system_facade_qt import SystemFacadeQt
 from src.feature_core.services.pet_service import PetService
 from src.feature_core.services.llm_service import LLMService
+from src.storage.prompt_manager import PromptManager
 import threading
 
 class SteaMissApp:
@@ -40,6 +41,7 @@ class SteaMissApp:
         self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
         self.steam_manager = SteamFacadeQt(self.config_manager)
         self.llm_service = LLMService(self.config_manager)
+        self.prompt_manager = PromptManager()
         
         # System/Pet：分别落在 adapters/qt 与 services
         self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
@@ -124,7 +126,8 @@ class SteaMissApp:
         self.window_factory = WindowFactory(
             self.steam_manager,
             self.config_manager,
-            self.timer_handler
+            self.timer_handler,
+            self.prompt_manager
         )
         
         self.radial_handler = RadialHandler(

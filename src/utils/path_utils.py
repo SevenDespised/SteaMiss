@@ -7,7 +7,7 @@ def _base_dir() -> Path:
     if hasattr(sys, "_MEIPASS"):
         return Path(sys._MEIPASS)
     # src/utils -> project root
-    return Path(__file__).resolve().parent.parent
+    return Path(__file__).resolve().parent.parent.parent
 
 
 def resource_path(*relative_parts: str, prefer_external: bool = True) -> Path:
