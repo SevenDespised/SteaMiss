@@ -1,10 +1,24 @@
 import random
+from PyQt6.QtCore import QObject, pyqtSignal
 
-class BehaviorManager:
+class BehaviorManager(QObject):
+    # 定义信号：请求说话
+    speech_requested = pyqtSignal(str)
+
     def __init__(self):
+        super().__init__()
         self.current_state = "idle"
         self.state_timer = 0
         
+    def request_speech(self, content):
+        """
+        外部请求 AI 说话（例如响应用户交互）
+        """
+        # 这里可以加入逻辑：比如正在睡觉时被打扰会生气
+        self.speech_requested.emit(content)
+        # 同时可以切换状态，例如切换到 "happy" 或 "talking"
+        # self.current_state = "happy" 
+
     def update(self, is_dragging):
         """
         每帧调用，返回当前应该处于的状态

@@ -46,6 +46,9 @@ class DesktopPet(QWidget):
         self.resource_manager = resource_manager
         self.timer_overlay = timer_overlay
 
+        # 监听行为管理器的说话请求
+        self.behavior_manager.speech_requested.connect(self.say)
+
         # 初始化气泡对话框
         self.speech_bubble = SpeechBubble()
 

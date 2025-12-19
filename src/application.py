@@ -169,8 +169,8 @@ class SteaMissApp:
 
     def on_say_hello(self, content):
         """响应打招呼"""
-        #self.tray_handler.show_message("SteaMiss", content)
-        self.pet.say(content)
+        # 将意图转达给 BehaviorManager，而不是直接操作 UI
+        self.behavior_manager.request_speech(content)
         print(f"[Pet Says]: {content}")
 
     def on_error_occurred(self, error_msg):
