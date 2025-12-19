@@ -6,6 +6,8 @@ from PyQt6.QtCore import QPoint, QTimer, Qt, pyqtSignal
 from PyQt6.QtGui import QColor, QCursor, QPainter
 from PyQt6.QtWidgets import QApplication, QWidget
 
+from src.ui.widgets.speech_bubble import SpeechBubble
+
 
 class DesktopPet(QWidget):
     """
@@ -44,6 +46,9 @@ class DesktopPet(QWidget):
         self.resource_manager = resource_manager
         self.timer_overlay = timer_overlay
 
+        # 初始化气泡对话框
+        self.speech_bubble = SpeechBubble()
+
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle"  # 当前行为状态
         self.frame_index = 0
@@ -81,6 +86,13 @@ class DesktopPet(QWidget):
             self.show()  # 更改 flags 后需要 show 才能生效
             self.activateWindow()  # 防止失去焦点导致交互失效
             self.topmost_changed.emit(enable)
+            
+            # 同步气泡层级
+            if hasattr(self, 'speech_bubble'):
+                was_visible = self.speech_bubble.isVisible()
+                self.speech_bubble.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, enable)
+                if was_visible:
+                    self.speech_bubble.show()
 
     def toggle_topmost(self):
         self.set_topmost(not self.is_topmost())
@@ -99,6 +111,8 @@ class DesktopPet(QWidget):
     def hideEvent(self, event):
         super().hideEvent(event)
         self.visibility_changed.emit(False)
+        if hasattr(self, 'speech_bubble'):
+            self.speech_bubble.hide()
 
     def center_window(self):
         screen = QApplication.primaryScreen().geometry()
@@ -131,6 +145,26 @@ class DesktopPet(QWidget):
 
         self.image = self.resource_manager.get_frame(self.current_state, self.frame_index)
         self.update()
+
+    def say(self, text, duration=3000):
+        """让宠物说话（显示气泡）"""
+        self.speech_bubble.show_message(text, duration)
+        self._update_bubble_position()
+        # 确保气泡层级正确
+        self.speech_bubble.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.is_topmost())
+        self.speech_bubble.show()
+
+    def moveEvent(self, event):
+        super().moveEvent(event)
+        self._update_bubble_position()
+
+    def _update_bubble_position(self):
+        if hasattr(self, 'speech_bubble') and self.speech_bubble.isVisible():
+            geo = self.geometry()
+            bubble_geo = self.speech_bubble.geometry()
+            x = geo.x() + (geo.width() - bubble_geo.width()) // 2
+            y = geo.y() + geo.height() + 5  # 5px margin
+            self.speech_bubble.move(x, y)
 
     # --- 交互事件 ---
     def mousePressEvent(self, event):
