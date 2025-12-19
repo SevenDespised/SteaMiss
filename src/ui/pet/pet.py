@@ -149,7 +149,7 @@ class DesktopPet(QWidget):
         self.image = self.resource_manager.get_frame(self.current_state, self.frame_index)
         self.update()
 
-    def say(self, text, duration=3000):
+    def say(self, text, duration=10000):
         """让宠物说话（显示气泡）"""
         self.speech_bubble.show_message(text, duration)
         self._update_bubble_position()
@@ -173,6 +173,7 @@ class DesktopPet(QWidget):
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.is_dragging = True
+            self.behavior_manager.set_paused("dragging", True)
             self.drag_position = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
             self.setCursor(QCursor(Qt.CursorShape.ClosedHandCursor))
             event.accept()
@@ -185,6 +186,7 @@ class DesktopPet(QWidget):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.is_dragging = False
+            self.behavior_manager.set_paused("dragging", False)
             self.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
             event.accept()
 
@@ -207,9 +209,11 @@ class DesktopPet(QWidget):
         if index == -1:
             self.current_state = "idle"
             self.frame_index = 0
+            self.behavior_manager.set_paused("menu_hover", False)
         else:
             self.current_state = "point"
             self.frame_index = index
+            self.behavior_manager.set_paused("menu_hover", True)
         self.update_animation()
 
     # --- 绘图 ---

@@ -4,7 +4,7 @@ import datetime
 import os
 from typing import Any, Callable, Optional
 
-from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QTimer, QObject, pyqtSignal
 
 from src.storage.timer_log_repository import TimerLogRepository
 from src.storage.timer_settings_repository import TimerSettingsRepository
@@ -12,7 +12,7 @@ from src.feature_core.domain.timer_models import ReminderSettings
 from src.feature_core.services.timer_service import TickResult, TimerService
 
 
-class TimerFacadeQt:
+class TimerFacadeQt(QObject):
     """
     Qt 对外入口：TimerFacadeQt
     - 用 QTimer 驱动 tick
@@ -22,6 +22,8 @@ class TimerFacadeQt:
     说明：这里仍然是“过渡期 facade”，等后续拆 ports 后可以进一步瘦身。
     """
 
+    running_state_changed = pyqtSignal(bool)
+
     DEFAULT_REMINDER_SETTINGS = {
         "timer_end_seconds": None,
         "timer_remind_interval_seconds": 0,
@@ -29,6 +31,7 @@ class TimerFacadeQt:
     }
 
     def __init__(self, log_path: Optional[str] = None, config_manager: Optional[object] = None, notifier: Optional[Callable[..., Any]] = None):
+        super().__init__()
         self.config_manager = config_manager
         self.notifier = notifier
 
@@ -70,16 +73,21 @@ class TimerFacadeQt:
 
     # ---- 控制 ----
     def toggle(self) -> bool:
-        return self.service.toggle()
+        result = self.service.toggle()
+        self.running_state_changed.emit(self.is_running())
+        return result
 
     def start(self) -> None:
         self.service.start()
+        self.running_state_changed.emit(True)
 
     def pause(self) -> None:
         self.service.pause()
+        self.running_state_changed.emit(False)
 
     def resume(self) -> None:
         self.service.resume()
+        self.running_state_changed.emit(True)
 
     def stop_and_persist(self) -> None:
         if not self.is_running() and not self.is_paused():
@@ -93,6 +101,7 @@ class TimerFacadeQt:
     def reset(self) -> None:
         self.service.reset()
         self.last_elapsed_seconds = 0.0
+        self.running_state_changed.emit(False)
 
     # ---- 提醒设置（供 UI 窗口使用）----
     def update_reminder_settings(self, end_seconds, remind_interval_seconds, pause_after_remind_seconds):

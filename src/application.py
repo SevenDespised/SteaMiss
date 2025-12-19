@@ -154,6 +154,18 @@ class SteaMissApp:
             timer_overlay=self.timer_overlay
         )
         
+        # 注入 BehaviorManager 所需的依赖
+        self.behavior_manager.set_dependencies(self.steam_manager, self.llm_service, self.prompt_manager)
+        
+        # 启动时触发一次推荐
+        self.behavior_manager.trigger_startup_behavior()
+        
+        # 连接计时器状态变化以暂停/恢复 AI 行为
+        # 当计时器运行时，我们可能希望 AI 保持专注或安静，或者至少不要随意切换状态
+        self.timer_handler.running_state_changed.connect(
+            lambda running: self.behavior_manager.set_paused("timer_running", running)
+        )
+
         # 显示宠物
         self.pet.show()
         # 连接信号以同步状态
