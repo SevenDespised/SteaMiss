@@ -15,6 +15,7 @@ class UiIntentsQt(QObject):
     hide_pet = pyqtSignal()
     toggle_topmost = pyqtSignal()
     error = pyqtSignal(str)
+    notification = pyqtSignal(str, str)  # title, message
 
 
 __all__ = ["UiIntentsQt"]

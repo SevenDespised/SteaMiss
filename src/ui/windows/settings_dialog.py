@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+from src.feature_core.services.llm_service import LLMService
 
 
 class SettingsDialog(QDialog):
@@ -32,8 +33,8 @@ class SettingsDialog(QDialog):
         self.tabs = QTabWidget()
 
         self.steam_tab = QWidget()
-        self.init_steam_tab()
-        self.tabs.addTab(self.steam_tab, "Steam设置")
+        self.init_basic_tab()
+        self.tabs.addTab(self.steam_tab, "基础设置")
 
         self.hello_tab = QWidget()
         self.init_hello_tab()
@@ -49,7 +50,8 @@ class SettingsDialog(QDialog):
 
         self.steam_page_tab = QWidget()
         self.init_steam_page_tab()
-        self.tabs.addTab(self.steam_page_tab, "Steam页面")
+        self.tabs.addTab(self.steam_page_tab, "Steam启动")
+
 
         layout.addWidget(self.tabs)
 
@@ -101,6 +103,11 @@ class SettingsDialog(QDialog):
             if index >= 0:
                 combo.setCurrentIndex(index)
 
+        self.llm_api_key_input.setText(config.get("llm_api_key", ""))
+        self.llm_base_url_input.setText(config.get("llm_base_url", ""))
+        self.llm_model_input.setText(config.get("llm_model", ""))
+
+
     def init_hello_tab(self):
         layout = QVBoxLayout()
         layout.addWidget(QLabel("自定义打招呼内容:"))
@@ -138,7 +145,7 @@ class SettingsDialog(QDialog):
         layout.addStretch()
         self.func_tab.setLayout(layout)
 
-    def init_steam_tab(self):
+    def init_basic_tab(self):
         layout = QVBoxLayout()
 
         layout.addWidget(QLabel("主账号 Steam ID (64位):"))
@@ -165,6 +172,25 @@ class SettingsDialog(QDialog):
         self.api_key_input.setPlaceholderText("在此输入你的 API Key")
         self.api_key_input.setEchoMode(QLineEdit.EchoMode.Password)
         layout.addWidget(self.api_key_input)
+
+        layout.addSpacing(20)
+        layout.addWidget(QLabel("--- AI 设置 ---"))
+        
+        layout.addWidget(QLabel("LLM API Key:"))
+        self.llm_api_key_input = QLineEdit()
+        self.llm_api_key_input.setPlaceholderText("sk-...")
+        self.llm_api_key_input.setEchoMode(QLineEdit.EchoMode.Password)
+        layout.addWidget(self.llm_api_key_input)
+
+        layout.addWidget(QLabel("LLM Base URL:"))
+        self.llm_base_url_input = QLineEdit()
+        self.llm_base_url_input.setPlaceholderText("https://api.openai.com/v1")
+        layout.addWidget(self.llm_base_url_input)
+
+        layout.addWidget(QLabel("LLM Model Name:"))
+        self.llm_model_input = QLineEdit()
+        self.llm_model_input.setPlaceholderText("gpt-3.5-turbo")
+        layout.addWidget(self.llm_model_input)
 
         layout.addStretch()
         self.steam_tab.setLayout(layout)
@@ -418,6 +444,27 @@ class SettingsDialog(QDialog):
                 return
 
             settings["steam_menu_pages"] = selected_pages
+
+        settings["llm_api_key"] = self.llm_api_key_input.text().strip()
+        settings["llm_base_url"] = self.llm_base_url_input.text().strip()
+        settings["llm_model"] = self.llm_model_input.text().strip()
+
+        # 检测 LLM 服务可用性
+        if settings["llm_api_key"] and settings["llm_base_url"] and settings["llm_model"]:
+            temp_service = LLMService(None)
+            if not temp_service.check_availability(
+                settings["llm_api_key"], 
+                settings["llm_base_url"], 
+                settings["llm_model"]
+            ):
+                QMessageBox.warning(
+                    self,
+                    "LLM 服务不可用",
+                    "无法连接到指定的 LLM 服务。\n\n"
+                    "配置将保存，但相关 AI 功能将被禁用。\n"
+                    "请检查 API Key、Base URL 和模型名称。",
+                    QMessageBox.StandardButton.Ok,
+                )
 
         self.request_save.emit(settings)
         self.accept()

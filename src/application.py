@@ -26,6 +26,8 @@ from src.ui.infra.radial_composer.menu_builders.tool_builder import ToolMenuBuil
 
 from src.feature_core.adapters.qt.system_facade_qt import SystemFacadeQt
 from src.feature_core.services.pet_service import PetService
+from src.feature_core.services.llm_service import LLMService
+import threading
 
 class SteaMissApp:
     def __init__(self, app: QApplication):
@@ -37,6 +39,7 @@ class SteaMissApp:
         self.resource_manager = ResourceManager()
         self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
         self.steam_manager = SteamFacadeQt(self.config_manager)
+        self.llm_service = LLMService(self.config_manager)
         
         # System/Pet：分别落在 adapters/qt 与 services
         self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
@@ -166,6 +169,22 @@ class SteaMissApp:
         self.ui_intents.toggle_topmost.connect(self.pet.toggle_topmost)
         self.ui_intents.say_hello.connect(self.on_say_hello)
         self.ui_intents.error.connect(self.on_error_occurred)
+        self.ui_intents.notification.connect(
+            lambda t, m: self.tray_handler.show_message(t, m, QSystemTrayIcon.MessageIcon.Warning, 3000)
+        )
+
+        # 启动时异步检查 LLM 可用性
+        threading.Thread(target=self._check_llm_startup, daemon=True).start()
+
+    def _check_llm_startup(self):
+        """启动时检查 LLM 服务，如果配置了但不可用，则通知用户"""
+        # 只有当用户配置了 API Key 时才检查，避免打扰新用户
+        if self.config_manager.get("llm_api_key"):
+            if not self.llm_service.check_availability():
+                self.ui_intents.notification.emit(
+                    "LLM 服务不可用", 
+                    "无法连接到 LLM 服务，AI 功能已禁用。\n请检查网络或配置。"
+                )
 
     def on_say_hello(self, content):
         """响应打招呼"""

@@ -11,7 +11,10 @@ class ConfigManager:
             "steam_id": "",
             "steam_alt_ids": [],
             "timer_reminder": {},
-            "timer_reminder_presets": []
+            "timer_reminder_presets": [],
+            "llm_api_key": "",
+            "llm_base_url": "",
+            "llm_model": ""
         }
         self.load_config()
 
