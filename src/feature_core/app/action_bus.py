@@ -18,10 +18,12 @@ class ActionBus:
     """
 
     _handlers: Dict[Action, Handler]
+    _hooks: Dict[Action, list[Handler]]
     _on_error: Optional[Callable[[Exception, Action, dict], None]] = None
 
     def __init__(self) -> None:
         self._handlers = {}
+        self._hooks = {}
         self._on_error = None
 
     def set_error_handler(self, fn: Callable[[Exception, Action, dict], None]) -> None:
@@ -30,13 +32,27 @@ class ActionBus:
     def register(self, action: Action, handler: Handler) -> None:
         self._handlers[action] = handler
 
+    def register_hook(self, action: Action, hook: Handler) -> None:
+        """注册钩子，在 execute 之后执行，不影响返回值"""
+        if action not in self._hooks:
+            self._hooks[action] = []
+        self._hooks[action].append(hook)
+
     def execute(self, action: Action, **kwargs: Any) -> Any:
         handler = self._handlers.get(action)
         if not handler:
             raise KeyError(f"Unknown action: {action}")
 
         try:
-            return handler(**kwargs)
+            result = handler(**kwargs)
+            # 执行钩子
+            if action in self._hooks:
+                for hook in self._hooks[action]:
+                    try:
+                        hook(**kwargs)
+                    except Exception:
+                        pass # 钩子失败不影响主流程
+            return result
         except Exception as e:
             if self._on_error:
                 try:
