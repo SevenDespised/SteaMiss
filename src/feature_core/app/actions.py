@@ -26,6 +26,7 @@ class Action(str, Enum):
     # UI intents (由业务触发 UI 行为)
     OPEN_WINDOW = "open_window"
     SAY_HELLO = "say_hello"
+    ACTIVATE_PET = "activate_pet"
     HIDE_PET = "hide_pet"
     TOGGLE_TOPMOST = "toggle_topmost"
 

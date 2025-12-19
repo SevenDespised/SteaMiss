@@ -72,6 +72,7 @@ class SteaMissApp:
                 self.ui_intents.say_hello.emit(content)
 
         self.action_bus.register(Action.SAY_HELLO, _say_hello)
+        self.action_bus.register(Action.ACTIVATE_PET, lambda **_: self.ui_intents.activate_pet.emit())
         self.action_bus.register(Action.HIDE_PET, lambda **_: self.ui_intents.hide_pet.emit())
         self.action_bus.register(Action.TOGGLE_TOPMOST, lambda **_: self.ui_intents.toggle_topmost.emit())
         self.action_bus.register(Action.OPEN_WINDOW, lambda window_name, **_: self.ui_intents.open_window.emit(window_name))
@@ -131,7 +132,7 @@ class SteaMissApp:
         )
         
         # 初始化托盘管理器
-        self.tray_handler = TrayHandler(self.window_factory, self.app)
+        self.tray_handler = TrayHandler(self.action_bus, self.app)
         # 将托盘提醒作为计时提醒通知器
         self.timer_handler.set_notifier(self.tray_handler.show_message)
         # 退出时关闭计时器内部 Qt 定时器
@@ -158,14 +159,9 @@ class SteaMissApp:
         self.pet.double_clicked.connect(lambda: self.action_bus.execute(Action.SAY_HELLO))
         self.radial_handler.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
         
-        # 连接 TrayHandler 的请求信号
-        self.tray_handler.request_toggle_visibility.connect(self.toggle_pet_visibility)
-        self.tray_handler.request_toggle_topmost.connect(self.pet.toggle_topmost)
-        self.tray_handler.request_quit_app.connect(self.quit_app)
-        self.tray_handler.request_activate_pet.connect(self.activate_pet)
-        
         # 连接 UI intents（由 ActionBus 触发）
         self.ui_intents.open_window.connect(self.window_handler.open_window)
+        self.ui_intents.activate_pet.connect(self.activate_pet)
         self.ui_intents.hide_pet.connect(self.toggle_pet_visibility)
         self.ui_intents.toggle_topmost.connect(self.pet.toggle_topmost)
         self.ui_intents.say_hello.connect(self.on_say_hello)
@@ -173,7 +169,8 @@ class SteaMissApp:
 
     def on_say_hello(self, content):
         """响应打招呼"""
-        self.tray_handler.show_message("SteaMiss", content)
+        #self.tray_handler.show_message("SteaMiss", content)
+        self.pet.say(content)
         print(f"[Pet Says]: {content}")
 
     def on_error_occurred(self, error_msg):

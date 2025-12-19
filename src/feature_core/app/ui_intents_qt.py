@@ -11,6 +11,7 @@ class UiIntentsQt(QObject):
 
     open_window = pyqtSignal(str)
     say_hello = pyqtSignal(str)
+    activate_pet = pyqtSignal()
     hide_pet = pyqtSignal()
     toggle_topmost = pyqtSignal()
     error = pyqtSignal(str)

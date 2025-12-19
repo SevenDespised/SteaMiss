@@ -1,8 +1,9 @@
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import QObject
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtWidgets import QMenu, QStyle, QSystemTrayIcon
 
 from src.utils.path_utils import resource_path
+from src.feature_core.app.actions import Action
 
 
 class TrayHandler(QObject):
@@ -10,19 +11,13 @@ class TrayHandler(QObject):
     系统托盘管理器：负责托盘图标、菜单以及相关动作。
     """
 
-    request_toggle_visibility = pyqtSignal()
-    request_toggle_topmost = pyqtSignal()
-    request_quit_app = pyqtSignal()
-    request_activate_pet = pyqtSignal()
-
-    def __init__(self, window_factory, app):
+    def __init__(self, action_bus, app):
         super().__init__()
-        self.window_factory = window_factory
+        self.action_bus = action_bus
         self.app = app
         self.tray_icon = None
         self.action_toggle = None
         self.action_topmost = None
-        self.settings_dialog = None
         self._setup_tray()
 
     def _setup_tray(self):
@@ -36,41 +31,31 @@ class TrayHandler(QObject):
         tray_menu = QMenu()
 
         self.action_toggle = QAction("隐藏宠物", self.app)
-        self.action_toggle.triggered.connect(self.request_toggle_visibility.emit)
+        self.action_toggle.triggered.connect(lambda: self.action_bus.execute(Action.HIDE_PET))
         tray_menu.addAction(self.action_toggle)
 
         self.action_topmost = QAction("取消置顶", self.app)
-        self.action_topmost.triggered.connect(self.request_toggle_topmost.emit)
+        self.action_topmost.triggered.connect(lambda: self.action_bus.execute(Action.TOGGLE_TOPMOST))
         tray_menu.addAction(self.action_topmost)
 
         action_settings = QAction("功能设置", self.app)
-        action_settings.triggered.connect(self.open_settings)
+        action_settings.triggered.connect(lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="settings"))
         tray_menu.addAction(action_settings)
 
         tray_menu.addSeparator()
 
         action_quit = QAction("退出", self.app)
-        action_quit.triggered.connect(self.request_quit_app.emit)
+        action_quit.triggered.connect(lambda: self.action_bus.execute(Action.EXIT))
         tray_menu.addAction(action_quit)
 
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.activated.connect(self.on_tray_activated)
         self.tray_icon.show()
 
-    def open_settings(self):
-        """打开或激活设置窗口"""
-        if self.settings_dialog is not None and self.settings_dialog.isVisible():
-            self.settings_dialog.raise_()
-            self.settings_dialog.activateWindow()
-            return
-
-        self.settings_dialog = self.window_factory.create_window("settings")
-        self.settings_dialog.show()
-
     def on_tray_activated(self, reason):
         """双击托盘图标时激活宠物窗口"""
         if reason == QSystemTrayIcon.ActivationReason.DoubleClick:
-            self.request_activate_pet.emit()
+            self.action_bus.execute(Action.ACTIVATE_PET)
 
     def update_visibility_text(self, visible):
         if self.action_toggle:
