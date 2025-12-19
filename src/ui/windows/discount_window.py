@@ -72,8 +72,9 @@ class DiscountWindow(QWidget):
 
         from PyQt6.QtCore import QTimer
 
-        QTimer.singleShot(8000, lambda: self.refresh_btn.setEnabled(True))
-        QTimer.singleShot(8000, lambda: self.refresh_btn.setText("刷新数据"))
+        # 由于 Steam API 改为串行请求，耗时可能较长，延长超时时间到 60s
+        QTimer.singleShot(60000, lambda: self.refresh_btn.setEnabled(True))
+        QTimer.singleShot(60000, lambda: self.refresh_btn.setText("刷新数据"))
 
     def update_data(self, games):
         self.refresh_btn.setEnabled(True)
@@ -91,6 +92,11 @@ class DiscountWindow(QWidget):
             item.setSizeHint(QSize(0, 70))
             widget = DiscountItemWidget(game)
             self.list_widget.setItemWidget(item, widget)
+
+    def on_fetch_error(self):
+        """当发生错误时，恢复按钮状态，但不清空列表（保留旧数据或空状态）。"""
+        self.refresh_btn.setEnabled(True)
+        self.refresh_btn.setText("刷新数据")
 
 
 __all__ = ["DiscountWindow"]
