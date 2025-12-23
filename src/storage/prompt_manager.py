@@ -19,7 +19,7 @@ class PromptManager:
         "post_requirements": {
             "name": "后置要求",
             "placeholders": [],
-            "default": "请保持回答简短，控制在200字以内。"
+            "default": "请保持回答简短，控制在50字以内。"
         },
         "game_recommendation": {
             "name": "游戏推荐 (被动查询)",
@@ -29,7 +29,7 @@ class PromptManager:
         "active_game_recommendation": {
             "name": "主动游戏推荐",
             "placeholders": ["{game_name}", "{appid}", "{playtime_forever}", "{playtime_2weeks}", "{description}"],
-            "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏（或者吐槽我玩太久/太少）。"
+            "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏，并且选取一些信息对我进行吐槽。注意：两周时长为0时，很可能不止两周没玩。"
         }
     }
 
