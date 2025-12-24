@@ -30,6 +30,34 @@ class PromptManager:
             "name": "主动游戏推荐",
             "placeholders": ["{game_name}", "{appid}", "{playtime_forever}", "{playtime_2weeks}", "{description}"],
             "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏，并且选取一些信息对我进行吐槽。注意：两周时长为0时，很可能不止两周没玩。"
+        },
+        "say_hello": {
+            "name": "打招呼",
+            "placeholders": [
+                "{current_datetime}",
+                "{persona_name}",
+                "{steam_level}",
+                "{total_playtime_hours}",
+                "{recent_games}",
+                "{owned_games_count}",
+                "{last_logoff}",
+                "{time_created}",
+                "{account_age_days}",
+            ],
+            "default": (
+                "用户刚刚向你打了招呼。请结合以下 Steam 档案信息中的一至二条，回复他。"
+                "可以轻微吐槽，但不要冒犯或攻击。若信息缺失就自然略过，不要编造。\n\n"
+                "【当前时间】{current_datetime}\n"
+                "【Steam昵称】{persona_name}\n"
+                "【账号等级】Lv. {steam_level}\n"
+                "【总游玩时长】{total_playtime_hours} 小时\n"
+                "【最近玩过】{recent_games}\n"
+                "【拥有游戏数】{owned_games_count}\n"
+                "【上次离线】{last_logoff}\n"
+                "【账号创建】{time_created}（{account_age_days} 天）\n"
+                "\n"
+                "请直接输出你要对用户说的话。"
+            ),
         }
     }
 

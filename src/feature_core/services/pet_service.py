@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
+from datetime import datetime
+from typing import Any, Dict, Optional
 
 
 class PetService:
@@ -16,6 +17,155 @@ class PetService:
 
     def __init__(self, config_manager: Optional[object] = None) -> None:
         self.config_manager = config_manager
+
+    def build_say_hello_prompt(self, prompt_manager: object, steam_manager: Optional[object] = None) -> str:
+        """构建 say_hello 的 LLM Prompt（不调用 LLM）。
+
+        - 从 steam_manager.cache 读取 summary / games 缓存（若存在）
+        - 组装为 PromptManager 的 say_hello 模板 kwargs
+        - 返回 prompt_manager.get_prompt("say_hello", **kwargs)
+        """
+        kwargs = self._build_say_hello_kwargs(steam_manager)
+        try:
+            get_prompt = getattr(prompt_manager, "get_prompt")
+        except Exception:
+            return ""
+        return get_prompt("say_hello", **kwargs)
+
+    def _build_say_hello_kwargs(self, steam_manager: Optional[object]) -> Dict[str, Any]:
+        now = datetime.now()
+        current_datetime = now.strftime("%Y-%m-%d %H:%M")
+
+        summary: Dict[str, Any] = {}
+        cache: Dict[str, Any] = {}
+        if steam_manager is not None:
+            cache = getattr(steam_manager, "cache", {}) or {}
+            if isinstance(cache, dict):
+                maybe_summary = cache.get("summary")
+                if isinstance(maybe_summary, dict):
+                    summary = maybe_summary
+
+        persona_name = (summary.get("personaname") or "未知")
+
+        steam_level = self._steam_level(summary)
+        total_playtime_hours = self._total_playtime_hours(cache)
+
+        last_logoff = self._ts_to_text(summary.get("lastlogoff"))
+        time_created = self._ts_to_text(summary.get("timecreated"))
+        account_age_days = self._account_age_days(summary.get("timecreated"))
+
+        owned_games_count = self._owned_games_count(cache)
+        recent_games = self._recent_games_brief(steam_manager)
+
+        # 确保所有模板字段都有值，避免 format KeyError 导致降级
+        return {
+            "current_datetime": current_datetime,
+            "persona_name": persona_name,
+            "steam_level": steam_level,
+            "total_playtime_hours": total_playtime_hours,
+            "recent_games": recent_games,
+            "owned_games_count": owned_games_count,
+            "last_logoff": last_logoff,
+            "time_created": time_created,
+            "account_age_days": account_age_days,
+        }
+
+    def _steam_level(self, summary: Dict[str, Any]) -> str:
+        try:
+            level = summary.get("steam_level")
+            if level is None:
+                return "?"
+            return str(int(level))
+        except Exception:
+            return "?"
+
+    def _total_playtime_hours(self, cache: Dict[str, Any]) -> str:
+        """从 cache 中读取 total_playtime（分钟）并转换为小时文本。"""
+        try:
+            total_min = None
+
+            games_primary = cache.get("games_primary")
+            if isinstance(games_primary, dict):
+                total_min = games_primary.get("total_playtime")
+
+            if total_min is None:
+                games = cache.get("games")
+                if isinstance(games, dict):
+                    total_min = games.get("total_playtime")
+
+            if total_min is None:
+                return "未知"
+
+            total_min_int = int(total_min)
+            if total_min_int < 0:
+                return "未知"
+            return str(int(total_min_int / 60))
+        except Exception:
+            return "未知"
+
+    def _ts_to_text(self, ts: Any) -> str:
+        try:
+            if ts is None:
+                return "未知"
+            ts_int = int(ts)
+            if ts_int <= 0:
+                return "未知"
+            return datetime.fromtimestamp(ts_int).strftime("%Y-%m-%d %H:%M")
+        except Exception:
+            return "未知"
+
+    def _account_age_days(self, time_created_ts: Any) -> str:
+        try:
+            if time_created_ts is None:
+                return "未知"
+            ts_int = int(time_created_ts)
+            if ts_int <= 0:
+                return "未知"
+            days = int((datetime.now().timestamp() - ts_int) // (24 * 3600))
+            return str(max(days, 0))
+        except Exception:
+            return "未知"
+
+    def _owned_games_count(self, cache: Dict[str, Any]) -> str:
+        try:
+            games_primary = cache.get("games_primary")
+            if isinstance(games_primary, dict):
+                count = games_primary.get("count")
+                if count is not None:
+                    return str(int(count))
+                all_games = games_primary.get("all_games")
+                if isinstance(all_games, list):
+                    return str(len(all_games))
+
+            games = cache.get("games")
+            if isinstance(games, dict):
+                count = games.get("count")
+                if count is not None:
+                    return str(int(count))
+                all_games = games.get("all_games")
+                if isinstance(all_games, list):
+                    return str(len(all_games))
+
+            return "未知"
+        except Exception:
+            return "未知"
+
+    def _recent_games_brief(self, steam_manager: Optional[object]) -> str:
+        if steam_manager is None:
+            return "未知"
+        try:
+            get_recent_games = getattr(steam_manager, "get_recent_games", None)
+            if not callable(get_recent_games):
+                return "未知"
+            games = get_recent_games(limit=3) or []
+            names = []
+            for g in games:
+                name = g.get("name") if isinstance(g, dict) else None
+                if name:
+                    names.append(str(name))
+            return "、".join(names) if names else "无"
+        except Exception:
+            return "未知"
 
     def get_say_hello_content(self) -> str:
         """获取“打招呼”文案（来自配置）。"""
