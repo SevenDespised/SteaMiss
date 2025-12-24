@@ -13,8 +13,8 @@ class PromptManager:
     PROMPT_DEFS = {
         "role_setup": {
             "name": "角色设定",
-            "placeholders": ["{user_name}"],
-            "default": "你是一个运行在电脑桌面上的虚拟桌宠助手，你的名字叫SteaMiss。你需要用简短、可爱、活泼的语气与用户对话。用户现在的名字是：{user_name}。"
+            "placeholders": [],
+            "default": "你是一个运行在电脑桌面上的虚拟桌宠助手，你的名字叫SteaMiss。你需要用简短、可爱、活泼的语气与用户对话。用户现在的名字是用户。"
         },
         "post_requirements": {
             "name": "后置要求",
@@ -79,10 +79,6 @@ class PromptManager:
             full_template = f"{role_template}\n\n{main_template}\n\n{post_template}"
         else:
             full_template = main_template
-
-        # 3. 注入默认变量（防止 KeyError）
-        if "user_name" not in kwargs:
-            kwargs["user_name"] = "用户"  # 默认用户名
 
         try:
             return full_template.format(**kwargs)

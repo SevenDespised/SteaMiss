@@ -505,7 +505,7 @@ class SettingsDialog(QDialog):
         layout.addLayout(hbox)
         
         # 占位符提示
-        self.prompt_hint_label = QLabel("可用占位符: ")
+        self.prompt_hint_label = QLabel("必须占位符: ")
         self.prompt_hint_label.setStyleSheet("color: gray; font-style: italic;")
         self.prompt_hint_label.setWordWrap(True)
         layout.addWidget(self.prompt_hint_label)
@@ -555,9 +555,9 @@ class SettingsDialog(QDialog):
         meta = defs.get(key, {})
         placeholders = meta.get("placeholders", [])
         if placeholders:
-            hint_text = "可用占位符: " + ", ".join(placeholders)
+            hint_text = "必须占位符: " + ", ".join(placeholders)
         else:
-            hint_text = "此模板无可用占位符。"
+            hint_text = "此模板无占位符。"
         self.prompt_hint_label.setText(hint_text)
 
         # 重新连接信号（确保只连接一次，或者使用 unique connection）
