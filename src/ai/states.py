@@ -144,13 +144,6 @@ class GameRecommendationSubState(AISubState):
                     "label": f"启动：\n{name_for_menu}",
                     "action": "launch_game",
                     "kwargs": {"appid": appid},
-                    "sub_items": [
-                        {
-                            "label": "互动：\n打招呼",
-                            "action": "say_hello",
-                            "kwargs": {},
-                        }
-                    ],
                 }
 
                 manager.request_speech(response, interaction_context=interaction_context)

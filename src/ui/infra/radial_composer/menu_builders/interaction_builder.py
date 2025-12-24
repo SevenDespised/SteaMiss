@@ -32,6 +32,12 @@ class InteractionMenuBuilder(BaseMenuBuilder):
             kwargs = kwargs or {}
             return lambda a=action, kw=kwargs: self.action_bus.execute(a, **kw)
 
+        # 子选项：互动打招呼（统一在 builder 里组装，上下文无需提供）
+        hello_sub_item = {
+            "label": "互动：\n打招呼",
+            "callback": lambda: self.action_bus.execute(Action.SAY_HELLO),
+        }
+
         # 有状态时：主选项为上下文主动作，子选项里包含“互动打招呼”等
         item = {
             "key": "interaction",
@@ -39,16 +45,8 @@ class InteractionMenuBuilder(BaseMenuBuilder):
             "callback": _build_callback(ctx.get("action"), ctx.get("kwargs")),
         }
 
-        sub_items = []
-        for sub in ctx.get("sub_items") or []:
-            sub_items.append(
-                {
-                    "label": sub.get("label", ""),
-                    "callback": _build_callback(sub.get("action"), sub.get("kwargs")),
-                }
-            )
-        if sub_items:
-            item["sub_items"] = sub_items
+        # 有上下文时：主选项为上下文主动作；子选项至少包含“打招呼”
+        item["sub_items"] = [hello_sub_item]
 
         return item
 
