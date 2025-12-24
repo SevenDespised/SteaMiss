@@ -146,7 +146,9 @@ class SteamFacadeQt(QObject):
 
     def _handle_worker_result(self, result):
         if result.get("error"):
-            if result.get("type") == "games" and self.games_aggregator:
+            # games_stats 目前走 profile_and_games；离线/失败时也要正确减少 pending，
+            # 否则聚合器会一直卡在未完成状态。
+            if result.get("type") in ("games", "profile_and_games") and self.games_aggregator:
                 done = self.games_aggregator.mark_error()
                 if done:
                     self._finalize_games_results()
@@ -203,6 +205,10 @@ class SteamFacadeQt(QObject):
 
     def _finalize_games_results(self):
         primary_data, aggregated, account_map = self.games_aggregator.finalize()
+
+        # 若全部请求失败（无任何可用结果），不要用空聚合覆盖本地缓存。
+        if not primary_data and not account_map and isinstance(aggregated, dict) and aggregated.get("count", 0) == 0:
+            return
 
         primary_id = self._policy().primary_id
         updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, primary_data, aggregated, account_map)
