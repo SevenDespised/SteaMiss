@@ -17,13 +17,14 @@ class SteamQueryService:
     def get_primary_games_cache(self, cache: Dict[str, Any], primary_id: Optional[str]) -> Optional[Dict[str, Any]]:
         if not primary_id:
             return None
-        if "games_primary" in cache:
-            games_primary = cache.get("games_primary")
-            return games_primary if isinstance(games_primary, dict) else None
-        if "games" in cache:
-            games = cache.get("games")
-            return games if isinstance(games, dict) else None
-        return None
+        accounts = cache.get("games_accounts")
+        if not isinstance(accounts, dict):
+            return None
+        entry = accounts.get(primary_id)
+        if not isinstance(entry, dict):
+            return None
+        games = entry.get("games")
+        return games if isinstance(games, dict) else None
 
     def get_recent_games(self, cache: Dict[str, Any], primary_id: Optional[str], limit: int = 3) -> List[dict]:
         games_cache = self.get_primary_games_cache(cache, primary_id)

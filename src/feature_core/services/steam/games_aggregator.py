@@ -31,13 +31,10 @@ class GamesAggregator:
 
     def finalize(self):
         if not self._ctx:
-            return None, None, {}
+            return None, {}
 
         results = self._ctx["results"]
-        primary_id = self._ctx.get("primary")
         self._ctx = None
-
-        primary_data = pick_primary_results(results, primary_id)
         aggregated = merge_games(results)
 
         account_map: Dict[str, Dict[str, Any]] = {}
@@ -48,24 +45,7 @@ class GamesAggregator:
             if sid and games:
                 account_map[sid] = {"games": games, "summary": summary}
 
-        return primary_data, aggregated, account_map
-
-
-def pick_primary_results(results: List[Dict[str, Any]], primary_id: Optional[str]):
-    primary_data = None
-    if primary_id:
-        for item in results:
-            if item.get("steam_id") == primary_id:
-                primary_data = item.get("games")
-                break
-
-    if primary_data is None:
-        for item in results:
-            games = item.get("games")
-            if games:
-                primary_data = games
-                break
-    return primary_data
+        return aggregated, account_map
 
 
 def merge_games(results: List[Dict[str, Any]]):

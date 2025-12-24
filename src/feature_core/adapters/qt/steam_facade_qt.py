@@ -204,14 +204,10 @@ class SteamFacadeQt(QObject):
             self.repository.save_data(self.cache)
 
     def _finalize_games_results(self):
-        primary_data, aggregated, account_map = self.games_aggregator.finalize()
-
-        # 若全部请求失败（无任何可用结果），不要用空聚合覆盖本地缓存。
-        if not primary_data and not account_map and isinstance(aggregated, dict) and aggregated.get("count", 0) == 0:
-            return
+        aggregated, account_map = self.games_aggregator.finalize()
 
         primary_id = self._policy().primary_id
-        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, primary_data, aggregated, account_map)
+        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, aggregated, account_map)
 
         summary_to_emit = updates.get("summary_to_emit")
         if summary_to_emit:

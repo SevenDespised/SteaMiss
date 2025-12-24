@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, Optional
 
+from src.feature_core.services.steam.games_aggregator import merge_games
+
 
 class PetService:
     """
@@ -82,17 +84,11 @@ class PetService:
     def _total_playtime_hours(self, cache: Dict[str, Any]) -> str:
         """从 cache 中读取 total_playtime（分钟）并转换为小时文本。"""
         try:
-            total_min = None
+            total_games = self._get_total_games(cache)
+            if not total_games:
+                return "未知"
 
-            games_primary = cache.get("games_primary")
-            if isinstance(games_primary, dict):
-                total_min = games_primary.get("total_playtime")
-
-            if total_min is None:
-                games = cache.get("games")
-                if isinstance(games, dict):
-                    total_min = games.get("total_playtime")
-
+            total_min = total_games.get("total_playtime")
             if total_min is None:
                 return "未知"
 
@@ -128,36 +124,87 @@ class PetService:
 
     def _owned_games_count(self, cache: Dict[str, Any]) -> str:
         try:
-            games_primary = cache.get("games_primary")
-            if isinstance(games_primary, dict):
-                count = games_primary.get("count")
-                if count is not None:
-                    return str(int(count))
-                all_games = games_primary.get("all_games")
-                if isinstance(all_games, list):
-                    return str(len(all_games))
+            total_games = self._get_total_games(cache)
+            if not total_games:
+                return "未知"
 
-            games = cache.get("games")
-            if isinstance(games, dict):
-                count = games.get("count")
-                if count is not None:
-                    return str(int(count))
-                all_games = games.get("all_games")
-                if isinstance(all_games, list):
-                    return str(len(all_games))
-
+            count = total_games.get("count")
+            if count is not None:
+                return str(int(count))
+            all_games = total_games.get("all_games")
+            if isinstance(all_games, list):
+                return str(len(all_games))
             return "未知"
         except Exception:
             return "未知"
+
+    def _get_total_games(self, cache: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """读取/构建“总计”游戏 payload：优先使用缓存的 cache['games']，缺失时基于 games_accounts 现算并写回缓存。"""
+        cached = cache.get("games")
+        if isinstance(cached, dict) and (cached.get("all_games") or cached.get("count")):
+            return cached
+
+        accounts = cache.get("games_accounts")
+        if not isinstance(accounts, dict) or not accounts:
+            return None
+
+        results = []
+        for sid, entry in accounts.items():
+            if not isinstance(entry, dict):
+                continue
+            games = entry.get("games")
+            if isinstance(games, dict) and games.get("all_games"):
+                results.append({"steam_id": sid, "games": games, "summary": entry.get("summary")})
+
+        if not results:
+            return None
+
+        aggregated = merge_games(results)
+        if isinstance(aggregated, dict) and (aggregated.get("all_games") or aggregated.get("count")):
+            cache["games"] = aggregated
+        return aggregated
+
+    def _resolve_primary_id(self, cache: Dict[str, Any]) -> Optional[str]:
+        """解析主账号 steam_id：优先 config，其次 summary.steamid。"""
+        try:
+            if self.config_manager is not None:
+                get_fn = getattr(self.config_manager, "get", None)
+                if callable(get_fn):
+                    sid = get_fn("steam_id")
+                    if sid:
+                        return str(sid)
+        except Exception:
+            pass
+
+        summary = cache.get("summary")
+        if isinstance(summary, dict):
+            sid = summary.get("steamid")
+            if sid:
+                return str(sid)
+        return None
+
+    def _get_account_games(self, cache: Dict[str, Any], steam_id: str) -> Optional[Dict[str, Any]]:
+        accounts = cache.get("games_accounts")
+        if not isinstance(accounts, dict):
+            return None
+        entry = accounts.get(str(steam_id))
+        if not isinstance(entry, dict):
+            return None
+        games = entry.get("games")
+        return games if isinstance(games, dict) else None
 
     def _recent_games_brief(self, steam_manager: Optional[object]) -> str:
         if steam_manager is None:
             return "未知"
         try:
-            get_recent_games = getattr(steam_manager, "get_recent_games", None)
-            if not callable(get_recent_games):
+            cache = getattr(steam_manager, "cache", None)
+            if not isinstance(cache, dict):
                 return "未知"
-            games = get_recent_games(limit=3) or []
+            total_games = self._get_total_games(cache)
+            if not total_games or not total_games.get("all_games"):
+                return "无"
+            all_games = total_games.get("all_games") or []
+            games = sorted(all_games, key=lambda x: (x or {}).get("rtime_last_played", 0), reverse=True)[:3]
             names = []
             for g in games:
                 name = g.get("name") if isinstance(g, dict) else None

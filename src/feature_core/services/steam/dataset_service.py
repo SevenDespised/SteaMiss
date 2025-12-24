@@ -19,8 +19,7 @@ class SteamDatasetService:
     def ensure_aggregated_cache(self, cache: Dict[str, Any]) -> None:
         accounts = cache.get("games_accounts", {}) or {}
         if not isinstance(accounts, dict) or not accounts:
-            if "games_primary" in cache:
-                cache["games"] = cache["games_primary"]
+            cache.pop("games", None)
             return
 
         results = []
@@ -29,6 +28,8 @@ class SteamDatasetService:
                 results.append({"steam_id": sid, "games": data["games"], "summary": data.get("summary")})
         if results:
             cache["games"] = merge_games(results)
+        else:
+            cache.pop("games", None)
 
     def build_game_datasets(self, cache: Dict[str, Any], primary_id: Optional[str], alt_ids: Any) -> List[dict]:
         datasets: List[dict] = []
@@ -39,9 +40,6 @@ class SteamDatasetService:
             datasets.append({"key": "total", "label": "总计", "steam_id": None, "data": aggregated, "summary": None})
 
         accounts = dict(cache.get("games_accounts", {}) or {})
-        if primary_id and primary_id not in accounts and "games_primary" in cache:
-            accounts[primary_id] = {"games": cache["games_primary"], "summary": cache.get("summary")}
-
         if primary_id and primary_id in accounts:
             primary_entry = accounts[primary_id]
             games_data = primary_entry.get("games") if isinstance(primary_entry, dict) else None
@@ -52,7 +50,7 @@ class SteamDatasetService:
                         "label": "主账号",
                         "steam_id": primary_id,
                         "data": games_data,
-                        "summary": (primary_entry.get("summary") or cache.get("summary")) if isinstance(primary_entry, dict) else cache.get("summary"),
+                        "summary": primary_entry.get("summary") if isinstance(primary_entry, dict) else None,
                     }
                 )
 
