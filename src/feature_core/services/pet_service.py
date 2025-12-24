@@ -3,8 +3,6 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from src.feature_core.services.steam.games_aggregator import merge_games
-
 
 class PetService:
     """
@@ -139,30 +137,12 @@ class PetService:
             return "未知"
 
     def _get_total_games(self, cache: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """读取/构建“总计”游戏 payload：优先使用缓存的 cache['games']，缺失时基于 games_accounts 现算并写回缓存。"""
+        """读取“总计”游戏 payload。
+        """
         cached = cache.get("games")
-        if isinstance(cached, dict) and (cached.get("all_games") or cached.get("count")):
+        if isinstance(cached, dict) and (cached.get("all_games") is not None or cached.get("count") is not None):
             return cached
-
-        accounts = cache.get("games_accounts")
-        if not isinstance(accounts, dict) or not accounts:
-            return None
-
-        results = []
-        for sid, entry in accounts.items():
-            if not isinstance(entry, dict):
-                continue
-            games = entry.get("games")
-            if isinstance(games, dict) and games.get("all_games"):
-                results.append({"steam_id": sid, "games": games, "summary": entry.get("summary")})
-
-        if not results:
-            return None
-
-        aggregated = merge_games(results)
-        if isinstance(aggregated, dict) and (aggregated.get("all_games") or aggregated.get("count")):
-            cache["games"] = aggregated
-        return aggregated
+        return None
 
     def _resolve_primary_id(self, cache: Dict[str, Any]) -> Optional[str]:
         """解析主账号 steam_id：优先 config，其次 summary.steamid。"""

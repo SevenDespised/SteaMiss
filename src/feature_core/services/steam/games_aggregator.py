@@ -31,11 +31,10 @@ class GamesAggregator:
 
     def finalize(self):
         if not self._ctx:
-            return None, {}
+            return {}
 
         results = self._ctx["results"]
         self._ctx = None
-        aggregated = merge_games(results)
 
         account_map: Dict[str, Dict[str, Any]] = {}
         for item in results:
@@ -45,7 +44,7 @@ class GamesAggregator:
             if sid and games:
                 account_map[sid] = {"games": games, "summary": summary}
 
-        return aggregated, account_map
+        return account_map
 
 
 def merge_games(results: List[Dict[str, Any]]):

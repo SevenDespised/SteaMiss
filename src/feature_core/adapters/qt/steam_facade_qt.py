@@ -61,6 +61,10 @@ class SteamFacadeQt(QObject):
 
         self.cache = self.repository.load_data()
 
+        # 启动/离线：若 games 缺失，则基于本地 games_accounts 聚合一次并落盘
+        if self.games_aggregation_service.ensure_games_from_accounts(self.cache):
+            self.repository.save_data(self.cache)
+
         self.fetch_player_summary()
         self.fetch_games_stats() 
 
@@ -204,10 +208,10 @@ class SteamFacadeQt(QObject):
             self.repository.save_data(self.cache)
 
     def _finalize_games_results(self):
-        aggregated, account_map = self.games_aggregator.finalize()
+        account_map = self.games_aggregator.finalize()
 
         primary_id = self._policy().primary_id
-        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, aggregated, account_map)
+        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, account_map)
 
         summary_to_emit = updates.get("summary_to_emit")
         if summary_to_emit:
@@ -223,9 +227,6 @@ class SteamFacadeQt(QObject):
     def get_game_datasets(self):
         policy = self._policy()
         return self.dataset_service.build_game_datasets(self.cache, policy.primary_id, policy.alt_ids)
-
-    def _ensure_aggregated_cache(self):
-        self.dataset_service.ensure_aggregated_cache(self.cache)
 
     def _get_primary_games_cache(self):
         primary_id = self._policy().primary_id

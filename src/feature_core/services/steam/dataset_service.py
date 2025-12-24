@@ -2,13 +2,10 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from src.feature_core.services.steam.games_aggregator import merge_games
-
 
 class SteamDatasetService:
     """
     Steam 数据集（Tabs）子域（纯 Python）：
-    - ensure_aggregated_cache：保证 cache['games'] 总计聚合存在
     - build_game_datasets：将 cache → UI 可消费 datasets 列表
 
     边界：
@@ -16,28 +13,14 @@ class SteamDatasetService:
     - 不处理 worker result（由 facade + aggregation/profile/... 子域处理）
     """
 
-    def ensure_aggregated_cache(self, cache: Dict[str, Any]) -> None:
-        accounts = cache.get("games_accounts", {}) or {}
-        if not isinstance(accounts, dict) or not accounts:
-            cache.pop("games", None)
-            return
-
-        results = []
-        for sid, data in accounts.items():
-            if isinstance(data, dict) and data.get("games"):
-                results.append({"steam_id": sid, "games": data["games"], "summary": data.get("summary")})
-        if results:
-            cache["games"] = merge_games(results)
-        else:
-            cache.pop("games", None)
 
     def build_game_datasets(self, cache: Dict[str, Any], primary_id: Optional[str], alt_ids: Any) -> List[dict]:
         datasets: List[dict] = []
-        self.ensure_aggregated_cache(cache)
 
-        aggregated = cache.get("games")
-        if aggregated is not None:
-            datasets.append({"key": "total", "label": "总计", "steam_id": None, "data": aggregated, "summary": None})
+        games_total: Optional[Dict[str, Any]] = cache.get("games")
+        if not games_total:
+            games_total = {"count": 0, "all_games": []}
+        datasets.append({"key": "total", "label": "总计", "steam_id": None, "data": games_total, "summary": None})
 
         accounts = dict(cache.get("games_accounts", {}) or {})
         if primary_id and primary_id in accounts:
