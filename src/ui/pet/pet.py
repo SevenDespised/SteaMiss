@@ -51,6 +51,8 @@ class DesktopPet(QWidget):
 
         # 初始化气泡对话框
         self.speech_bubble = SpeechBubble()
+        self.speech_bubble.shown.connect(self._on_bubble_shown)
+        self.speech_bubble.hidden.connect(self._on_bubble_hidden)
 
         # 4. 核心循环 (大脑与心脏)
         self.current_state = "idle"  # 当前行为状态
@@ -156,6 +158,20 @@ class DesktopPet(QWidget):
         # 确保气泡层级正确
         self.speech_bubble.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.is_topmost())
         self.speech_bubble.show()
+
+    def _on_bubble_shown(self):
+        # 新气泡出现时立刻切换上下文：
+        # - 有 pending ctx：应用
+        # - 无 pending ctx：清空（回到默认互动项）
+        ctx = self.behavior_manager.consume_pending_interaction_context()
+        if ctx is None:
+            self.behavior_manager.clear_interaction_context()
+        else:
+            self.behavior_manager.set_interaction_context(ctx)
+
+    def _on_bubble_hidden(self):
+        # 只要没有气泡就清上下文
+        self.behavior_manager.clear_interaction_context()
 
     def moveEvent(self, event):
         super().moveEvent(event)

@@ -80,6 +80,7 @@ class SpeakingState(AIState):
 
     def exit(self, manager: 'BehaviorManager'):
         self.current_sub_state_type = None
+        # 互动上下文由“气泡显示/隐藏”驱动，不在这里强制清理
 
 class GameRecommendationSubState(AISubState):
     def execute(self, manager: 'BehaviorManager'):
@@ -132,7 +133,27 @@ class GameRecommendationSubState(AISubState):
             response = manager.llm_service.chat_completion(messages)
             
             if response:
-                manager.request_speech(response)
+                # 以气泡显示为起点：仅在确定要显示气泡时，才设置推荐状态与互动上下文
+                manager.current_recommended_game = game
+
+                name_for_menu = name
+                if len(name_for_menu) > 8:
+                    name_for_menu = name_for_menu[:8] + "..."
+
+                interaction_context = {
+                    "label": f"启动：\n{name_for_menu}",
+                    "action": "launch_game",
+                    "kwargs": {"appid": appid},
+                    "sub_items": [
+                        {
+                            "label": "互动：\n打招呼",
+                            "action": "say_hello",
+                            "kwargs": {},
+                        }
+                    ],
+                }
+
+                manager.request_speech(response, interaction_context=interaction_context)
         except Exception as e:
             print(f"[GameRecommendation] Error in async task: {e}")
 

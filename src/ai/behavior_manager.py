@@ -15,6 +15,8 @@ from src.ai.states import (
 class BehaviorManager(QObject):
     # 定义信号：请求说话
     speech_requested = pyqtSignal(str)
+    # 定义信号：请求刷新菜单（例如状态变化影响互动项）
+    menu_refresh_requested = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -33,6 +35,11 @@ class BehaviorManager(QObject):
         
         # State Data
         self.last_recommend_time = time.time()
+        self.current_recommended_game = None
+
+        # UI interaction context (driven by speech bubble lifecycle)
+        self.interaction_context = None
+        self._pending_interaction_context = None
 
         # Register default states
         self.register_state(StateType.IDLE, IdleState())
@@ -86,11 +93,39 @@ class BehaviorManager(QObject):
         self._current_state = self._states[state_type]
         self._current_state.enter(self)
 
-    def request_speech(self, content):
+    def request_speech(self, content: str, interaction_context=None):
+        """外部请求 AI 说话（显示气泡）。
+
+        交互上下文同步策略：
+        - 以气泡显示为起点：在气泡 show 时消费 pending context 并应用到菜单；
+        - 以气泡隐藏为终点：在气泡 hide 时清空上下文并刷新菜单。
+
+        @param interaction_context: 可选，供“互动”菜单渲染的上下文信息。
         """
-        外部请求 AI 说话（例如响应用户交互）
-        """
+        self._pending_interaction_context = interaction_context
         self.speech_requested.emit(content)
+
+    def request_menu_refresh(self) -> None:
+        """请求 UI 刷新一次环形菜单（若正在显示则更新内容）。"""
+        self.menu_refresh_requested.emit()
+
+    def consume_pending_interaction_context(self):
+        """由 UI 在气泡显示时调用：取出本次说话携带的上下文。"""
+        ctx = self._pending_interaction_context
+        self._pending_interaction_context = None
+        return ctx
+
+    def set_interaction_context(self, ctx) -> None:
+        """设置当前互动上下文并刷新菜单。"""
+        self.interaction_context = ctx
+        self.request_menu_refresh()
+
+    def clear_interaction_context(self) -> None:
+        """清空当前互动上下文并刷新菜单。"""
+        self.interaction_context = None
+        self.current_recommended_game = None
+        self._pending_interaction_context = None
+        self.request_menu_refresh()
 
     def update(self, is_dragging):
         """

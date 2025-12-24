@@ -92,6 +92,7 @@ class SteaMissApp:
         config_manager = self.config_manager
         timer_handler = self.timer_handler
         steam_manager = self.steam_manager
+        behavior_manager = self.behavior_manager
 
         menu_providers = [
             lambda ab=action_bus, cm=config_manager: ExitMenuBuilder(ab, cm).build(),
@@ -101,7 +102,7 @@ class SteaMissApp:
             lambda ab=action_bus, cm=config_manager, th=timer_handler: TimerMenuBuilder(ab, cm, th).build(),
             lambda ab=action_bus, cm=config_manager, sm=steam_manager: SteamGameMenuBuilder(ab, cm, sm).build_recent_game_item(),
             lambda ab=action_bus, cm=config_manager, sm=steam_manager: SteamGameMenuBuilder(ab, cm, sm).build_quick_launch_item(),
-            lambda ab=action_bus, cm=config_manager: InteractionMenuBuilder(ab, cm).build(),
+            lambda ab=action_bus, cm=config_manager, bm=behavior_manager: InteractionMenuBuilder(ab, cm, bm).build(),
         ]
 
         # 菜单布局顺序：由顶层注入，避免耦合在 MenuComposer 中
@@ -113,7 +114,7 @@ class SteaMissApp:
             "timer",
             "launch_recent",
             "launch_favorite",
-            "say_hello",
+            "interaction",
         ]
 
         self.menu_composer = MenuComposer(
@@ -176,6 +177,9 @@ class SteaMissApp:
         self.pet.right_clicked.connect(self.radial_handler.handle_right_click)
         self.pet.double_clicked.connect(lambda: self.action_bus.execute(Action.SAY_HELLO))
         self.radial_handler.menu_hovered_changed.connect(self.pet.on_menu_hover_changed)
+
+        # 气泡 show/hide 会驱动互动上下文变化：若菜单正在显示则即时刷新
+        self.behavior_manager.menu_refresh_requested.connect(self.radial_handler.refresh_menu)
         
         # 连接 UI intents（由 ActionBus 触发）
         self.ui_intents.open_window.connect(self.window_handler.open_window)

@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt, QRectF, QTimer
+from PyQt6.QtCore import Qt, QRectF, QTimer, pyqtSignal
 from PyQt6.QtGui import QColor, QPainter, QPainterPath, QFont, QFontMetrics
 from PyQt6.QtWidgets import QWidget
 
@@ -6,6 +6,10 @@ class SpeechBubble(QWidget):
     """
     显示在宠物下方的气泡对话框。
     """
+
+    shown = pyqtSignal()
+    hidden = pyqtSignal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         # 无边框、置顶、工具窗口（不显示在任务栏）
@@ -41,11 +45,18 @@ class SpeechBubble(QWidget):
         self.adjust_size_to_text()
         self.show()
         self.update()
+
+        # 每次显示/更新消息都发射 shown，便于“新气泡立刻切换上下文”
+        self.shown.emit()
         
         if duration > 0:
             self.hide_timer.start(duration)
         else:
             self.hide_timer.stop()
+
+    def hideEvent(self, event):
+        super().hideEvent(event)
+        self.hidden.emit()
 
     def adjust_size_to_text(self):
         if not self.text:
