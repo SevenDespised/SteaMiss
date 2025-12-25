@@ -1,5 +1,6 @@
 import requests
 import json
+from typing import Iterator
 
 class LLMService:
     """
@@ -115,3 +116,71 @@ class LLMService:
         except Exception as e:
             print(f"[LLM] Request failed: {e}")
             return None
+
+    def stream_chat_completion(self, messages) -> Iterator[str]:
+        """以 OpenAI 兼容 SSE 方式流式调用 LLM。
+
+        产出：增量文本（delta）。
+        说明：
+        - 请求将带上 stream=true
+        - 响应按 data: {...}\n\n 逐段返回，最终以 data: [DONE] 结束
+        """
+        api_key = self.config_manager.get("llm_api_key", "")
+        base_url = self.config_manager.get("llm_base_url", "")
+        model = self.config_manager.get("llm_model", "")
+
+        if not api_key or not base_url or not model:
+            return
+
+        base_url = base_url.rstrip("/")
+        if base_url.endswith("/v1"):
+            url = f"{base_url}/chat/completions"
+        elif base_url.endswith("/chat/completions"):
+            url = base_url
+        else:
+            url = f"{base_url}/v1/chat/completions"
+
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        }
+
+        payload = {
+            "model": model,
+            "messages": messages,
+            "stream": True,
+        }
+
+        try:
+            with requests.post(url, headers=headers, json=payload, stream=True, timeout=60) as response:
+                response.raise_for_status()
+
+                for raw_line in response.iter_lines(decode_unicode=True):
+                    if raw_line is None:
+                        continue
+                    line = raw_line.strip()
+                    if not line:
+                        continue
+                    if not line.startswith("data:"):
+                        continue
+
+                    data_str = line[len("data:") :].strip()
+                    if data_str == "[DONE]":
+                        break
+
+                    try:
+                        data = json.loads(data_str)
+                    except Exception:
+                        continue
+
+                    try:
+                        choice0 = (data.get("choices") or [None])[0] or {}
+                        delta = choice0.get("delta") or {}
+                        content = delta.get("content")
+                        if isinstance(content, str) and content:
+                            yield content
+                    except Exception:
+                        continue
+        except Exception as e:
+            print(f"[LLM] Stream request failed: {e}")
+            return

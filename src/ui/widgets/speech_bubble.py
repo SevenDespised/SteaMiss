@@ -21,6 +21,8 @@ class SpeechBubble(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         
         self.text = ""
+        self._stream_request_id = None
+        self._is_streaming = False
         self.bg_color = QColor(255, 255, 255, 240)
         self.border_color = QColor(200, 200, 200, 200)
         self.text_color = QColor(50, 50, 50)
@@ -42,6 +44,8 @@ class SpeechBubble(QWidget):
         @param duration: 显示时长（毫秒），0 表示不自动隐藏
         """
         self.text = text
+        self._is_streaming = False
+        self._stream_request_id = None
         self.adjust_size_to_text()
         self.show()
         self.update()
@@ -54,12 +58,54 @@ class SpeechBubble(QWidget):
         else:
             self.hide_timer.stop()
 
+    def start_stream(self, request_id: str, duration_after_done: int = 10000):
+        """开始一次流式展示。
+
+        - 只在开始时 emit shown（用于同步互动上下文）
+        - 流式过程中不自动隐藏；结束后再按 duration_after_done 自动隐藏
+        """
+        self._stream_request_id = request_id
+        self._is_streaming = True
+        self._duration_after_done = duration_after_done
+
+        self.text = ""
+        self.adjust_size_to_text()
+        self.show()
+        self.update()
+        self.shown.emit()
+        self.hide_timer.stop()
+
+    def append_stream(self, request_id: str, delta: str):
+        if not self._is_streaming or request_id != self._stream_request_id:
+            return
+        if not isinstance(delta, str) or not delta:
+            return
+        self.text += delta
+        self.adjust_size_to_text()
+        self.update()
+
+    def end_stream(self, request_id: str):
+        if not self._is_streaming or request_id != self._stream_request_id:
+            return
+        self._is_streaming = False
+        self._stream_request_id = None
+
+        duration = getattr(self, "_duration_after_done", 10000)
+        if duration and duration > 0:
+            self.hide_timer.start(duration)
+        else:
+            self.hide_timer.stop()
+
     def hideEvent(self, event):
         super().hideEvent(event)
         self.hidden.emit()
 
     def adjust_size_to_text(self):
+        # 允许空文本（例如流式刚开始），至少保持一个最小尺寸
         if not self.text:
+            w = self.max_width
+            h = self.padding * 2 + self.pointer_height + 10
+            self.resize(w, h)
             return
             
         font = QFont("Microsoft YaHei UI", self.font_size)

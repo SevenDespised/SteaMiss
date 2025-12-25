@@ -48,6 +48,9 @@ class DesktopPet(QWidget):
 
         # 监听行为管理器的说话请求
         self.behavior_manager.speech_requested.connect(self.say)
+        self.behavior_manager.speech_stream_started.connect(self.say_stream_started)
+        self.behavior_manager.speech_stream_delta.connect(self.say_stream_delta)
+        self.behavior_manager.speech_stream_done.connect(self.say_stream_done)
 
         # 初始化气泡对话框
         self.speech_bubble = SpeechBubble()
@@ -158,6 +161,19 @@ class DesktopPet(QWidget):
         # 确保气泡层级正确
         self.speech_bubble.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.is_topmost())
         self.speech_bubble.show()
+
+    def say_stream_started(self, request_id: str):
+        self.speech_bubble.start_stream(request_id, duration_after_done=10000)
+        self._update_bubble_position()
+        self.speech_bubble.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.is_topmost())
+        self.speech_bubble.show()
+
+    def say_stream_delta(self, request_id: str, delta: str):
+        self.speech_bubble.append_stream(request_id, delta)
+        self._update_bubble_position()
+
+    def say_stream_done(self, request_id: str):
+        self.speech_bubble.end_stream(request_id)
 
     def _on_bubble_shown(self):
         # 新气泡出现时立刻切换上下文：

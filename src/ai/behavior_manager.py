@@ -15,6 +15,10 @@ from src.ai.states import (
 class BehaviorManager(QObject):
     # 定义信号：请求说话
     speech_requested = pyqtSignal(str)
+    # 流式说话：开始/增量/结束
+    speech_stream_started = pyqtSignal(str)  # request_id
+    speech_stream_delta = pyqtSignal(str, str)  # request_id, delta
+    speech_stream_done = pyqtSignal(str)  # request_id
     # 定义信号：请求刷新菜单（例如状态变化影响互动项）
     menu_refresh_requested = pyqtSignal()
 
@@ -104,6 +108,22 @@ class BehaviorManager(QObject):
         """
         self._pending_interaction_context = interaction_context
         self.speech_requested.emit(content)
+
+    def request_speech_stream_started(self, request_id: str, interaction_context=None) -> None:
+        """开始一次流式说话。
+
+        注意：上下文同步仍以“气泡 show”为起点，因此这里也复用 pending ctx。
+        """
+        self._pending_interaction_context = interaction_context
+        self.speech_stream_started.emit(request_id)
+
+    def request_speech_stream_delta(self, request_id: str, delta: str) -> None:
+        """追加一段流式文本（delta）。"""
+        self.speech_stream_delta.emit(request_id, delta)
+
+    def request_speech_stream_done(self, request_id: str) -> None:
+        """结束一次流式说话。"""
+        self.speech_stream_done.emit(request_id)
 
     def request_menu_refresh(self) -> None:
         """请求 UI 刷新一次环形菜单（若正在显示则更新内容）。"""
