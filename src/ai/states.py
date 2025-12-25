@@ -137,8 +137,8 @@ class GameRecommendationSubState(AISubState):
                 manager.current_recommended_game = game
 
                 name_for_menu = name
-                if len(name_for_menu) > 8:
-                    name_for_menu = name_for_menu[:8] + "..."
+                if len(name_for_menu) > 6:
+                    name_for_menu = name_for_menu[:6] + "..."
 
                 interaction_context = {
                     "label": f"启动：\n{name_for_menu}",
