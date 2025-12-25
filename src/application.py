@@ -28,6 +28,7 @@ from src.feature_core.adapters.qt.system_facade_qt import SystemFacadeQt
 from src.feature_core.services.pet_service import PetService
 from src.feature_core.services.llm_service import LLMService
 from src.storage.prompt_manager import PromptManager
+from src.feature_core.adapters.qt.say_hello_facade_qt import SayHelloFacadeQt
 import threading
 
 class SteaMissApp:
@@ -42,14 +43,23 @@ class SteaMissApp:
         self.steam_manager = SteamFacadeQt(self.config_manager)
         self.llm_service = LLMService(self.config_manager)
         self.prompt_manager = PromptManager()
+
+        # ActionBus + UI intents
+        self.ui_intents = UiIntentsQt()
+        self.action_bus = ActionBus()
         
         # System/Pet：分别落在 adapters/qt 与 services
         self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
-        self.pet_service = PetService(self.config_manager)
+        self.pet_service = PetService()
 
-        # ActionBus + UI intents（替代旧 FeatureRouter）
-        self.ui_intents = UiIntentsQt()
-        self.action_bus = ActionBus()
+        # SayHello：Qt 边界负责异步与 UI 信号驱动
+        self.say_hello_facade = SayHelloFacadeQt(
+            ui_intents=self.ui_intents,
+            pet_service=self.pet_service,
+            llm_service=self.llm_service,
+            prompt_manager=self.prompt_manager,
+            steam_manager=self.steam_manager,
+        )
 
         def _emit_error(e: Exception, action: Action, kwargs: dict) -> None:
             self.ui_intents.error.emit(f"{action.value} failed: {e}")
@@ -70,13 +80,7 @@ class SteaMissApp:
         self.action_bus.register(Action.STOP_TIMER, self.timer_handler.stop_and_persist)
 
         # UI intents via actions
-        def _say_hello(**kwargs) -> None:
-            _ = kwargs
-            content = self.pet_service.get_say_hello_content()
-            if content:
-                self.ui_intents.say_hello.emit(content)
-
-        self.action_bus.register(Action.SAY_HELLO, _say_hello)
+        self.action_bus.register(Action.SAY_HELLO, self.say_hello_facade.say_hello)
         self.action_bus.register(Action.ACTIVATE_PET, lambda **_: self.ui_intents.activate_pet.emit())
         self.action_bus.register(Action.HIDE_PET, lambda **_: self.ui_intents.hide_pet.emit())
         self.action_bus.register(Action.TOGGLE_TOPMOST, lambda **_: self.ui_intents.toggle_topmost.emit())

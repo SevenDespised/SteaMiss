@@ -15,11 +15,13 @@ class PetService:
     - 与 UI 的交互通过 UiIntentsQt / PetFacadeQt 完成
     """
 
-    def __init__(self, config_manager: Optional[object] = None) -> None:
-        self.config_manager = config_manager
+    SAY_HELLO_FALLBACK_TEXT = "你好！"
+
+    def __init__(self) -> None:
+        pass
 
     def build_say_hello_prompt(self, prompt_manager: object, steam_manager: Optional[object] = None) -> str:
-        """构建 say_hello 的 LLM Prompt（不调用 LLM）。
+        """构建 say_hello 的 LLM Prompt。
 
         - 从 steam_manager.cache 读取 summary / games 缓存（若存在）
         - 组装为 PromptManager 的 say_hello 模板 kwargs
@@ -144,35 +146,6 @@ class PetService:
             return cached
         return None
 
-    def _resolve_primary_id(self, cache: Dict[str, Any]) -> Optional[str]:
-        """解析主账号 steam_id：优先 config，其次 summary.steamid。"""
-        try:
-            if self.config_manager is not None:
-                get_fn = getattr(self.config_manager, "get", None)
-                if callable(get_fn):
-                    sid = get_fn("steam_id")
-                    if sid:
-                        return str(sid)
-        except Exception:
-            pass
-
-        summary = cache.get("summary")
-        if isinstance(summary, dict):
-            sid = summary.get("steamid")
-            if sid:
-                return str(sid)
-        return None
-
-    def _get_account_games(self, cache: Dict[str, Any], steam_id: str) -> Optional[Dict[str, Any]]:
-        accounts = cache.get("games_accounts")
-        if not isinstance(accounts, dict):
-            return None
-        entry = accounts.get(str(steam_id))
-        if not isinstance(entry, dict):
-            return None
-        games = entry.get("games")
-        return games if isinstance(games, dict) else None
-
     def _recent_games_brief(self, steam_manager: Optional[object]) -> str:
         if steam_manager is None:
             return "未知"
@@ -194,14 +167,9 @@ class PetService:
         except Exception:
             return "未知"
 
-    def get_say_hello_content(self) -> str:
-        """获取“打招呼”文案（来自配置）。"""
-        if not self.config_manager:
-            return "你好！"
-        try:
-            return self.config_manager.get("say_hello_content", "你好！")
-        except Exception:
-            return "你好！"
+    def get_say_hello_fallback_text(self) -> str:
+        """LLM 失败/不可用时的回退文案（唯一保留的默认值）。"""
+        return self.SAY_HELLO_FALLBACK_TEXT
 
 
 __all__ = ["PetService"]

@@ -39,10 +39,6 @@ class SettingsDialog(QDialog):
         self.init_basic_tab()
         self.tabs.addTab(self.steam_tab, "基础设置")
 
-        self.hello_tab = QWidget()
-        self.init_hello_tab()
-        self.tabs.addTab(self.hello_tab, "打招呼")
-
         self.func_tab = QWidget()
         self.init_func_tab()
         self.tabs.addTab(self.func_tab, "快捷路径")
@@ -74,8 +70,6 @@ class SettingsDialog(QDialog):
 
     def load_settings(self, config):
         """加载配置到 UI"""
-        self.hello_input.setText(config.get("say_hello_content", "你好！"))
-
         paths = config.get("explorer_paths", ["C:/", "C:/", "C:/"])
         aliases = config.get("explorer_path_aliases", ["", "", ""])
         for i in range(3):
@@ -112,15 +106,6 @@ class SettingsDialog(QDialog):
         self.llm_api_key_input.setText(config.get("llm_api_key", ""))
         self.llm_base_url_input.setText(config.get("llm_base_url", ""))
         self.llm_model_input.setText(config.get("llm_model", ""))
-
-
-    def init_hello_tab(self):
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("自定义打招呼内容:"))
-        self.hello_input = QLineEdit()
-        layout.addWidget(self.hello_input)
-        layout.addStretch()
-        self.hello_tab.setLayout(layout)
 
     def init_func_tab(self):
         layout = QVBoxLayout()
@@ -402,8 +387,6 @@ class SettingsDialog(QDialog):
 
     def save_settings(self):
         settings = {}
-
-        settings["say_hello_content"] = self.hello_input.text()
 
         settings["explorer_paths"] = [inp.text() for inp in self.path_inputs]
         settings["explorer_path_aliases"] = [inp.text() for inp in self.alias_inputs]

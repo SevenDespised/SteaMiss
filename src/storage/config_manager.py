@@ -5,7 +5,6 @@ class ConfigManager:
     def __init__(self, config_path="config/settings.json"):
         self.config_path = config_path
         self.settings = {
-            "say_hello_content": "你好！我是你的桌面宠物。",
             "explorer_paths": ["C:/", "C:/", "C:/"],
             "steam_api_key": "",
             "steam_id": "",
