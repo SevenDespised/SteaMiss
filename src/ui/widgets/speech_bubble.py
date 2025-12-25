@@ -23,6 +23,11 @@ class SpeechBubble(QWidget):
         self.text = ""
         self._stream_request_id = None
         self._is_streaming = False
+        self._has_real_stream_content = False
+        self._placeholder_phase = 0
+        self._placeholder_frames = ["", ".", "..", "..."]
+        self._placeholder_timer = QTimer(self)
+        self._placeholder_timer.timeout.connect(self._tick_placeholder)
         self.bg_color = QColor(255, 255, 255, 240)
         self.border_color = QColor(200, 200, 200, 200)
         self.text_color = QColor(50, 50, 50)
@@ -31,6 +36,14 @@ class SpeechBubble(QWidget):
         self.max_width = 180
         self.pointer_height = 8
         self.pointer_width = 12
+
+        # 占位符阶段固定尺寸：避免 placeholder 动画导致尺寸变化、进而出现位置“跑偏”
+        font = QFont("Microsoft YaHei UI", self.font_size)
+        metrics = QFontMetrics(font)
+        placeholder_text_w = metrics.boundingRect("...").width()
+        placeholder_text_h = metrics.height()
+        self._placeholder_fixed_w = max(40, placeholder_text_w + self.padding * 2)
+        self._placeholder_fixed_h = placeholder_text_h + self.padding * 2 + self.pointer_height
         
         # 自动隐藏定时器
         self.hide_timer = QTimer(self)
@@ -46,6 +59,8 @@ class SpeechBubble(QWidget):
         self.text = text
         self._is_streaming = False
         self._stream_request_id = None
+        self._has_real_stream_content = False
+        self._placeholder_timer.stop()
         self.adjust_size_to_text()
         self.show()
         self.update()
@@ -68,19 +83,33 @@ class SpeechBubble(QWidget):
         self._is_streaming = True
         self._duration_after_done = duration_after_done
 
-        self.text = ""
+        self._has_real_stream_content = False
+        self._placeholder_phase = 0
+
+        # 先展示空白占位（边框可见），随后动态循环: "" -> . -> .. -> ... -> ""
+        self.text = self._placeholder_frames[self._placeholder_phase]
         self.adjust_size_to_text()
         self.show()
         self.update()
         self.shown.emit()
         self.hide_timer.stop()
 
+        # 300ms 一跳：. .. ... 循环
+        self._placeholder_timer.start(300)
+
     def append_stream(self, request_id: str, delta: str):
         if not self._is_streaming or request_id != self._stream_request_id:
             return
         if not isinstance(delta, str) or not delta:
             return
-        self.text += delta
+
+        # 第一个真实片段到来时，用真实内容替换占位符，并停止动画
+        if not self._has_real_stream_content:
+            self._has_real_stream_content = True
+            self._placeholder_timer.stop()
+            self.text = delta
+        else:
+            self.text += delta
         self.adjust_size_to_text()
         self.update()
 
@@ -89,6 +118,7 @@ class SpeechBubble(QWidget):
             return
         self._is_streaming = False
         self._stream_request_id = None
+        self._placeholder_timer.stop()
 
         duration = getattr(self, "_duration_after_done", 10000)
         if duration and duration > 0:
@@ -96,16 +126,31 @@ class SpeechBubble(QWidget):
         else:
             self.hide_timer.stop()
 
+    def _tick_placeholder(self):
+        if not self._is_streaming or self._has_real_stream_content:
+            self._placeholder_timer.stop()
+            return
+
+        self._placeholder_phase = (self._placeholder_phase + 1) % len(self._placeholder_frames)
+        self.text = self._placeholder_frames[self._placeholder_phase]
+        self.adjust_size_to_text()
+        self.update()
+
     def hideEvent(self, event):
+        # 气泡隐藏后，停止占位符动画，避免不可见状态下继续刷新 UI
+        self._placeholder_timer.stop()
         super().hideEvent(event)
         self.hidden.emit()
 
     def adjust_size_to_text(self):
-        # 允许空文本（例如流式刚开始），至少保持一个最小尺寸
+        # 占位符阶段固定尺寸：timer tick 会更新 text，但不应引起窗口尺寸变化（否则定位会漂）
+        if self._is_streaming and not self._has_real_stream_content:
+            self.resize(self._placeholder_fixed_w, self._placeholder_fixed_h)
+            return
+
+        # 允许空文本（例如清理/边界情况），至少保持一个最小尺寸
         if not self.text:
-            w = self.max_width
-            h = self.padding * 2 + self.pointer_height + 10
-            self.resize(w, h)
+            self.resize(self._placeholder_fixed_w, self._placeholder_fixed_h)
             return
             
         font = QFont("Microsoft YaHei UI", self.font_size)
@@ -123,9 +168,6 @@ class SpeechBubble(QWidget):
         self.resize(w, h)
 
     def paintEvent(self, event):
-        if not self.text:
-            return
-            
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         
@@ -178,8 +220,9 @@ class SpeechBubble(QWidget):
             w - self.padding * 2, 
             h - ph - self.padding * 2
         )
-        painter.drawText(
-            text_rect, 
-            Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap, 
-            self.text
-        )
+        if self.text:
+            painter.drawText(
+                text_rect,
+                Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap,
+                self.text
+            )
