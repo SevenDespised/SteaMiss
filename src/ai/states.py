@@ -2,6 +2,7 @@ from __future__ import annotations
 import random
 import time
 import threading
+import uuid
 from enum import Enum, auto
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
@@ -84,16 +85,24 @@ class SpeakingState(AIState):
 
 class GameRecommendationSubState(AISubState):
     def execute(self, manager: 'BehaviorManager'):
-        if not manager.steam_manager or not manager.llm_service:
+        if not manager.steam_manager or not manager.llm_service or not manager.prompt_manager:
             return
 
         # Update last recommend time
         manager.last_recommend_time = time.time()
 
-        # Start async task
-        threading.Thread(target=self._run_async_task, args=(manager,), daemon=True).start()
+        # 取消上一条推荐的流式输出（如果有）
+        prev_request_id = getattr(manager, "_active_game_recommendation_request_id", None)
+        if isinstance(prev_request_id, str) and prev_request_id:
+            manager.request_speech_stream_done(prev_request_id)
 
-    def _run_async_task(self, manager: 'BehaviorManager'):
+        request_id = uuid.uuid4().hex
+        manager._active_game_recommendation_request_id = request_id
+
+        # Start async task
+        threading.Thread(target=self._run_async_task, args=(manager, request_id), daemon=True).start()
+
+    def _run_async_task(self, manager: 'BehaviorManager', request_id: str):
         try:
             # 1. Pick a game
             game = self._pick_game(manager)
@@ -129,24 +138,35 @@ class GameRecommendationSubState(AISubState):
             
             messages = [{"role": "user", "content": prompt_content}]
 
-            # 5. Call LLM Service
-            response = manager.llm_service.chat_completion(messages)
-            
-            if response:
-                # 以气泡显示为起点：仅在确定要显示气泡时，才设置推荐状态与互动上下文
-                manager.current_recommended_game = game
+            # 5. Stream LLM Service
+            if getattr(manager, "_active_game_recommendation_request_id", None) != request_id:
+                return
 
-                name_for_menu = name
-                if len(name_for_menu) > 6:
-                    name_for_menu = name_for_menu[:6] + "..."
+            # 以气泡显示为起点：仅在确定要显示气泡时，才设置推荐状态与互动上下文
+            manager.current_recommended_game = game
 
-                interaction_context = {
-                    "label": f"启动：\n{name_for_menu}",
-                    "action": "launch_game",
-                    "kwargs": {"appid": appid},
-                }
+            name_for_menu = name
+            if len(name_for_menu) > 6:
+                name_for_menu = name_for_menu[:6] + "..."
 
-                manager.request_speech(response, interaction_context=interaction_context)
+            interaction_context = {
+                "label": f"启动：\n{name_for_menu}",
+                "action": "launch_game",
+                "kwargs": {"appid": appid},
+            }
+
+            manager.request_speech_stream_started(request_id, interaction_context=interaction_context)
+
+            try:
+                for delta in manager.llm_service.stream_chat_completion(messages):
+                    if getattr(manager, "_active_game_recommendation_request_id", None) != request_id:
+                        return
+                    if not isinstance(delta, str) or not delta:
+                        continue
+                    manager.request_speech_stream_delta(request_id, delta)
+            finally:
+                if getattr(manager, "_active_game_recommendation_request_id", None) == request_id:
+                    manager.request_speech_stream_done(request_id)
         except Exception as e:
             print(f"[GameRecommendation] Error in async task: {e}")
 
