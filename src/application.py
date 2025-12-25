@@ -191,6 +191,9 @@ class SteaMissApp:
         self.ui_intents.hide_pet.connect(self.toggle_pet_visibility)
         self.ui_intents.toggle_topmost.connect(self.pet.toggle_topmost)
         self.ui_intents.say_hello.connect(self.on_say_hello)
+        self.ui_intents.say_hello_stream_started.connect(self.behavior_manager.request_speech_stream_started)
+        self.ui_intents.say_hello_stream_delta.connect(self.behavior_manager.request_speech_stream_delta)
+        self.ui_intents.say_hello_stream_done.connect(self.behavior_manager.request_speech_stream_done)
         self.ui_intents.error.connect(self.on_error_occurred)
         self.ui_intents.notification.connect(
             lambda t, m: self.tray_handler.show_message(t, m, QSystemTrayIcon.MessageIcon.Warning, 3000)

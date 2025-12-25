@@ -11,6 +11,10 @@ class UiIntentsQt(QObject):
 
     open_window = pyqtSignal(str)
     say_hello = pyqtSignal(str)
+    # 流式输出：开始/增量/结束（用于气泡逐步更新文本）
+    say_hello_stream_started = pyqtSignal(str)  # request_id
+    say_hello_stream_delta = pyqtSignal(str, str)  # request_id, delta
+    say_hello_stream_done = pyqtSignal(str)  # request_id
     activate_pet = pyqtSignal()
     hide_pet = pyqtSignal()
     toggle_topmost = pyqtSignal()

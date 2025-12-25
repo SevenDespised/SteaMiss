@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import threading
+import time
+import uuid
 from typing import Optional
 
 from PyQt6.QtCore import QObject
@@ -30,28 +32,65 @@ class SayHelloFacadeQt(QObject):
         self._llm_service = llm_service
         self._prompt_manager = prompt_manager
         self._steam_manager = steam_manager
+        self._active_request_id: Optional[str] = None
 
     def say_hello(self, **kwargs) -> None:
         _ = kwargs
 
+        request_id = uuid.uuid4().hex
+        self._active_request_id = request_id
+
         fallback = self._pet_service.get_say_hello_fallback_text()
         prompt = self._pet_service.build_say_hello_prompt(self._prompt_manager, self._steam_manager)
+
+        # 通知 UI：开始流式
+        self._ui_intents.say_hello_stream_started.emit(request_id)
 
         def _run() -> None:
             try:
                 if not isinstance(prompt, str) or not prompt.strip():
-                    self._ui_intents.say_hello.emit(fallback)
+                    self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
                     return
 
-                content: Optional[str] = self._llm_service.chat_completion(
+                # 轻量节流：累积一小段再发，避免 UI 每 token 重绘
+                buffer = ""
+                last_flush = time.monotonic()
+                has_output = False
+
+                for delta in self._llm_service.stream_chat_completion(
                     [{"role": "user", "content": prompt}]
-                )
-                if isinstance(content, str) and content.strip():
-                    self._ui_intents.say_hello.emit(content.strip())
-                else:
-                    self._ui_intents.say_hello.emit(fallback)
+                ):
+                    # 取消：如果用户触发了新的 say_hello，请停止本次输出
+                    if self._active_request_id != request_id:
+                        return
+
+                    if not isinstance(delta, str) or not delta:
+                        continue
+
+                    has_output = True
+                    buffer += delta
+
+                    now = time.monotonic()
+                    if len(buffer) >= 20 or (now - last_flush) >= 0.05:
+                        self._ui_intents.say_hello_stream_delta.emit(request_id, buffer)
+                        buffer = ""
+                        last_flush = now
+
+                if self._active_request_id != request_id:
+                    return
+
+                if buffer:
+                    self._ui_intents.say_hello_stream_delta.emit(request_id, buffer)
+
+                if not has_output:
+                    self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
             except Exception:
-                self._ui_intents.say_hello.emit(fallback)
+                if self._active_request_id != request_id:
+                    return
+                self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
+            finally:
+                if self._active_request_id == request_id:
+                    self._ui_intents.say_hello_stream_done.emit(request_id)
 
         threading.Thread(target=_run, daemon=True).start()
 
