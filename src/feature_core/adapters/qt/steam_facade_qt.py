@@ -20,6 +20,16 @@ from src.feature_core.services.steam.price_service import SteamPriceService
 from src.feature_core.services.steam.wishlist_service import SteamWishlistService
 from src.feature_core.services.steam.achievement_service import SteamAchievementService
 from src.storage.steam_repository import SteamRepository
+from src.feature_core.services.steam.steam_result_processor import (
+    EmitAchievements,
+    EmitError,
+    EmitGamesStats,
+    EmitPlayerSummary,
+    EmitStorePrices,
+    EmitWishlist,
+    SaveStep,
+    SteamResultProcessor,
+)
 
 
 class SteamFacadeQt(QObject):
@@ -41,6 +51,8 @@ class SteamFacadeQt(QObject):
         self.config = config_manager
         self.cache = {}
         self._policy_cache: Optional[SteamAccountPolicy] = None
+
+        self._result_processor: Optional[SteamResultProcessor] = None
 
         self.games_aggregator = GamesAggregator()
         self.launcher_service = SteamLauncherService()
@@ -65,6 +77,17 @@ class SteamFacadeQt(QObject):
         if self.games_aggregation_service.ensure_games_from_accounts(self.cache):
             self.repository.save_data(self.cache)
 
+        self._result_processor = SteamResultProcessor(
+            cache=self.cache,
+            games_aggregator=self.games_aggregator,
+            get_primary_id=lambda: self._policy().primary_id,
+            games_aggregation_service=self.games_aggregation_service,
+            profile_service=self.profile_service,
+            price_service=self.price_service,
+            wishlist_service=self.wishlist_service,
+            achievement_service=self.achievement_service,
+        )
+
         self.fetch_player_summary()
         self.fetch_games_stats() 
 
@@ -79,10 +102,6 @@ class SteamFacadeQt(QObject):
         账号凭证发生变化后的最小刷新动作：
         - 失效账号策略缓存
         - 重新抓取 games_stats + player_summary
-
-        说明：
-        - 不清理旧 cache（历史数据保留符合你的预期）
-        - 不自动抓取 wishlist/achievements/prices（这些较慢，继续由用户手动触发）
         """
         self.invalidate_account_policy_cache()
         self.fetch_games_stats()
@@ -99,9 +118,6 @@ class SteamFacadeQt(QObject):
     def _get_primary_credentials(self):
         policy = self._policy()
         return policy.api_key, policy.primary_id
-
-    def _get_all_account_ids(self):
-        return list(self._policy().account_ids)
 
     def fetch_player_summary(self):
         key, sid = self._get_primary_credentials()
@@ -149,88 +165,32 @@ class SteamFacadeQt(QObject):
         return self.query_service.search_games(self.cache, primary_id, keyword)
 
     def _handle_worker_result(self, result):
-        if result.get("error"):
-            # games_stats 目前走 profile_and_games；离线/失败时也要正确减少 pending，
-            # 否则聚合器会一直卡在未完成状态。
-            if result.get("type") in ("games", "profile_and_games") and self.games_aggregator:
-                done = self.games_aggregator.mark_error()
-                if done:
-                    self._finalize_games_results()
-            self.on_error.emit(result["error"])
+        if not self._result_processor:
             return
 
-        task_type = result.get("type")
-        data = result.get("data")
-        if data is None:
-            return
+        outcome = self._result_processor.process(result)
 
-        if task_type == "summary":
-            updates = self.profile_service.apply_summary(self.cache, data)
-            summary_to_emit = updates.get("summary_to_emit")
-            if summary_to_emit:
-                self.on_player_summary.emit(summary_to_emit)
-        elif task_type in ("games", "profile_and_games"):
-            steam_id = result.get("steam_id")
-            if task_type == "profile_and_games":
-                games_data = data.get("games") if data else None
-                summary_data = data.get("summary") if data else None
-            else:
-                games_data = data
-                summary_data = None
+        emitters = {
+            EmitPlayerSummary: self.on_player_summary.emit,
+            EmitGamesStats: self.on_games_stats.emit,
+            EmitStorePrices: self.on_store_prices.emit,
+            EmitWishlist: self.on_wishlist_data.emit,
+            EmitAchievements: self.on_achievements_data.emit,
+            EmitError: self.on_error.emit,
+        }
 
-            if self.games_aggregator:
-                if games_data is None:
-                    done = self.games_aggregator.mark_error()
-                    if done:
-                        self._finalize_games_results()
-                else:
-                    done = self.games_aggregator.add_result(steam_id, games_data, summary_data)
-                    if done:
-                        self._finalize_games_results()
+        for step in outcome.steps:
+            if isinstance(step, SaveStep):
+                self.repository.save_data(self.cache)
+                continue
 
-        elif task_type == "store_prices":
-            updates = self.price_service.apply_store_prices(self.cache, data)
-            prices_to_emit = updates.get("prices_to_emit")
-            if prices_to_emit is not None:
-                self.on_store_prices.emit(prices_to_emit)
-        elif task_type == "wishlist":
-            updates = self.wishlist_service.apply_wishlist(self.cache, data)
-            wishlist_to_emit = updates.get("wishlist_to_emit")
-            if wishlist_to_emit is not None:
-                self.on_wishlist_data.emit(wishlist_to_emit)
-        elif task_type == "achievements":
-            updates = self.achievement_service.apply_achievements(self.cache, data)
-            achievements_to_emit = updates.get("achievements_to_emit")
-            if achievements_to_emit is not None:
-                self.on_achievements_data.emit(achievements_to_emit)
-
-        if task_type != "games":
-            self.repository.save_data(self.cache)
-
-    def _finalize_games_results(self):
-        account_map = self.games_aggregator.finalize()
-
-        primary_id = self._policy().primary_id
-        updates = self.games_aggregation_service.apply_games_aggregation(self.cache, primary_id, account_map)
-
-        summary_to_emit = updates.get("summary_to_emit")
-        if summary_to_emit:
-            self.on_player_summary.emit(summary_to_emit)
-
-        games_to_emit = updates.get("games_to_emit")
-        if games_to_emit is not None:
-            self.on_games_stats.emit(games_to_emit)
-
-        if updates.get("should_save"):
-            self.repository.save_data(self.cache)
+            emitter = emitters.get(type(step))
+            if emitter is not None:
+                emitter(step.payload)
 
     def get_game_datasets(self):
         policy = self._policy()
         return self.dataset_service.build_game_datasets(self.cache, policy.primary_id, policy.alt_ids)
-
-    def _get_primary_games_cache(self):
-        primary_id = self._policy().primary_id
-        return self.query_service.get_primary_games_cache(self.cache, primary_id)
 
     def launch_game(self, appid):
         plan = self.launcher_service.build_launch_game(appid)
