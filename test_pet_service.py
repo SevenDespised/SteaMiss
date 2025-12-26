@@ -95,8 +95,17 @@ class TestPetServiceBuildSayHelloPrompt(unittest.TestCase):
         if games_total and isinstance(games_total.get("count"), int) and games_total.get("count") > 0:
             self.assertEqual(kwargs["owned_games_count"], str(games_total.get("count")))
 
-        # recent_games is a string (could be '无'/'未知' depending on cache)
-        self.assertIsInstance(kwargs["recent_games"], str)
+        # recent_games is now structured data; formatting is handled inside PromptManager
+        self.assertIsInstance(kwargs["recent_games"], list)
+        for row in kwargs["recent_games"]:
+            self.assertIsInstance(row, dict)
+            # Keep schema flexible: require at least a name when present
+            if row:
+                self.assertIn("name", row)
+
+        # final prompt should have placeholders substituted
+        self.assertNotIn("{recent_games}", prompt)
+        self.assertIn("【最近玩过】", prompt)
 
 
 if __name__ == "__main__":
