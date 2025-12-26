@@ -57,7 +57,7 @@ class PetService:
         account_age_days = self._account_age_days(summary.get("timecreated"))
 
         owned_games_count = self._owned_games_count(cache)
-        recent_games = self._recent_games_brief(steam_manager)
+        recent_games = self._recent_games_data(steam_manager)
 
         # 确保所有模板字段都有值，避免 format KeyError 导致降级
         return {
@@ -146,26 +146,43 @@ class PetService:
             return cached
         return None
 
-    def _recent_games_brief(self, steam_manager: Optional[object]) -> str:
+    def _recent_games_data(self, steam_manager: Optional[object]) -> Optional[list[Dict[str, Any]]]:
+        """返回最近游玩游戏的结构化数据。
+
+        注意：这里不做字符串拼接，避免把展示逻辑耦合进 service。
+        """
         if steam_manager is None:
-            return "未知"
+            return None
         try:
             cache = getattr(steam_manager, "cache", None)
             if not isinstance(cache, dict):
-                return "未知"
+                return None
             total_games = self._get_total_games(cache)
             if not total_games or not total_games.get("all_games"):
-                return "无"
+                return []
+
             all_games = total_games.get("all_games") or []
             games = sorted(all_games, key=lambda x: (x or {}).get("rtime_last_played", 0), reverse=True)[:3]
-            names = []
+
+            out: list[Dict[str, Any]] = []
             for g in games:
-                name = g.get("name") if isinstance(g, dict) else None
-                if name:
-                    names.append(str(name))
-            return "、".join(names) if names else "无"
+                if not isinstance(g, dict):
+                    continue
+                name = g.get("name")
+                if not name:
+                    continue
+                out.append(
+                    {
+                        "name": str(name),
+                        # Steam payload：分钟
+                        "playtime_forever": g.get("playtime_forever"),
+                        "playtime_2weeks": g.get("playtime_2weeks"),
+                        "rtime_last_played": g.get("rtime_last_played"),
+                    }
+                )
+            return out
         except Exception:
-            return "未知"
+            return None
 
     def get_say_hello_fallback_text(self) -> str:
         """LLM 失败/不可用时的回退文案（唯一保留的默认值）。"""

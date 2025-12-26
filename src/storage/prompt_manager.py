@@ -1,6 +1,7 @@
 import json
 import os
-from typing import Dict, List
+import math
+from typing import Any, Dict, List
 
 from src.utils.path_utils import resource_path
 
@@ -29,7 +30,7 @@ class PromptManager:
         "active_game_recommendation": {
             "name": "主动游戏推荐",
             "placeholders": ["{game_name}", "{appid}", "{playtime_forever}", "{playtime_2weeks}", "{description}"],
-            "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏，并且选取一些信息对我进行吐槽。注意：两周时长为0时，很可能不止两周没玩。"
+            "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏，并且选取一些信息对我进行吐槽。\n注意：1.两周时长为0时，很可能不止两周没玩。\n2.游玩时长较长时，存在通关概念的游戏很可能已经通关。"
         },
         "say_hello": {
             "name": "打招呼",
@@ -45,12 +46,12 @@ class PromptManager:
                 "{account_age_days}",
             ],
             "default": (
-                "用户刚刚向你打了招呼。请结合以下 Steam 档案信息中的一至二条，回复他。"
+                "用户刚刚向你打了招呼。请结合以下 Steam 档案信息中的一部分，回复他。"
                 "可以轻微吐槽，但不要冒犯或攻击。若信息缺失就自然略过，不要编造。\n\n"
                 "【当前时间】{current_datetime}\n"
                 "【Steam昵称】{persona_name}\n"
                 "【账号等级】Lv. {steam_level}\n"
-                "【总游玩时长】{total_playtime_hours} 小时\n"
+                "【所有游戏总游玩时长】{total_playtime_hours} 小时\n"
                 "【最近玩过】{recent_games}\n"
                 "【拥有游戏数】{owned_games_count}\n"
                 "【上次离线】{last_logoff}\n"
@@ -97,6 +98,11 @@ class PromptManager:
         :param kwargs: 用于填充占位符的变量
         :return: 格式化后的 Prompt 字符串
         """
+        # 0. 针对特定 prompt 做轻量预处理（避免把展示拼接塞进 service）
+        if key == "say_hello":
+            kwargs = dict(kwargs)
+            kwargs["recent_games"] = self._format_recent_games(kwargs.get("recent_games"))
+
         # 1. 获取核心模板
         main_template = self.prompts.get(key, self.PROMPT_DEFS.get(key, {}).get("default", ""))
         
@@ -130,3 +136,71 @@ class PromptManager:
     def get_definitions(self) -> Dict:
         """获取 Prompt 定义元数据"""
         return self.PROMPT_DEFS
+
+    def _format_recent_games(self, value: Any) -> str:
+        """将最近游玩游戏字段格式化为模板可用的文本。
+
+        支持：
+        - None/未知：返回“未知”
+        - str：原样返回
+        - list[dict]：按分钟时长格式化为多行
+        """
+        if value is None:
+            return "未知"
+        if isinstance(value, str):
+            return value
+        if not isinstance(value, list):
+            return "未知"
+        if not value:
+            return "无"
+
+        def _parse_nonneg_minutes(raw: Any) -> int | None:
+            if raw is None:
+                return None
+            if isinstance(raw, bool):
+                return None
+            if isinstance(raw, int):
+                return raw if raw >= 0 else None
+            if isinstance(raw, float):
+                if not math.isfinite(raw):
+                    return None
+                minutes = int(raw)
+                return minutes if minutes >= 0 else None
+            if isinstance(raw, str):
+                s = raw.strip()
+                if not s:
+                    return None
+                if s.isdigit():
+                    return int(s)
+                # 支持形如 "12.0" 的字符串（取整，分钟通常应为整数）
+                parts = s.split(".")
+                if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                    return int(parts[0])
+                return None
+            return None
+
+        def _min_to_hours_text(minutes_raw: Any, *, default_if_missing: str = "?") -> str:
+            minutes = _parse_nonneg_minutes(minutes_raw)
+            if minutes is None:
+                return default_if_missing
+            if minutes == 0:
+                return "0"
+            hours = minutes / 60.0
+            if hours < 10:
+                return f"{hours:.1f}"
+            return str(int(hours))
+
+        lines: List[str] = []
+        for row in value:
+            if not isinstance(row, dict):
+                continue
+            name = row.get("name")
+            if not name:
+                continue
+            pt_forever = _min_to_hours_text(row.get("playtime_forever"), default_if_missing="?")
+            # 近两周没有/缺失就显示 0h
+            pt_2w = _min_to_hours_text(row.get("playtime_2weeks"), default_if_missing="0")
+
+            lines.append(f"{name}（近两周 {pt_2w}h / 总 {pt_forever}h）")
+
+        return "\n".join(lines) if lines else "无"
