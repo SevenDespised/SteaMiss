@@ -11,17 +11,19 @@ class WindowFactory:
     窗口工厂：创建窗口并执行 Binder 接线。
     """
 
-    def __init__(self, steam_manager, config_manager, timer_handler, prompt_manager=None):
+    def __init__(self, steam_manager, config_manager, timer_handler, news_manager=None, prompt_manager=None):
         # 保存基础依赖（便于注入 navigator 时重建 ctx）
         self._steam_manager = steam_manager
         self._config_manager = config_manager
         self._timer_handler = timer_handler
+        self._news_manager = news_manager
         self._prompt_manager = prompt_manager
 
         self._ctx = WindowContext(
             steam_manager=self._steam_manager,
             config_manager=self._config_manager,
             timer_handler=self._timer_handler,
+            news_manager=self._news_manager,
             prompt_manager=self._prompt_manager,
             navigate=None,
         )
@@ -36,6 +38,7 @@ class WindowFactory:
             steam_manager=self._steam_manager,
             config_manager=self._config_manager,
             timer_handler=self._timer_handler,
+            news_manager=self._news_manager,
             prompt_manager=self._prompt_manager,
             navigate=navigate,
         )

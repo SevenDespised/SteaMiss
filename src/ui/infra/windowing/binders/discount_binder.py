@@ -19,6 +19,30 @@ class DiscountWindowBinder:
         else:
             ctx.steam_manager.fetch_wishlist()
 
+        # 新闻页（可选）：只有在 application 注入 news_manager 时才启用
+        news_manager = getattr(ctx, "news_manager", None)
+        if news_manager is not None:
+            try:
+                news_manager.on_news_data.connect(view.update_news_data)
+            except Exception:
+                pass
+
+            try:
+                news_manager.on_error.connect(view.on_news_fetch_error)
+            except Exception:
+                pass
+
+            try:
+                view.request_news_refresh.connect(lambda force, nm=news_manager: nm.fetch_news(force_refresh=bool(force)))
+            except Exception:
+                pass
+
+            # 首次进入：按日期缓存规则加载（不强制刷新）
+            try:
+                news_manager.fetch_news(force_refresh=False)
+            except Exception:
+                pass
+
 
 __all__ = ["DiscountWindowBinder"]
 
