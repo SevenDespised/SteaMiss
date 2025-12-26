@@ -7,6 +7,7 @@ from src.storage.config_manager import ConfigManager
 from src.ai.behavior_manager import BehaviorManager
 from src.feature_core.adapters.qt.steam_facade_qt import SteamFacadeQt
 from src.feature_core.adapters.qt.timer_facade_qt import TimerFacadeQt
+from src.feature_core.adapters.qt.game_news_facade_qt import GameNewsFacadeQt
 from src.feature_core.app.action_bus import ActionBus
 from src.feature_core.app.actions import Action
 from src.feature_core.app.ui_intents_qt import UiIntentsQt
@@ -41,6 +42,7 @@ class SteaMissApp:
         self.resource_manager = ResourceManager()
         self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
         self.steam_manager = SteamFacadeQt(self.config_manager)
+        self.news_manager = GameNewsFacadeQt()
         self.llm_service = LLMService(self.config_manager)
         self.prompt_manager = PromptManager()
 
@@ -132,8 +134,15 @@ class SteaMissApp:
             self.steam_manager,
             self.config_manager,
             self.timer_handler,
+            self.news_manager,
             self.prompt_manager
         )
+
+        # 将新闻抓取错误也汇总到统一错误通道（不影响窗口内错误展示）
+        try:
+            self.news_manager.on_error.connect(lambda msg: self.ui_intents.error.emit(f"news failed: {msg}"))
+        except Exception:
+            pass
         
         self.radial_handler = RadialHandler(
             self.menu_composer
