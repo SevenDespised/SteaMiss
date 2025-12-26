@@ -3,7 +3,6 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from typing import Optional
 
 from src.feature_core.services.steam.games_aggregator import GamesAggregator
-from src.feature_core.adapters.qt.steam_task_service_qt import SteamTaskServiceQt
 from src.feature_core.services.steam.account_service import SteamAccountService
 from src.feature_core.domain.steam_account_models import SteamAccountPolicy
 from src.feature_core.services.steam.query_service import SteamQueryService
@@ -13,7 +12,6 @@ from src.feature_core.services.steam.profile_service import SteamProfileService
 from src.feature_core.services.steam.price_service import SteamPriceService
 from src.feature_core.services.steam.wishlist_service import SteamWishlistService
 from src.feature_core.services.steam.achievement_service import SteamAchievementService
-from src.storage.steam_repository import SteamRepository
 from src.feature_core.services.steam.steam_result_processor import (
     EmitAchievements,
     EmitError,
@@ -24,6 +22,7 @@ from src.feature_core.services.steam.steam_result_processor import (
     SaveStep,
     SteamResultProcessor,
 )
+from src.feature_core.services.steam.steam_ports import SteamRepositoryPort, SteamTaskServicePort
 
 
 class SteamFacadeQt(QObject):
@@ -40,7 +39,13 @@ class SteamFacadeQt(QObject):
     on_achievements_data = pyqtSignal(dict)
     on_error = pyqtSignal(str)
 
-    def __init__(self, config_manager, *, repository: Optional[SteamRepository] = None, task_service: Optional[SteamTaskServiceQt] = None):
+    def __init__(
+        self,
+        config_manager,
+        *,
+        repository: SteamRepositoryPort,
+        task_service: SteamTaskServicePort,
+    ):
         super().__init__()
         self.config = config_manager
         self.cache = {}
@@ -49,8 +54,8 @@ class SteamFacadeQt(QObject):
         self._result_processor: Optional[SteamResultProcessor] = None
 
         self.games_aggregator = GamesAggregator()
-        self.repository = repository or SteamRepository()
-        self.service = task_service or SteamTaskServiceQt()  # Qt worker：异步抓取
+        self.repository = repository
+        self.service = task_service  # Qt worker：异步抓取
         # 纯业务子域（不依赖 Qt）：现阶段不做“多 service 协同”，Qt 直接调用这些子域
         self.account_service = SteamAccountService()
         self.query_service = SteamQueryService()
@@ -61,7 +66,10 @@ class SteamFacadeQt(QObject):
         self.wishlist_service = SteamWishlistService()
         self.achievement_service = SteamAchievementService()
 
-        self.repository.error_occurred.connect(self.on_error.emit)
+        try:
+            self.repository.set_error_handler(self.on_error.emit)
+        except Exception:
+            pass
         self.service.task_finished.connect(self._handle_worker_result)
 
         self.cache = self.repository.load_data()

@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import json
 import os
-from PyQt6.QtCore import QObject, pyqtSignal
+from typing import Any, Callable, Optional
 
-class SteamRepository(QObject):
-    """
-    Steam 数据持久化层
-    负责本地数据的加载和保存
-    """
-    error_occurred = pyqtSignal(str)
 
-    def __init__(self, data_file="config/steam_data.json"):
-        super().__init__()
+class SteamRepository:
+    """Steam 数据持久化层（纯 Python）"""
+
+    def __init__(self, data_file: str = "config/steam_data.json") -> None:
         self.data_file = data_file
+        self._on_error: Optional[Callable[[str], Any]] = None
+
+    def set_error_handler(self, fn: Callable[[str], Any]) -> None:
+        self._on_error = fn
 
     def load_data(self):
         """加载本地缓存数据"""
@@ -24,7 +26,11 @@ class SteamRepository(QObject):
             except Exception as e:
                 msg = f"Failed to load local steam data: {e}"
                 print(msg)
-                self.error_occurred.emit(msg)
+                if callable(self._on_error):
+                    try:
+                        self._on_error(msg)
+                    except Exception:
+                        pass
         return cache
 
     def save_data(self, data):
@@ -38,4 +44,8 @@ class SteamRepository(QObject):
         except Exception as e:
             msg = f"Failed to save local steam data: {e}"
             print(msg)
-            self.error_occurred.emit(msg)
+            if callable(self._on_error):
+                try:
+                    self._on_error(msg)
+                except Exception:
+                    pass

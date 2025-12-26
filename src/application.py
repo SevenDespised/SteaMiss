@@ -61,7 +61,7 @@ class SteaMissApp:
         self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
         self.pet_service = PetService()
 
-        # Steam launcher（纯业务）：生成可执行 URI/URL 计划；实际打开交给 SystemFacadeQt
+        # Steam launcher：生成可执行 URI/URL 计划；实际打开交给 SystemFacadeQt
         self.steam_launcher_service = SteamLauncherService()
 
         # SayHello：Qt 边界负责异步与 UI 信号驱动
