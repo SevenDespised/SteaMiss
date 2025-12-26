@@ -8,6 +8,7 @@ from src.ai.behavior_manager import BehaviorManager
 from src.feature_core.adapters.qt.steam_facade_qt import SteamFacadeQt
 from src.feature_core.adapters.qt.timer_facade_qt import TimerFacadeQt
 from src.feature_core.adapters.qt.game_news_facade_qt import GameNewsFacadeQt
+from src.feature_core.adapters.qt.epic_free_games_facade_qt import EpicFreeGamesFacadeQt
 from src.storage.steam_repository import SteamRepository
 from src.feature_core.adapters.qt.steam_task_service_qt import SteamTaskServiceQt
 from src.feature_core.app.action_bus import ActionBus
@@ -50,6 +51,7 @@ class SteaMissApp:
             task_service=SteamTaskServiceQt(),
         )
         self.news_manager = GameNewsFacadeQt()
+        self.epic_manager = EpicFreeGamesFacadeQt()
         self.llm_service = LLMService(self.config_manager)
         self.prompt_manager = PromptManager()
 
@@ -157,6 +159,7 @@ class SteaMissApp:
             self.config_manager,
             self.timer_handler,
             self.news_manager,
+            self.epic_manager,
             self.prompt_manager
         )
 

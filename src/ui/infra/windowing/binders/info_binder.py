@@ -41,5 +41,35 @@ class InfoWindowBinder:
             except Exception:
                 pass
 
+        epic_manager = getattr(ctx, "epic_manager", None)
+        if epic_manager is not None:
+            try:
+                epic_manager.on_epic_free_games_data.connect(view.update_epic_free_games_data)
+            except Exception:
+                pass
+
+            try:
+                epic_manager.on_error.connect(lambda msg: view.update_epic_free_games_data([{"title": f"Epic 数据获取失败：{msg}", "period": "", "url": None}]))
+            except Exception:
+                pass
+
+            # 优先使用缓存
+            cached = []
+            try:
+                cached = epic_manager.last_items
+            except Exception:
+                cached = []
+
+            if cached:
+                try:
+                    view.update_epic_free_games_data(cached)
+                except Exception:
+                    pass
+            else:
+                try:
+                    epic_manager.fetch_free_games()
+                except Exception:
+                    pass
+
 
 __all__ = ["InfoWindowBinder"]

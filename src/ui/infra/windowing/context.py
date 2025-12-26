@@ -18,6 +18,7 @@ class WindowContext:
     config_manager: object
     timer_handler: object
     news_manager: object = None
+    epic_manager: object = None
     prompt_manager: object = None
     navigate: Optional[Callable[[str], None]] = None
 

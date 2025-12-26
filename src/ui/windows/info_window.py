@@ -279,7 +279,7 @@ class InfoWindow(QWidget):
         self.epic_list_widget.setStyleSheet("QListWidget::item { border-bottom: 1px solid #eee; }")
         layout.addWidget(self.epic_list_widget)
 
-        hint = QLabel("此页仅实现 UI：后续接入 Epic 数据后，将在此展示当前/即将上线的免费游戏。")
+        hint = QLabel("展示 Epic 当前/即将免费游戏（时间按北京时间）。")
         hint.setStyleSheet("color: #666; font-size: 12px; margin: 6px 10px;")
         hint.setWordWrap(True)
         layout.addWidget(hint)
