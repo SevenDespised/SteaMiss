@@ -15,7 +15,7 @@ class ToolMenuBuilder(BaseMenuBuilder):
             "label": "游玩\n统计",
             "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="stats"),
             "sub_items": [
-                {"key": "discounts", "label": "特惠\n推荐", "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="discounts")},
+                {"key": "info", "label": "信息\n门户", "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="info")},
                 {"key": "achievements", "label": "成就\n总览", "callback": lambda: self.action_bus.execute(Action.OPEN_WINDOW, window_name="achievements")},
             ],
         }

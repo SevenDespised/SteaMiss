@@ -6,7 +6,7 @@ from src.ui.infra.windowing.context import WindowContext
 from src.ui.infra.windowing.registry import WindowRegistry, WindowSpec
 from src.ui.infra.windowing.binders.achievement_binder import AchievementWindowBinder
 from src.ui.infra.windowing.binders.all_games_binder import AllGamesWindowBinder
-from src.ui.infra.windowing.binders.discount_binder import DiscountWindowBinder
+from src.ui.infra.windowing.binders.info_binder import InfoWindowBinder
 from src.ui.infra.windowing.binders.reminder_settings_binder import ReminderSettingsWindowBinder
 from src.ui.infra.windowing.binders.settings_dialog_binder import SettingsDialogBinder
 from src.ui.infra.windowing.binders.stats_binder import StatsWindowBinder
@@ -38,11 +38,11 @@ def build_window_registry() -> WindowRegistry:
 
         return AllGamesWindow(parent=parent)
 
-    def create_discounts(ctx: WindowContext, parent: Optional[object] = None) -> object:
-        from src.ui.windows.discount_window import DiscountWindow
+    def create_info(ctx: WindowContext, parent: Optional[object] = None) -> object:
+        from src.ui.windows.info_window import InfoWindow
 
         _ = (ctx, parent)
-        return DiscountWindow(parent=parent)
+        return InfoWindow(parent=parent)
 
     def create_achievements(ctx: WindowContext, parent: Optional[object] = None) -> object:
         from src.ui.windows.achievement_window import AchievementWindow
@@ -57,7 +57,7 @@ def build_window_registry() -> WindowRegistry:
     registry.register("settings", WindowSpec(create=create_settings, binder=SettingsDialogBinder()))
     registry.register("stats", WindowSpec(create=create_stats, binder=StatsWindowBinder()))
     registry.register("all_games", WindowSpec(create=create_all_games, binder=AllGamesWindowBinder()))
-    registry.register("discounts", WindowSpec(create=create_discounts, binder=DiscountWindowBinder()))
+    registry.register("info", WindowSpec(create=create_info, binder=InfoWindowBinder()))
     registry.register("achievements", WindowSpec(create=create_achievements, binder=AchievementWindowBinder()))
     registry.register("reminder_settings", WindowSpec(create=create_reminder_settings, binder=ReminderSettingsWindowBinder()))
 
