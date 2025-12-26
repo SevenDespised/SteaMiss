@@ -8,6 +8,8 @@ from src.ai.behavior_manager import BehaviorManager
 from src.feature_core.adapters.qt.steam_facade_qt import SteamFacadeQt
 from src.feature_core.adapters.qt.timer_facade_qt import TimerFacadeQt
 from src.feature_core.adapters.qt.game_news_facade_qt import GameNewsFacadeQt
+from src.storage.steam_repository import SteamRepository
+from src.feature_core.adapters.qt.steam_task_service_qt import SteamTaskServiceQt
 from src.feature_core.app.action_bus import ActionBus
 from src.feature_core.app.actions import Action
 from src.feature_core.app.ui_intents_qt import UiIntentsQt
@@ -30,6 +32,7 @@ from src.feature_core.services.pet_service import PetService
 from src.feature_core.services.llm_service import LLMService
 from src.storage.prompt_manager import PromptManager
 from src.feature_core.adapters.qt.say_hello_facade_qt import SayHelloFacadeQt
+from src.feature_core.services.steam.launcher_service import SteamLauncherService
 import threading
 
 class SteaMissApp:
@@ -41,7 +44,11 @@ class SteaMissApp:
         self.behavior_manager = BehaviorManager()
         self.resource_manager = ResourceManager()
         self.timer_handler = TimerFacadeQt(config_manager=self.config_manager)
-        self.steam_manager = SteamFacadeQt(self.config_manager)
+        self.steam_manager = SteamFacadeQt(
+            self.config_manager,
+            repository=SteamRepository(),
+            task_service=SteamTaskServiceQt(),
+        )
         self.news_manager = GameNewsFacadeQt()
         self.llm_service = LLMService(self.config_manager)
         self.prompt_manager = PromptManager()
@@ -53,6 +60,9 @@ class SteaMissApp:
         # System/Pet：分别落在 adapters/qt 与 services
         self.system_facade = SystemFacadeQt(config_manager=self.config_manager)
         self.pet_service = PetService()
+
+        # Steam launcher（纯业务）：生成可执行 URI/URL 计划；实际打开交给 SystemFacadeQt
+        self.steam_launcher_service = SteamLauncherService()
 
         # SayHello：Qt 边界负责异步与 UI 信号驱动
         self.say_hello_facade = SayHelloFacadeQt(
@@ -73,8 +83,20 @@ class SteaMissApp:
         self.action_bus.register(Action.OPEN_URL, self.system_facade.open_url)
         self.action_bus.register(Action.EXIT, self.system_facade.exit_app)
 
-        self.action_bus.register(Action.LAUNCH_GAME, self.steam_manager.launch_game)
-        self.action_bus.register(Action.OPEN_STEAM_PAGE, self.steam_manager.open_page)
+        def _launch_game(appid=None, **_: object) -> None:
+            plan = self.steam_launcher_service.build_launch_game(appid)
+            if not plan:
+                return
+            self.system_facade.open_uri(uri=plan.primary_uri, fallback_url=plan.fallback_url)
+
+        def _open_steam_page(page_type=None, **_: object) -> None:
+            plan = self.steam_launcher_service.build_open_page(page_type)
+            if not plan:
+                return
+            self.system_facade.open_uri(uri=plan.primary_uri, fallback_url=plan.fallback_url)
+
+        self.action_bus.register(Action.LAUNCH_GAME, _launch_game)
+        self.action_bus.register(Action.OPEN_STEAM_PAGE, _open_steam_page)
 
         self.action_bus.register(Action.TOGGLE_TIMER, self.timer_handler.toggle)
         self.action_bus.register(Action.PAUSE_TIMER, self.timer_handler.pause)

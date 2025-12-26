@@ -3,12 +3,6 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from typing import Optional
 
 from src.feature_core.services.steam.games_aggregator import GamesAggregator
-import os
-
-from PyQt6.QtCore import QUrl
-from PyQt6.QtGui import QDesktopServices
-
-from src.feature_core.services.steam.launcher_service import SteamLauncherService
 from src.feature_core.adapters.qt.steam_task_service_qt import SteamTaskServiceQt
 from src.feature_core.services.steam.account_service import SteamAccountService
 from src.feature_core.domain.steam_account_models import SteamAccountPolicy
@@ -46,7 +40,7 @@ class SteamFacadeQt(QObject):
     on_achievements_data = pyqtSignal(dict)
     on_error = pyqtSignal(str)
 
-    def __init__(self, config_manager):
+    def __init__(self, config_manager, *, repository: Optional[SteamRepository] = None, task_service: Optional[SteamTaskServiceQt] = None):
         super().__init__()
         self.config = config_manager
         self.cache = {}
@@ -55,9 +49,8 @@ class SteamFacadeQt(QObject):
         self._result_processor: Optional[SteamResultProcessor] = None
 
         self.games_aggregator = GamesAggregator()
-        self.launcher_service = SteamLauncherService()
-        self.repository = SteamRepository()
-        self.service = SteamTaskServiceQt()  # Qt worker：异步抓取
+        self.repository = repository or SteamRepository()
+        self.service = task_service or SteamTaskServiceQt()  # Qt worker：异步抓取
         # 纯业务子域（不依赖 Qt）：现阶段不做“多 service 协同”，Qt 直接调用这些子域
         self.account_service = SteamAccountService()
         self.query_service = SteamQueryService()
@@ -191,31 +184,6 @@ class SteamFacadeQt(QObject):
     def get_game_datasets(self):
         policy = self._policy()
         return self.dataset_service.build_game_datasets(self.cache, policy.primary_id, policy.alt_ids)
-
-    def launch_game(self, appid):
-        plan = self.launcher_service.build_launch_game(appid)
-        if not plan:
-            return
-        try:
-            os.startfile(plan.primary_uri)
-        except Exception as e:
-            self.on_error.emit(f"Failed to launch game {appid}: {e}")
-
-    def open_page(self, page_type):
-        plan = self.launcher_service.build_open_page(page_type)
-        if not plan:
-            return
-        try:
-            os.startfile(plan.primary_uri)
-        except Exception as e:
-            if plan.fallback_url:
-                try:
-                    QDesktopServices.openUrl(QUrl(plan.fallback_url))
-                    return
-                except Exception:
-                    pass
-            self.on_error.emit(f"Failed to open steam page {page_type}: {e}")
-
 
 __all__ = ["SteamFacadeQt"]
 
