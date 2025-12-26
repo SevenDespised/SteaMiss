@@ -168,10 +168,16 @@ class SettingsDialog(QDialog):
         layout.addWidget(QLabel("--- AI 设置 ---"))
         
         layout.addWidget(QLabel("LLM API Key:"))
+        llm_key_row = QHBoxLayout()
         self.llm_api_key_input = QLineEdit()
         self.llm_api_key_input.setPlaceholderText("sk-...")
         self.llm_api_key_input.setEchoMode(QLineEdit.EchoMode.Password)
-        layout.addWidget(self.llm_api_key_input)
+        llm_key_row.addWidget(self.llm_api_key_input, 1)
+
+        self.llm_test_btn = QPushButton("连通测试")
+        self.llm_test_btn.clicked.connect(self.test_llm_connection)
+        llm_key_row.addWidget(self.llm_test_btn)
+        layout.addLayout(llm_key_row)
 
         layout.addWidget(QLabel("LLM Base URL:"))
         self.llm_base_url_input = QLineEdit()
@@ -438,23 +444,6 @@ class SettingsDialog(QDialog):
         settings["llm_base_url"] = self.llm_base_url_input.text().strip()
         settings["llm_model"] = self.llm_model_input.text().strip()
 
-        # 检测 LLM 服务可用性
-        if settings["llm_api_key"] and settings["llm_base_url"] and settings["llm_model"]:
-            temp_service = LLMService(None)
-            if not temp_service.check_availability(
-                settings["llm_api_key"], 
-                settings["llm_base_url"], 
-                settings["llm_model"]
-            ):
-                QMessageBox.warning(
-                    self,
-                    "LLM 服务不可用",
-                    "无法连接到指定的 LLM 服务。\n\n"
-                    "配置将保存，但相关 AI 功能将被禁用。\n"
-                    "请检查 API Key、Base URL 和模型名称。",
-                    QMessageBox.StandardButton.Ok,
-                )
-
         # 保存当前正在编辑的 Prompt
         if hasattr(self, "prompt_combo") and hasattr(self, "prompt_edit"):
             current_key = self.prompt_combo.currentData()
@@ -466,6 +455,38 @@ class SettingsDialog(QDialog):
 
         self.request_save.emit(settings)
         self.accept()
+
+    def test_llm_connection(self):
+        api_key = self.llm_api_key_input.text().strip()
+        base_url = self.llm_base_url_input.text().strip()
+        model = self.llm_model_input.text().strip()
+
+        if not api_key or not base_url or not model:
+            QMessageBox.warning(
+                self,
+                "提示",
+                "请先填写 LLM API Key、Base URL 和模型名称，再进行连通测试。",
+                QMessageBox.StandardButton.Ok,
+            )
+            return
+
+        temp_service = LLMService(None)
+        ok = temp_service.check_availability(api_key, base_url, model)
+        if ok:
+            QMessageBox.information(
+                self,
+                "LLM 连通成功",
+                "已成功连接到指定的 LLM 服务。",
+                QMessageBox.StandardButton.Ok,
+            )
+        else:
+            QMessageBox.warning(
+                self,
+                "LLM 连通失败",
+                "无法连接到指定的 LLM 服务。\n\n"
+                "请检查 API Key、Base URL 和模型名称。",
+                QMessageBox.StandardButton.Ok,
+            )
 
     def init_prompt_tab(self):
         layout = QVBoxLayout()
