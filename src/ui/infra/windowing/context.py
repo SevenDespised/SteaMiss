@@ -17,6 +17,7 @@ class WindowContext:
     steam_manager: object
     config_manager: object
     timer_handler: object
+    news_manager: object = None
     prompt_manager: object = None
     navigate: Optional[Callable[[str], None]] = None
 
