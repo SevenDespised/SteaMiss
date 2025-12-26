@@ -30,6 +30,7 @@ def main() -> int:
     sources = [
         NewsSource(name="Gcores", feed_url="https://www.gcores.com/rss"),
         NewsSource(name="GameSpot", feed_url="https://www.gamespot.com/feeds/news/"),
+        NewsSource(name="GameSpot", feed_url="https://www.yystv.cn/rss/feed"),
     ]
 
     items = client.fetch_sources(sources, per_source_limit=20, total_limit=20)
