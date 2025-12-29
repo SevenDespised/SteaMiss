@@ -8,11 +8,14 @@ from PyQt6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QPushButton,
+    QScrollArea,
     QSizePolicy,
+    QSpacerItem,
     QSplitter,
     QTabWidget,
     QTextBrowser,
     QVBoxLayout,
+    QFrame,
     QWidget,
 )
 
@@ -142,38 +145,58 @@ def _elide_to_lines(text: str, font, width: int, *, max_lines: int) -> str:
     return "\n".join([ln for ln in kept_lines if ln])
 
 
-class EpicFreeGameItemWidget(QWidget):
+class EpicFreeGameCardWidget(QFrame):
     def __init__(self, game_data: dict, parent=None):
         super().__init__(parent)
-        layout = QVBoxLayout()
-        layout.setContentsMargins(10, 8, 10, 8)
-        layout.setSpacing(6)
+        self.setFrameShape(QFrame.Shape.StyledPanel)
+        self.setStyleSheet("QFrame { border: 1px solid #eee; border-radius: 6px; }")
+
+        layout = QHBoxLayout()
+        layout.setContentsMargins(12, 10, 12, 10)
+        layout.setSpacing(10)
+
+        left = QVBoxLayout()
+        left.setContentsMargins(0, 0, 0, 0)
+        left.setSpacing(4)
 
         title_label = QLabel(game_data.get("title", "(未命名游戏)"))
         title_label.setStyleSheet("font-weight: bold; font-size: 13px;")
         title_label.setWordWrap(True)
-        layout.addWidget(title_label)
+        left.addWidget(title_label)
 
-        period = game_data.get("period", "")
-        if period:
-            period_label = QLabel(f"有效期：{period}")
-        else:
-            period_label = QLabel("有效期：—")
+        period = (game_data.get("period") or "").strip()
+        period_label = QLabel(f"有效期：{period}" if period else "有效期：—")
         period_label.setStyleSheet("color: #666; font-size: 12px;")
-        layout.addWidget(period_label)
+        period_label.setWordWrap(True)
+        left.addWidget(period_label)
 
-        btn_row = QHBoxLayout()
-        btn_row.setContentsMargins(0, 0, 0, 0)
-        btn_row.addStretch(1)
+        left.addItem(QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
+
+        layout.addLayout(left, 1)
 
         url = game_data.get("url")
         open_btn = QPushButton("打开领取页面")
         open_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         open_btn.setEnabled(bool(url))
+        open_btn.setMinimumWidth(110)
+        open_btn.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         if url:
             open_btn.clicked.connect(lambda checked=False, u=url: QDesktopServices.openUrl(QUrl(u)))
-        btn_row.addWidget(open_btn)
-        layout.addLayout(btn_row)
+        layout.addWidget(open_btn, 0, Qt.AlignmentFlag.AlignTop)
+
+        self.setLayout(layout)
+
+
+class EpicSectionHeaderWidget(QWidget):
+    def __init__(self, text: str, parent=None):
+        super().__init__(parent)
+        layout = QHBoxLayout()
+        layout.setContentsMargins(4, 10, 4, 6)
+
+        label = QLabel(text)
+        label.setStyleSheet("font-weight: bold; font-size: 13px;")
+        label.setWordWrap(True)
+        layout.addWidget(label)
 
         self.setLayout(layout)
 
@@ -268,21 +291,31 @@ class InfoWindow(QWidget):
     def _build_epic_tab(self) -> QWidget:
         tab = QWidget()
         layout = QVBoxLayout()
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSpacing(8)
 
         header = QLabel("Epic 免费游戏")
-        header.setStyleSheet("font-size: 16px; font-weight: bold; margin: 10px;")
+        header.setStyleSheet("font-size: 16px; font-weight: bold; margin: 0px;")
         header.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(header)
 
-        self.epic_list_widget = QListWidget()
-        self.epic_list_widget.setAlternatingRowColors(True)
-        self.epic_list_widget.setStyleSheet("QListWidget::item { border-bottom: 1px solid #eee; }")
-        layout.addWidget(self.epic_list_widget)
+        self.epic_summary_label = QLabel("")
+        self.epic_summary_label.setStyleSheet("color: #444; font-size: 12px;")
+        self.epic_summary_label.setWordWrap(True)
+        self.epic_summary_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
+        layout.addWidget(self.epic_summary_label)
 
-        hint = QLabel("展示 Epic 当前/即将免费游戏（时间按北京时间）。")
-        hint.setStyleSheet("color: #666; font-size: 12px; margin: 6px 10px;")
-        hint.setWordWrap(True)
-        layout.addWidget(hint)
+        self.epic_scroll_area = QScrollArea()
+        self.epic_scroll_area.setWidgetResizable(True)
+        self.epic_scroll_area.setFrameShape(QFrame.Shape.NoFrame)
+
+        self.epic_container = QWidget()
+        self.epic_container_layout = QVBoxLayout()
+        self.epic_container_layout.setContentsMargins(2, 2, 2, 2)
+        self.epic_container_layout.setSpacing(10)
+        self.epic_container.setLayout(self.epic_container_layout)
+        self.epic_scroll_area.setWidget(self.epic_container)
+        layout.addWidget(self.epic_scroll_area, 1)
 
         tab.setLayout(layout)
         return tab
@@ -378,19 +411,55 @@ class InfoWindow(QWidget):
         self.news_detail.setHtml(f"<h3>获取新闻失败</h3><p>{msg}</p>")
 
     def update_epic_free_games_data(self, games: list[dict]):
-        self.epic_list_widget.clear()
+        # 清空容器
+        if hasattr(self, "epic_container_layout"):
+            while self.epic_container_layout.count():
+                item = self.epic_container_layout.takeAt(0)
+                w = item.widget()
+                if w is not None:
+                    w.setParent(None)
+
+        self.epic_summary_label.setText("")
 
         if not games:
-            item = QListWidgetItem("暂无 Epic 免费游戏（UI占位）")
-            item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.epic_list_widget.addItem(item)
+            empty = QLabel("暂无 Epic 免费游戏")
+            empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            empty.setStyleSheet("color: #666; font-size: 12px;")
+            self.epic_container_layout.addWidget(empty)
+            self.epic_container_layout.addStretch(1)
             return
 
-        for game in games:
-            row_item = QListWidgetItem(self.epic_list_widget)
-            row_item.setSizeHint(QSize(0, 84))
-            widget = EpicFreeGameItemWidget(game)
-            self.epic_list_widget.setItemWidget(row_item, widget)
+        # 约定：service 会插入若干“标题行”（url=None 且 period 空）。
+        # 其中第一条通常是“统计：...”，其余为分组标题。
+        first_header_consumed = False
+        has_any_game = False
+
+        for entry in games:
+            title = (entry.get("title") or "").strip()
+            period = (entry.get("period") or "").strip()
+            url = entry.get("url")
+
+            is_header = (not url) and (not period)
+            if is_header:
+                if (not first_header_consumed) and title.startswith("统计："):
+                    self.epic_summary_label.setText(title)
+                    first_header_consumed = True
+                    continue
+
+                if title:
+                    self.epic_container_layout.addWidget(EpicSectionHeaderWidget(title))
+                continue
+
+            has_any_game = True
+            self.epic_container_layout.addWidget(EpicFreeGameCardWidget(entry))
+
+        if not has_any_game:
+            empty = QLabel("暂无 Epic 免费游戏")
+            empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            empty.setStyleSheet("color: #666; font-size: 12px;")
+            self.epic_container_layout.addWidget(empty)
+
+        self.epic_container_layout.addStretch(1)
 
 
 __all__ = ["InfoWindow"]

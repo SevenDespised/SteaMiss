@@ -47,7 +47,7 @@ class EpicFreeGamesService:
         return EpicFreeGamesSnapshot(updated_at_bjt=now_bjt, current=current, upcoming=upcoming)
 
     def build_info_window_items(self, snapshot: EpicFreeGamesSnapshot) -> list[dict]:
-        """为 InfoWindow.epic_tab 生成 list[dict]，供 EpicFreeGameItemWidget 展示。"""
+        """为 InfoWindow.epic_tab 生成 list[dict]，供 UI 侧 Epic 免费游戏列表展示。"""
         items: list[dict] = []
 
         def add_header(text: str) -> None:
