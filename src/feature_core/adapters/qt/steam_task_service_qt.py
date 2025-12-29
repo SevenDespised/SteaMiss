@@ -1,3 +1,5 @@
+import logging
+
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from src.feature_core.adapters.qt.steam_worker_qt import SteamWorker
@@ -29,7 +31,19 @@ class SteamTaskServiceQt(QObject):
             self.active_workers.remove(worker)
 
     def _handle_result(self, result):
-        self.task_finished.emit(result)
+        try:
+            logger = logging.getLogger(__name__)
+            logger.debug(
+                "SteamTaskServiceQt emit task_finished: type=%s keys=%s",
+                (result or {}).get("type"),
+                sorted(list((result or {}).keys())),
+            )
+            self.task_finished.emit(result)
+        except Exception:
+            logging.getLogger(__name__).exception(
+                "SteamTaskServiceQt failed to emit task_finished: type=%s",
+                (result or {}).get("type"),
+            )
 
 
 __all__ = ["SteamTaskServiceQt"]

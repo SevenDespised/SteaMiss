@@ -1,6 +1,10 @@
 import sys
 import os
 from pathlib import Path
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def ensure_single_instance(app_name="SteaMiss"):
@@ -35,8 +39,8 @@ def ensure_single_instance(app_name="SteaMiss"):
                 try:
                     os.close(lock_fd)
                     lock_file.unlink(missing_ok=True)
-                except:
-                    pass
+                except Exception:
+                    logger.exception("Failed to cleanup single-instance lock")
             
             atexit.register(cleanup)
             return True
@@ -62,8 +66,8 @@ def ensure_single_instance(app_name="SteaMiss"):
                 try:
                     lock_fd.close()
                     lock_file.unlink(missing_ok=True)
-                except:
-                    pass
+                except Exception:
+                    logger.exception("Failed to cleanup single-instance lock")
             
             atexit.register(cleanup)
             return True

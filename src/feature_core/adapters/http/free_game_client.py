@@ -362,5 +362,6 @@ if __name__ == "__main__":
 
 		_demo_print_offers("Current Free Games", current, limit=8)
 		_demo_print_offers("Upcoming Free Games", upcoming, limit=8)
-	except Exception as e:
-		print(f"Demo failed: {e}")
+	except Exception:
+		import logging
+		logging.getLogger(__name__).exception("EpicFreeGamesClient demo failed")

@@ -1,6 +1,11 @@
-import requests
 import json
+import logging
+
+import requests
 from typing import Iterator
+
+
+logger = logging.getLogger(__name__)
 
 class LLMService:
     """
@@ -68,7 +73,7 @@ class LLMService:
                 self._is_available = True
             return True
         except Exception as e:
-            print(f"[LLM] Availability check failed: {e}")
+            logger.exception(f"[LLM] Availability check failed: {e}")
             if is_self_check:
                 self._is_available = False
             return False
@@ -84,7 +89,7 @@ class LLMService:
         model = self.config_manager.get("llm_model", "")
 
         if not api_key or not base_url or not model:
-            print("[LLM] Missing configuration")
+            logger.warning("[LLM] Missing configuration")
             return None
 
         # 确保 base_url 不以 /chat/completions 结尾，也不以 / 结尾
@@ -114,8 +119,8 @@ class LLMService:
             content = data["choices"][0]["message"]["content"]
             return content
         except Exception as e:
-            print(f"[LLM] Request failed: {e}")
-            return None
+            logger.exception("[LLM] Request failed")
+            raise RuntimeError("LLM request failed") from e
 
     def stream_chat_completion(self, messages) -> Iterator[str]:
         """以 OpenAI 兼容 SSE 方式流式调用 LLM。
@@ -182,5 +187,5 @@ class LLMService:
                     except Exception:
                         continue
         except Exception as e:
-            print(f"[LLM] Stream request failed: {e}")
-            return
+            logger.exception("[LLM] Stream request failed")
+            raise RuntimeError("LLM stream request failed") from e

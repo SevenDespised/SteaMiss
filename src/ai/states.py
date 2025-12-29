@@ -1,4 +1,5 @@
 from __future__ import annotations
+import logging
 import random
 import time
 import threading
@@ -9,6 +10,9 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.ai.behavior_manager import BehaviorManager
+
+
+logger = logging.getLogger(__name__)
 
 # --- State Interfaces & Enums ---
 
@@ -168,7 +172,8 @@ class GameRecommendationSubState(AISubState):
                 if getattr(manager, "_active_game_recommendation_request_id", None) == request_id:
                     manager.request_speech_stream_done(request_id)
         except Exception as e:
-            print(f"[GameRecommendation] Error in async task: {e}")
+            logger.exception("[GameRecommendation] Error in async task")
+            raise
 
     def _pick_game(self, manager):
         # Access cache via SteamFacadeQt

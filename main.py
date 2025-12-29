@@ -1,9 +1,15 @@
 import sys
+import logging
 from PyQt6.QtWidgets import QApplication, QMessageBox
 from src.application import SteaMissApp
 from src.utils.single_instance import ensure_single_instance
+from src.utils.logging_config import install_global_exception_hooks, setup_logging
 
 def main():
+    # Initialize logging as early as possible (before Qt app starts)
+    setup_logging()
+    install_global_exception_hooks(logging.getLogger("steamiss"))
+
     # 检查单实例
     if not ensure_single_instance("SteaMiss"):
         # 已有实例在运行，显示提示后退出

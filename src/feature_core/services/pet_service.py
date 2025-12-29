@@ -31,8 +31,12 @@ class PetService:
         try:
             get_prompt = getattr(prompt_manager, "get_prompt")
         except Exception:
+            raise TypeError("PromptManager.get_prompt is missing")
+
+        prompt = get_prompt("say_hello", **kwargs)
+        if prompt is None:
             return ""
-        return get_prompt("say_hello", **kwargs)
+        return prompt
 
     def _build_say_hello_kwargs(self, steam_manager: Optional[object]) -> Dict[str, Any]:
         now = datetime.now()

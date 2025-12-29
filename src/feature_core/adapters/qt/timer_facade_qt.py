@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import os
 from typing import Any, Callable, Optional
 
@@ -10,6 +11,9 @@ from src.storage.timer_log_repository import TimerLogRepository
 from src.storage.timer_settings_repository import TimerSettingsRepository
 from src.feature_core.domain.timer_models import ReminderSettings
 from src.feature_core.services.timer_service import TickResult, TimerService
+
+
+logger = logging.getLogger(__name__)
 
 
 class TimerFacadeQt(QObject):
@@ -150,7 +154,7 @@ class TimerFacadeQt(QObject):
                 self.notifier(title, message)
                 return
             except Exception:
-                pass
+                logger.exception("Timer notifier failed")
         print(f"[{title}]: {message}")
 
     def _persist_record(self):
@@ -166,7 +170,7 @@ class TimerFacadeQt(QObject):
             if self._tick_timer.isActive():
                 self._tick_timer.stop()
         except Exception:
-            pass
+            logger.exception("TimerFacadeQt shutdown failed")
 
     # 说明：Timer 的配置读写已统一下沉到 `src/storage/timer_settings_repository.py`
 

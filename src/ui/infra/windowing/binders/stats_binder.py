@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import logging
+
 from src.ui.infra.windowing.context import WindowContext
+
+
+logger = logging.getLogger(__name__)
 
 
 class StatsWindowBinder:
@@ -24,7 +29,7 @@ class StatsWindowBinder:
             try:
                 view.request_open_all_games.connect(lambda: ctx.navigate("all_games"))
             except Exception:
-                pass
+                logger.exception("StatsWindowBinder failed to connect request_open_all_games")
 
         update_window_data()
 

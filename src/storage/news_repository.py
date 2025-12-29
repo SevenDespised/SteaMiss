@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import json
 import os
+import logging
 from typing import Any, Optional
 
 from PyQt6.QtCore import QObject, pyqtSignal
+
+
+logger = logging.getLogger(__name__)
 
 
 class NewsRepository(QObject):
@@ -29,7 +33,7 @@ class NewsRepository(QObject):
             return {}
         except Exception as e:
             msg = f"Failed to load local news data: {e}"
-            print(msg)
+            logger.exception("%s", msg)
             self.error_occurred.emit(msg)
             return {}
 
@@ -39,10 +43,10 @@ class NewsRepository(QObject):
             os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
             with open(self.data_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            print(f"Saved news data to {self.data_file}")
+            logger.info("Saved news data to %s", self.data_file)
         except Exception as e:
             msg = f"Failed to save local news data: {e}"
-            print(msg)
+            logger.exception("%s", msg)
             self.error_occurred.emit(msg)
 
     def load_cached_items(self) -> tuple[Optional[str], list[dict[str, Any]]]:

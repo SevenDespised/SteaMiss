@@ -1,10 +1,14 @@
+import logging
+
+import requests
+
+logger = logging.getLogger(__name__)
+
 try:
     from steam.webapi import WebAPI
 except ImportError:
     WebAPI = None
-    print("Warning: 'steam' library not found. Please install it via 'pip install steam'.")
-
-import requests
+    logger.warning("'steam' library not found. Install via 'pip install steam'.")
 
 
 class SteamClient:
@@ -26,7 +30,7 @@ class SteamClient:
             try:
                 self.api = WebAPI(key=self.api_key)
             except Exception as e:
-                print(f"Failed to initialize WebAPI: {e}")
+                logger.exception("Failed to initialize WebAPI")
                 # 这里不抛出异常，让后续调用自行处理 None
 
     def get_player_summaries(self, steam_ids):
@@ -42,7 +46,7 @@ class SteamClient:
             response = self.api.ISteamUser.GetPlayerSummaries(steamids=steam_ids)
             return response.get("response", {}).get("players", [])
         except Exception as e:
-            print(f"Steam API Error (GetPlayerSummaries): {e}")
+            logger.exception("Steam API Error (GetPlayerSummaries): steam_ids=%s", steam_ids)
             return []
 
     def get_owned_games(self, steam_id):
@@ -66,7 +70,7 @@ class SteamClient:
             )
             return response.get("response", {})
         except Exception as e:
-            print(f"Steam API Error (GetOwnedGames): {e}")
+            logger.exception("Steam API Error (GetOwnedGames): steam_id=%s", steam_id)
             return None
 
     def get_steam_level(self, steam_id):
@@ -78,7 +82,7 @@ class SteamClient:
             response = self.api.IPlayerService.GetSteamLevel(steamid=steam_id)
             return response.get("response", {}).get("player_level", 0)
         except Exception as e:
-            print(f"Steam API Error (GetSteamLevel): {e}")
+            logger.exception("Steam API Error (GetSteamLevel): steam_id=%s", steam_id)
             return 0
 
     def get_app_price(self, app_ids):
@@ -98,7 +102,7 @@ class SteamClient:
             if response.status_code == 200:
                 return response.json()
         except Exception as e:
-            print(f"Steam Store API Error: {e}")
+            logger.exception("Steam Store API Error: app_ids=%s", app_ids)
             return {}
 
     def get_player_achievements(self, steam_id, app_id):
@@ -114,6 +118,7 @@ class SteamClient:
             response = self.api.ISteamUserStats.GetPlayerAchievements(steamid=steam_id, appid=app_id, l="schinese")
             return response.get("playerstats", {})
         except Exception:
+            logger.exception("Steam API Error (GetPlayerAchievements): steam_id=%s app_id=%s", steam_id, app_id)
             return None
 
     # --- 以下为原逻辑：保留不动（后续再考虑继续拆分/下沉） ---
@@ -192,7 +197,7 @@ class SteamClient:
 
                     resp = requests.get(url, params=params, timeout=30)
                     if resp.status_code != 200:
-                        print(f"Steam API Error (GetAppList): HTTP {resp.status_code}")
+                        logger.error("Steam API Error (GetAppList): HTTP %s", resp.status_code)
                         break
 
                     data = resp.json().get("response", {})
@@ -209,7 +214,7 @@ class SteamClient:
                 time.sleep(0.5)
 
         except Exception as e:
-            print(f"Steam API Error (GetAppList): {e}")
+            logger.exception("Steam API Error (GetAppList)")
 
         return all_apps
 
@@ -241,7 +246,7 @@ class SteamClient:
                 # 避免请求过快
                 time.sleep(0.1)
             except Exception as e:
-                print(f"Steam API Error (get_apps_info - {appid}): {e}")
+                logger.exception("Steam API Error (get_apps_info): appid=%s", appid)
         
         return result
 
@@ -255,7 +260,7 @@ class SteamClient:
                 items = response.get("response", {}).get("items", [])
                 app_ids = [item["appid"] for item in items]
             except Exception as e:
-                print(f"Steam API Error (GetWishlistApp): {e}")
+                logger.exception("Steam API Error (GetWishlistApp): steam_id=%s", steam_id)
         return app_ids
 
     def get_game_followed(self, steam_id):
@@ -267,7 +272,7 @@ class SteamClient:
                 response = self.api.IStoreService.GetGamesFollowed(steamid=steam_id)
                 app_ids = response.get("response", {}).get("appids", [])
             except Exception as e:
-                print(f"Steam API Error (GetGamesFollowedApp): {e}")
+                logger.exception("Steam API Error (GetGamesFollowedApp): steam_id=%s", steam_id)
         return app_ids
 
     def get_wishlist(self, steam_id):
@@ -321,7 +326,7 @@ class SteamClient:
             if response.status_code == 200:
                 return response.json()
         except Exception as e:
-            print(f"Steam Wishlist Fallback Error: {e}")
+            logger.exception("Steam Wishlist Fallback Error: steam_id=%s", steam_id)
 
         return {}
 
@@ -334,7 +339,12 @@ class SteamClient:
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            print(f"Steam Inventory Request Error: {e}")
+            logger.exception(
+                "Steam Inventory Request Error: steam_id=%s appid=%s contextid=%s",
+                steam_id,
+                appid,
+                contextid,
+            )
             return None
 
 

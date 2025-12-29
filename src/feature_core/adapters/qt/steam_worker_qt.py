@@ -1,10 +1,15 @@
 from PyQt6.QtCore import QThread, pyqtSignal
+import logging
 import time
+import traceback
 
 from src.feature_core.adapters.http.steam_client import SteamClient
 from src.feature_core.services.steam.achievement_stats_service import summarize_achievements
 from src.feature_core.services.steam.games_payload_service import build_games_payload
 from src.feature_core.services.steam.wishlist_discount_service import build_discounted_wishlist_items
+
+
+logger = logging.getLogger(__name__)
 
 
 class SteamWorker(QThread):
@@ -20,7 +25,13 @@ class SteamWorker(QThread):
         self.extra_data = extra_data
 
     def run(self):
-        result = {"type": self.task_type, "data": None, "error": None, "steam_id": self.steam_id}
+        result = {
+            "type": self.task_type,
+            "data": None,
+            "error": None,
+            "steam_id": self.steam_id,
+            "traceback": None,
+        }
 
         if not self.client.api_key or not self.steam_id:
             result["error"] = "Missing API Key or Steam ID"
@@ -98,7 +109,12 @@ class SteamWorker(QThread):
 
         except Exception as e:
             result["error"] = str(e)
-            print(f"Worker Error: {e}")
+            result["traceback"] = traceback.format_exc()
+            logger.exception(
+                "SteamWorker failed: task_type=%s steam_id=%s",
+                self.task_type,
+                self.steam_id,
+            )
 
         self.data_ready.emit(result)
 __all__ = ["SteamWorker"]

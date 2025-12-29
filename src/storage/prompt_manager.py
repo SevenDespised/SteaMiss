@@ -1,9 +1,13 @@
 import json
 import os
 import math
+import logging
 from typing import Any, Dict, List
 
 from src.utils.path_utils import resource_path
+
+
+logger = logging.getLogger(__name__)
 
 class PromptManager:
     """
@@ -75,7 +79,7 @@ class PromptManager:
                 with open(self.config_path, "r", encoding="utf-8") as f:
                     self.prompts = json.load(f)
             except Exception as e:
-                print(f"[PromptManager] Load failed: {e}")
+                logger.exception("[PromptManager] Load failed: %s", self.config_path)
                 self.prompts = {}
         
         # 补全缺失的 key 为默认值
@@ -89,7 +93,7 @@ class PromptManager:
             with open(self.config_path, "w", encoding="utf-8") as f:
                 json.dump(self.prompts, f, indent=4, ensure_ascii=False)
         except Exception as e:
-            print(f"[PromptManager] Save failed: {e}")
+            logger.exception("[PromptManager] Save failed: %s", self.config_path)
 
     def get_prompt(self, key: str, **kwargs) -> str:
         """
@@ -117,11 +121,11 @@ class PromptManager:
         try:
             return full_template.format(**kwargs)
         except KeyError as e:
-            print(f"[PromptManager] Missing placeholder for {key}: {e}")
+            logger.exception("[PromptManager] Missing placeholder for %s: %s", key, e)
             # 降级：尝试只返回核心模板（可能也不行，但比报错好）
             return main_template
         except Exception as e:
-            print(f"[PromptManager] Format error for {key}: {e}")
+            logger.exception("[PromptManager] Format error for %s", key)
             return main_template
 
     def update_prompt(self, key: str, content: str):

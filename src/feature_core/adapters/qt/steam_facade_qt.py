@@ -1,6 +1,7 @@
-from PyQt6.QtCore import QObject, pyqtSignal
-
+import logging
 from typing import Optional
+
+from PyQt6.QtCore import QObject, pyqtSignal
 
 from src.feature_core.services.steam.games_aggregator import GamesAggregator
 from src.feature_core.services.steam.account_service import SteamAccountService
@@ -23,6 +24,9 @@ from src.feature_core.services.steam.steam_result_processor import (
     SteamResultProcessor,
 )
 from src.feature_core.services.steam.steam_ports import SteamRepositoryPort, SteamTaskServicePort
+
+
+logger = logging.getLogger(__name__)
 
 
 class SteamFacadeQt(QObject):
@@ -69,7 +73,7 @@ class SteamFacadeQt(QObject):
         try:
             self.repository.set_error_handler(self.on_error.emit)
         except Exception:
-            pass
+            logger.exception("Failed to set SteamRepository error handler")
         self.service.task_finished.connect(self._handle_worker_result)
 
         self.cache = self.repository.load_data()
@@ -169,7 +173,40 @@ class SteamFacadeQt(QObject):
         if not self._result_processor:
             return
 
-        outcome = self._result_processor.process(result)
+        task_type = (result or {}).get("type")
+        steam_id = (result or {}).get("steam_id")
+        error = (result or {}).get("error")
+        tb = (result or {}).get("traceback")
+        if error:
+            if tb:
+                logger.error(
+                    "Steam worker error: type=%s steam_id=%s error=%s\n%s",
+                    task_type,
+                    steam_id,
+                    error,
+                    tb,
+                )
+            else:
+                logger.error(
+                    "Steam worker error: type=%s steam_id=%s error=%s",
+                    task_type,
+                    steam_id,
+                    error,
+                )
+
+        try:
+            outcome = self._result_processor.process(result)
+        except Exception:
+            logger.exception(
+                "SteamResultProcessor.process failed: type=%s steam_id=%s",
+                task_type,
+                steam_id,
+            )
+            try:
+                self.on_error.emit(f"Steam processor failed: {task_type}")
+            except Exception:
+                logger.exception("SteamFacadeQt failed to emit on_error")
+            return
 
         emitters = {
             EmitPlayerSummary: self.on_player_summary.emit,
@@ -182,12 +219,22 @@ class SteamFacadeQt(QObject):
 
         for step in outcome.steps:
             if isinstance(step, SaveStep):
-                self.repository.save_data(self.cache)
+                try:
+                    self.repository.save_data(self.cache)
+                except Exception:
+                    logger.exception("Failed to save steam cache: type=%s steam_id=%s", task_type, steam_id)
                 continue
 
             emitter = emitters.get(type(step))
             if emitter is not None:
-                emitter(step.payload)
+                try:
+                    emitter(step.payload)
+                except Exception:
+                    logger.exception(
+                        "SteamFacadeQt emitter failed: type=%s step=%s",
+                        task_type,
+                        type(step).__name__,
+                    )
 
     def get_game_datasets(self):
         policy = self._policy()

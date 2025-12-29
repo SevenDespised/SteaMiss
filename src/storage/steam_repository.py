@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import json
 import os
+import logging
 from typing import Any, Callable, Optional
+
+
+logger = logging.getLogger(__name__)
 
 
 class SteamRepository:
@@ -22,15 +26,15 @@ class SteamRepository:
             try:
                 with open(self.data_file, 'r', encoding='utf-8') as f:
                     cache = json.load(f)
-                print(f"Loaded local steam data from {self.data_file}")
+                logger.info("Loaded local steam data from %s", self.data_file)
             except Exception as e:
                 msg = f"Failed to load local steam data: {e}"
-                print(msg)
+                logger.exception("%s", msg)
                 if callable(self._on_error):
                     try:
                         self._on_error(msg)
                     except Exception:
-                        pass
+                        logger.exception("SteamRepository error handler failed")
         return cache
 
     def save_data(self, data):
@@ -40,12 +44,12 @@ class SteamRepository:
             os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
             with open(self.data_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            print(f"Saved steam data to {self.data_file}")
+            logger.info("Saved steam data to %s", self.data_file)
         except Exception as e:
             msg = f"Failed to save local steam data: {e}"
-            print(msg)
+            logger.exception("%s", msg)
             if callable(self._on_error):
                 try:
                     self._on_error(msg)
                 except Exception:
-                    pass
+                    logger.exception("SteamRepository error handler failed")

@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import logging
 from typing import Callable, Iterable, Optional, Union
+
+
+logger = logging.getLogger(__name__)
 
 
 class MenuComposer:
@@ -41,6 +45,7 @@ class MenuComposer:
                 result = provider()
             except Exception:
                 # provider 出错时不阻塞整个菜单渲染（保持 UI 可用）
+                logger.exception("Menu provider failed")
                 continue
 
             if result is None:

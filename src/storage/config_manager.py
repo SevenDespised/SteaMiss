@@ -1,5 +1,9 @@
 import json
 import os
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 class ConfigManager:
     def __init__(self, config_path="config/settings.json"):
@@ -24,7 +28,7 @@ class ConfigManager:
                     data = json.load(f)
                     self.settings.update(data)
             except Exception as e:
-                print(f"Error loading config: {e}")
+                logger.exception("Error loading config: %s", self.config_path)
 
     def save_config(self):
         os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
@@ -32,7 +36,7 @@ class ConfigManager:
             with open(self.config_path, 'w', encoding='utf-8') as f:
                 json.dump(self.settings, f, ensure_ascii=False, indent=4)
         except Exception as e:
-            print(f"Error saving config: {e}")
+            logger.exception("Error saving config: %s", self.config_path)
 
     def get(self, key, default=None):
         return self.settings.get(key, default)

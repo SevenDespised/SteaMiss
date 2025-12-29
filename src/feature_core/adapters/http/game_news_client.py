@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import gzip
+import logging
 import re
 import urllib.request
 import urllib.error
@@ -9,6 +10,9 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Iterable, Optional
 from xml.etree import ElementTree as ET
+
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -68,6 +72,7 @@ class GameNewsClient:
                 items = self.fetch_feed(src.feed_url, source=src.name, limit=per_source_limit)
             except Exception:
                 # 源失败直接跳过：上层若需要提示/埋点可在 service 层处理
+                logger.exception("GameNewsClient fetch source failed: %s %s", src.name, src.feed_url)
                 continue
 
             for item in items:
@@ -217,7 +222,7 @@ class GameNewsClient:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt
         except Exception:
-            pass
+            logger.debug("GameNewsClient RFC date parse failed: %s", value, exc_info=True)
 
         # ISO 8601
         v = value.replace("Z", "+00:00")

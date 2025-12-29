@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os
 from typing import Optional
 
@@ -8,6 +9,9 @@ from PyQt6.QtGui import QDesktopServices
 from PyQt6.QtWidgets import QApplication
 
 from src.feature_core.services.system_service import SystemService
+
+
+logger = logging.getLogger(__name__)
 
 
 class SystemFacadeQt:
@@ -51,7 +55,7 @@ class SystemFacadeQt:
                     QDesktopServices.openUrl(QUrl(fallback_url))
                     return
                 except Exception:
-                    pass
+                    logger.exception("Failed to open fallback URL: %s", fallback_url)
             raise Exception(f"Failed to open URI {uri}: {e}")
 
     def exit_app(self, **_: object) -> None:

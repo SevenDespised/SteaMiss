@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 from typing import Optional
 
@@ -7,6 +8,9 @@ from PyQt6.QtCore import QObject, QThread, pyqtSignal
 
 from src.feature_core.services.game_news_service import GameNewsService
 from src.storage.news_repository import NewsRepository
+
+
+logger = logging.getLogger(__name__)
 
 
 class _GameNewsWorker(QThread):
@@ -35,6 +39,7 @@ class _GameNewsWorker(QThread):
                 "from_cache": from_cache,
             }
         except Exception as e:
+            logger.exception("GameNews worker failed: force_refresh=%s", self._force_refresh)
             result["error"] = str(e)
         self.data_ready.emit(result)
 
@@ -46,6 +51,7 @@ def _format_pub_date(dt: Optional[datetime]) -> str:
         local_dt = dt.astimezone()
         return local_dt.strftime("%Y-%m-%d %H:%M")
     except Exception:
+        logger.debug("Failed to format pub date", exc_info=True)
         return ""
 
 
@@ -61,7 +67,10 @@ class GameNewsFacadeQt(QObject):
         self._service = service or GameNewsService(self._repository)
         self._active_workers: list[_GameNewsWorker] = []
 
-        self._repository.error_occurred.connect(self.on_error.emit)
+        try:
+            self._repository.error_occurred.connect(self.on_error.emit)
+        except Exception:
+            logger.exception("Failed to connect NewsRepository.error_occurred")
 
     def fetch_news(self, *, force_refresh: bool = False) -> None:
         worker = _GameNewsWorker(self._service, force_refresh=force_refresh)
@@ -77,6 +86,7 @@ class GameNewsFacadeQt(QObject):
 
     def _handle_result(self, result: dict) -> None:
         if result.get("error"):
+            logger.error("GameNews result error: %s", result.get("error"))
             self.on_error.emit(result["error"])
             return
         data = result.get("data") or {}

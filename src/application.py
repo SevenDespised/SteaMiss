@@ -1,3 +1,5 @@
+import logging
+
 from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
 from src.ui.pet.pet import DesktopPet
 from src.ui.widgets.timer_overlay import TimerOverlay
@@ -35,6 +37,9 @@ from src.storage.prompt_manager import PromptManager
 from src.feature_core.adapters.qt.say_hello_facade_qt import SayHelloFacadeQt
 from src.feature_core.services.steam.launcher_service import SteamLauncherService
 import threading
+
+
+logger = logging.getLogger(__name__)
 
 class SteaMissApp:
     def __init__(self, app: QApplication):
@@ -76,6 +81,11 @@ class SteaMissApp:
         )
 
         def _emit_error(e: Exception, action: Action, kwargs: dict) -> None:
+            logger.exception(
+                "ActionBus error: action=%s keys=%s",
+                getattr(action, "value", str(action)),
+                sorted(list((kwargs or {}).keys())),
+            )
             self.ui_intents.error.emit(f"{action.value} failed: {e}")
 
         self.action_bus.set_error_handler(_emit_error)
@@ -167,7 +177,13 @@ class SteaMissApp:
         try:
             self.news_manager.on_error.connect(lambda msg: self.ui_intents.error.emit(f"news failed: {msg}"))
         except Exception:
-            pass
+            logger.exception("Failed to bridge news_manager.on_error")
+
+        # 将 Steam 错误也汇总到统一错误通道
+        try:
+            self.steam_manager.on_error.connect(lambda msg: self.ui_intents.error.emit(f"steam failed: {msg}"))
+        except Exception:
+            logger.exception("Failed to bridge steam_manager.on_error")
         
         self.radial_handler = RadialHandler(
             self.menu_composer
@@ -254,7 +270,7 @@ class SteaMissApp:
 
     def on_error_occurred(self, error_msg):
         """响应错误信息"""
-        print(f"[Error]: {error_msg}")
+        logger.error("[Error]: %s", error_msg)
         self.tray_handler.show_message("错误", error_msg, QSystemTrayIcon.MessageIcon.Warning, 3000)
 
     def toggle_pet_visibility(self):

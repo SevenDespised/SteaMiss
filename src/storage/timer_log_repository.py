@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import json
 import os
+import logging
 from typing import Any, Dict, List
+
+
+logger = logging.getLogger(__name__)
 
 
 class TimerLogRepository:
@@ -23,6 +27,7 @@ class TimerLogRepository:
                 if isinstance(loaded, list):
                     data = loaded
             except Exception:
+                logger.exception("Failed to read timer log: %s", self.log_path)
                 data = []
 
         data.append(record)

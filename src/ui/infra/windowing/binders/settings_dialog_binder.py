@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import logging
+
 from src.ui.infra.windowing.context import WindowContext
+
+
+logger = logging.getLogger(__name__)
 
 
 class SettingsDialogBinder:
@@ -28,7 +33,7 @@ class SettingsDialogBinder:
                 try:
                     ctx.steam_manager.on_credentials_changed()
                 except Exception:
-                    pass
+                    logger.exception("SettingsDialogBinder failed to refresh steam credentials")
 
         view.request_save.connect(handle_save)
 

@@ -1,4 +1,9 @@
+import logging
+
 from PyQt6.QtCore import QObject
+
+
+logger = logging.getLogger(__name__)
 
 
 class WindowHandler(QObject):
@@ -15,7 +20,7 @@ class WindowHandler(QObject):
         try:
             self.window_factory.set_navigator(self.open_window)
         except Exception:
-            pass
+            logger.exception("WindowHandler failed to set navigator")
 
     def open_window(self, window_name):
         """

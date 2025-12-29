@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, Optional
 
@@ -7,6 +8,9 @@ from src.feature_core.app.actions import Action
 
 
 Handler = Callable[..., Any]
+
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -38,6 +42,24 @@ class ActionBus:
             self._hooks[action] = []
         self._hooks[action].append(hook)
 
+    def _sanitize_kwargs(self, kwargs: dict) -> dict:
+        redacted_keys = {
+            "api_key",
+            "steam_api_key",
+            "llm_api_key",
+            "authorization",
+            "Authorization",
+            "token",
+            "access_token",
+        }
+        out: dict = {}
+        for k, v in (kwargs or {}).items():
+            if str(k) in redacted_keys:
+                out[k] = "***"
+            else:
+                out[k] = v
+        return out
+
     def execute(self, action: Action, **kwargs: Any) -> Any:
         handler = self._handlers.get(action)
         if not handler:
@@ -51,14 +73,27 @@ class ActionBus:
                     try:
                         hook(**kwargs)
                     except Exception:
-                        pass # 钩子失败不影响主流程
+                        logger.exception(
+                            "Action hook failed: %s",
+                            action.value,
+                            extra={"action": action.value, "kwargs": self._sanitize_kwargs(dict(kwargs))},
+                        )
             return result
         except Exception as e:
+            logger.exception(
+                "Action failed: %s",
+                action.value,
+                extra={"action": action.value, "kwargs": self._sanitize_kwargs(dict(kwargs))},
+            )
             if self._on_error:
                 try:
                     self._on_error(e, action, dict(kwargs))
                 except Exception:
-                    pass
+                    logger.exception(
+                        "Action on_error handler failed: %s",
+                        action.value,
+                        extra={"action": action.value, "kwargs": self._sanitize_kwargs(dict(kwargs))},
+                    )
             # UI 场景下不希望异常冒泡导致崩溃；错误由 on_error 回调统一处理。
             return None
 

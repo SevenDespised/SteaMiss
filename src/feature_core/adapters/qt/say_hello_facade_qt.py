@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import logging
 import threading
 import time
 import uuid
 from typing import Optional
 
 from PyQt6.QtCore import QObject
+
+logger = logging.getLogger(__name__)
 
 
 class SayHelloFacadeQt(QObject):
@@ -41,7 +44,11 @@ class SayHelloFacadeQt(QObject):
         self._active_request_id = request_id
 
         fallback = self._pet_service.get_say_hello_fallback_text()
-        prompt = self._pet_service.build_say_hello_prompt(self._prompt_manager, self._steam_manager)
+        try:
+            prompt = self._pet_service.build_say_hello_prompt(self._prompt_manager, self._steam_manager)
+        except Exception:
+            logger.exception("SayHelloFacadeQt failed to build prompt")
+            prompt = ""
 
         # 通知 UI：开始流式
         self._ui_intents.say_hello_stream_started.emit(request_id)
@@ -85,9 +92,9 @@ class SayHelloFacadeQt(QObject):
                 if not has_output:
                     self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
             except Exception:
-                if self._active_request_id != request_id:
-                    return
-                self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
+                logger.exception("SayHelloFacadeQt stream worker failed")
+                if self._active_request_id == request_id:
+                    self._ui_intents.say_hello_stream_delta.emit(request_id, fallback)
             finally:
                 if self._active_request_id == request_id:
                     self._ui_intents.say_hello_stream_done.emit(request_id)

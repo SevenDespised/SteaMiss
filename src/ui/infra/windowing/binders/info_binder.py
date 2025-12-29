@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import logging
+
 from src.ui.infra.windowing.context import WindowContext
+
+
+logger = logging.getLogger(__name__)
 
 
 class InfoWindowBinder:
@@ -24,34 +29,34 @@ class InfoWindowBinder:
             try:
                 news_manager.on_news_data.connect(view.update_news_data)
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to connect news data")
 
             try:
                 news_manager.on_error.connect(view.on_news_fetch_error)
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to connect news error")
 
             try:
                 view.request_news_refresh.connect(lambda force, nm=news_manager: nm.fetch_news(force_refresh=bool(force)))
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to connect request_news_refresh")
 
             try:
                 news_manager.fetch_news(force_refresh=False)
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to fetch news")
 
         epic_manager = getattr(ctx, "epic_manager", None)
         if epic_manager is not None:
             try:
                 epic_manager.on_epic_free_games_data.connect(view.update_epic_free_games_data)
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to connect epic data")
 
             try:
                 epic_manager.on_error.connect(lambda msg: view.update_epic_free_games_data([{"title": f"Epic 数据获取失败：{msg}", "period": "", "url": None}]))
             except Exception:
-                pass
+                logger.exception("InfoWindowBinder failed to connect epic error")
 
             # 优先使用缓存
             cached = []
@@ -64,12 +69,12 @@ class InfoWindowBinder:
                 try:
                     view.update_epic_free_games_data(cached)
                 except Exception:
-                    pass
+                    logger.exception("InfoWindowBinder failed to render cached epic data")
             else:
                 try:
                     epic_manager.fetch_free_games()
                 except Exception:
-                    pass
+                    logger.exception("InfoWindowBinder failed to fetch epic free games")
 
 
 __all__ = ["InfoWindowBinder"]

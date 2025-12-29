@@ -2,8 +2,13 @@
 交互菜单项构建器。
 """
 
+import logging
+
 from src.ui.infra.radial_composer.menu_builders.base_builder import BaseMenuBuilder
 from src.feature_core.app.actions import Action
+
+
+logger = logging.getLogger(__name__)
 
 
 class InteractionMenuBuilder(BaseMenuBuilder):
@@ -28,6 +33,7 @@ class InteractionMenuBuilder(BaseMenuBuilder):
             try:
                 action = Action(action_value)
             except Exception:
+                logger.exception("InteractionMenuBuilder invalid action: %s", action_value)
                 return None
             kwargs = kwargs or {}
             return lambda a=action, kw=kwargs: self.action_bus.execute(a, **kw)
