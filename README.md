@@ -224,7 +224,7 @@
 ### 配置文件位置
 
 - 主配置文件：`config/settings.json`
-- Steam 数据缓存：`config/steam_data.json`
+- Game 数据缓存：`config/game_data.json`
 - 计时器日志：`config/timer_log.json`
 
 ## 🏗️ 项目结构
@@ -235,7 +235,7 @@ SteaMiss/
 │   └── digits/            # 数字图片资源
 ├── config/                 # 配置文件目录
 │   ├── settings.json      # 主配置文件
-│   ├── steam_data.json    # Steam 数据缓存
+│   ├── game_data.json     # Game 数据缓存
 │   └── timer_log.json     # 计时器日志
 ├── doc/                    # 文档目录
 ├── src/                    # 源代码目录
