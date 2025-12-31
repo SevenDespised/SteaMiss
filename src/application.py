@@ -56,7 +56,7 @@ class SteaMissApp:
             task_service=SteamTaskServiceQt(),
         )
         self.news_manager = GameNewsFacadeQt()
-        self.epic_manager = EpicFreeGamesFacadeQt()
+        self.epic_manager = EpicFreeGamesFacadeQt(steam_manager=self.steam_manager, cache_key="free_game")
         self.llm_service = LLMService(self.config_manager)
         self.prompt_manager = PromptManager()
 

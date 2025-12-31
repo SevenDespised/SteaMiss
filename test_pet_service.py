@@ -33,12 +33,12 @@ class MockSteamManager:
 class TestPetServiceBuildSayHelloPrompt(unittest.TestCase):
     def test_build_say_hello_prompt_with_real_cache(self):
         # 1) Load REAL cache from disk (avoid SteamRepository -> PyQt6 dependency)
-        cache_path = os.path.join(current_dir, "config", "steam_data.json")
-        self.assertTrue(os.path.exists(cache_path), f"Missing real steam cache file: {cache_path}")
+        cache_path = os.path.join(current_dir, "config", "game_data.json")
+        self.assertTrue(os.path.exists(cache_path), f"Missing real game data cache file: {cache_path}")
         with open(cache_path, "r", encoding="utf-8") as f:
             cache = json.load(f)
         self.assertIsInstance(cache, dict)
-        self.assertTrue(cache, "steam cache should not be empty")
+        self.assertTrue(cache, "game data cache should not be empty")
 
         # 2) Mimic app startup behavior: ensure cache['games'] derived from games_accounts
         agg_service = SteamGamesAggregationService()
