@@ -1,5 +1,7 @@
 from __future__ import annotations
+import json
 import logging
+import os
 import random
 import time
 import threading
@@ -22,6 +24,9 @@ class StateType(Enum):
 
 class SpeakingSubStateType(Enum):
     GAME_RECOMMENDATION = auto()
+    NEWS_PUSH = auto()
+    FREE_GAME_PUSH = auto()
+    DISCOUNT_PUSH = auto()
 
 class AIState(ABC):
     """Abstract base class for main states."""
@@ -40,6 +45,15 @@ class AIState(ABC):
 
 class AISubState(ABC):
     """Abstract base class for sub-states (e.g., specific speaking topics)."""
+
+    def is_available(self, manager: 'BehaviorManager') -> bool:
+        """Optional availability check.
+
+        SpeakingState 会在 enter 时优先筛选可用子状态；默认认为可用。
+        子状态如需“只在缓存存在时触发”，可覆盖本方法。
+        """
+        return True
+
     @abstractmethod
     def execute(self, manager: 'BehaviorManager'):
         pass
@@ -70,8 +84,30 @@ class SpeakingState(AIState):
 
     def enter(self, manager: 'BehaviorManager'):
         self.timer = 0
-        self.current_sub_state_type = SpeakingSubStateType.GAME_RECOMMENDATION
-        
+        self.current_sub_state_type = None
+
+        # 从已注册的子状态中随机挑选（不在 SpeakingState 内写死具体子状态）
+        candidates: list[SpeakingSubStateType] = []
+        try:
+            items = list(getattr(manager, "_speaking_sub_states", {}).items())
+        except Exception:
+            items = []
+
+        for sub_state_type, sub_state in items:
+            try:
+                is_available = getattr(sub_state, "is_available", None)
+                if callable(is_available) and not bool(is_available(manager)):
+                    continue
+                candidates.append(sub_state_type)
+            except Exception:
+                # 子状态可用性判断失败则视为不可用，避免说话逻辑崩溃
+                continue
+
+        if not candidates:
+            manager.transition_to(StateType.IDLE)
+            return
+
+        self.current_sub_state_type = random.choice(candidates)
         sub_state = manager.get_speaking_sub_state(self.current_sub_state_type)
         if sub_state:
             sub_state.execute(manager)
@@ -218,3 +254,266 @@ class GameRecommendationSubState(AISubState):
             target_game = random.choice(all_games)
             
         return target_game
+
+
+class NewsPushSubState(AISubState):
+    """新闻推送：仅使用本地缓存（config/news_data.json），无缓存则不可用。"""
+
+    _CACHE_PATH = os.path.join("config", "news_data.json")
+
+    def is_available(self, manager: 'BehaviorManager') -> bool:
+        items = self._load_cached_items()
+        return bool(items)
+
+    def execute(self, manager: 'BehaviorManager'):
+        if not manager.llm_service or not manager.prompt_manager:
+            return
+
+        items = self._load_cached_items()
+        if not items:
+            return
+
+        manager.last_recommend_time = time.time()
+
+        prev_request_id = getattr(manager, "_active_news_push_request_id", None)
+        if isinstance(prev_request_id, str) and prev_request_id:
+            manager.request_speech_stream_done(prev_request_id)
+
+        request_id = uuid.uuid4().hex
+        manager._active_news_push_request_id = request_id
+
+        threading.Thread(target=self._run_async_task, args=(manager, request_id, items), daemon=True).start()
+
+    def _run_async_task(self, manager: 'BehaviorManager', request_id: str, items: list[dict]):
+        try:
+            if getattr(manager, "_active_news_push_request_id", None) != request_id:
+                return
+
+            text_items = self._format_items(items)
+            prompt_content = manager.prompt_manager.get_prompt(
+                "active_news_push",
+                items=text_items,
+            )
+            messages = [{"role": "user", "content": prompt_content}]
+
+            manager.request_speech_stream_started(request_id, interaction_context=None)
+            try:
+                for delta in manager.llm_service.stream_chat_completion(messages):
+                    if getattr(manager, "_active_news_push_request_id", None) != request_id:
+                        return
+                    if not isinstance(delta, str) or not delta:
+                        continue
+                    manager.request_speech_stream_delta(request_id, delta)
+            finally:
+                if getattr(manager, "_active_news_push_request_id", None) == request_id:
+                    manager.request_speech_stream_done(request_id)
+        except Exception:
+            logger.exception("[NewsPush] Error in async task")
+
+    def _load_cached_items(self) -> list[dict]:
+        try:
+            if not os.path.exists(self._CACHE_PATH):
+                return []
+            with open(self._CACHE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if not isinstance(data, dict):
+                return []
+            items = data.get("items")
+            if not isinstance(items, list):
+                return []
+            out: list[dict] = []
+            for it in items:
+                if isinstance(it, dict):
+                    out.append(it)
+            return out
+        except Exception:
+            return []
+
+    def _format_items(self, items: list[dict], *, limit: int = 5) -> str:
+        rows: list[str] = []
+        for it in items[: int(limit or 0)]:
+            title = str(it.get("title") or "").strip()
+            source = str(it.get("source") or "").strip()
+            link = str(it.get("link") or "").strip()
+            if not title:
+                continue
+            parts = [f"- {title}"]
+            if source:
+                parts.append(f"（{source}）")
+            if link:
+                parts.append(f"{link}")
+            rows.append(" ".join(parts))
+        return "\n".join(rows)
+
+
+class FreeGamePushSubState(AISubState):
+    """免费游戏推送：仅使用 game data cache 中的 free_game 缓存。"""
+
+    def is_available(self, manager: 'BehaviorManager') -> bool:
+        return bool(self._get_cached_items(manager))
+
+    def execute(self, manager: 'BehaviorManager'):
+        if not manager.steam_manager or not manager.llm_service or not manager.prompt_manager:
+            return
+
+        items = self._get_cached_items(manager)
+        if not items:
+            return
+
+        manager.last_recommend_time = time.time()
+
+        prev_request_id = getattr(manager, "_active_free_game_push_request_id", None)
+        if isinstance(prev_request_id, str) and prev_request_id:
+            manager.request_speech_stream_done(prev_request_id)
+
+        request_id = uuid.uuid4().hex
+        manager._active_free_game_push_request_id = request_id
+
+        threading.Thread(target=self._run_async_task, args=(manager, request_id, items), daemon=True).start()
+
+    def _run_async_task(self, manager: 'BehaviorManager', request_id: str, items: list[dict]):
+        try:
+            if getattr(manager, "_active_free_game_push_request_id", None) != request_id:
+                return
+
+            text_items = self._format_items(items)
+            prompt_content = manager.prompt_manager.get_prompt(
+                "active_free_game_push",
+                items=text_items,
+            )
+            messages = [{"role": "user", "content": prompt_content}]
+
+            manager.request_speech_stream_started(request_id, interaction_context=None)
+            try:
+                for delta in manager.llm_service.stream_chat_completion(messages):
+                    if getattr(manager, "_active_free_game_push_request_id", None) != request_id:
+                        return
+                    if not isinstance(delta, str) or not delta:
+                        continue
+                    manager.request_speech_stream_delta(request_id, delta)
+            finally:
+                if getattr(manager, "_active_free_game_push_request_id", None) == request_id:
+                    manager.request_speech_stream_done(request_id)
+        except Exception:
+            logger.exception("[FreeGamePush] Error in async task")
+
+    def _get_cached_items(self, manager: 'BehaviorManager') -> list[dict]:
+        try:
+            cache = getattr(manager.steam_manager, "cache", None)
+            if not isinstance(cache, dict):
+                return []
+
+            payload = cache.get("free_game")
+            if not isinstance(payload, dict):
+                return []
+
+            items = payload.get("items")
+            if not isinstance(items, list):
+                return []
+            return [it for it in items if isinstance(it, dict)]
+        except Exception:
+            return []
+
+    def _format_items(self, items: list[dict], *, limit: int = 6) -> str:
+        # EpicService.build_info_window_items 会混入 header 行；这里做轻量筛选
+        rows: list[str] = []
+        for it in items:
+            title = str(it.get("title") or "").strip()
+            url = it.get("url")
+            period = str(it.get("period") or "").strip()
+            if not title:
+                continue
+            # 跳过统计/分组 header（通常 period 为空且 url 为 None）
+            if url is None and ("当前免费" in title or "即将免费" in title or "统计：" in title):
+                continue
+            line = f"- {title}"
+            if period:
+                line += f"（{period}）"
+            if isinstance(url, str) and url:
+                line += f" {url}"
+            rows.append(line)
+            if len(rows) >= int(limit or 0):
+                break
+        return "\n".join(rows)
+
+
+class DiscountPushSubState(AISubState):
+    """折扣推送：仅使用 steam_manager.cache['wishlist']（折扣列表缓存），无缓存则不可用。"""
+
+    def is_available(self, manager: 'BehaviorManager') -> bool:
+        return bool(self._get_discount_items(manager))
+
+    def execute(self, manager: 'BehaviorManager'):
+        if not manager.steam_manager or not manager.llm_service or not manager.prompt_manager:
+            return
+
+        items = self._get_discount_items(manager)
+        if not items:
+            return
+
+        manager.last_recommend_time = time.time()
+
+        prev_request_id = getattr(manager, "_active_discount_push_request_id", None)
+        if isinstance(prev_request_id, str) and prev_request_id:
+            manager.request_speech_stream_done(prev_request_id)
+
+        request_id = uuid.uuid4().hex
+        manager._active_discount_push_request_id = request_id
+
+        threading.Thread(target=self._run_async_task, args=(manager, request_id, items), daemon=True).start()
+
+    def _run_async_task(self, manager: 'BehaviorManager', request_id: str, items: list[dict]):
+        try:
+            if getattr(manager, "_active_discount_push_request_id", None) != request_id:
+                return
+
+            text_items = self._format_items(items)
+            prompt_content = manager.prompt_manager.get_prompt(
+                "active_discount_push",
+                items=text_items,
+            )
+            messages = [{"role": "user", "content": prompt_content}]
+
+            manager.request_speech_stream_started(request_id, interaction_context=None)
+            try:
+                for delta in manager.llm_service.stream_chat_completion(messages):
+                    if getattr(manager, "_active_discount_push_request_id", None) != request_id:
+                        return
+                    if not isinstance(delta, str) or not delta:
+                        continue
+                    manager.request_speech_stream_delta(request_id, delta)
+            finally:
+                if getattr(manager, "_active_discount_push_request_id", None) == request_id:
+                    manager.request_speech_stream_done(request_id)
+        except Exception:
+            logger.exception("[DiscountPush] Error in async task")
+
+    def _get_discount_items(self, manager: 'BehaviorManager') -> list[dict]:
+        try:
+            cache = getattr(manager.steam_manager, "cache", None)
+            if not isinstance(cache, dict):
+                return []
+            rows = cache.get("wishlist")
+            if not isinstance(rows, list):
+                return []
+            items = [r for r in rows if isinstance(r, dict)]
+            # 仅保留有折扣的
+            items = [r for r in items if int(r.get("discount_pct") or 0) > 0]
+            items.sort(key=lambda x: int(x.get("discount_pct") or 0), reverse=True)
+            return items
+        except Exception:
+            return []
+
+    def _format_items(self, items: list[dict], *, limit: int = 5) -> str:
+        rows: list[str] = []
+        for it in items[: int(limit or 0)]:
+            name = str(it.get("name") or "").strip()
+            pct = it.get("discount_pct")
+            price = str(it.get("price") or "").strip()
+            if not name:
+                continue
+            line = f"- {name} -{pct}%"
+            if price:
+                line += f"（{price}）"
+            rows.append(line)
+        return "\n".join(rows)

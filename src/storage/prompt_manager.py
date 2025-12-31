@@ -36,6 +36,33 @@ class PromptManager:
             "placeholders": ["{game_name}", "{appid}", "{playtime_forever}", "{playtime_2weeks}", "{description}"],
             "default": "推荐游戏：{game_name} (AppID: {appid})\n总时长：{playtime_forever}小时\n两周时长：{playtime_2weeks}小时\n简介：{description}\n\n请根据以上信息，用简短、有趣的语气向我推荐这款游戏，并且选取一些信息对我进行吐槽。\n注意：1.两周时长为0时，很可能不止两周没玩。\n2.游玩时长较长时，存在通关概念的游戏很可能已经通关。"
         },
+        "active_news_push": {
+            "name": "新闻推送",
+            "placeholders": ["{items}"],
+            "default": (
+                "你要向用户推送一些游戏相关新闻。以下是缓存里的新闻条目：\n"
+                "{items}\n\n"
+                "在其中挑 1-2 条最值得看的说给用户听。"
+                "可以带一点吐槽，但不要攻击。"
+            ),
+        },
+        "active_free_game_push": {
+            "name": "免费游戏推送",
+            "placeholders": ["{items}"],
+            "default": (
+                "你要提醒用户现在有哪些可领取/即将免费的游戏。以下是缓存条目：\n"
+                "{items}\n\n"
+            ),
+        },
+        "active_discount_push": {
+            "name": "折扣推送",
+            "placeholders": ["{items}"],
+            "default": (
+                "你要提醒用户关注的游戏里有折扣了。以下是缓存条目（按折扣排序）：\n"
+                "{items}\n\n"
+                "请用桌宠的口吻，挑 1-2 个折扣最大的快速播报，并给一句是否值得冲的建议。"
+            ),
+        },
         "say_hello": {
             "name": "打招呼",
             "placeholders": [

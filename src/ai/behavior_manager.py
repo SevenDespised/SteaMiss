@@ -7,7 +7,10 @@ from src.ai.states import (
     AISubState, 
     IdleState, 
     SpeakingState, 
-    GameRecommendationSubState
+    GameRecommendationSubState,
+    NewsPushSubState,
+    FreeGamePushSubState,
+    DiscountPushSubState,
 )
 
 # --- BehaviorManager ---
@@ -50,6 +53,9 @@ class BehaviorManager(QObject):
         self.register_state(StateType.SPEAKING, SpeakingState())
         
         self.register_speaking_sub_state(SpeakingSubStateType.GAME_RECOMMENDATION, GameRecommendationSubState())
+        self.register_speaking_sub_state(SpeakingSubStateType.NEWS_PUSH, NewsPushSubState())
+        self.register_speaking_sub_state(SpeakingSubStateType.FREE_GAME_PUSH, FreeGamePushSubState())
+        self.register_speaking_sub_state(SpeakingSubStateType.DISCOUNT_PUSH, DiscountPushSubState())
         
         # Initialize
         self._current_state = self._states[self._current_state_type]
