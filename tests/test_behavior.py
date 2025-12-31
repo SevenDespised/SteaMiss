@@ -5,9 +5,10 @@ import unittest
 from unittest.mock import MagicMock, patch
 from PyQt6.QtCore import QObject, QCoreApplication
 
-# Ensure src is in path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
+# Ensure repo root is in path so `import src.*` works
+_repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if _repo_root not in sys.path:
+    sys.path.insert(0, _repo_root)
 
 # Create QCoreApplication for signal handling
 app = QCoreApplication.instance()
@@ -32,23 +33,23 @@ class MockSteamFacade:
         # Load REAL cache
         repo = SteamRepository()
         self.cache = repo.load_data()
-        
+
         # Try to find a primary ID from cache if possible, or use a dummy
         # In real app, primary_id comes from config/policy.
         # Here we try to infer it from cache keys if available
         self.primary_id = "76561198000000000" # Default dummy
-        
+
         # Simple heuristic to find a valid steamid key in cache that has 'games'
         for key in self.cache:
             if key.isdigit() and "games" in self.cache[key]:
                 self.primary_id = key
                 print(f"[Test] Found primary ID from cache: {self.primary_id}")
                 break
-        
+
         self.config = {"steam_api_key": "dummy_key_for_test"}
         # Use REAL QueryService to parse the real cache
         self.query_service = SteamQueryService()
-    
+
     def _policy(self):
         return MockPolicy(self.primary_id)
 
@@ -63,14 +64,14 @@ class TestBehaviorManager(unittest.TestCase):
     def setUp(self):
         # Initialize Manager
         self.manager = BehaviorManager()
-        
+
         # Setup Mocks
         self.mock_steam = MockSteamFacade()
         self.mock_llm = MockLLMService()
         self.prompt_manager = PromptManager() # Use Real PromptManager
-        
+
         self.manager.set_dependencies(self.mock_steam, self.mock_llm, self.prompt_manager)
-        
+
         # Capture signals
         self.speech_output = []
         self.manager.speech_requested.connect(self.on_speech)
@@ -87,7 +88,7 @@ class TestBehaviorManager(unittest.TestCase):
         print("\n--- Starting Test: Game Recommendation Flow (Real Cache + Real Steam API) ---")
 
         # 1. No Mock SteamClient setup needed - we want real network calls for description
-        
+
         # 2. Force transition to SPEAKING state
         # This should automatically enter GameRecommendationSubState and execute logic
         print("Transitioning to SPEAKING state...")
@@ -104,9 +105,9 @@ class TestBehaviorManager(unittest.TestCase):
             time.sleep(0.1)
 
         # 3. Verify results
-        # We can't assert SteamClient calls easily without mocking, 
+        # We can't assert SteamClient calls easily without mocking,
         # but we can check if the output prompt contains a real description.
-        
+
         # Check if speech was emitted
         if self.speech_output:
             prompt_content = self.speech_output[0] # This is actually the LLM response in the current mock

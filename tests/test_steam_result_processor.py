@@ -3,8 +3,9 @@ import sys
 import unittest
 
 # Ensure repo root is in path so `import src.*` works
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
+_repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if _repo_root not in sys.path:
+    sys.path.insert(0, _repo_root)
 
 from src.feature_core.services.steam.games_aggregator import GamesAggregator
 from src.feature_core.services.steam.games_aggregation_service import SteamGamesAggregationService

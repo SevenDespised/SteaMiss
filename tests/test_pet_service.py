@@ -5,8 +5,9 @@ import unittest
 import json
 
 # Ensure repo root is in path so `import src.*` works
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
+_repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if _repo_root not in sys.path:
+    sys.path.insert(0, _repo_root)
 
 from src.feature_core.services.steam.games_aggregation_service import SteamGamesAggregationService
 from src.feature_core.services.pet_service import PetService
@@ -33,7 +34,7 @@ class MockSteamManager:
 class TestPetServiceBuildSayHelloPrompt(unittest.TestCase):
     def test_build_say_hello_prompt_with_real_cache(self):
         # 1) Load REAL cache from disk (avoid SteamRepository -> PyQt6 dependency)
-        cache_path = os.path.join(current_dir, "config", "game_data.json")
+        cache_path = os.path.join(_repo_root, "config", "game_data.json")
         self.assertTrue(os.path.exists(cache_path), f"Missing real game data cache file: {cache_path}")
         with open(cache_path, "r", encoding="utf-8") as f:
             cache = json.load(f)
