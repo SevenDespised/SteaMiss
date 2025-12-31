@@ -70,11 +70,12 @@ class InfoWindowBinder:
                     view.update_epic_free_games_data(cached)
                 except Exception:
                     logger.exception("InfoWindowBinder failed to render cached epic data")
-            else:
-                try:
-                    epic_manager.fetch_free_games()
-                except Exception:
-                    logger.exception("InfoWindowBinder failed to fetch epic free games")
+
+            # 每次打开 InfoWindow 都刷新一次（缓存仅用于秒开占位展示）。
+            try:
+                epic_manager.fetch_free_games()
+            except Exception:
+                logger.exception("InfoWindowBinder failed to fetch epic free games")
 
 
 __all__ = ["InfoWindowBinder"]
