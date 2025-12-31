@@ -58,7 +58,7 @@ class PromptManager:
                 "【所有游戏总游玩时长】{total_playtime_hours} 小时\n"
                 "【最近玩过】{recent_games}\n"
                 "【拥有游戏数】{owned_games_count}\n"
-                "【上次离线】{last_logoff}\n"
+                "【最后在线时间】{last_logoff}\n"
                 "【账号创建】{time_created}（{account_age_days} 天）\n"
                 "\n"
                 "请直接输出你要对用户说的话。"
