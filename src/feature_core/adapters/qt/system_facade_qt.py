@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import os
+import winreg
 from typing import Optional
 
 from PyQt6.QtCore import QUrl
@@ -39,6 +40,14 @@ class SystemFacadeQt:
         """打开 URL。"""
         self.service.open_url(url=url)
 
+    def _is_steam_installed(self) -> bool:
+        try:
+            key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
+            path, _ = winreg.QueryValueEx(key, "SteamPath")
+            return bool(path and os.path.exists(path))
+        except Exception:
+            return False
+
     def open_uri(self, uri: Optional[str] = None, fallback_url: Optional[str] = None, **_: object) -> None:
         """打开 URI（例如 steam:// 或 http(s)://）。
 
@@ -46,17 +55,32 @@ class SystemFacadeQt:
         """
         if not uri:
             return
-        try:
-            os.startfile(uri)
-            return
-        except Exception as e:
-            if fallback_url:
-                try:
-                    QDesktopServices.openUrl(QUrl(fallback_url))
-                    return
-                except Exception:
-                    logger.exception("Failed to open fallback URL: %s", fallback_url)
-            raise Exception(f"Failed to open URI {uri}: {e}")
+
+        should_try_startfile = True
+        # 针对 steam:// 协议：预先检查 Steam 是否安装，避免 Windows 尝试打开应用商店
+        if uri.startswith("steam://") and not self._is_steam_installed():
+            should_try_startfile = False
+            logger.info("Steam not installed (registry check)")
+
+        startfile_error = None
+        if should_try_startfile:
+            try:
+                os.startfile(uri)
+                return
+            except Exception as e:
+                startfile_error = e
+                logger.warning("os.startfile failed for %s: %s", uri, e)
+
+        if fallback_url:
+            try:
+                QDesktopServices.openUrl(QUrl(fallback_url))
+                return
+            except Exception:
+                logger.exception("Failed to open fallback URL: %s", fallback_url)
+
+        if not should_try_startfile:
+            raise Exception(f"Steam not installed, cannot open URI: {uri}")
+        raise Exception(f"Failed to open URI {uri}: {startfile_error}")
 
     def exit_app(self, **_: object) -> None:
         """退出应用。"""
@@ -64,5 +88,3 @@ class SystemFacadeQt:
 
 
 __all__ = ["SystemFacadeQt"]
-
-

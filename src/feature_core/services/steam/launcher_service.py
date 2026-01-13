@@ -46,7 +46,7 @@ class SteamLauncherService:
     def build_launch_game(self, appid: object) -> Optional[LaunchPlan]:
         if not appid:
             return None
-        return LaunchPlan(primary_uri=f"steam://run/{appid}", fallback_url=None)
+        return LaunchPlan(primary_uri=f"steam://run/{appid}", fallback_url=self.WEB_URLS.get("store"))
 
     def build_open_page(self, page_type: str) -> Optional[LaunchPlan]:
         page_type = (page_type or "").strip()
